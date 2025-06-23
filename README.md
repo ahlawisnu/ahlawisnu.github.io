@@ -48,9 +48,6 @@ Kamu bisa menggunakan prompt dari alat ini di berbagai platform AI pembuat gamba
 | **Ideogram** | [https://ideogram.ai](https://ideogram.ai) | Bagus untuk teks dalam gambar, cocok untuk poster dan konten media sosial. |
 | **NightCafe Studio** | [https://creator.nightcafe.studio](https://creator.nightcafe.studio) | Platform yang memungkinkan kamu eksperimen dengan berbagai algoritma AI. |
 | **DeepAI** | [https://deepai.org](https://deepai.org) | Platform sederhana dengan API yang mudah digunakan untuk integrasi. |
-| **Fy! Studio Pro** | [https://fyai.art](https://fyai.art) | AI Art Generator buatan lokal Indonesia, mendukung prompt dalam bahasa Indonesia. |
-| **Pixray** | [https://pixray.org](https://pixray.org) | Membuat gambar surreal dan abstrak dengan teknik unik. |
-
 ---
 
 ### 📦 Fitur Utama
