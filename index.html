@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Prompt Generator AI</title>
   <style>
     body {
@@ -57,31 +57,87 @@
   <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
 
   <label>Pakaian</label>
+  <select id="pakaianSelect" onchange="handleSelectChange('pakaian')">
+    <option value="">Tulis Manual</option>
+    <option value="wearing school uniform">wearing school uniform</option>
+    <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
+    <option value="summer dress with hat">summer dress with hat</option>
+    <option value="casual hoodie and jeans">casual hoodie and jeans</option>
+  </select>
   <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
 
   <label>Gaya Rambut</label>
+  <select id="gayaRambutSelect" onchange="handleSelectChange('gayaRambut')">
+    <option value="">Tulis Manual</option>
+    <option value="long twin-tails">long twin-tails</option>
+    <option value="short bob cut">short bob cut</option>
+    <option value="messy bun">messy bun</option>
+    <option value="side ponytail">side ponytail</option>
+  </select>
   <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
 
   <label>Warna Rambut</label>
   <input type="text" id="warnaRambut" oninput="generatePrompt()" placeholder="Contoh: sakura pink" />
 
   <label>Ekspresi / Suasana</label>
+  <select id="ekspresiSelect" onchange="handleSelectChange('ekspresi')">
+    <option value="">Tulis Manual</option>
+    <option value="gentle smile">gentle smile</option>
+    <option value="teary-eyed">teary-eyed</option>
+    <option value="cheerful laugh">cheerful laugh</option>
+    <option value="melancholic gaze">melancholic gaze</option>
+  </select>
   <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
 
   <label>Pose / Aksi</label>
+  <select id="poseSelect" onchange="handleSelectChange('pose')">
+    <option value="">Tulis Manual</option>
+    <option value="standing under cherry tree">standing under cherry tree</option>
+    <option value="sitting in a meadow">sitting in a meadow</option>
+    <option value="walking in the rain">walking in the rain</option>
+    <option value="reading by the window">reading by the window</option>
+  </select>
   <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
 
   <label>Komposisi Kamera</label>
-  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up, medium shot" />
+  <select id="kameraSelect" onchange="handleSelectChange('kamera')">
+    <option value="">Tulis Manual</option>
+    <option value="close-up">close-up</option>
+    <option value="medium shot">medium shot</option>
+    <option value="wide shot">wide shot</option>
+    <option value="over-the-shoulder">over-the-shoulder</option>
+  </select>
+  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up" />
 
   <label>Latar Belakang</label>
-  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: background: cherry blossom forest" />
+  <select id="latarSelect" onchange="handleSelectChange('latar')">
+    <option value="">Tulis Manual</option>
+    <option value="cherry blossom forest">cherry blossom forest</option>
+    <option value="Indonesian school courtyard">Indonesian school courtyard</option>
+    <option value="sunset rice field">sunset rice field</option>
+    <option value="rainy street at night">rainy street at night</option>
+  </select>
+  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
 
   <label>Detail Estetis</label>
-  <textarea id="detail" rows="2" oninput="generatePrompt()" placeholder="Contoh: ultra-detailed, glowing light, 4k, soft shadows"></textarea>
+  <select id="detailSelect" onchange="handleSelectChange('detail')">
+    <option value="">Tulis Manual</option>
+    <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
+    <option value="rim lighting, ambient glow">rim lighting, ambient glow</option>
+    <option value="volumetric fog, warm tone">volumetric fog, warm tone</option>
+    <option value="silky texture, soft shadows">silky texture, soft shadows</option>
+  </select>
+  <textarea id="detail" rows="2" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting"></textarea>
 
   <label>Gaya Seni</label>
-  <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style, Studio Ghibli inspired" />
+  <select id="gayaSelect" onchange="handleSelectChange('gaya')">
+    <option value="">Tulis Manual</option>
+    <option value="anime-style">anime-style</option>
+    <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
+    <option value="realistic digital painting">realistic digital painting</option>
+    <option value="chibi art">chibi art</option>
+  </select>
+  <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style" />
 
   <label>Aspect Ratio</label>
   <select id="rasio" onchange="generatePrompt()">
@@ -106,11 +162,10 @@
     if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
     if (s('pose')) prompt += `, ${s('pose')}`;
     if (s('kamera')) prompt += `, ${s('kamera')} camera`;
-    if (s('latar')) prompt += `, ${s('latar')}`;
+    if (s('latar')) prompt += `, background: ${s('latar')}`;
     if (s('detail')) prompt += `, ${s('detail')}`;
     if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
     if (s('rasio')) prompt += `, aspect ratio: ${s('rasio')}`;
-
     document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt;
   }
 
@@ -123,17 +178,26 @@
       }, 2000);
     });
   }
+
+  function handleSelectChange(fieldId) {
+    const select = document.getElementById(fieldId + "Select");
+    const input = document.getElementById(fieldId);
+    input.value = select.value;
+    generatePrompt();
+  }
 </script>
+
 <div>
   <h3>Contact Person</h3>
-  <p>
-    🌐 Misskey: 
-    <a href="https://misskey.id/@awvr" target="_blank">@awvr@misskey.id</a>
-  </p>
+  <p>🌐 Misskey: <a href="https://misskey.id/@awvr" target="_blank">@awvr@misskey.id</a></p>
 </div>
+
 <footer style="text-align: center; margin-top: 40px; font-size: 14px; color: #777;">
-  Dibuat dengan ❤️ oleh <a href="https://linktr.ee/ahladigital" target="_blank"
-  style="color: #cc3399; text-decoration: none;">@AWVR@MISSKEY.ID</a>
+  Dibuat dengan ❤️ oleh 
+  <a href="https://linktr.ee/ahladigital" target="_blank" style="color: #cc3399; text-decoration: none;">
+    @AWVR@MISSKEY.ID
+  </a>
 </footer>
+
 </body>
 </html>
