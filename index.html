@@ -231,6 +231,175 @@ if (warna) prompt += `, hair color: ${warna}`;
       prompt += `, aspect ratio: ${document.getElementById('rasio').value}`;
     
     document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt.trim();
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prompt Generator AI</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4fa;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    select, input, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    #output {
+      background: #fff;
+      padding: 15px;
+      border-left: 4px solid #007bff;
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+    }
+    #copyBtn {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      width: auto;
+      padding: 10px 16px;
+    }
+    #copyBtn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Pembuat Prompt Gambar AI</h1>
+
+<form id="promptForm">
+  <label>Subjek Utama</label>
+  <select id="subjek" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="a girl sitting under a sakura tree">a girl sitting under a sakura tree</option>
+    <option value="a mystical forest spirit">a mystical forest spirit</option>
+    <option value="a futuristic cyborg in neon city">a futuristic cyborg in neon city</option>
+  </select>
+  <input type="text" id="subjekManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+
+  <label>Gaya Rambut</label>
+  <select id="gayaRambut" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="long straight hair">long straight hair</option>
+    <option value="twin tails">twin tails</option>
+    <option value="short bob cut">short bob cut</option>
+    <option value="braided with ribbon">braided with ribbon</option>
+  </select>
+  <input type="text" id="gayaRambutManual" placeholder="Tulis gaya rambut..." oninput="generatePrompt()" />
+
+  <label>Warna Rambut</label>
+  <select id="warnaRambut" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="sakura pink">sakura pink</option>
+    <option value="silver gray">silver gray</option>
+    <option value="light teal">light teal</option>
+  </select>
+  <input type="text" id="warnaRambutManual" placeholder="Tulis warna rambut..." oninput="generatePrompt()" />
+
+  <label>Pakaian</label>
+  <select id="pakaian" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="in traditional Balinese attire">in traditional Balinese attire</option>
+    <option value="wearing futuristic armor suit">wearing futuristic armor suit</option>
+    <option value="in a dreamy gothic lolita dress">in a dreamy gothic lolita dress</option>
+  </select>
+  <input type="text" id="pakaianManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+
+  <label>Pose / Aksi</label>
+  <select id="pose" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="sitting under a starry night sky">sitting under a starry night sky</option>
+    <option value="dancing in the rain with closed eyes">dancing in the rain with closed eyes</option>
+  </select>
+  <input type="text" id="poseManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+
+  <label>Komposisi Kamera</label>
+  <select id="kamera" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="close-up">close-up</option>
+    <option value="aerial view">aerial view</option>
+    <option value="depth of field focus">depth of field focus</option>
+  </select>
+  <input type="text" id="kameraManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+
+  <label>Latar Belakang</label>
+  <select id="latar" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="background: misty forest with ancient ruins">background: misty forest with ancient ruins</option>
+    <option value="background: Tokyo alley at night">background: Tokyo alley at night</option>
+  </select>
+  <input type="text" id="latarManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+
+  <label>Detail Estetis</label>
+  <select id="detail" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="high contrast lighting, cinematic glow, depth of field">high contrast lighting, cinematic glow, depth of field</option>
+    <option value="soft pastel tones, dreamy blur, watercolor texture">soft pastel tones, dreamy blur, watercolor texture</option>
+  </select>
+  <textarea id="detailManual" rows="2" placeholder="Tulis detail tambahan..." oninput="generatePrompt()"></textarea>
+
+  <label>Gaya Seni</label>
+  <select id="gaya" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="anime-style">anime-style</option>
+    <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
+  </select>
+  <input type="text" id="gayaManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+
+  <label>Aspect Ratio</label>
+  <select id="rasio" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="16:9">16:9</option>
+    <option value="4:3">4:3</option>
+    <option value="1:1">1:1</option>
+    <option value="9:16">9:16</option>
+  </select>
+</form>
+
+<div id="output"><em>Prompt akan muncul di sini secara otomatis...</em></div>
+<button id="copyBtn" onclick="copyPrompt()">📋 Salin Prompt</button>
+
+<script>
+  function val(id) {
+    const preset = document.getElementById(id).value;
+    const manual = document.getElementById(id + 'Manual');
+    return manual && manual.value.trim() !== "" ? manual.value.trim() : preset;
+  }
+
+  function generatePrompt() {
+    let prompt = val('subjek');
+    if (val('gayaRambut')) prompt += `, hairstyle: ${val('gayaRambut')}`;
+    if (val('warnaRambut')) prompt += `, hair color: ${val('warnaRambut')}`;
+    if (val('pakaian')) prompt += `, ${val('pakaian')}`;
+    if (val('pose')) prompt += `, ${val('pose')}`;
+    if (val('kamera')) prompt += `, ${val('kamera')} camera`;
+    if (val('latar')) prompt += `, ${val('latar')}`;
+    if (val('detail') || document.getElementById('detailManual').value.trim())
+      prompt += `, ${val('detail')}, ${document.getElementById('detailManual').value.trim()}`;
+    if (val('gaya')) prompt += `, art style: ${val('gaya')}`;
+    if (document.getElementById('rasio').value) 
+      prompt += `, aspect ratio: ${document.getElementById('rasio').value}`;
+
+    document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt.trim();
   }
 
   function copyPrompt() {
@@ -240,7 +409,7 @@ if (warna) prompt += `, hair color: ${warna}`;
       btn.textContent = "✅ Prompt Disalin!";
       setTimeout(() => btn.textContent = "📋 Salin Prompt", 2000);
     });
-  }
+   } 
 </script>
 <div>
   <h3>Contact Person</h3>
