@@ -85,7 +85,3 @@ Dibuat dengan ❤️ oleh
 ### 📄 Lisensi
 
 MIT License – Silakan digunakan, dimodifikasi, dan didistribusikan ulang tanpa batasan.
-
----
-
-Jika kamu ingin saya tambahkan panduan **cara deploy** halaman ini ke GitHub Pages atau Netlify, atau ingin saya buatkan **file `.gitignore`**, beri tahu saya!
