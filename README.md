@@ -1,7 +1,3 @@
-Berikut adalah file `README.md` yang bisa kamu gunakan untuk menjelaskan cara menggunakan alat prompt generator ini, serta rekomendasi platform AI Image Generator populer yang dapat digunakan bersamanya.
-
----
-
 ## 🎨 Prompt Generator AI – Pembuat Prompt Gambar Berbasis AI
 
 Prompt Generator AI adalah alat web sederhana berbasis HTML/JavaScript yang membantu pengguna membuat **prompt gambar AI** secara otomatis dan real-time. Alat ini sangat berguna bagi kreator digital, desainer, atau siapa saja yang ingin menghasilkan gambar dengan teknologi AI seperti Midjourney, Stable Diffusion, Leonardo.Ai, dan lainnya.
@@ -13,7 +9,7 @@ Prompt Generator AI adalah alat web sederhana berbasis HTML/JavaScript yang memb
 1. **Buka Halaman Web**
    - Buka file `index.html` di browser kamu.
    - Tidak perlu koneksi internet atau server backend — semua berjalan secara lokal.
-
+   - <ahlawisnu.github.io> untuk secara online 
 2. **Isi Formulir Prompt**
    - Lengkapi kolom sesuai keinginanmu:
      - Subjek utama
