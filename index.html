@@ -67,6 +67,29 @@
   </select>
   <input type="text" id="subjekManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
 
+<label>Gaya Rambut</label>
+<select id="gayaRambut" onchange="generatePrompt()">
+  <option value="">-- Pilih Gaya Rambut --</option>
+  <option value="long straight hair">long straight hair</option>
+  <option value="twin tails">twin tails</option>
+  <option value="short bob cut">short bob cut</option>
+  <option value="braided with ribbon">braided with ribbon</option>
+  <option value="messy wind-blown hair">messy wind-blown hair</option>
+</select>
+<input type="text" id="gayaRambutManual" placeholder="Tulis gaya rambut..." oninput="generatePrompt()" />
+
+<label>Warna Rambut</label>
+<select id="warnaRambut" onchange="generatePrompt()">
+  <option value="">-- Pilih Warna Rambut --</option>
+  <option value="sakura pink">sakura pink</option>
+  <option value="silver gray">silver gray</option>
+  <option value="light teal">light teal</option>
+  <option value="peach blonde">peach blonde</option>
+  <option value="deep violet">deep violet</option>
+</select>
+<input type="text" id="warnaRambutManual" placeholder="Tulis warna rambut..." oninput="generatePrompt()" />
+
+  
   <label>Pakaian</label>
   <select id="pakaian" onchange="generatePrompt()">
     <option value="">-- Pilih --</option>
@@ -193,6 +216,10 @@
 
   function generatePrompt() {
     let prompt = val('subjek');
+    const rambut = val('gayaRambut');
+if (rambut) prompt += `, hairstyle: ${rambut}`;
+const warna = val('warnaRambut');
+if (warna) prompt += `, hair color: ${warna}`;
     if (val('pakaian')) prompt += `, ${val('pakaian')}`;
     if (val('pose')) prompt += `, ${val('pose')}`;
     if (val('kamera')) prompt += `, ${val('kamera')} camera`;
