@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   
@@ -12,25 +12,51 @@
   
   <meta name="author" content="@AWVR@Misskey.ID">
   
-  <meta name="robots" content="index, follow">
-    <!--- Sisanya tetap seperti sebelumnya --->
+  <meta name="robots" content="index, follow"> 
+  <!--- STYLE CSS --->
   <style>
     body {
       font-family: sans-serif;
       background: #f4f4fa;
+      color: #333;
       padding: 30px;
       max-width: 800px;
       margin: auto;
+      transition: all 0.3s ease-in-out;
     }
+
+    .dark-mode {
+      background: #1e1e1e;
+      color: #eee;
+    }
+    
+    .dark-mode H1 
+    {color: #eee;} 
+    .dark-mode input,
+    .dark-mode textarea,
+    .dark-mode select,
+    .dark-mode button {
+      background-color: #2d2d2d;
+      color: #eee;
+      border: 1px solid #555;
+    }
+
+    .dark-mode #output {
+      background: #2a2a2a;
+      border-left-color: #4db6ac;
+    }
+
     h1 {
       color: #333;
       margin-bottom: 20px;
     }
+
     label {
       display: block;
       margin: 15px 0 5px;
       font-weight: bold;
     }
+
     input, textarea, select, button {
       width: 100%;
       padding: 8px;
@@ -39,6 +65,7 @@
       border: 1px solid #ccc;
       font-size: 14px;
     }
+
     #output {
       background: #fff;
       padding: 15px;
@@ -46,15 +73,28 @@
       white-space: pre-wrap;
       margin-bottom: 10px;
     }
-    #copyBtn {
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
       background-color: #007bff;
       color: white;
       font-weight: bold;
       cursor: pointer;
       width: auto;
     }
-    #copyBtn:hover {
+
+    button:hover {
       background-color: #0056b3;
+    }
+
+    .small-btn {
+      padding: 6px 12px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -67,7 +107,26 @@
   <label>Subjek Utama</label>
   <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
 
-  <!-- Gaya Berdasarkan Negara -->
+  <!-- Genre -->
+  <label>Genre</label>
+  <select id="genreSelect" onchange="handleSelectChange('genre')">
+    <option value="">Tulis Manual</option>
+    <option value="fantasy">Fantasi</option>
+    <option value="sci-fi">Sains Fiksi</option>
+    <option value="horror">Horor</option>
+    <option value="romance">Romantis</option>
+    <option value="cyberpunk">Cyberpunk</option>
+    <option value="historical">Historis</option>
+    <option value="adventure">Petualangan</option>
+    <option value="mystery">Misteri</option>
+    <option value="drama">Drama</option>
+    <option value="comedy">Komedi</option>
+    <option value="post-apocalyptic">Post-Apocalyptic</option>
+    <option value="magical girl">Magical Girl</option>
+  </select>
+  <input type="text" id="genre" oninput="generatePrompt()" placeholder="Contoh: fantasy" />
+
+  <!-- Gaya Visual Berdasarkan Negara -->
   <label>Gaya Visual Berdasarkan Negara</label>
   <select id="negaraSelect" onchange="handleSelectChange('negara')">
     <option value="">Tulis Manual</option>
@@ -141,6 +200,22 @@
   </select>
   <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
 
+  <!-- Sudut Pandang Kamera -->
+  <label>Sudut Pandang Kamera</label>
+  <select id="kameraSelect" onchange="handleSelectChange('kamera')">
+    <option value="">Tulis Manual</option>
+    <option value="close-up shot">Close-up Shot</option>
+    <option value="medium shot">Medium Shot</option>
+    <option value="wide shot">Wide Shot</option>
+    <option value="low angle shot">Low Angle Shot</option>
+    <option value="high angle shot">High Angle Shot</option>
+    <option value="overhead shot">Overhead Shot</option>
+    <option value="bird's eye view">Bird’s Eye View</option>
+    <option value="dutch angle tilt">Dutch Angle</option>
+    <option value="point of view (POV)">Point of View</option>
+  </select>
+  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up shot" />
+
   <!-- Gaya Seni -->
   <label>Gaya Seni</label>
   <select id="gayaSelect" onchange="handleSelectChange('gaya')">
@@ -193,21 +268,30 @@
     <option value="4:3">4:3</option>
   </select>
 
+  <div class="buttons">
+    <button onclick="resetForm()">🔄 Reset Form</button>
+    <button onclick="saveToFavorites()">⭐ Simpan sebagai Favorit</button>
+    <button onclick="exportToTxt()">📄 Ekspor sebagai .txt</button>
+    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </div>
+
 </form>
 
 <div id="output"><em>Prompt akan muncul di sini secara otomatis...</em></div>
-<button id="copyBtn" onclick="copyPrompt()">📋 Salin Prompt</button>
+<button id="copyBtn" onclick="copyPrompt()" class="small-btn">📋 Salin Prompt</button>
 
 <script>
   function generatePrompt() {
     const s = id => document.getElementById(id).value;
     let prompt = s('subjek');
+    if (s('genre')) prompt += `, ${s('genre')} theme`;
     if (s('negara')) prompt += `, ${s('negara')}`;
     if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
     if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
     if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
     if (s('pose')) prompt += `, ${s('pose')}`;
     if (s('pakaian')) prompt += `, ${s('pakaian')}`;
+    if (s('kamera')) prompt += `, ${s('kamera')} camera`;
     if (s('latar')) prompt += `, background: ${s('latar')}`;
     if (s('detail')) prompt += `, ${s('detail')}`;
     if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
@@ -231,14 +315,54 @@
     input.value = select.value;
     generatePrompt();
   }
+
+  function resetForm() {
+    document.querySelectorAll("input[type='text'], textarea").forEach(el => el.value = '');
+    generatePrompt();
+  }
+
+  function saveToFavorites() {
+    const prompt = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
+    let favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+    if (!favorites.includes(prompt)) {
+      favorites.push(prompt);
+      localStorage.setItem("aiPrompts", JSON.stringify(favorites));
+      alert("Prompt berhasil disimpan sebagai favorit!");
+    } else {
+      alert("Prompt sudah tersimpan sebelumnya.");
+    }
+  }
+
+  function exportToTxt() {
+    const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
+    const blob = new Blob([text], {type: 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'prompt_ai.txt';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+  }
+
+  // Load dark mode from localStorage
+  window.onload = () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+  };
 </script>
-<div>
+<div style="text-align:center">
   <h3>Contact Person</h3>
-  <p>
-    🌐 Misskey: 
-    <a href="https://misskey.id/@awvr" target="_blank">@awvr@misskey.id</a>
-  </p>
-</div> 
+  <p>⭕ fediverse <a href="https://misskey.id/@awvr" target="_blank"
+  style="color: #cc3399; text-decoration: none;">@awvr@misskey.id</a></p>
+</div>
 <footer style="text-align: center; margin-top: 40px; font-size: 14px; color: #777;">
   Dibuat dengan ❤️ oleh 
   <a href="https://linktr.ee/ahladigital"  target="_blank" style="color: #cc3399; text-decoration: none;">
