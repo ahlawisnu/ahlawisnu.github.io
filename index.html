@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
+  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prompt Generator AI</title>
+  
+  <title>Prompt Generator AI - Buat Prompt Gambar AI Secara Cepat</title>
+  
+  <meta name="description" content="Prompt Generator AI adalah alat gratis untuk membuat prompt gambar berbasis AI secara otomatis. Cocok untuk Midjourney, DALL·E, Stable Diffusion, Leonardo.Ai, dan lainnya.">
+  
+  <meta name="keywords" content="Prompt Builder, prompt generator AI, pembuat prompt gambar, prompt art generator, midjourney prompt, stable diffusion prompt, ai image prompt builder, buat prompt online">
+  
+  <meta name="author" content="@AWVR@Misskey.ID">
+  
+  <meta name="robots" content="index, follow">
+    /* Sisanya tetap seperti sebelumnya */
   <style>
     body {
       font-family: sans-serif;
@@ -53,19 +63,25 @@
 <h1>Pembuat Prompt Gambar AI</h1>
 
 <form id="promptForm">
+
   <label>Subjek Utama</label>
   <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
 
-  <label>Pakaian</label>
-  <select id="pakaianSelect" onchange="handleSelectChange('pakaian')">
+  <!-- Gaya Berdasarkan Negara -->
+  <label>Gaya Visual Berdasarkan Negara</label>
+  <select id="negaraSelect" onchange="handleSelectChange('negara')">
     <option value="">Tulis Manual</option>
-    <option value="wearing school uniform">wearing school uniform</option>
-    <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
-    <option value="summer dress with hat">summer dress with hat</option>
-    <option value="casual hoodie and jeans">casual hoodie and jeans</option>
+    <option value="Japanese anime style character">Jepang (gaya karakter anime)</option>
+    <option value="South Korean realistic beauty standard">Korea Selatan (realistis kecantikan)</option>
+    <option value="American photorealistic portrait">Amerika Serikat (fotorealistis potret)</option>
+    <option value="Middle Eastern traditional attire and architecture">Timur Tengah (pakaian dan arsitektur tradisional)</option>
+    <option value="Scandinavian minimalism with cold tones">Skandinavia (minimalis dengan warna dingin)</option>
+    <option value="Indian classical art with vibrant colors">India (seni klasik dengan warna cerah)</option>
+    <option value="Chinese ink painting aesthetic">Tiongkok (estetika lukisan tinta)</option>
   </select>
-  <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
+  <input type="text" id="negara" oninput="generatePrompt()" placeholder="Contoh: Japanese anime style character" />
 
+  <!-- Gaya Rambut -->
   <label>Gaya Rambut</label>
   <select id="gayaRambutSelect" onchange="handleSelectChange('gayaRambut')">
     <option value="">Tulis Manual</option>
@@ -73,12 +89,17 @@
     <option value="short bob cut">short bob cut</option>
     <option value="messy bun">messy bun</option>
     <option value="side ponytail">side ponytail</option>
+    <option value="curly afro">curly afro</option>
+    <option value="slicked-back hair">slicked-back hair</option>
+    <option value="braided crown style">braided crown style</option>
   </select>
   <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
 
+  <!-- Warna Rambut -->
   <label>Warna Rambut</label>
   <input type="text" id="warnaRambut" oninput="generatePrompt()" placeholder="Contoh: sakura pink" />
 
+  <!-- Ekspresi -->
   <label>Ekspresi / Suasana</label>
   <select id="ekspresiSelect" onchange="handleSelectChange('ekspresi')">
     <option value="">Tulis Manual</option>
@@ -86,9 +107,13 @@
     <option value="teary-eyed">teary-eyed</option>
     <option value="cheerful laugh">cheerful laugh</option>
     <option value="melancholic gaze">melancholic gaze</option>
+    <option value="determined look">determined look</option>
+    <option value="surprised expression">surprised expression</option>
+    <option value="mysterious smirk">mysterious smirk</option>
   </select>
   <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
 
+  <!-- Pose -->
   <label>Pose / Aksi</label>
   <select id="poseSelect" onchange="handleSelectChange('pose')">
     <option value="">Tulis Manual</option>
@@ -96,39 +121,27 @@
     <option value="sitting in a meadow">sitting in a meadow</option>
     <option value="walking in the rain">walking in the rain</option>
     <option value="reading by the window">reading by the window</option>
+    <option value="holding a lantern at night">holding a lantern at night</option>
+    <option value="kneeling in prayer">kneeling in prayer</option>
+    <option value="jumping with joy">jumping with joy</option>
   </select>
   <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
 
-  <label>Komposisi Kamera</label>
-  <select id="kameraSelect" onchange="handleSelectChange('kamera')">
+  <!-- Pakaian -->
+  <label>Pakaian</label>
+  <select id="pakaianSelect" onchange="handleSelectChange('pakaian')">
     <option value="">Tulis Manual</option>
-    <option value="close-up">close-up</option>
-    <option value="medium shot">medium shot</option>
-    <option value="wide shot">wide shot</option>
-    <option value="over-the-shoulder">over-the-shoulder</option>
+    <option value="wearing school uniform">wearing school uniform</option>
+    <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
+    <option value="summer dress with hat">summer dress with hat</option>
+    <option value="casual hoodie and jeans">casual hoodie and jeans</option>
+    <option value="elegant evening gown">elegant evening gown</option>
+    <option value="battle armor with sword">battle armor with sword</option>
+    <option value="space suit with helmet">space suit with helmet</option>
   </select>
-  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up" />
+  <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
 
-  <label>Latar Belakang</label>
-  <select id="latarSelect" onchange="handleSelectChange('latar')">
-    <option value="">Tulis Manual</option>
-    <option value="cherry blossom forest">cherry blossom forest</option>
-    <option value="Indonesian school courtyard">Indonesian school courtyard</option>
-    <option value="sunset rice field">sunset rice field</option>
-    <option value="rainy street at night">rainy street at night</option>
-  </select>
-  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
-
-  <label>Detail Estetis</label>
-  <select id="detailSelect" onchange="handleSelectChange('detail')">
-    <option value="">Tulis Manual</option>
-    <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
-    <option value="rim lighting, ambient glow">rim lighting, ambient glow</option>
-    <option value="volumetric fog, warm tone">volumetric fog, warm tone</option>
-    <option value="silky texture, soft shadows">silky texture, soft shadows</option>
-  </select>
-  <textarea id="detail" rows="2" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting"></textarea>
-
+  <!-- Gaya Seni -->
   <label>Gaya Seni</label>
   <select id="gayaSelect" onchange="handleSelectChange('gaya')">
     <option value="">Tulis Manual</option>
@@ -136,9 +149,41 @@
     <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
     <option value="realistic digital painting">realistic digital painting</option>
     <option value="chibi art">chibi art</option>
+    <option value="cyberpunk concept art">cyberpunk concept art</option>
+    <option value="watercolor illustration">watercolor illustration</option>
+    <option value="pixel art style">pixel art style</option>
   </select>
   <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style" />
 
+  <!-- Detail Estetis -->
+  <label>Detail Estetis</label>
+  <select id="detailSelect" onchange="handleSelectChange('detail')">
+    <option value="">Tulis Manual</option>
+    <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
+    <option value="rim lighting, ambient glow">rim lighting, ambient glow</option>
+    <option value="volumetric fog, warm tone">volumetric fog, warm tone</option>
+    <option value="silky texture, soft shadows">silky texture, soft shadows</option>
+    <option value="sparkling particles, cinematic blur">sparkling particles, cinematic blur</option>
+    <option value="glowing neon signs, rainy reflection">glowing neon signs, rainy reflection</option>
+    <option value="soft bokeh, golden hour lighting">soft bokeh, golden hour lighting</option>
+  </select>
+  <textarea id="detail" rows="2" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting"></textarea>
+
+  <!-- Latar Belakang -->
+  <label>Latar Belakang</label>
+  <select id="latarSelect" onchange="handleSelectChange('latar')">
+    <option value="">Tulis Manual</option>
+    <option value="cherry blossom forest">cherry blossom forest</option>
+    <option value="Indonesian school courtyard">Indonesian school courtyard</option>
+    <option value="sunset rice field">sunset rice field</option>
+    <option value="rainy street at night">rainy street at night</option>
+    <option value="cyberpunk cityscape">cyberpunk cityscape</option>
+    <option value="ancient Japanese temple">ancient Japanese temple</option>
+    <option value="floating islands above clouds">floating islands above clouds</option>
+  </select>
+  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
+
+  <!-- Aspect Ratio -->
   <label>Aspect Ratio</label>
   <select id="rasio" onchange="generatePrompt()">
     <option value="">-- Pilih --</option>
@@ -147,6 +192,7 @@
     <option value="9:16">9:16 (Portrait)</option>
     <option value="4:3">4:3</option>
   </select>
+
 </form>
 
 <div id="output"><em>Prompt akan muncul di sini secara otomatis...</em></div>
@@ -156,12 +202,12 @@
   function generatePrompt() {
     const s = id => document.getElementById(id).value;
     let prompt = s('subjek');
-    if (s('pakaian')) prompt += `, ${s('pakaian')}`;
+    if (s('negara')) prompt += `, ${s('negara')}`;
     if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
     if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
     if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
     if (s('pose')) prompt += `, ${s('pose')}`;
-    if (s('kamera')) prompt += `, ${s('kamera')} camera`;
+    if (s('pakaian')) prompt += `, ${s('pakaian')}`;
     if (s('latar')) prompt += `, background: ${s('latar')}`;
     if (s('detail')) prompt += `, ${s('detail')}`;
     if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
@@ -186,15 +232,16 @@
     generatePrompt();
   }
 </script>
-
 <div>
   <h3>Contact Person</h3>
-  <p>🌐 Misskey: <a href="https://misskey.id/@awvr" target="_blank">@awvr@misskey.id</a></p>
-</div>
-
+  <p>
+    🌐 Misskey: 
+    <a href="https://misskey.id/@awvr" target="_blank">@awvr@misskey.id</a>
+  </p>
+</div> 
 <footer style="text-align: center; margin-top: 40px; font-size: 14px; color: #777;">
   Dibuat dengan ❤️ oleh 
-  <a href="https://linktr.ee/ahladigital" target="_blank" style="color: #cc3399; text-decoration: none;">
+  <a href="https://linktr.ee/ahladigital"  target="_blank" style="color: #cc3399; text-decoration: none;">
     @AWVR@MISSKEY.ID
   </a>
 </footer>
