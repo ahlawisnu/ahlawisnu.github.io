@@ -1,241 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prompt Generator Fleksibel</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f4f4fa;
-      padding: 30px;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      font-weight: bold;
-    }
-    select, input, textarea, button {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-    #output {
-      background: #fff;
-      padding: 15px;
-      border-left: 4px solid #007bff;
-      white-space: pre-wrap;
-      margin-bottom: 10px;
-    }
-    #copyBtn {
-      background-color: #007bff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      width: auto;
-    }
-    #copyBtn:hover {
-      background-color: #0056b3;
-    }
-  </style>
-</head>
-<body>
-
-<h1>Pembuat Prompt Gambar AI</h1>
-
-<form id="promptForm">
-  <label>Subjek Utama</label>
-  <select id="subjek" onchange="generatePrompt()">
-    <option value="">-- Pilih Subjek --</option>
-    <option value="a young woman">a young woman</option>
-    <option value="a futuristic samurai">a futuristic samurai</option>
-    <option value="a nostalgic schoolboy">a nostalgic schoolboy</option>
-    <option value="a girl sitting under a sakura tree">a girl sitting under a sakura tree</option>
-<option value="a traveler walking in the desert">a traveler walking in the desert</option>
-<option value="a futuristic cyborg in neon city">a futuristic cyborg in neon city</option>
-<option value="a cat on a floating island">a cat on a floating island</option>
-
-  </select>
-  <input type="text" id="subjekManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-<label>Gaya Rambut</label>
-<select id="gayaRambut" onchange="generatePrompt()">
-  <option value="">-- Pilih Gaya Rambut --</option>
-  <option value="long straight hair">long straight hair</option>
-  <option value="twin tails">twin tails</option>
-  <option value="short bob cut">short bob cut</option>
-  <option value="braided with ribbon">braided with ribbon</option>
-  <option value="messy wind-blown hair">messy wind-blown hair</option>
-</select>
-<input type="text" id="gayaRambutManual" placeholder="Tulis gaya rambut..." oninput="generatePrompt()" />
-
-<label>Warna Rambut</label>
-<select id="warnaRambut" onchange="generatePrompt()">
-  <option value="">-- Pilih Warna Rambut --</option>
-  <option value="sakura pink">sakura pink</option>
-  <option value="silver gray">silver gray</option>
-  <option value="light teal">light teal</option>
-  <option value="peach blonde">peach blonde</option>
-  <option value="deep violet">deep violet</option>
-</select>
-<input type="text" id="warnaRambutManual" placeholder="Tulis warna rambut..." oninput="generatePrompt()" />
-
-  
-  <label>Pakaian</label>
-  <select id="pakaian" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="in a school uniform">in a school uniform</option>
-    <option value="wearing kimono">wearing kimono</option>
-    <option value="in traditional Balinese attire">in traditional Balinese attire</option>
-<option value="wearing futuristic armor suit">wearing futuristic armor suit</option>
-<option value="in a dreamy gothic lolita dress">in a dreamy gothic lolita dress</option>
-<option value="wearing a warm autumn coat and scarf">wearing a warm autumn coat and scarf</option>
-<option value="in a magical girl costume">in a magical girl costume</option>
-<option value="wearing a vintage 80s school uniform">wearing a vintage 80s school uniform</option>
-<option value="in a pastel fairy-core outfit">in a pastel fairy-core outfit</option>
-<option value="wearing a sukajan bomber jacket and jeans">wearing a sukajan bomber jacket and jeans</option>
-<option value="in traditional Indonesian batik dress">in traditional Indonesian batik dress</option>
-<option value="wearing sporty tracksuit and sneakers">wearing sporty tracksuit and sneakers</option>
-<option value="in a sailor-style idol costume">in a sailor-style idol costume</option>
-<option value="wearing a casual summer outfit with sunhat">wearing a casual summer outfit with sunhat</option>
-<option value="in an elegant hanfu with floral embroidery">in an elegant hanfu with floral embroidery</option>
-<option value="wearing festival yukata with obi ribbon">wearing festival yukata with obi ribbon</option>
-<option value="in an explorer outfit with utility belt">in an explorer outfit with utility belt</option>
-
-  </select>
-  <input type="text" id="pakaianManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-  <label>Pose</label>
-  <select id="pose" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="standing under cherry tree">standing under cherry tree</option>
-    <option value="walking in the rain">walking in the rain</option>
-    <option value="reaching out toward the sky">reaching out toward the sky</option>
-<option value="floating among stars">floating among stars</option>
-<option value="sitting alone in a field of flowers">sitting alone in a field of flowers</option>
-<option value="jumping mid-air during sunset">jumping mid-air during sunset</option>
-<option value="sitting under a starry night sky">sitting under a starry night sky</option>
-<option value="reaching out with one hand toward the light">reaching out with one hand toward the light</option>
-<option value="dancing in the rain with closed eyes">dancing in the rain with closed eyes</option>
-<option value="looking back while walking away slowly">looking back while walking away slowly</option>
-<option value="lying on a grassy hill watching clouds">lying on a grassy hill watching clouds</option>
-<option value="floating gently above water surface">floating gently above water surface</option>
-  </select>
-  <input type="text" id="poseManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-  <label>Komposisi Kamera</label>
-  <select id="kamera" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="close-up">close-up</option>
-    <option value="wide shot">wide shot</option>
-    <option value="low angle">low angle</option>
-<option value="over-the-shoulder view">over-the-shoulder view</option>
-<option value="top-down view">top-down view</option>
-<option value="depth of field focus">depth of field focus</option>
-
-  </select>
-  <input type="text" id="kameraManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-  <label>Latar Belakang</label>
-  <select id="latar" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="background: cherry blossom forest">background: cherry blossom forest</option>
-    <option value="background: rainy alley">background: rainy alley</option>
-    <option value="background: Tokyo alley at night">background: Tokyo alley at night</option>
-<option value="background: peaceful riverside">background: peaceful riverside</option>
-<option value="background: village market during morning">background: village market during morning</option>
-<option value="background: starry sky with falling meteors">background: starry sky with falling meteors</option>
-<option value="background: traditional Japanese street during evening">background: traditional Japanese street during evening</option>
-<option value="background: futuristic skyline with flying vehicles">background: futuristic skyline with flying vehicles</option>
-<option value="background: countryside field glowing with fireflies">background: countryside field glowing with fireflies</option>
-<option value="background: misty forest with ancient ruins">background: misty forest with ancient ruins</option>
-<option value="background: coastal cliff at sunrise">background: coastal cliff at sunrise</option>
-<option value="background: rainy neon-lit alley">background: rainy neon-lit alley</option>
-  </select>
-  <input type="text" id="latarManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-  <label>Detail Artistik</label>
-  <select id="detail" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
-    <option value="cinematic shadows, ambient light">cinematic shadows, ambient light</option>
-    <option value="sharp focus, volumetric lighting, 8k render">sharp focus, volumetric lighting, 8k render</option>
-<option value="dreamlike haze, lens flare, cinematic blur">dreamlike haze, lens flare, cinematic blur</option>
-<option value="illustrative texture, watercolor style">illustrative texture, watercolor style</option>
-<option value="backlight glow, rain reflections, moody tones">backlight glow, rain reflections, moody tones</option>
-<option value="high contrast lighting, cinematic glow, depth of field">high contrast lighting, cinematic glow, depth of field</option>
-<option value="soft pastel tones, dreamy blur, watercolor texture">soft pastel tones, dreamy blur, watercolor texture</option>
-<option value="realistic shadowing, reflective surfaces, detailed texture">realistic shadowing, reflective surfaces, detailed texture</option>
-<option value="pixel-art style dithering, clean outlines, vibrant color palette">pixel-art style dithering, clean outlines, vibrant color palette</option>
-<option value="bokeh effect, backlight rim, HDR rendering">bokeh effect, backlight rim, HDR rendering</option>
-<option value="dramatic fog, glowing particles, atmospheric lens flare">dramatic fog, glowing particles, atmospheric lens flare</option>
-  </select>
-  <textarea id="detailManual" rows="2" placeholder="Tulis detail tambahan..." oninput="generatePrompt()"></textarea>
-
-  <label>Gaya Seni</label>
-  <select id="gaya" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="anime-style">anime-style</option>
-    <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
-    <option value="pixel art style">pixel art style</option>
-<option value="colored pencil sketch">colored pencil sketch</option>
-<option value="vaporwave aesthetic">vaporwave aesthetic</option>
-<option value="lo-fi anime illustration">lo-fi anime illustration</option>
-
-  </select>
-  <input type="text" id="gayaManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-  <label>Aspect Ratio</label>
-  <select id="rasio" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="16:9">16:9</option>
-    <option value="4:3">4:3</option>
-    <option value="1:1">1:1</option>
-    <option value="9:16">9:16</option>
-  </select>
-</form>
-
-<div id="output"><em>Prompt akan muncul di sini secara otomatis...</em></div>
-<button id="copyBtn" onclick="copyPrompt()">📋 Salin Prompt</button>
-
-<script>
-  function val(id) {
-    const v1 = document.getElementById(id).value;
-    const v2 = document.getElementById(id + 'Manual');
-    return v2 && v2.value.trim() !== "" ? v2.value : v1;
-  }
-
-  function generatePrompt() {
-    let prompt = val('subjek');
-    const rambut = val('gayaRambut');
-if (rambut) prompt += `, hairstyle: ${rambut}`;
-const warna = val('warnaRambut');
-if (warna) prompt += `, hair color: ${warna}`;
-    if (val('pakaian')) prompt += `, ${val('pakaian')}`;
-    if (val('pose')) prompt += `, ${val('pose')}`;
-    if (val('kamera')) prompt += `, ${val('kamera')} camera`;
-    if (val('latar')) prompt += `, ${val('latar')}`;
-    if (val('detail') || document.getElementById('detailManual').value.trim())
-      prompt += `, ${val('detail')}, ${document.getElementById('detailManual').value.trim()}`;
-    if (val('gaya')) prompt += `, art style: ${val('gaya')}`;
-    if (document.getElementById('rasio').value) 
-      prompt += `, aspect ratio: ${document.getElementById('rasio').value}`;
-    
-    document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt.trim();
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prompt Generator AI</title>
   <style>
     body {
@@ -254,7 +21,7 @@ if (warna) prompt += `, hair color: ${warna}`;
       margin: 15px 0 5px;
       font-weight: bold;
     }
-    select, input, textarea, button {
+    input, textarea, select, button {
       width: 100%;
       padding: 8px;
       margin-bottom: 12px;
@@ -275,7 +42,6 @@ if (warna) prompt += `, hair color: ${warna}`;
       font-weight: bold;
       cursor: pointer;
       width: auto;
-      padding: 10px 16px;
     }
     #copyBtn:hover {
       background-color: #0056b3;
@@ -288,90 +54,42 @@ if (warna) prompt += `, hair color: ${warna}`;
 
 <form id="promptForm">
   <label>Subjek Utama</label>
-  <select id="subjek" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="a girl sitting under a sakura tree">a girl sitting under a sakura tree</option>
-    <option value="a mystical forest spirit">a mystical forest spirit</option>
-    <option value="a futuristic cyborg in neon city">a futuristic cyborg in neon city</option>
-  </select>
-  <input type="text" id="subjekManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
-
-  <label>Gaya Rambut</label>
-  <select id="gayaRambut" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="long straight hair">long straight hair</option>
-    <option value="twin tails">twin tails</option>
-    <option value="short bob cut">short bob cut</option>
-    <option value="braided with ribbon">braided with ribbon</option>
-  </select>
-  <input type="text" id="gayaRambutManual" placeholder="Tulis gaya rambut..." oninput="generatePrompt()" />
-
-  <label>Warna Rambut</label>
-  <select id="warnaRambut" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="sakura pink">sakura pink</option>
-    <option value="silver gray">silver gray</option>
-    <option value="light teal">light teal</option>
-  </select>
-  <input type="text" id="warnaRambutManual" placeholder="Tulis warna rambut..." oninput="generatePrompt()" />
+  <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
 
   <label>Pakaian</label>
-  <select id="pakaian" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="in traditional Balinese attire">in traditional Balinese attire</option>
-    <option value="wearing futuristic armor suit">wearing futuristic armor suit</option>
-    <option value="in a dreamy gothic lolita dress">in a dreamy gothic lolita dress</option>
-  </select>
-  <input type="text" id="pakaianManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+  <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
+
+  <label>Gaya Rambut</label>
+  <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
+
+  <label>Warna Rambut</label>
+  <input type="text" id="warnaRambut" oninput="generatePrompt()" placeholder="Contoh: sakura pink" />
+
+  <label>Ekspresi / Suasana</label>
+  <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
 
   <label>Pose / Aksi</label>
-  <select id="pose" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="sitting under a starry night sky">sitting under a starry night sky</option>
-    <option value="dancing in the rain with closed eyes">dancing in the rain with closed eyes</option>
-  </select>
-  <input type="text" id="poseManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+  <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
 
   <label>Komposisi Kamera</label>
-  <select id="kamera" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="close-up">close-up</option>
-    <option value="aerial view">aerial view</option>
-    <option value="depth of field focus">depth of field focus</option>
-  </select>
-  <input type="text" id="kameraManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up, medium shot" />
 
   <label>Latar Belakang</label>
-  <select id="latar" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="background: misty forest with ancient ruins">background: misty forest with ancient ruins</option>
-    <option value="background: Tokyo alley at night">background: Tokyo alley at night</option>
-  </select>
-  <input type="text" id="latarManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: background: cherry blossom forest" />
 
   <label>Detail Estetis</label>
-  <select id="detail" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="high contrast lighting, cinematic glow, depth of field">high contrast lighting, cinematic glow, depth of field</option>
-    <option value="soft pastel tones, dreamy blur, watercolor texture">soft pastel tones, dreamy blur, watercolor texture</option>
-  </select>
-  <textarea id="detailManual" rows="2" placeholder="Tulis detail tambahan..." oninput="generatePrompt()"></textarea>
+  <textarea id="detail" rows="2" oninput="generatePrompt()" placeholder="Contoh: ultra-detailed, glowing light, 4k, soft shadows"></textarea>
 
   <label>Gaya Seni</label>
-  <select id="gaya" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="anime-style">anime-style</option>
-    <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
-  </select>
-  <input type="text" id="gayaManual" placeholder="Tulis manual..." oninput="generatePrompt()" />
+  <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style, Studio Ghibli inspired" />
 
   <label>Aspect Ratio</label>
   <select id="rasio" onchange="generatePrompt()">
     <option value="">-- Pilih --</option>
-    <option value="16:9">16:9</option>
+    <option value="1:1">1:1 (Square)</option>
+    <option value="16:9">16:9 (Landscape)</option>
+    <option value="9:16">9:16 (Portrait)</option>
     <option value="4:3">4:3</option>
-    <option value="1:1">1:1</option>
-    <option value="9:16">9:16</option>
   </select>
 </form>
 
@@ -379,36 +97,32 @@ if (warna) prompt += `, hair color: ${warna}`;
 <button id="copyBtn" onclick="copyPrompt()">📋 Salin Prompt</button>
 
 <script>
-  function val(id) {
-    const preset = document.getElementById(id).value;
-    const manual = document.getElementById(id + 'Manual');
-    return manual && manual.value.trim() !== "" ? manual.value.trim() : preset;
-  }
-
   function generatePrompt() {
-    let prompt = val('subjek');
-    if (val('gayaRambut')) prompt += `, hairstyle: ${val('gayaRambut')}`;
-    if (val('warnaRambut')) prompt += `, hair color: ${val('warnaRambut')}`;
-    if (val('pakaian')) prompt += `, ${val('pakaian')}`;
-    if (val('pose')) prompt += `, ${val('pose')}`;
-    if (val('kamera')) prompt += `, ${val('kamera')} camera`;
-    if (val('latar')) prompt += `, ${val('latar')}`;
-    if (val('detail') || document.getElementById('detailManual').value.trim())
-      prompt += `, ${val('detail')}, ${document.getElementById('detailManual').value.trim()}`;
-    if (val('gaya')) prompt += `, art style: ${val('gaya')}`;
-    if (document.getElementById('rasio').value) 
-      prompt += `, aspect ratio: ${document.getElementById('rasio').value}`;
+    const s = id => document.getElementById(id).value;
+    let prompt = s('subjek');
+    if (s('pakaian')) prompt += `, ${s('pakaian')}`;
+    if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
+    if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
+    if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
+    if (s('pose')) prompt += `, ${s('pose')}`;
+    if (s('kamera')) prompt += `, ${s('kamera')} camera`;
+    if (s('latar')) prompt += `, ${s('latar')}`;
+    if (s('detail')) prompt += `, ${s('detail')}`;
+    if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
+    if (s('rasio')) prompt += `, aspect ratio: ${s('rasio')}`;
 
-    document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt.trim();
+    document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt;
   }
 
   function copyPrompt() {
     const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
     navigator.clipboard.writeText(text).then(() => {
-      const btn = document.getElementById('copyBtn');
-      btn.textContent = "✅ Prompt Disalin!";
-      setTimeout(() => btn.textContent = "📋 Salin Prompt", 2000);
+      document.getElementById('copyBtn').textContent = "✅ Prompt Disalin!";
+      setTimeout(() => {
+        document.getElementById('copyBtn').textContent = "📋 Salin Prompt";
+      }, 2000);
     });
+  }
 </script>
 <div>
   <h3>Contact Person</h3>
