@@ -1,0 +1,54 @@
+/* style.css */
+
+/* Reset dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Judul utama */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+/* Paragraf */
+p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+/* Tombol install (jika ada) */
+#installBtn {
+  display: none; /* Default disembunyikan */
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#installBtn:hover {
+  background-color: #303f9f;
+}
