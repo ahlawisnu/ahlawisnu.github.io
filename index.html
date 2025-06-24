@@ -497,8 +497,6 @@ select[multiple] {
 
   <div class="buttons">
     <button onclick="resetForm()">🔄 Reset Form</button>
-    <button onclick="saveToFavorites()">⭐ Simpan sebagai Favorit</button>
-    <button onclick="clearFavorites()">❌ Hapus Semua Favorit</button> 
     <button onclick="exportToTxt()">📄 Ekspor sebagai .txt</button>
     <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
   </div>
@@ -548,24 +546,6 @@ select[multiple] {
     document.querySelectorAll("input[type='text'], textarea").forEach(el => el.value = '');
     generatePrompt();
   }
-// favorite 
-  function saveToFavorites() {
-    const prompt = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
-    let favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
-    if (!favorites.includes(prompt)) {
-      favorites.push(prompt);
-      localStorage.setItem("aiPrompts", JSON.stringify(favorites));
-      alert("Prompt berhasil disimpan sebagai favorit!");
-    } else {
-      alert("Prompt sudah tersimpan sebelumnya.");
-    }
-  }
- // hapus fav
-function clearFavorites() {
-  localStorage.removeItem("aiPrompts");
-  showFavorites();
-  alert("Semua favorit telah dihapus.");
-}
 
   function exportToTxt() {
     const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
@@ -636,8 +616,6 @@ function updateDetail() {
   
 </script>
 <div style="text-align:center">
- <h3>Favorit</h3>
-<ul id="favoritesList"></ul>
   <h3>Contact Person</h3>
   <p>⭕ fediverse <a href="https://misskey.id/@awvr" target="_blank"
   style="color: #cc3399; text-decoration: none;">@awvr@misskey.id</a></p>
