@@ -348,6 +348,10 @@ select[multiple] {
     <option value="space suit with helmet">space suit with helmet</option>
       <!-- TOPS -->
   <optgroup label="Tops">
+    <option value="strapless">Strapless</option>
+<option value="spaghetti strap">spaghetti strap</option>
+<option value="off shoulder">off shoulder</option>
+<option value="bandeau">Bandeau</option>
     <option value="tshirt">T-Shirt</option>
     <option value="shirt">Shirt</option>
     <option value="poloshirt">Polo Shirt</option>
@@ -368,6 +372,7 @@ select[multiple] {
 
   <!-- BOTTOMS -->
   <optgroup label="Bottoms">
+    <option value="denim">denim</option>
     <option value="pants">Pants</option>
     <option value="jeans">Jeans</option>
     <option value="shorts">Shorts</option>
@@ -754,34 +759,7 @@ select[multiple] {
     link.click();
     URL.revokeObjectURL(url);
   }
- // list fav
-function showFavorites() {
-  const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
-  const list = document.getElementById("favoritesList");
-  list.innerHTML = "";
-
-  if (favorites.length === 0) {
-    list.innerHTML = "<em>Belum ada prompt favorit.</em>";
-    return;
-  }
-
-  favorites.forEach((prompt, index) => {
-    const li = document.createElement("li");
-    li.textContent = prompt;
-
-    const btnHapus = document.createElement("button");
-    btnHapus.textContent = "🗑️";
-    btnHapus.style.marginLeft = "10px";
-    btnHapus.onclick = () => {
-      const updated = favorites.filter((_, i) => i !== index);
-      localStorage.setItem("aiPrompts", JSON.stringify(updated));
-      showFavorites();
-    };
-
-    li.appendChild(btnHapus);
-    list.appendChild(li);
-  });
-}
+  
  // hair style 
  function updateHair() {
     const select = document.getElementById("hairSelect");
