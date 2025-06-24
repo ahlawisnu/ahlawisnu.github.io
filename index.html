@@ -615,6 +615,40 @@ function updateDetail() {
       document.body.classList.add('dark-mode');
     }
   };
+  // APPS
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration => {
+      console.log('Service Worker terdaftar:', registration);
+    })
+    .catch(error => {
+      console.log('Gagal mendaftarkan Service Worker:', error);
+    });
+  } 
+  // if
+  let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  const btnInstall = document.getElementById('installBtn');
+  btnInstall.style.display = 'block';
+
+  btnInstall.addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+      });
+    }
+  });
+}); 
   
 </script>
 <div style="text-align:center">
