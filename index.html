@@ -146,15 +146,110 @@ select[multiple] {
 
   <!-- Gaya Rambut -->
   <label>Gaya Rambut</label>
-  <select id="gayaRambutSelect" onchange="handleSelectChange('gayaRambut')">
+<select id="hairSelect" multiple size="6" onchange="updateHair()">
     <option value="">Tulis Manual</option>
-    <option value="long twin-tails">long twin-tails</option>
-    <option value="short bob cut">short bob cut</option>
+    <option value="long hair">long hair</option>
+    <option value="medium hair">medium hair</option>
+    <option value="short hair">short hair</option>
     <option value="messy bun">messy bun</option>
-    <option value="side ponytail">side ponytail</option>
+    <optgroup label="Gaya Rambut Pendek">
+        <option value="pixie-cut">Pixie Cut</option>
+        <option value="bob">Bob</option>
+        <option value="lob">Lob (Long Bob)</option>
+        <option value="undercut">Undercut</option>
+        <option value="buzz-cut">Buzz Cut</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Sedang">
+        <option value="shag">Shag</option>
+        <option value="layered-cut">Layered Cut</option>
+        <option value="curtain-bangs">Curtain Bangs</option>
+        <option value="mid-length-waves">Mid-length with Waves</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Panjang">
+        <option value="long-layers">Long Layers</option>
+        <option value="rapunzel-cut">Rapunzel Cut</option>
+        <option value="long-with-bangs">Long with Bangs</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Bertekstur dan Keriting">
+        <option value="afro">Afro</option>
+        <option value="braids">Braids (Kepang)</option>
+        <option value="dreadlocks">Dreadlocks</option>
+        <option value="permed-hair">Permed Hair</option>
+        <option value="natural-curls">Natural Curls</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Pria">
+        <option value="fade">Fade</option>
+        <option value="quiff">Quiff</option>
+        <option value="pompadour">Pompadour</option>
+        <option value="slick-back">Slick Back</option>
+        <option value="crew-cut">Crew Cut</option>
+        <option value="man-bun">Man Bun</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Khusus / Penataan">
+        <option value="ponytail">Ponytail (Kuncir Kuda)</option>
+        <option value="bun">Bun (Sanggul)</option>
+        <option value="half-up-half-down">Half-Up, Half-Down</option>
+        <option value="faux-hawk">Faux Hawk</option>
+        <option value="wet-look">Wet Look</option>
+    </optgroup>
+ 
+
     <option value="curly afro">curly afro</option>
     <option value="slicked-back hair">slicked-back hair</option>
     <option value="braided crown style">braided crown style</option>
+    
+    <optgroup label="Gaya Rambut Pendek">
+        <option value="pixie-cut">Pixie Cut</option>
+        <option value="bob">Bob</option>
+        <option value="lob">Lob (Long Bob)</option>
+        <option value="undercut">Undercut</option>
+        <option value="buzz-cut">Buzz Cut</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Sedang">
+        <option value="shag">Shag</option>
+        <option value="layered-cut">Layered Cut</option>
+        <option value="curtain-bangs">Curtain Bangs</option>
+        <option value="mid-length-waves">Mid-length with Waves</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Panjang">
+        <option value="long-layers">Long Layers</option>
+        <option value="rapunzel-cut">Rapunzel Cut</option>
+        <option value="long-with-bangs">Long with Bangs</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Bertekstur dan Keriting">
+        <option value="afro">Afro</option>
+        <option value="braids">Braids (Kepang)</option>
+        <option value="dreadlocks">Dreadlocks</option>
+        <option value="permed-hair">Permed Hair</option>
+        <option value="natural-curls">Natural Curls</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Pria">
+        <option value="fade">Fade</option>
+        <option value="quiff">Quiff</option>
+        <option value="pompadour">Pompadour</option>
+        <option value="slick-back">Slick Back</option>
+        <option value="crew-cut">Crew Cut</option>
+        <option value="man-bun">Man Bun</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Khusus / Penataan">
+        <option value="ponytail">Ponytail (Kuncir Kuda)</option>
+        <option value="bun">Bun (Sanggul)</option>
+        <option value="half-up-half-down">Half-Up, Half-Down</option>
+        <option value="faux-hawk">Faux Hawk</option>
+        <option value="wet-look">Wet Look</option>
+    </optgroup>
+ 
+ 
   </select>
   <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
 
@@ -178,8 +273,58 @@ select[multiple] {
 
   <!-- Pose -->
   <label>Pose / Aksi</label>
-  <select id="poseSelect" onchange="handleSelectChange('pose')">
+   <select id="poseSelect" multiple size="6" onchange="updatePose()"> 
     <option value="">Tulis Manual</option>
+ <optgroup label="General Photo Styles">
+    <option value="candid">Candid</option>
+    <option value="formal">Formal</option>
+    <option value="casual">Casual / Relaxed</option>
+    <option value="glamorous">Glamorous / Elegant</option>
+    <option value="minimalist">Minimalist</option>
+    <option value="action">Action / Dynamic</option>
+    <option value="vintage">Vintage / Classic</option>
+    <option value="natural">Natural / Authentic</option>
+    <option value="portrait">Portrait (Close-up)</option>
+    <option value="full-body">Full Body</option>
+  </optgroup>
+
+  <optgroup label="Hand Poses">
+    <option value="hands-in-pockets">Hands in Pockets</option>
+    <option value="crossed-arms">Crossed Arms</option>
+    <option value="one-hand-on-hip">One Hand on Hip</option>
+    <option value="hands-clasped">Hands Clasped (Front/Back)</option>
+    <option value="touching-face">Touching Face / Chin</option>
+    <option value="holding-prop">Holding a Prop</option>
+    <option value="waving">Waving</option>
+    <option value="pointing">Pointing</option>
+    <option value="hands-on-shoulders">Hands on Shoulders (Self/Other)</option>
+    <option value="reaching-out">Reaching Out</option>
+  </optgroup>
+
+  <optgroup label="Sitting Poses">
+    <option value="sitting-cross-legged">Cross-Legged</option>
+    <option value="sitting-on-steps">On Steps</option>
+    <option value="sitting-on-chair-straight">On Chair (Straight)</option>
+    <option value="sitting-on-chair-relaxed">On Chair (Relaxed)</option>
+    <option value="sitting-on-floor-knees-up">On Floor (Knees Up)</option>
+    <option value="sitting-on-ground-legs-out">On Ground (Legs Stretched Out)</option>
+    <option value="sitting-leaning-back">Leaning Back</option>
+    <option value="sitting-sideways">Sideways Sit</option>
+    <option value="sitting-on-edge">On the Edge (of something)</option>
+    <option value="sitting-with-pet">Sitting with Pet</option>
+  </optgroup>
+
+  <optgroup label="Standing Poses">
+    <option value="standing-straight">Standing Straight</option>
+    <option value="standing-one-leg-bent">One Leg Bent</option>
+    <option value="standing-leaning-against-wall">Leaning Against Wall</option>
+    <option value="standing-hands-on-hips">Hands on Hips</option>
+    <option value="standing-walking">In Motion (Walking)</option>
+    <option value="standing-back-to-camera">Back to Camera</option>
+    <option value="standing-looking-away">Looking Away</option>
+    <option value="standing-power-pose">Power Pose</option>
+    <option value="standing-arms-out">Arms Outstretched</option>
+    <option value="standing-with-object">Standing with an Object</option>
     <option value="standing under cherry tree">standing under cherry tree</option>
     <option value="sitting in a meadow">sitting in a meadow</option>
     <option value="walking in the rain">walking in the rain</option>
@@ -474,7 +619,7 @@ select[multiple] {
 
   <!-- Latar Belakang -->
   <label>Latar Belakang</label>
-  <select id="latarSelect" onchange="handleSelectChange('latar')">
+   <select id="latarSelect" multiple size="6" onchange="updateLatar()">
     <option value="">Tulis Manual</option>
     <option value="cherry blossom forest">cherry blossom forest</option>
     <option value="Indonesian school courtyard">Indonesian school courtyard</option>
@@ -483,6 +628,57 @@ select[multiple] {
     <option value="cyberpunk cityscape">cyberpunk cityscape</option>
     <option value="ancient Japanese temple">ancient Japanese temple</option>
     <option value="floating islands above clouds">floating islands above clouds</option>
+         <optgroup label="1. Background (Latar Belakang Visual Umum)">
+        <option value="polos-putih">Putih Polos</option>
+        <option value="polos-hitam">Hitam Pekat</option>
+        <option value="gradien-lembut">Gradien Warna Lembut</option>
+        <option value="bokeh-buram">Bokeh (Efek Buram)</option>
+        <option value="tekstur-beton">Tekstur Kasar (Beton/Batu Bata)</option>
+        <option value="pola-geometris">Pola Geometris Abstrak</option>
+        <option value="galaksi-buram">Galaksi/Bintang Buram</option>
+        <option value="dinding-mengelupas">Dinding dengan Cat Mengelupas</option>
+        <option value="air-beriak">Air Beriak atau Gelembung</option>
+        <option value="awan-biru">Awan Tipis di Langit Biru</option>
+    </optgroup>
+
+    <optgroup label="2. Setting/Tempat (Lingkungan Spesifik)">
+        <option value="hutan-amazon-senja">Hutan Belantara Amazon saat Senja</option>
+        <option value="jalanan-tokyo-malam">Jalanan Tokyo Ramai di Malam Hari (Neon)</option>
+        <option value="reruntuhan-kuil-bulan">Reruntuhan Kuil Kuno di Bawah Bulan Purnama</option>
+        <option value="stasiun-luar-angkasa">Stasiun Luar Angkasa Canggih Mengorbit Bumi</option>
+        <option value="desa-pegunungan-salju">Desa Pegunungan Tradisional Jepang (Salju)</option>
+        <option value="pasar-maroko">Pasar Jalanan Tradisional Maroko (Siang)</option>
+        <option value="kota-atlantis">Kota Bawah Laut Atlantis yang Megah</option>
+        <option value="medan-perang-apokaliptik">Medan Perang Pasca-Apokaliptik yang Hancur</option>
+        <option value="padang-savana-migrasi">Padang Savana Afrika saat Migrasi Satwa Liar</option>
+        <option value="istana-es-gunung">Istana Es di Puncak Gunung Beku</option>
+    </optgroup>
+
+    <optgroup label="3. Ruangan (Interior Umum)">
+        <option value="perpustakaan-tua">Perpustakaan Tua yang Megah</option>
+        <option value="laboratorium-futuristik">Laboratorium Ilmiah Futuristik</option>
+        <option value="kamar-tidur-minimalis">Kamar Tidur Bergaya Minimalis</option>
+        <option value="gudang-industri-terbengkalai">Gudang Industri Terbengkalai</option>
+        <option value="ruang-tamu-art-deco">Ruang Tamu Mewah Bergaya Art Deco</option>
+        <option value="dapur-pedesaan">Dapur Pedesaan yang Hangat</option>
+        <option value="ruang-kendali-pesawat">Ruang Kendali Pesawat Luar Angkasa</option>
+        <option value="kuil-zen-jepang">Kuil Zen Jepang</option>
+        <option value="ruang-kelas-kosong">Ruang Kelas Sekolah yang Kosong</option>
+        <option value="kamar-mandi-spa">Kamar Mandi Spa Modern</option>
+    </optgroup>
+
+    <optgroup label="4. Area Rumah (Interior Spesifik)">
+        <option value="dapur-pedesaan-rumah">Dapur Bergaya Pedesaan (Rustic)</option>
+        <option value="ruang-tamu-modern-rumah">Ruang Tamu Modern Minimalis</option>
+        <option value="kamar-tidur-utama-rumah">Kamar Tidur Utama Bernuansa Tenang</option>
+        <option value="kamar-mandi-spa-rumah">Kamar Mandi Bergaya Spa</option>
+        <option value="ruang-kerja-kreatif-rumah">Ruang Kerja/Studio Kreatif di Rumah</option>
+        <option value="sudut-baca-nyaman-rumah">Sudut Baca yang Nyaman</option>
+        <option value="ruang-bermain-anak-rumah">Ruang Bermain Anak yang Penuh Warna</option>
+        <option value="teras-balkon-rumah">Teras/Balkon dengan Pemandangan</option>
+        <option value="ruang-makan-keluarga-rumah">Ruang Makan Keluarga Tradisional</option>
+        <option value="lorong-dramatis-rumah">Lorong/Koridor dengan Pencahayaan Dramatis</option>
+    </optgroup>
   </select>
   <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
 
@@ -586,7 +782,17 @@ function showFavorites() {
     list.appendChild(li);
   });
 }
+ // hair style 
+ function updateHair() {
+    const select = document.getElementById("hairSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("gayaRambut");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
 
+ // pakaian 
 function updatePakaian() {
     const select = document.getElementById("pakaianSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
@@ -595,6 +801,17 @@ function updatePakaian() {
     input.value = selectedOptions.join(", ");
     generatePrompt();
   }
+  
+  // Update pose
+  function updatePose() {
+    const select = document.getElementById("poseSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("pose");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+  
 function updateDetail() {
     const select = document.getElementById("detailSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
@@ -606,7 +823,16 @@ function updateDetail() {
     const isDark = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
   }
-
+ // background multiple
+ 
+ function updateLatar() {
+    const select = document.getElementById("latarSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("latar");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
   // Load dark mode from localStorage
   window.onload = () => {
     const darkMode = localStorage.getItem('darkMode');
