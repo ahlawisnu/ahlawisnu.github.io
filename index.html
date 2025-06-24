@@ -65,7 +65,10 @@
       border: 1px solid #ccc;
       font-size: 14px;
     }
-
+select[multiple] {
+      height: 50px;
+      padding: 6px;
+    }
     #output {
       background: #fff;
       padding: 15px;
@@ -187,8 +190,8 @@
   <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
 
   <!-- Pakaian -->
-  <label>Pakaian</label>
-  <select id="pakaianSelect" onchange="handleSelectChange('pakaian')">
+  <label for="pakaianSelect">Gaya Pakaian: multipl</label>
+<select id="pakaianSelect" multiple size="6" onchange="updatePakaian()">
     <option value="">Tulis Manual</option>
     <option value="wearing school uniform">wearing school uniform</option>
     <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
@@ -197,6 +200,80 @@
     <option value="elegant evening gown">elegant evening gown</option>
     <option value="battle armor with sword">battle armor with sword</option>
     <option value="space suit with helmet">space suit with helmet</option>
+      <!-- TOPS -->
+  <optgroup label="Tops">
+    <option value="tshirt">T-Shirt</option>
+    <option value="shirt">Shirt</option>
+    <option value="poloshirt">Polo Shirt</option>
+    <option value="longsleeve">Long Sleeve Shirt</option>
+    <option value="sweater">Sweater</option>
+    <option value="hoodie">Hoodie</option>
+    <option value="jacket">Jacket</option>
+    <option value="blouse">Blouse</option>
+    <option value="tanktop">Tank Top</option>
+    <option value="cardigan">Cardigan</option>
+    <option value="vest">Vest / Waistcoat</option>
+    <option value="tunic">Tunic</option>
+    <option value="crop-top">Crop Top</option>
+    <option value="peplum-top">Peplum Top</option>
+    <option value="kimono-top">Kimono Top</option>
+    <option value="sleeveless-top">Sleeveless Top</option>
+  </optgroup>
+
+  <!-- BOTTOMS -->
+  <optgroup label="Bottoms">
+    <option value="pants">Pants</option>
+    <option value="jeans">Jeans</option>
+    <option value="shorts">Shorts</option>
+    <option value="skirt">Skirt</option>
+    <option value="mini-skirt">Mini Skirt</option>
+    <option value="maxi-skirt">Maxi Skirt</option>
+    <option value="pleated-skirt">Pleated Skirt</option>
+    <option value="pencil-skirt">Pencil Skirt</option>
+    <option value="leggings">Leggings</option>
+    <option value="saree">Saree</option>
+    <option value="palazzo-pants">Palazzo Pants</option>
+    <option value="chinos">Chinos</option>
+    <option value="capris">Capris / Cropped Pants</option>
+    <option value="sportspants">Sports Pants</option>
+    <option value="trousers">Trousers</option>
+    <option value="culottes">Culottes</option>
+    <option value="bloomers">Bloomers</option>
+    <option value="hot-pants">Hot Pants</option>
+    <option value="overalls">Overalls / Dungarees</option>
+  </optgroup>
+
+  <!-- FULL SETS -->
+  <optgroup label="Full Sets">
+    <option value="suit">Suit (Jacket + Pants)</option>
+    <option value="tracksuit">Tracksuit</option>
+    <option value="pajamas">Pajamas Set</option>
+    <option value="outfit">Fashion Outfit Set</option>
+    <option value="uniform">Uniform Set</option>
+    <option value="nightgown">Nightgown / Dress</option>
+    <option value="formalwear">Formal Wear Set</option>
+    <option value="casualset">Casual Wear Set</option>
+    <option value="gown">Gown</option>
+    <option value="kimono">Kimono Set</option>
+    <option value="maxi-dress">Maxi Dress</option>
+    <option value="midi-dress">Midi Dress</option>
+    <option value="mini-dress">Mini Dress</option>
+    <option value="cocktail-dress">Cocktail Dress</option>
+    <option value="prom-dress">Prom Dress</option>
+    <option value="wedding-dress">Wedding Dress</option>
+    <option value="bodycon-dress">Bodycon Dress</option>
+    <option value="shift-dress">Shift Dress</option>
+    <option value="sundress">Sundress</option>
+    <option value="two-piece-set">Two-Piece Set</option>
+    <option value="jumpsuit">Jumpsuit</option>
+    <option value="romper">Rompers / Playsuits</option>
+    <option value="kaftan">Kaftan</option>
+    <option value="abayas">Abayas</option>
+    <option value="kurta-set">Kurta & Salwar Set</option>
+    <option value="hanfu">Hanfu Set</option>
+    <option value="yukata">Yukata</option>
+    <option value="cheongsam">Cheongsam / Qipao</option>
+  </optgroup>
   </select>
   <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
 
@@ -227,12 +304,119 @@
     <option value="cyberpunk concept art">cyberpunk concept art</option>
     <option value="watercolor illustration">watercolor illustration</option>
     <option value="pixel art style">pixel art style</option>
+    <!-- new -->
+    <option value="Abstract Painting">Abstract Painting</option><option
+    value="Acrylic Painting">Acrylic Painting</option><option value="Action
+    Painting">Action Painting</option><option value="Aestheticism
+    Painting">Aestheticism Painting</option><option value="Anamorphosis
+    Painting">Anamorphosis Painting</option><option value="Art Deco
+    Painting">Art Deco Painting</option><option value="Art nouveau Painting">Art
+    nouveau Painting</option><option value="Ashcan School Painting">Ashcan
+    School Painting</option><option value="Baroque Painting">Baroque
+    Painting</option><option value="Body Painting">Body Painting</option><option
+    value="Canvas Painting">Canvas Painting</option><option value="Cartoon
+    Painting">Cartoon Painting</option><option value="Chalk Painting">Chalk
+    Painting</option><option value="Child's Finger Painting">Child's Finger
+    Painting</option><option value="Chinese Painting">Chinese
+    Painting</option><option value="Classicism Painting">Classicism
+    Painting</option><option value="Collage Painting">Collage
+    Painting</option><option value="Cubism Painting">Cubism
+    Painting</option><option value="Dadaism Painting">Dadaism
+    Painting</option><option value="De Stijl Painting">De Stijl
+    Painting</option><option value="Der Blaue Painting">Der Blaue
+    Painting</option><option value="Digital Painting">Digital
+    Painting</option><option value="Drip Painting">Drip Painting</option><option
+    value="Enamel Painting">Enamel Painting</option><option value="Encaustic
+    Painting">Encaustic Painting</option><option value="Expressionism
+    Painting">Expressionism Painting</option><option value="Figurativism
+    Painting">Figurativism Painting</option><option value="Fingerpainting
+    Painting">Fingerpainting Painting</option><option value="Finger
+    Painting">Finger Painting</option><option value="Fresco Secco
+    Painting">Fresco Secco Painting</option><option value="Futurism
+    Painting">Futurism Painting</option><option value="Genre Painting">Genre
+    Painting</option><option value="Glitter Glue Painting">Glitter Glue
+    Painting</option><option value="Gothic Painting">Gothic
+    Painting</option><option value="Gouache Painting">Gouache
+    Painting</option><option value="History Painting">History
+    Painting</option><option value="Hot Wax Painting">Hot Wax
+    Painting</option><option value="Impressionism Painting">Impressionism
+    Painting</option><option value="Ink Wash Painting">Ink Wash
+    Painting</option><option value="Japanese Painting">Japanese
+    Painting</option><option value="Korean Painting">Korean
+    Painting</option><option value="Landscape Painting">Landscape
+    Painting</option><option value="Leaf Painting">Leaf Painting</option><option
+    value="Marker Painting">Marker Painting</option><option value="Matte
+    Painting">Matte Painting</option><option value="Miniature
+    Painting">Miniature Painting</option><option value="Modernism
+    Painting">Modernism Painting</option><option value="Mughal Painting">Mughal
+    Painting</option><option value="Mural Painting">Mural
+    Painting</option><option value="Oil Painting">Oil Painting</option><option
+    value="Pastel Painting">Pastel Painting</option><option value="Pattachitra
+    Painting">Pattachitra Painting</option><option value="Photorealism
+    Painting">Photorealism Painting</option><option value="Rajasthan
+    Painting">Rajasthan Painting</option><option value="Realism
+    Painting">Realism Painting</option><option value="Reverse Glass
+    Painting">Reverse Glass Painting</option><option value="Sand Painting">Sand
+    Painting</option><option value="Speed Painting">Speed
+    Painting</option><option value="Spray Painting">Spray
+    Painting</option><option value="Still Life Painting">Still Life
+    Painting</option><option value="Surrealism Painting">Surrealism
+    Painting</option><option value="Tanjore Painting">Tanjore
+    Painting</option><option value="Tempera Painting">Tempera
+    Painting</option><option value="Velvet Painting">Velvet
+    Painting</option><option value="Watercolor Painting">Watercolor
+    Painting</option><option value="Anime Art">Anime Art</option><option
+    value="Bedazzled Art Style">Bedazzled Art Style</option><option
+    value="Button Art">Button Art</option><option value="Chalk Art">Chalk
+    Art</option><option value="Comic Book Art">Comic Book Art</option><option
+    value="Conceptual Art">Conceptual Art</option><option value="Leather Art
+    Style">Leather Art Style</option><option value="Line Art">Line
+    Art</option><option value="Marble Art">Marble Art</option><option value="Pop
+    Art painting">Pop Art painting</option><option value="Portrait Art">Portrait
+    Art</option><option value="Sand Art">Sand Art</option><option value="Street
+    Art">Street Art</option><option value="Woven Art">Woven Art</option><option
+    value="Anime Style">Anime Style</option><option value="Atari 2600
+    Style">Atari 2600 Style</option><option value="Bauhaus Style">Bauhaus
+    Style</option><option value="Coloring Book Style">Coloring Book
+    Style</option><option value="Constructivism Style">Constructivism
+    Style</option><option value="Fauvism Style">Fauvism Style</option><option
+    value="Glitter Style">Glitter Style</option><option value="GTAV Style">GTAV
+    Style</option><option value="NES Style">NES Style</option><option
+    value="Retro Comic Book Style">Retro Comic Book Style</option><option
+    value="SNES Style">SNES Style</option><option value="Studio Ghibli
+    Style">Studio Ghibli Style</option><option value="Woodburning
+    Style">Woodburning Style</option><option value="Woodcut Style">Woodcut
+    Style</option><option value="Ballpoint Pen Drawing">Ballpoint Pen
+    Drawing</option><option value="Blue Ballpoint Pen Drawing">Blue Ballpoint
+    Pen Drawing</option><option value="Colored Pencil Drawing">Colored Pencil
+    Drawing</option><option value="Pencil Drawing">Pencil
+    Drawing</option><option value="Red Ballpoint Pen Drawing">Red Ballpoint Pen
+    Drawing</option><option value="Comic Book Cover">Comic Book
+    Cover</option><option value="Comic Book">Comic Book</option><option
+    value="Comic Book Panel">Comic Book Panel</option><option value="Colored
+    Pencil Sketch">Colored Pencil Sketch</option><option value="Pencil
+    Sketch">Pencil Sketch</option><option value="3D Render">3D
+    Render</option><option value="Boxart">Boxart</option><option
+    value="Children's Book">Children's Book</option><option value="Coloring
+    Book">Coloring Book</option><option value="Copper Plate Engraving">Copper
+    Plate Engraving</option><option
+    value="Cross-Stitch">Cross-Stitch</option><option value="Diamond
+    Engraving">Diamond Engraving</option><option
+    value="Icon">Icon</option><option value="Linocut">Linocut</option><option
+    value="Lowpoly">Lowpoly</option><option value="Old Black and White
+    Photograph">Old Black and White Photograph</option><option
+    value="Photograph">Photograph</option><option
+    value="Pixelart">Pixelart</option><option value="Pop Up Book">Pop Up
+    Book</option><option value="Ring Engraving">Ring Engraving</option><option
+    value="Spray Paint">Spray Paint</option><option value="Stained
+    Glass">Stained Glass</option><option value="Sticker">Sticker</option><option
+    value="Stone Cut">Stone Cut</option>
   </select>
   <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style" />
 
-  <!-- Detail Estetis -->
-  <label>Detail Estetis</label>
-  <select id="detailSelect" onchange="handleSelectChange('detail')">
+  <!-- Detail Estetis -->  
+  <label>Detail Estetis (Pilih Banyak)</label>
+  <select id="detailSelect" multiple size="6" onchange="updateDetail()">
     <option value="">Tulis Manual</option>
     <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
     <option value="rim lighting, ambient glow">rim lighting, ambient glow</option>
@@ -241,6 +425,49 @@
     <option value="sparkling particles, cinematic blur">sparkling particles, cinematic blur</option>
     <option value="glowing neon signs, rainy reflection">glowing neon signs, rainy reflection</option>
     <option value="soft bokeh, golden hour lighting">soft bokeh, golden hour lighting</option>
+    <!-- new -->
+    <option value="cinematic">
+        cinematic
+      </option><option value="hd">
+        hd
+      </option><option value="4k">
+        4k
+      </option><option value="8k">
+        8k
+      </option><option value="3d">
+        3d
+      </option><option value="4d">
+        4d
+      </option><option value="highly detailed">
+        highly detailed
+      </option><option value="octane render">
+        octane render
+      </option><option value="trending artstation">
+        trending artstation
+      </option><option value="Pixelate">
+        Pixelate
+      </option><option value="Blur">
+        Blur
+      </option><option value="Beautiful">
+        Beautiful
+      </option><option value="Very Beautiful">
+        Very Beautiful
+      </option><option value="Very Very Beautiful">
+        Very Very Beautiful
+      </option><option value="Symmetrical">
+        Symmetrical
+      </option><option value="Macabre">
+        Macabre
+      </option><option value="at night">
+        at night
+      </option>
+      <option value="daylight">daylight</option><option
+      value="moonlight">moonlight</option><option value="natural light">natural
+      light</option><option value="Front Light">Front Light</option><option
+      value="Backlight">Backlight</option><option value="Soft Light">Soft
+      Light</option><option value="Hard Light">Hard Light</option><option
+      value="Moody Light">Moody Light</option><option value="Dynamic
+      Light">Dynamic Light</option>
   </select>
   <textarea id="detail" rows="2" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting"></textarea>
 
@@ -344,6 +571,20 @@
     URL.revokeObjectURL(url);
   }
 
+function updatePakaian() {
+    const select = document.getElementById("pakaianSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("pakaian");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+function updateDetail() {
+    const select = document.getElementById("detailSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    document.getElementById("detail").value = selectedOptions.join(", ");
+    generatePrompt();
+  }
   function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
@@ -371,4 +612,4 @@
 </footer>
 
 </body>
-</html>
+      </html>
