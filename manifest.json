@@ -1,6 +1,6 @@
 {
   "name": "Prompt builder",
-  "short_name": "AppKu",
+  "short_name": "Prompt Builder",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
