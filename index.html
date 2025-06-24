@@ -498,6 +498,7 @@ select[multiple] {
   <div class="buttons">
     <button onclick="resetForm()">🔄 Reset Form</button>
     <button onclick="saveToFavorites()">⭐ Simpan sebagai Favorit</button>
+    <button onclick="clearFavorites()">❌ Hapus Semua Favorit</button> 
     <button onclick="exportToTxt()">📄 Ekspor sebagai .txt</button>
     <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
   </div>
@@ -547,7 +548,7 @@ select[multiple] {
     document.querySelectorAll("input[type='text'], textarea").forEach(el => el.value = '');
     generatePrompt();
   }
-
+// favorite 
   function saveToFavorites() {
     const prompt = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
     let favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
@@ -559,6 +560,12 @@ select[multiple] {
       alert("Prompt sudah tersimpan sebelumnya.");
     }
   }
+ // hapus fav
+function clearFavorites() {
+  localStorage.removeItem("aiPrompts");
+  showFavorites();
+  alert("Semua favorit telah dihapus.");
+}
 
   function exportToTxt() {
     const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
@@ -570,6 +577,34 @@ select[multiple] {
     link.click();
     URL.revokeObjectURL(url);
   }
+ // list fav
+function showFavorites() {
+  const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+  const list = document.getElementById("favoritesList");
+  list.innerHTML = "";
+
+  if (favorites.length === 0) {
+    list.innerHTML = "<em>Belum ada prompt favorit.</em>";
+    return;
+  }
+
+  favorites.forEach((prompt, index) => {
+    const li = document.createElement("li");
+    li.textContent = prompt;
+
+    const btnHapus = document.createElement("button");
+    btnHapus.textContent = "🗑️";
+    btnHapus.style.marginLeft = "10px";
+    btnHapus.onclick = () => {
+      const updated = favorites.filter((_, i) => i !== index);
+      localStorage.setItem("aiPrompts", JSON.stringify(updated));
+      showFavorites();
+    };
+
+    li.appendChild(btnHapus);
+    list.appendChild(li);
+  });
+}
 
 function updatePakaian() {
     const select = document.getElementById("pakaianSelect");
@@ -598,8 +633,11 @@ function updateDetail() {
       document.body.classList.add('dark-mode');
     }
   };
+  
 </script>
 <div style="text-align:center">
+ <h3>Favorit</h3>
+<ul id="favoritesList"></ul>
   <h3>Contact Person</h3>
   <p>⭕ fediverse <a href="https://misskey.id/@awvr" target="_blank"
   style="color: #cc3399; text-decoration: none;">@awvr@misskey.id</a></p>
@@ -612,4 +650,4 @@ function updateDetail() {
 </footer>
 
 </body>
-      </html>
+</html>
