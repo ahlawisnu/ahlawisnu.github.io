@@ -189,83 +189,6 @@
   </select>
   <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
 
-  <!-- Pose -->
-  <label>Pose / Aksi</label>
-   <select id="poseSelect" multiple size="6" onchange="updatePose()"> 
-    <option value="">Tulis Manual</option>
- <optgroup label="General Photo Styles">
-    <option value="candid">Candid</option>
-    <option value="formal">Formal</option>
-    <option value="casual">Casual / Relaxed</option>
-    <option value="glamorous">Glamorous / Elegant</option>
-    <option value="minimalist">Minimalist</option>
-    <option value="action">Action / Dynamic</option>
-    <option value="vintage">Vintage / Classic</option>
-    <option value="natural">Natural / Authentic</option>
-    <option value="portrait">Portrait (Close-up)</option>
-    <option value="full body">Full Body</option>
-  </optgroup>
-     <optgroup label="Pose Combo">
-    <option value="peace with smile">Peace Sign with Natural Smile</option>
-    <option value="thumbs with laugh">Thumbs Up with Bright Laughter</option>
-    <option value="fingerheart-shy">Finger Heart with Bashful Smile</option>
-    <option value="index with shocked">One Finger Up with Cute Shocked Face</option>
-    <option value="crossed with hoping">Crossed Fingers with Hopeful Eyes</option>
-    <option value="blank with rock">Rock On with Blank Stare</option>
-    <option value="candid side with softlook">Look to Side with Soft Eyes</option>
-    <option value="chin rest with polite">Chin Rest with Gentle Smile</option>
-    <option value="two hearts with gaze">Two Hands Heart with Tender Gaze</option>
-    <option value="finger heart with sweetlook">Finger Heart with Sweet Look</option>
-     </optgroup>
-
-  <optgroup label="Hand Poses">
-    <option value="hands in pockets">Hands in Pockets</option>
-    <option value="crossed-arms">Crossed Arms</option>
-    <option value="one hand on hip">One Hand on Hip</option>
-    <option value="hands clasped">Hands Clasped (Front/Back)</option>
-    <option value="touching face">Touching Face / Chin</option>
-    <option value="holding prop">Holding a Prop</option>
-    <option value="waving">Waving</option>
-    <option value="pointing">Pointing</option>
-    <option value="hands on shoulders">Hands on Shoulders (Self/Other)</option>
-    <option value="reaching out">Reaching Out</option>
-  </optgroup>
-
-  <optgroup label="Sitting Poses">
-    <option value="sitting">sitting</option> 
-    <option value="sitting cross legged">Cross-Legged</option>
-    <option value="sitting on steps">On Steps</option>
-    <option value="sitting on chair straight">On Chair (Straight)</option>
-    <option value="sitting on chair relaxed">On Chair (Relaxed)</option>
-    <option value="sitting on floor knees up">On Floor (Knees Up)</option>
-    <option value="sitting on ground legs out out">On Ground (Legs Stretched Out)</option>
-    <option value="sitting leaning back">Leaning Back</option>
-    <option value="sitting sideways">Sideways Sit</option>
-    <option value="sitting on edge">On the Edge (of something)</option>
-    <option value="Sitting with pet">Sitting with Pet</option>
-  </optgroup>
-
-  <optgroup label="Standing Poses">
-    <option value="standing straight">Standing Straight</option>
-    <option value="standing one leg bent">One Leg Bent</option>
-    <option value="standing-lg leaning against wall">Leaning Against Wall</option>
-    <option value="standing hands on hips">Hands on Hips</option>
-    <option value="standing walking">In Motion (Walking)</option>
-    <option value="standing back to camera">Back to Camera</option>
-    <option value="standing looking away">Looking Away</option>
-    <option value="standing power pose">Power Pose</option>
-    <option value="standing arms out">Arms Outstretched</option>
-    <option value="standing with object">Standing with an Object</option>
-    <option value="standing under cherry tree">standing under cherry tree</option>
-    <option value="sitting in a meadow">sitting in a meadow</option>
-    <option value="walking in the rain">walking in the rain</option>
-    <option value="reading by the window">reading by the window</option>
-    <option value="holding a lantern at night">holding a lantern at night</option>
-    <option value="kneeling in prayer">kneeling in prayer</option>
-    <option value="jumping with joy">jumping with joy</option>
-  </select>
-  <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
-
   <!-- Pakaian -->
   <label for="pakaianSelect">Gaya Pakaian: multipl</label>
 <select id="pakaianSelect" multiple size="6" onchange="updatePakaian()">
@@ -358,6 +281,84 @@
   </optgroup>
   </select>
   <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
+
+        
+  <!-- Pose -->
+  <label>Pose / Aksi</label>
+   <select id="poseSelect" multiple size="6" onchange="updatePose()"> 
+    <option value="">Tulis Manual</option>
+ <optgroup label="General Photo Styles">
+    <option value="candid">Candid</option>
+    <option value="formal">Formal</option>
+    <option value="casual">Casual / Relaxed</option>
+    <option value="glamorous">Glamorous / Elegant</option>
+    <option value="minimalist">Minimalist</option>
+    <option value="action">Action / Dynamic</option>
+    <option value="vintage">Vintage / Classic</option>
+    <option value="natural">Natural / Authentic</option>
+    <option value="portrait">Portrait (Close-up)</option>
+    <option value="full body">Full Body</option>
+  </optgroup>
+     <optgroup label="Pose Combo">
+    <option value="peace with smile">Peace Sign with Natural Smile</option>
+    <option value="thumbs with laugh">Thumbs Up with Bright Laughter</option>
+    <option value="fingerheart-shy">Finger Heart with Bashful Smile</option>
+    <option value="index with shocked">One Finger Up with Cute Shocked Face</option>
+    <option value="crossed with hoping">Crossed Fingers with Hopeful Eyes</option>
+    <option value="blank with rock">Rock On with Blank Stare</option>
+    <option value="candid side with softlook">Look to Side with Soft Eyes</option>
+    <option value="chin rest with polite">Chin Rest with Gentle Smile</option>
+    <option value="two hearts with gaze">Two Hands Heart with Tender Gaze</option>
+    <option value="finger heart with sweetlook">Finger Heart with Sweet Look</option>
+     </optgroup>
+
+  <optgroup label="Hand Poses">
+    <option value="hands in pockets">Hands in Pockets</option>
+    <option value="crossed-arms">Crossed Arms</option>
+    <option value="one hand on hip">One Hand on Hip</option>
+    <option value="hands clasped">Hands Clasped (Front/Back)</option>
+    <option value="touching face">Touching Face / Chin</option>
+    <option value="holding prop">Holding a Prop</option>
+    <option value="waving">Waving</option>
+    <option value="pointing">Pointing</option>
+    <option value="hands on shoulders">Hands on Shoulders (Self/Other)</option>
+    <option value="reaching out">Reaching Out</option>
+  </optgroup>
+
+  <optgroup label="Sitting Poses">
+    <option value="sitting">sitting</option> 
+    <option value="sitting cross legged">Cross-Legged</option>
+    <option value="sitting on steps">On Steps</option>
+    <option value="sitting on chair straight">On Chair (Straight)</option>
+    <option value="sitting on chair relaxed">On Chair (Relaxed)</option>
+    <option value="sitting on floor knees up">On Floor (Knees Up)</option>
+    <option value="sitting on ground legs out out">On Ground (Legs Stretched Out)</option>
+    <option value="sitting leaning back">Leaning Back</option>
+    <option value="sitting sideways">Sideways Sit</option>
+    <option value="sitting on edge">On the Edge (of something)</option>
+    <option value="Sitting with pet">Sitting with Pet</option>
+  </optgroup>
+
+  <optgroup label="Standing Poses">
+    <option value="standing straight">Standing Straight</option>
+    <option value="standing one leg bent">One Leg Bent</option>
+    <option value="standing-lg leaning against wall">Leaning Against Wall</option>
+    <option value="standing hands on hips">Hands on Hips</option>
+    <option value="standing walking">In Motion (Walking)</option>
+    <option value="standing back to camera">Back to Camera</option>
+    <option value="standing looking away">Looking Away</option>
+    <option value="standing power pose">Power Pose</option>
+    <option value="standing arms out">Arms Outstretched</option>
+    <option value="standing with object">Standing with an Object</option>
+    <option value="standing under cherry tree">standing under cherry tree</option>
+    <option value="sitting in a meadow">sitting in a meadow</option>
+    <option value="walking in the rain">walking in the rain</option>
+    <option value="reading by the window">reading by the window</option>
+    <option value="holding a lantern at night">holding a lantern at night</option>
+    <option value="kneeling in prayer">kneeling in prayer</option>
+    <option value="jumping with joy">jumping with joy</option>
+  </select>
+  <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
 
   <!-- Sudut Pandang Kamera -->
   <label>Sudut Pandang Kamera</label>
