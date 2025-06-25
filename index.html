@@ -626,64 +626,67 @@ select[multiple] {
   <label>Latar Belakang</label>
    <select id="latarSelect" multiple size="6" onchange="updateLatar()">
     <option value="">Tulis Manual</option>
-    <option value="cherry blossom forest">cherry blossom forest</option>
+  <optgroup label="Random">
+     <option value="cherry blossom forest">cherry blossom forest</option>
     <option value="Indonesian school courtyard">Indonesian school courtyard</option>
     <option value="sunset rice field">sunset rice field</option>
     <option value="rainy street at night">rainy street at night</option>
     <option value="cyberpunk cityscape">cyberpunk cityscape</option>
     <option value="ancient Japanese temple">ancient Japanese temple</option>
     <option value="floating islands above clouds">floating islands above clouds</option>
-         <optgroup label="1. Background (Latar Belakang Visual Umum)">
-        <option value="polos-putih">Putih Polos</option>
-        <option value="polos-hitam">Hitam Pekat</option>
-        <option value="gradien-lembut">Gradien Warna Lembut</option>
-        <option value="bokeh-buram">Bokeh (Efek Buram)</option>
-        <option value="tekstur-beton">Tekstur Kasar (Beton/Batu Bata)</option>
-        <option value="pola-geometris">Pola Geometris Abstrak</option>
-        <option value="galaksi-buram">Galaksi/Bintang Buram</option>
-        <option value="dinding-mengelupas">Dinding dengan Cat Mengelupas</option>
-        <option value="air-beriak">Air Beriak atau Gelembung</option>
-        <option value="awan-biru">Awan Tipis di Langit Biru</option>
-    </optgroup>
+  </optgroup>
+    <optgroup label="1. Background (General Visual Backgrounds)">
+    <option value="Plain White">Plain White</option>
+    <option value="Solid Black">Solid Black</option>
+    <option value="Soft Color Gradient">Soft Color Gradient</option>
+    <option value="Bokeh Blur">Bokeh (Blur Effect)</option>
+    <option value="Rough Texture">Rough Texture (Concrete/Brick)</option>
+    <option value="Abstract Geometric">Abstract Geometric Pattern</option>
+    <option value="Blurred Galaxy">Blurred Galaxy/Stars</option>
+    <option value="Peeling Wall">Peeling Paint Wall</option>
+    <option value="Rippling Water">Rippling Water or Bubbles</option>
+    <option value="Blue Sky Clouds">Thin Clouds in Blue Sky</option>
+</optgroup>
 
-    <optgroup label="2. Setting/Tempat (Lingkungan Spesifik)">
-        <option value="hutan-amazon-senja">Hutan Belantara Amazon saat Senja</option>
-        <option value="jalanan-tokyo-malam">Jalanan Tokyo Ramai di Malam Hari (Neon)</option>
-        <option value="reruntuhan-kuil-bulan">Reruntuhan Kuil Kuno di Bawah Bulan Purnama</option>
-        <option value="stasiun-luar-angkasa">Stasiun Luar Angkasa Canggih Mengorbit Bumi</option>
-        <option value="desa-pegunungan-salju">Desa Pegunungan Tradisional Jepang (Salju)</option>
-        <option value="pasar-maroko">Pasar Jalanan Tradisional Maroko (Siang)</option>
-        <option value="kota-atlantis">Kota Bawah Laut Atlantis yang Megah</option>
-        <option value="medan-perang-apokaliptik">Medan Perang Pasca-Apokaliptik yang Hancur</option>
-        <option value="padang-savana-migrasi">Padang Savana Afrika saat Migrasi Satwa Liar</option>
-        <option value="istana-es-gunung">Istana Es di Puncak Gunung Beku</option>
-    </optgroup>
+<optgroup label="2. Settings/Places (Specific Environments)">
+    <option value="Amazon Sunset">Amazon Rainforest at Sunset</option>
+    <option value="Tokyo Night">Bustling Tokyo Street at Night (Neon)</option>
+    <option value="Temple Moon">Ancient Temple Ruins under Full Moon</option>
+    <option value="Space Station">Advanced Space Station Orbiting Earth</option>
+    <option value="Japanese Snow Village">Traditional Japanese Mountain Village (Snowy)</option>
+    <option value="Moroccan Market">Traditional Moroccan Street Market (Day)</option>
+    <option value="Atlantis">Majestic Underwater City of Atlantis</option>
+    <option value="Apocalyptic Warzone">Post-Apocalyptic War Zone</option>
+    <option value="Safari Migration">African Savanna during Wildlife Migration</option>
+    <option value="Ice Palace">Ice Palace atop a Frozen Mountain</option>
+</optgroup>
 
-    <optgroup label="3. Ruangan (Interior Umum)">
-        <option value="perpustakaan-tua">Perpustakaan Tua yang Megah</option>
-        <option value="laboratorium-futuristik">Laboratorium Ilmiah Futuristik</option>
-        <option value="kamar-tidur-minimalis">Kamar Tidur Bergaya Minimalis</option>
-        <option value="gudang-industri-terbengkalai">Gudang Industri Terbengkalai</option>
-        <option value="ruang-tamu-art-deco">Ruang Tamu Mewah Bergaya Art Deco</option>
-        <option value="dapur-pedesaan">Dapur Pedesaan yang Hangat</option>
-        <option value="ruang-kendali-pesawat">Ruang Kendali Pesawat Luar Angkasa</option>
-        <option value="kuil-zen-jepang">Kuil Zen Jepang</option>
-        <option value="ruang-kelas-kosong">Ruang Kelas Sekolah yang Kosong</option>
-        <option value="kamar-mandi-spa">Kamar Mandi Spa Modern</option>
-    </optgroup>
+<optgroup label="3. Interior Rooms (General)">
+    <option value="Grand Library">Grand Old Library</option>
+    <option value="Futuristic Lab">Futuristic Science Laboratory</option>
+    <option value="Minimal Bedroom">Minimalist Bedroom</option>
+    <option value="Abandoned Warehouse">Abandoned Industrial Warehouse</option>
+    <option value="Art Deco Living Room">Luxurious Art Deco Living Room</option>
+    <option value="Rustic Kitchen">Warm Rustic Kitchen</option>
+    <option value="Spaceship Control Room">Spaceship Control Room</option>
+    <option value="Zen Temple">Japanese Zen Temple</option>
+    <option value="Empty Classroom">Empty School Classroom</option>
+    <option value="Spa Bathroom">Modern Spa Bathroom</option>
+</optgroup>
 
-    <optgroup label="4. Area Rumah (Interior Spesifik)">
-        <option value="dapur-pedesaan-rumah">Dapur Bergaya Pedesaan (Rustic)</option>
-        <option value="ruang-tamu-modern-rumah">Ruang Tamu Modern Minimalis</option>
-        <option value="kamar-tidur-utama-rumah">Kamar Tidur Utama Bernuansa Tenang</option>
-        <option value="kamar-mandi-spa-rumah">Kamar Mandi Bergaya Spa</option>
-        <option value="ruang-kerja-kreatif-rumah">Ruang Kerja/Studio Kreatif di Rumah</option>
-        <option value="sudut-baca-nyaman-rumah">Sudut Baca yang Nyaman</option>
-        <option value="ruang-bermain-anak-rumah">Ruang Bermain Anak yang Penuh Warna</option>
-        <option value="teras-balkon-rumah">Teras/Balkon dengan Pemandangan</option>
-        <option value="ruang-makan-keluarga-rumah">Ruang Makan Keluarga Tradisional</option>
-        <option value="lorong-dramatis-rumah">Lorong/Koridor dengan Pencahayaan Dramatis</option>
-    </optgroup>
+<optgroup label="4. Home Areas (Specific Interior Spaces)">
+    <option value="Home Rustic Kitchen">Rustic-Style Kitchen</option>
+    <option value="Home Modern Living">Modern Minimalist Living Room</option>
+    <option value="Home Master Bedroom">Calm Master Bedroom</option>
+    <option value="Home Spa Bathroom">Spa-Style Bathroom</option>
+    <option value="Home Creative Studio">Creative Home Studio/Workspace</option>
+    <option value="Home Reading Nook">Cozy Reading Nook</option>
+    <option value="Home Playroom">Colorful Children's Playroom</option>
+    <option value="Home Balcony">Terrace/Balcony with a View</option>
+    <option value="Home Dining Room">Traditional Family Dining Room</option>
+    <option value="Home Dramatic Hallway">Dramatic Hallway with Lighting</option>
+</optgroup>
+
   </select>
   <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
 
