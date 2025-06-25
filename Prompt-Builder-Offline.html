@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>Prompt Generator AI - Buat Prompt Gambar AI Secara Cepat</title>
+  
+  <meta name="description" content="Prompt Generator AI adalah alat gratis untuk membuat prompt gambar berbasis AI secara otomatis. Cocok untuk Midjourney, DALL·E, Stable Diffusion, Leonardo.Ai, dan lainnya.">
+  
+  <meta name="keywords" content="Prompt Builder, prompt generator AI, pembuat prompt gambar, prompt art generator, midjourney prompt, stable diffusion prompt, ai image prompt builder, buat prompt online">
+  
+  <meta name="author" content="@AWVR@Misskey.ID">
+  
+  <meta name="robots" content="index, follow"> 
+  <link rel="manifest" href="manifest.json" />
+  <!--- STYLE CSS --->
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4fa;
+      color: #333;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .dark-mode {
+      background: #1e1e1e;
+      color: #eee;
+    }
+    
+    .dark-mode H1 
+    {color: #eee;} 
+    .dark-mode input,
+    .dark-mode textarea,
+    .dark-mode select,
+    .dark-mode button {
+      background-color: #2d2d2d;
+      color: #eee;
+      border: 1px solid #555;
+    }
+
+    .dark-mode #output {
+      background: #2a2a2a;
+      border-left-color: #4db6ac;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+select[multiple] {
+      height: 50px;
+      padding: 6px;
+    }
+    #output {
+      background: #fff;
+      padding: 15px;
+      border-left: 4px solid #007bff;
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      width: auto;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .small-btn {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Pembuat Prompt Gambar AI</h1>
+
+<form id="promptForm">
+
+  <label>Subjek Utama</label>
+  <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
+
+  <!-- Genre -->
+  <label>Genre</label>
+  <select id="genreSelect" onchange="handleSelectChange('genre')">
+    <option value="">Tulis Manual</option>
+    <option value="fantasy">Fantasi</option>
+    <option value="sci-fi">Sains Fiksi</option>
+    <option value="horror">Horor</option>
+    <option value="romance">Romantis</option>
+    <option value="cyberpunk">Cyberpunk</option>
+    <option value="historical">Historis</option>
+    <option value="adventure">Petualangan</option>
+    <option value="mystery">Misteri</option>
+    <option value="drama">Drama</option>
+    <option value="Cybernetic">Cybernetic</option>
+    <option value="post-apocalyptic">Post-Apocalyptic</option>
+    <option value="magical girl">Magical Girl</option>
+  </select>
+  <input type="text" id="genre" oninput="generatePrompt()" placeholder="Contoh: fantasy" />
+
+  <!-- Gaya Visual Berdasarkan Negara -->
+  <label>Gaya Visual Berdasarkan Negara</label>
+  <select id="negaraSelect" onchange="handleSelectChange('negara')">
+    <option value="">Tulis Manual</option>
+    <option value="Japanese anime style character">Jepang (gaya karakter anime)</option>
+    <option value="South Korean realistic beauty standard">Korea Selatan (realistis kecantikan)</option>
+    <option value="American photorealistic portrait">Amerika Serikat (fotorealistis potret)</option>
+    <option value="Middle Eastern traditional attire and architecture">Timur Tengah (pakaian dan arsitektur tradisional)</option>
+    <option value="Scandinavian minimalism with cold tones">Skandinavia (minimalis dengan warna dingin)</option>
+    <option value="Indian classical art with vibrant colors">India (seni klasik dengan warna cerah)</option>
+    <option value="Chinese ink painting aesthetic">Tiongkok (estetika lukisan tinta)</option>
+  </select>
+  <input type="text" id="negara" oninput="generatePrompt()" placeholder="Contoh: Japanese anime style character" />
+
+  <!-- Gaya Rambut -->
+  <label>Gaya Rambut</label>
+<select id="hairSelect" multiple size="6" onchange="updateHair()">
+    <option value="">Tulis Manual</option>
+    <option value="long hair">long hair</option>
+    <option value="medium hair">medium hair</option>
+    <option value="short hair">short hair</option>
+    <option value="messy bun">messy bun</option>
+    <optgroup label="Gaya Rambut Pendek">
+        <option value="pixie-cut">Pixie Cut</option>
+        <option value="bob">Bob</option>
+        <option value="lob">Lob (Long Bob)</option>
+        <option value="undercut">Undercut</option>
+        <option value="buzz-cut">Buzz Cut</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Sedang">
+        <option value="shag">Shag</option>
+        <option value="layered cut">Layered Cut</option>
+        <option value="curtain bangs">Curtain Bangs</option>
+        <option value="mid length waves">Mid-length with Waves</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Panjang">
+        <option value="long-layers">Long Layers</option>
+        <option value="rapunzel cut">Rapunzel Cut</option>
+        <option value="long with bangs">Long with Bangs</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Bertekstur dan Keriting">
+        <option value="afro">Afro</option>
+        <option value="braids">Braids (Kepang)</option>
+        <option value="dreadlocks">Dreadlocks</option>
+        <option value="permed hair">Permed Hair</option>
+        <option value="natural curls">Natural Curls</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Pria">
+        <option value="fade">Fade</option>
+        <option value="quiff">Quiff</option>
+        <option value="pompadour">Pompadour</option>
+        <option value="slick back">Slick Back</option>
+        <option value="crew cut">Crew Cut</option>
+        <option value="man bun">Man Bun</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Khusus / Penataan">
+        <option value="ponytail">Ponytail (Kuncir Kuda)</option>
+        <option value="bun">Bun (Sanggul)</option>
+        <option value="half-up-half-down">Half-Up, Half-Down</option>
+        <option value="faux-hawk">Faux Hawk</option>
+        <option value="wet-look">Wet Look</option>
+    </optgroup>
+ 
+
+    <option value="curly afro">curly afro</option>
+    <option value="slicked back hair">slicked-back hair</option>
+    <option value="braided crown style">braided crown style</option>
+    
+    <optgroup label="Gaya Rambut Pendek">
+        <option value="pixie-cut">Pixie Cut</option>
+        <option value="bob">Bob</option>
+        <option value="lob">Lob (Long Bob)</option>
+        <option value="undercut">Undercut</option>
+        <option value="buzz cut">Buzz Cut</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Sedang">
+        <option value="shag">Shag</option>
+        <option value="layered cut">Layered Cut</option>
+        <option value="curtain bangs">Curtain Bangs</option>
+        <option value="mid length waves">Mid-length with Waves</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Panjang">
+        <option value="long layers">Long Layers</option>
+        <option value="rapunzel cut">Rapunzel Cut</option>
+        <option value="long with bangs">Long with Bangs</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Bertekstur dan Keriting">
+        <option value="afro">Afro</option>
+        <option value="braids">Braids (Kepang)</option>
+        <option value="dreadlocks">Dreadlocks</option>
+        <option value="permed hair">Permed Hair</option>
+        <option value="natural curls">Natural Curls</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Pria">
+        <option value="fade">Fade</option>
+        <option value="quiff">Quiff</option>
+        <option value="pompadour">Pompadour</option>
+        <option value="slick back">Slick Back</option>
+        <option value="crew cut">Crew Cut</option>
+        <option value="man bun">Man Bun</option>
+    </optgroup>
+
+    <optgroup label="Gaya Rambut Khusus / Penataan">
+        <option value="ponytail">Ponytail (Kuncir Kuda)</option>
+        <option value="bun">Bun (Sanggul)</option>
+        <option value="half up half down">Half-Up, Half-Down</option>
+        <option value="faux hawk">Faux Hawk</option>
+        <option value="wet look">Wet Look</option>
+    </optgroup>
+ 
+ 
+  </select>
+  <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
+
+  <!-- Warna Rambut -->
+  <label>Warna Rambut</label>
+  <input type="text" id="warnaRambut" oninput="generatePrompt()" placeholder="Contoh: sakura pink" />
+  <!-- Pakaian -->
+  <label for="pakaianSelect">Gaya Pakaian: multipl</label>
+<select id="pakaianSelect" multiple size="6" onchange="updatePakaian()">
+    <option value="">Tulis Manual</option>
+    <option value="wearing school uniform">wearing school uniform</option>
+    <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
+    <option value="summer dress with hat">summer dress with hat</option>
+    <option value="casual hoodie and jeans">casual hoodie and jeans</option>
+    <option value="elegant evening gown">elegant evening gown</option>
+    <option value="battle armor with sword">battle armor with sword</option>
+    <option value="space suit with helmet">space suit with helmet</option>
+      <!-- TOPS -->
+  <optgroup label="Tops">
+    <option value="strapless">Strapless</option>
+<option value="spaghetti strap">spaghetti strap</option>
+<option value="off shoulder">off shoulder</option>
+<option value="bandeau">Bandeau</option>
+    <option value="tshirt">T-Shirt</option>
+    <option value="shirt">Shirt</option>
+    <option value="poloshirt">Polo Shirt</option>
+    <option value="longsleeve">Long Sleeve Shirt</option>
+    <option value="sweater">Sweater</option>
+    <option value="hoodie">Hoodie</option>
+    <option value="jacket">Jacket</option>
+    <option value="blouse">Blouse</option>
+    <option value="tanktop">Tank Top</option>
+    <option value="cardigan">Cardigan</option>
+    <option value="vest">Vest / Waistcoat</option>
+    <option value="tunic">Tunic</option>
+    <option value="crop top">Crop Top</option>
+    <option value="peplum top">Peplum Top</option>
+    <option value="kimono top">Kimono Top</option>
+    <option value="sleeveless-top">Sleeveless Top</option>
+  </optgroup>
+
+  <!-- BOTTOMS -->
+  <optgroup label="Bottoms">
+    <option value="denim">denim</option>
+    <option value="pants">Pants</option>
+    <option value="jeans">Jeans</option>
+    <option value="shorts">Shorts</option>
+    <option value="skirt">Skirt</option>
+    <option value="mini skirt">Mini Skirt</option>
+    <option value="maxi skirt">Maxi Skirt</option>
+    <option value="pleated skirt">Pleated Skirt</option>
+    <option value="pencil skirt">Pencil Skirt</option>
+    <option value="leggings">Leggings</option>
+    <option value="saree">Saree</option>
+    <option value="palazzo-pants">Palazzo Pants</option>
+    <option value="chinos">Chinos</option>
+    <option value="capris">Capris / Cropped Pants</option>
+    <option value="sportspants">Sports Pants</option>
+    <option value="trousers">Trousers</option>
+    <option value="culottes">Culottes</option>
+    <option value="bloomers">Bloomers</option>
+    <option value="hot-pants">Hot Pants</option>
+    <option value="overalls">Overalls / Dungarees</option>
+  </optgroup>
+
+  <!-- FULL SETS -->
+  <optgroup label="Full Sets">
+    <option value="suit">Suit (Jacket + Pants)</option>
+    <option value="tracksuit">Tracksuit</option>
+    <option value="pajamas">Pajamas Set</option>
+    <option value="outfit">Fashion Outfit Set</option>
+    <option value="uniform">Uniform Set</option>
+    <option value="nightgown">Nightgown / Dress</option>
+    <option value="formalwear">Formal Wear Set</option>
+    <option value="casualset">Casual Wear Set</option>
+    <option value="gown">Gown</option>
+    <option value="kimono">Kimono Set</option>
+    <option value="maxi dress">Maxi Dress</option>
+    <option value="midi dress">Midi Dress</option>
+    <option value="mini dress">Mini Dress</option>
+    <option value="cocktail dress">Cocktail Dress</option>
+    <option value="prom dress">Prom Dress</option>
+    <option value="wedding dress">Wedding Dress</option>
+    <option value="bodycon dress">Bodycon Dress</option>
+    <option value="shift dress">Shift Dress</option>
+    <option value="sundress">Sundress</option>
+    <option value="two piece set">Two-Piece Set</option>
+    <option value="jumpsuit">Jumpsuit</option>
+    <option value="romper">Rompers / Playsuits</option>
+    <option value="kaftan">Kaftan</option>
+    <option value="abayas">Abayas</option>
+    <option value="kurta set">Kurta & Salwar Set</option>
+    <option value="hanfu">Hanfu Set</option>
+    <option value="yukata">Yukata</option>
+    <option value="cheongsam">Cheongsam / Qipao</option>
+  </optgroup>
+  </select>
+  <input type="text" id="pakaian" oninput="generatePrompt()"
+  placeholder="Contoh: wearing school uniform" /> 
+  <!-- Ekspresi -->
+  <label>Ekspresi / Suasana</label>
+  <select id="ekspresiSelect" onchange="handleSelectChange('ekspresi')">
+    <option value="">Tulis Manual</option>
+    <option value="gentle smile">gentle smile</option>
+    <option value="teary eyed">teary-eyed</option>
+    <option value="cheerful laugh">cheerful laugh</option>
+    <option value="melancholic gaze">melancholic gaze</option>
+    <option value="determined look">determined look</option>
+    <option value="surprised expression">surprised expression</option>
+    <option value="mysterious smirk">mysterious smirk</option>
+  </select>
+  <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
+
+  <!-- Pose -->
+  <label>Pose / Aksi</label>
+   <select id="poseSelect" multiple size="6" onchange="updatePose()"> 
+    <option value="">Tulis Manual</option>
+ <optgroup label="General Photo Styles">
+    <option value="candid">Candid</option>
+    <option value="formal">Formal</option>
+    <option value="casual">Casual / Relaxed</option>
+    <option value="glamorous">Glamorous / Elegant</option>
+    <option value="minimalist">Minimalist</option>
+    <option value="action">Action / Dynamic</option>
+    <option value="vintage">Vintage / Classic</option>
+    <option value="natural">Natural / Authentic</option>
+    <option value="portrait">Portrait (Close-up)</option>
+    <option value="full body">Full Body</option>
+  </optgroup>
+     <optgroup label="Pose Combo">
+    <option value="peace with smile">Peace Sign with Natural Smile</option>
+    <option value="thumbs with laugh">Thumbs Up with Bright Laughter</option>
+    <option value="fingerheart-shy">Finger Heart with Bashful Smile</option>
+    <option value="index with shocked">One Finger Up with Cute Shocked Face</option>
+    <option value="crossed with hoping">Crossed Fingers with Hopeful Eyes</option>
+    <option value="blank with rock">Rock On with Blank Stare</option>
+    <option value="candid side with softlook">Look to Side with Soft Eyes</option>
+    <option value="chin rest with polite">Chin Rest with Gentle Smile</option>
+    <option value="two hearts with gaze">Two Hands Heart with Tender Gaze</option>
+    <option value="finger heart with sweetlook">Finger Heart with Sweet Look</option>
+     </optgroup>
+
+  <optgroup label="Hand Poses">
+    <option value="hands in pockets">Hands in Pockets</option>
+    <option value="crossed-arms">Crossed Arms</option>
+    <option value="one hand on hip">One Hand on Hip</option>
+    <option value="hands clasped">Hands Clasped (Front/Back)</option>
+    <option value="touching face">Touching Face / Chin</option>
+    <option value="holding prop">Holding a Prop</option>
+    <option value="waving">Waving</option>
+    <option value="pointing">Pointing</option>
+    <option value="hands on shoulders">Hands on Shoulders (Self/Other)</option>
+    <option value="reaching out">Reaching Out</option>
+  </optgroup>
+
+  <optgroup label="Sitting Poses">
+    <option value="sitting">sitting</option> 
+    <option value="sitting cross legged">Cross-Legged</option>
+    <option value="sitting on steps">On Steps</option>
+    <option value="sitting on chair straight">On Chair (Straight)</option>
+    <option value="sitting on chair relaxed">On Chair (Relaxed)</option>
+    <option value="sitting on floor knees up">On Floor (Knees Up)</option>
+    <option value="sitting on ground legs out out">On Ground (Legs Stretched Out)</option>
+    <option value="sitting leaning back">Leaning Back</option>
+    <option value="sitting sideways">Sideways Sit</option>
+    <option value="sitting on edge">On the Edge (of something)</option>
+    <option value="Sitting with pet">Sitting with Pet</option>
+  </optgroup>
+
+  <optgroup label="Standing Poses">
+    <option value="standing straight">Standing Straight</option>
+    <option value="standing one leg bent">One Leg Bent</option>
+    <option value="standing-lg leaning against wall">Leaning Against Wall</option>
+    <option value="standing hands on hips">Hands on Hips</option>
+    <option value="standing walking">In Motion (Walking)</option>
+    <option value="standing back to camera">Back to Camera</option>
+    <option value="standing looking away">Looking Away</option>
+    <option value="standing power pose">Power Pose</option>
+    <option value="standing arms out">Arms Outstretched</option>
+    <option value="standing with object">Standing with an Object</option>
+    <option value="standing under cherry tree">standing under cherry tree</option>
+    <option value="sitting in a meadow">sitting in a meadow</option>
+    <option value="walking in the rain">walking in the rain</option>
+    <option value="reading by the window">reading by the window</option>
+    <option value="holding a lantern at night">holding a lantern at night</option>
+    <option value="kneeling in prayer">kneeling in prayer</option>
+    <option value="jumping with joy">jumping with joy</option>
+  </select>
+  <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
+
+  <!-- Sudut Pandang Kamera -->
+  <label>Sudut Pandang Kamera</label>
+  <select id="kameraSelect" onchange="handleSelectChange('kamera')">
+    <option value="">Tulis Manual</option>
+    <option value="close-up shot">Close-up Shot</option>
+    <option value="medium shot">Medium Shot</option>
+    <option value="wide shot">Wide Shot</option>
+    <option value="low angle shot">Low Angle Shot</option>
+    <option value="high angle shot">High Angle Shot</option>
+    <option value="overhead shot">Overhead Shot</option>
+    <option value="bird's eye view">Bird’s Eye View</option>
+    <option value="dutch angle tilt">Dutch Angle</option>
+    <option value="point of view (POV)">Point of View</option>
+  </select>
+  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up shot" />
+
+  <!-- Gaya Seni -->
+  <label>Gaya Seni</label>
+  <select id="gayaSelect" onchange="handleSelectChange('gaya')">
+    <option value="">Tulis Manual</option>
+    <option value="anime-style">anime-style</option>
+    <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
+    <option value="realistic digital painting">realistic digital painting</option>
+    <option value="chibi art">chibi art</option>
+    <option value="cyberpunk concept art">cyberpunk concept art</option>
+    <option value="watercolor illustration">watercolor illustration</option>
+    <option value="pixel art style">pixel art style</option>
+    <!-- new -->
+    <option value="Abstract Painting">Abstract Painting</option><option
+    value="Acrylic Painting">Acrylic Painting</option><option value="Action
+    Painting">Action Painting</option><option value="Aestheticism
+    Painting">Aestheticism Painting</option><option value="Anamorphosis
+    Painting">Anamorphosis Painting</option><option value="Art Deco
+    Painting">Art Deco Painting</option><option value="Art nouveau Painting">Art
+    nouveau Painting</option><option value="Ashcan School Painting">Ashcan
+    School Painting</option><option value="Baroque Painting">Baroque
+    Painting</option><option value="Body Painting">Body Painting</option><option
+    value="Canvas Painting">Canvas Painting</option><option value="Cartoon
+    Painting">Cartoon Painting</option><option value="Chalk Painting">Chalk
+    Painting</option><option value="Child's Finger Painting">Child's Finger
+    Painting</option><option value="Chinese Painting">Chinese
+    Painting</option><option value="Classicism Painting">Classicism
+    Painting</option><option value="Collage Painting">Collage
+    Painting</option><option value="Cubism Painting">Cubism
+    Painting</option><option value="Dadaism Painting">Dadaism
+    Painting</option><option value="De Stijl Painting">De Stijl
+    Painting</option><option value="Der Blaue Painting">Der Blaue
+    Painting</option><option value="Digital Painting">Digital
+    Painting</option><option value="Drip Painting">Drip Painting</option><option
+    value="Enamel Painting">Enamel Painting</option><option value="Encaustic
+    Painting">Encaustic Painting</option><option value="Expressionism
+    Painting">Expressionism Painting</option><option value="Figurativism
+    Painting">Figurativism Painting</option><option value="Fingerpainting
+    Painting">Fingerpainting Painting</option><option value="Finger
+    Painting">Finger Painting</option><option value="Fresco Secco
+    Painting">Fresco Secco Painting</option><option value="Futurism
+    Painting">Futurism Painting</option><option value="Genre Painting">Genre
+    Painting</option><option value="Glitter Glue Painting">Glitter Glue
+    Painting</option><option value="Gothic Painting">Gothic
+    Painting</option><option value="Gouache Painting">Gouache
+    Painting</option><option value="History Painting">History
+    Painting</option><option value="Hot Wax Painting">Hot Wax
+    Painting</option><option value="Impressionism Painting">Impressionism
+    Painting</option><option value="Ink Wash Painting">Ink Wash
+    Painting</option><option value="Japanese Painting">Japanese
+    Painting</option><option value="Korean Painting">Korean
+    Painting</option><option value="Landscape Painting">Landscape
+    Painting</option><option value="Leaf Painting">Leaf Painting</option><option
+    value="Marker Painting">Marker Painting</option><option value="Matte
+    Painting">Matte Painting</option><option value="Miniature
+    Painting">Miniature Painting</option><option value="Modernism
+    Painting">Modernism Painting</option><option value="Mughal Painting">Mughal
+    Painting</option><option value="Mural Painting">Mural
+    Painting</option><option value="Oil Painting">Oil Painting</option><option
+    value="Pastel Painting">Pastel Painting</option><option value="Pattachitra
+    Painting">Pattachitra Painting</option><option value="Photorealism
+    Painting">Photorealism Painting</option><option value="Rajasthan
+    Painting">Rajasthan Painting</option><option value="Realism
+    Painting">Realism Painting</option><option value="Reverse Glass
+    Painting">Reverse Glass Painting</option><option value="Sand Painting">Sand
+    Painting</option><option value="Speed Painting">Speed
+    Painting</option><option value="Spray Painting">Spray
+    Painting</option><option value="Still Life Painting">Still Life
+    Painting</option><option value="Surrealism Painting">Surrealism
+    Painting</option><option value="Tanjore Painting">Tanjore
+    Painting</option><option value="Tempera Painting">Tempera
+    Painting</option><option value="Velvet Painting">Velvet
+    Painting</option><option value="Watercolor Painting">Watercolor
+    Painting</option><option value="Anime Art">Anime Art</option><option
+    value="Bedazzled Art Style">Bedazzled Art Style</option><option
+    value="Button Art">Button Art</option><option value="Chalk Art">Chalk
+    Art</option><option value="Comic Book Art">Comic Book Art</option><option
+    value="Conceptual Art">Conceptual Art</option><option value="Leather Art
+    Style">Leather Art Style</option><option value="Line Art">Line
+    Art</option><option value="Marble Art">Marble Art</option><option value="Pop
+    Art painting">Pop Art painting</option><option value="Portrait Art">Portrait
+    Art</option><option value="Sand Art">Sand Art</option><option value="Street
+    Art">Street Art</option><option value="Woven Art">Woven Art</option><option
+    value="Anime Style">Anime Style</option><option value="Atari 2600
+    Style">Atari 2600 Style</option><option value="Bauhaus Style">Bauhaus
+    Style</option><option value="Coloring Book Style">Coloring Book
+    Style</option><option value="Constructivism Style">Constructivism
+    Style</option><option value="Fauvism Style">Fauvism Style</option><option
+    value="Glitter Style">Glitter Style</option><option value="GTAV Style">GTAV
+    Style</option><option value="NES Style">NES Style</option><option
+    value="Retro Comic Book Style">Retro Comic Book Style</option><option
+    value="SNES Style">SNES Style</option><option value="Studio Ghibli
+    Style">Studio Ghibli Style</option><option value="Woodburning
+    Style">Woodburning Style</option><option value="Woodcut Style">Woodcut
+    Style</option><option value="Ballpoint Pen Drawing">Ballpoint Pen
+    Drawing</option><option value="Blue Ballpoint Pen Drawing">Blue Ballpoint
+    Pen Drawing</option><option value="Colored Pencil Drawing">Colored Pencil
+    Drawing</option><option value="Pencil Drawing">Pencil
+    Drawing</option><option value="Red Ballpoint Pen Drawing">Red Ballpoint Pen
+    Drawing</option><option value="Comic Book Cover">Comic Book
+    Cover</option><option value="Comic Book">Comic Book</option><option
+    value="Comic Book Panel">Comic Book Panel</option><option value="Colored
+    Pencil Sketch">Colored Pencil Sketch</option><option value="Pencil
+    Sketch">Pencil Sketch</option><option value="3D Render">3D
+    Render</option><option value="Boxart">Boxart</option><option
+    value="Children's Book">Children's Book</option><option value="Coloring
+    Book">Coloring Book</option><option value="Copper Plate Engraving">Copper
+    Plate Engraving</option><option
+    value="Cross-Stitch">Cross-Stitch</option><option value="Diamond
+    Engraving">Diamond Engraving</option><option
+    value="Icon">Icon</option><option value="Linocut">Linocut</option><option
+    value="Lowpoly">Lowpoly</option><option value="Old Black and White
+    Photograph">Old Black and White Photograph</option><option
+    value="Photograph">Photograph</option><option
+    value="Pixelart">Pixelart</option><option value="Pop Up Book">Pop Up
+    Book</option><option value="Ring Engraving">Ring Engraving</option><option
+    value="Spray Paint">Spray Paint</option><option value="Stained
+    Glass">Stained Glass</option><option value="Sticker">Sticker</option><option
+    value="Stone Cut">Stone Cut</option>
+  </select>
+  <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style" />
+
+  <!-- Detail Estetis -->  
+  <label>Detail Estetis (Pilih Banyak)</label>
+  <select id="detailSelect" multiple size="6" onchange="updateDetail()">
+    <option value="">Tulis Manual</option>
+    <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
+    <option value="rim lighting, ambient glow">rim lighting, ambient glow</option>
+    <option value="volumetric fog, warm tone">volumetric fog, warm tone</option>
+    <option value="silky texture, soft shadows">silky texture, soft shadows</option>
+    <option value="sparkling particles, cinematic blur">sparkling particles, cinematic blur</option>
+    <option value="glowing neon signs, rainy reflection">glowing neon signs, rainy reflection</option>
+    <option value="soft bokeh, golden hour lighting">soft bokeh, golden hour lighting</option>
+    <!-- new -->
+    <option value="cinematic">
+        cinematic
+      </option><option value="hd">
+        hd
+      </option><option value="4k">
+        4k
+      </option><option value="8k">
+        8k
+      </option><option value="3d">
+        3d
+      </option><option value="4d">
+        4d
+      </option><option value="highly detailed">
+        highly detailed
+      </option><option value="octane render">
+        octane render
+      </option><option value="trending artstation">
+        trending artstation
+      </option><option value="Pixelate">
+        Pixelate
+      </option><option value="Blur">
+        Blur
+      </option><option value="Beautiful">
+        Beautiful
+      </option><option value="Very Beautiful">
+        Very Beautiful
+      </option><option value="Very Very Beautiful">
+        Very Very Beautiful
+      </option><option value="Symmetrical">
+        Symmetrical
+      </option><option value="Macabre">
+        Macabre
+      </option><option value="at night">
+        at night
+      </option>
+      <option value="daylight">daylight</option><option
+      value="moonlight">moonlight</option><option value="natural light">natural
+      light</option><option value="Front Light">Front Light</option><option
+      value="Backlight">Backlight</option><option value="Soft Light">Soft
+      Light</option><option value="Hard Light">Hard Light</option><option
+      value="Moody Light">Moody Light</option><option value="Dynamic
+      Light">Dynamic Light</option>
+  </select>
+  <input type="text" id="detail" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting"></input>
+
+  <!-- Latar Belakang -->
+  <label>Latar Belakang</label>
+   <select id="latarSelect" multiple size="6" onchange="updateLatar()">
+    <option value="">Tulis Manual</option>
+  <optgroup label="Random">
+     <option value="cherry blossom forest">cherry blossom forest</option>
+    <option value="Indonesian school courtyard">Indonesian school courtyard</option>
+    <option value="sunset rice field">sunset rice field</option>
+    <option value="rainy street at night">rainy street at night</option>
+    <option value="cyberpunk cityscape">cyberpunk cityscape</option>
+    <option value="ancient Japanese temple">ancient Japanese temple</option>
+    <option value="floating islands above clouds">floating islands above clouds</option>
+  </optgroup>
+    <optgroup label="1. Background (General Visual Backgrounds)">
+    <option value="Plain White">Plain White</option>
+    <option value="Solid Black">Solid Black</option>
+    <option value="Soft Color Gradient">Soft Color Gradient</option>
+    <option value="Bokeh Blur">Bokeh (Blur Effect)</option>
+    <option value="Rough Texture">Rough Texture (Concrete/Brick)</option>
+    <option value="Abstract Geometric">Abstract Geometric Pattern</option>
+    <option value="Blurred Galaxy">Blurred Galaxy/Stars</option>
+    <option value="Peeling Wall">Peeling Paint Wall</option>
+    <option value="Rippling Water">Rippling Water or Bubbles</option>
+    <option value="Blue Sky Clouds">Thin Clouds in Blue Sky</option>
+</optgroup>
+
+<optgroup label="2. Settings/Places (Specific Environments)">
+    <option value="Amazon Sunset">Amazon Rainforest at Sunset</option>
+    <option value="Tokyo Night">Bustling Tokyo Street at Night (Neon)</option>
+    <option value="Temple Moon">Ancient Temple Ruins under Full Moon</option>
+    <option value="Space Station">Advanced Space Station Orbiting Earth</option>
+    <option value="Japanese Snow Village">Traditional Japanese Mountain Village (Snowy)</option>
+    <option value="Moroccan Market">Traditional Moroccan Street Market (Day)</option>
+    <option value="Atlantis">Majestic Underwater City of Atlantis</option>
+    <option value="Apocalyptic Warzone">Post-Apocalyptic War Zone</option>
+    <option value="Safari Migration">African Savanna during Wildlife Migration</option>
+    <option value="Ice Palace">Ice Palace atop a Frozen Mountain</option>
+</optgroup>
+
+<optgroup label="3. Interior Rooms (General)">
+    <option value="Grand Library">Grand Old Library</option>
+    <option value="Futuristic Lab">Futuristic Science Laboratory</option>
+    <option value="Minimal Bedroom">Minimalist Bedroom</option>
+    <option value="Abandoned Warehouse">Abandoned Industrial Warehouse</option>
+    <option value="Art Deco Living Room">Luxurious Art Deco Living Room</option>
+    <option value="Rustic Kitchen">Warm Rustic Kitchen</option>
+    <option value="Spaceship Control Room">Spaceship Control Room</option>
+    <option value="Zen Temple">Japanese Zen Temple</option>
+    <option value="Empty Classroom">Empty School Classroom</option>
+    <option value="Spa Bathroom">Modern Spa Bathroom</option>
+</optgroup>
+
+<optgroup label="4. Home Areas (Specific Interior Spaces)">
+    <option value="Home Rustic Kitchen">Rustic-Style Kitchen</option>
+    <option value="Home Modern Living">Modern Minimalist Living Room</option>
+    <option value="Home Master Bedroom">Calm Master Bedroom</option>
+    <option value="Home Spa Bathroom">Spa-Style Bathroom</option>
+    <option value="Home Creative Studio">Creative Home Studio/Workspace</option>
+    <option value="Home Reading Nook">Cozy Reading Nook</option>
+    <option value="Home Playroom">Colorful Children's Playroom</option>
+    <option value="Home Balcony">Terrace/Balcony with a View</option>
+    <option value="Home Dining Room">Traditional Family Dining Room</option>
+    <option value="Home Dramatic Hallway">Dramatic Hallway with Lighting</option>
+</optgroup>
+
+  </select>
+  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
+
+  <!-- Aspect Ratio -->
+  <label>Aspect Ratio</label>
+  <select id="rasio" onchange="generatePrompt()">
+    <option value="">-- Pilih --</option>
+    <option value="1:1">1:1 (Square)</option>
+    <option value="16:9">16:9 (Landscape)</option>
+    <option value="9:16">9:16 (Portrait)</option>
+    <option value="4:3">4:3</option>
+  </select>
+
+  <div class="buttons">
+    <button onclick="resetForm()">🔄 Reset Form</button>
+    <button onclick="exportToTxt()">📄 Ekspor sebagai .txt</button>
+    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </div>
+
+</form>
+
+<div id="output"><em>Prompt akan muncul di sini secara otomatis...</em></div>
+<button id="copyBtn" onclick="copyPrompt()" class="small-btn">📋 Salin Prompt</button>
+
+<script>
+  function generatePrompt() {
+    const s = id => document.getElementById(id).value;
+    let prompt = s('subjek');
+    if (s('genre')) prompt += `, ${s('genre')} theme`;
+    if (s('negara')) prompt += `, ${s('negara')}`;
+    if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
+    if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
+    if (s('pakaian')) prompt += `, ${s('pakaian')}`;
+    if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
+    if (s('pose')) prompt += `, ${s('pose')}`;
+    if (s('kamera')) prompt += `, ${s('kamera')} camera`;
+    if (s('latar')) prompt += `, background: ${s('latar')}`;
+    if (s('detail')) prompt += `, ${s('detail')}`;
+    if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
+    if (s('rasio')) prompt += `, aspect ratio: ${s('rasio')}`;
+    document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt;
+  }
+
+  function copyPrompt() {
+    const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
+    navigator.clipboard.writeText(text).then(() => {
+      document.getElementById('copyBtn').textContent = "✅ Prompt Disalin!";
+      setTimeout(() => {
+        document.getElementById('copyBtn').textContent = "📋 Salin Prompt";
+      }, 2000);
+    });
+  }
+
+  function handleSelectChange(fieldId) {
+    const select = document.getElementById(fieldId + "Select");
+    const input = document.getElementById(fieldId);
+    input.value = select.value;
+    generatePrompt();
+  }
+
+  function resetForm() {
+    document.querySelectorAll("input[type='text'], textarea").forEach(el => el.value = '');
+    generatePrompt();
+  }
+
+  function exportToTxt() {
+    const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
+    const blob = new Blob([text], {type: 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'prompt_ai.txt';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+  
+ // hair style 
+ function updateHair() {
+    const select = document.getElementById("hairSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("gayaRambut");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+
+ // pakaian 
+function updatePakaian() {
+    const select = document.getElementById("pakaianSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("pakaian");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+  
+  // Update pose
+  function updatePose() {
+    const select = document.getElementById("poseSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("pose");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+  
+function updateDetail() {
+    const select = document.getElementById("detailSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    document.getElementById("detail").value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+  }
+ // background multiple
+ 
+ function updateLatar() {
+    const select = document.getElementById("latarSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("latar");
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+  }
+  // Load dark mode from localStorage
+  window.onload = () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+  };
+  // APPS
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration => {
+      console.log('Service Worker terdaftar:', registration);
+    })
+    .catch(error => {
+      console.log('Gagal mendaftarkan Service Worker:', error);
+    });
+  } 
+  // if
+  let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  const btnInstall = document.getElementById('installBtn');
+  btnInstall.style.display = 'block';
+
+  btnInstall.addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+      });
+    }
+  });
+}); 
+  
+</script>
+<div style="text-align:center">
+  <h3>Contact Person</h3>
+  <p>⭕ fediverse <a href="https://misskey.id/@awvr" target="_blank"
+  style="color: #cc3399; text-decoration: none;">@awvr@misskey.id</a></p>
+</div>
+<footer style="text-align: center; margin-top: 40px; font-size: 14px; color: #777;">
+  Dibuat dengan ❤️ oleh 
+  <a href="https://linktr.ee/ahladigital"  target="_blank" style="color: #cc3399; text-decoration: none;">
+    @AWVR@MISSKEY.ID
+  </a>
+</footer>
+
+</body>
+</html>
