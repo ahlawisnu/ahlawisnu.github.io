@@ -9,7 +9,7 @@ Prompt Generator AI adalah alat web sederhana berbasis HTML/JavaScript yang memb
 ### 🔧 Cara Menggunakan
 
 1. **Buka Halaman Web**
-   - Buka file `index.html` di browser kamu.
+   - Buka file `Yang di download di atas` di browser kamu.
    - Tidak perlu koneksi internet atau server backend — semua berjalan secara lokal.
    - [ahlawisnu.github.io](https://ahlawisnu.github.io) untuk secara online 
 2. **Isi Formulir Prompt**
