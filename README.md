@@ -4,7 +4,7 @@ Prompt Generator AI adalah alat web sederhana berbasis HTML/JavaScript yang memb
 
 ---
 ## Versi Offline 
-[Download Source](tab:https://raw.githubusercontent.com/ahlawisnu/ahlawisnu.github.io/refs/heads/main/Prompt-Builder-Offline.html) 
+[Download Source] (https://raw.githubusercontent.com/ahlawisnu/ahlawisnu.github.io/refs/heads/main/Prompt-Builder-Offline.html){:target="_blank"}
 
 ### 🔧 Cara Menggunakan
 
