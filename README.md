@@ -3,6 +3,8 @@
 Prompt Generator AI adalah alat web sederhana berbasis HTML/JavaScript yang membantu pengguna membuat **prompt gambar AI** secara otomatis dan real-time. Alat ini sangat berguna bagi kreator digital, desainer, atau siapa saja yang ingin menghasilkan gambar dengan teknologi AI seperti Midjourney, Stable Diffusion, Leonardo.Ai, dan lainnya.
 
 ---
+## Versi Offline 
+[Download Source](https://raw.githubusercontent.com/ahlawisnu/ahlawisnu.github.io/refs/heads/main/PROMPTBuilderOffline.Html) 
 
 ### 🔧 Cara Menggunakan
 
