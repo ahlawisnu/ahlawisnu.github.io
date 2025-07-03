@@ -78,13 +78,24 @@ function updatePakaian() {
     input.value = selectedOptions.join(", ");
     generatePrompt();
   }
-  
+
+ // KAMERA
+ function updateKamera() {
+    const select = document.getElementById("kameraSelect");
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const input = document.getElementById("kamera");
+     
+    // Masukkan hasil pilihan ke dalam input
+    input.value = selectedOptions.join(", ");
+    generatePrompt();
+ }
 function updateDetail() {
     const select = document.getElementById("detailSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
     document.getElementById("detail").value = selectedOptions.join(", ");
     generatePrompt();
   }
+
   function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
