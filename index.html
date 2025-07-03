@@ -316,6 +316,54 @@
   <!-- Sudut Pandang Kamera -->
   <label>Sudut Pandang Kamera</label>
   <select id="kameraSelect" onchange="handleSelectChange('kamera')">
+
+      <!-- Grup Kamera Profesional -->
+  <optgroup label="📷 Kamera Profesional">
+    
+    <!-- Canon -->
+    <optgroup label="Canon">
+      <option value="canon eos r5">Canon EOS R5</option>
+      <option value="canon eos r6 mark ii">Canon EOS R6 Mark II</option>
+      <option value="canon eos 1dx mark iii">Canon EOS-1DX Mark III</option>
+    </optgroup>
+
+    <!-- Nikon -->
+    <optgroup label="Nikon">
+      <option value="nikon z9">Nikon Z9</option>
+      <option value="nikon z8">Nikon Z8</option>
+      <option value="nikon z6 ii">Nikon Z6 II</option>
+      <option value="nikon z7 ii">Nikon Z7 II</option>
+    </optgroup>
+
+    <!-- Sony -->
+    <optgroup label="Sony">
+      <option value="sony a7r v">Sony Alpha a7R V</option>
+      <option value="sony a7 iv">Sony Alpha a7 IV</option>
+      <option value="sony a1">Sony Alpha a1</option>
+      <option value="sony a9 ii">Sony Alpha a9 II</option>
+    </optgroup>
+
+    <!-- Fujifilm -->
+    <optgroup label="Fujifilm">
+      <option value="fujifilm gfx100s">Fujifilm GFX100S</option>
+      <option value="fujifilm x h2s">Fujifilm X-H2S</option>
+      <option value="fujifilm x t5">Fujifilm X-T5</option>
+    </optgroup>
+
+    <!-- Panasonic -->
+    <optgroup label="Panasonic">
+      <option value="panasonic s1h">Panasonic Lumix S1H</option>
+      <option value="panasonic s5 ii">Panasonic Lumix S5 II</option>
+      <option value="panasonic gh6">Panasonic GH6</option>
+    </optgroup>
+
+    <!-- Olympus / OM System -->
+    <optgroup label="OM System">
+      <option value="om system om 1">OM SYSTEM OM-1</option>
+    </optgroup>
+
+  </optgroup>
+
     <option value="">Tulis Manual</option>
     <option value="close-up shot">Close-up Shot</option>
     <option value="medium shot">Medium Shot</option>
@@ -326,6 +374,22 @@
     <option value="bird's eye view">Bird’s Eye View</option>
     <option value="dutch angle tilt">Dutch Angle</option>
     <option value="point of view (POV)">Point of View</option>
+    
+    <!-- lensa -->
+     <optgroup label="🔍 Jenis Lensa">
+    <option value="ultra wide angle">Ultra Wide-angle</option>
+    <option value="wide angle prime">Wide-angle Prime</option>
+    <option value="standard zoom">Standard Zoom</option>
+    <option value="telephoto zoom">Telephoto Zoom</option>
+    <option value="super telephoto">Super Telephoto</option>
+    <option value="fast prime">Fast Prime (f/2.8 ke bawah)</option>
+    <option value="macro lens">Macro Lens</option>
+    <option value="portrait lens">Portrait Lens</option>
+    <option value="landscape lens">Landscape Lens</option>
+    <option value="video lens">Video Lens</option>
+    <option value="tilt shift lens">Tilt & Shift Lens</option>
+    <option value="fisheye lens">Fisheye Lens</option>
+     </optgroup>
   </select>
   <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up shot" />
 
