@@ -117,3 +117,47 @@ p {
 #installBtn:hover {
   background-color: #303f9f;
 }
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  color: red;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: red;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 60px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#searchFav {
+  width: 100%;
+  padding: 8px;
+  color: red;
+  margin-bottom: 10px;
+}
