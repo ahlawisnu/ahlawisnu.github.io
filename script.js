@@ -153,3 +153,98 @@ window.addEventListener('beforeinstallprompt', (e) => {
   });
 }); 
   
+// Tampilkan modal
+function openFavoritesModal() {
+  showFavorites();
+  document.getElementById("favoritesModal").style.display = "flex";
+}
+
+// Tutup modal
+function closeFavoritesModal() {
+  document.getElementById("favoritesModal").style.display = "none";
+}
+
+// Tampilkan semua favorit
+function showFavorites() {
+  const list = document.getElementById("favoritesList");
+  const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+  list.innerHTML = "";
+
+  if (favorites.length === 0) {
+    list.innerHTML = "<em>Belum ada prompt favorit.</em>";
+    return;
+  }
+
+  favorites.forEach((prompt, index) => {
+    const li = document.createElement("li");
+    li.textContent = prompt;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.onclick = () => {
+      const updated = favorites.filter((_, i) => i !== index);
+      localStorage.setItem("aiPrompts", JSON.stringify(updated));
+      showFavorites();
+    };
+
+    li.appendChild(deleteBtn);
+    list.appendChild(li);
+  });
+}
+
+// Filter pencarian di modal
+function filterFavorites() {
+  const search = document.getElementById("searchFav").value.toLowerCase();
+  const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+  const filtered = favorites.filter(prompt => prompt.toLowerCase().includes(search));
+
+  const list = document.getElementById("favoritesList");
+  list.innerHTML = "";
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<em>Tidak ada hasil ditemukan.</em>";
+    return;
+  }
+
+  filtered.forEach((prompt, index) => {
+    const li = document.createElement("li");
+    li.textContent = prompt;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.onclick = () => {
+      const updated = favorites.filter((_, i) => i !== index);
+      localStorage.setItem("aiPrompts", JSON.stringify(updated));
+      filterFavorites(); // Update tampilan setelah hapus
+    };
+
+    li.appendChild(deleteBtn);
+    list.appendChild(li);
+  });
+}
+
+function saveToFavorites() {
+  const output = document.getElementById("output").textContent.replace("🎨 Prompt:\n", "").trim();
+  
+  if (!output) {
+    alert("Prompt kosong, tidak ada yang bisa disimpan.");
+    return;
+  }
+
+  // Ambil data dari localStorage
+  let favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+
+  // Cek duplikasi
+  if (favorites.includes(output)) {
+    alert("Prompt ini sudah tersimpan sebelumnya.");
+    return;
+  }
+
+  // Tambahkan ke daftar
+  favorites.push(output);
+  localStorage.setItem("aiPrompts", JSON.stringify(favorites));
+
+  alert("Prompt berhasil disimpan sebagai favorit!");
+}
