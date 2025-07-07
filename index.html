@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   
-  <title>Prompt Generator AI - Buat Prompt Gambar AI Secara Cepat</title>
+  <title>Prompt Builder</title>
   
-  <meta name="description" content="Prompt Generator AI adalah alat gratis untuk membuat prompt gambar berbasis AI secara otomatis. Cocok untuk Midjourney, DALL·E, Stable Diffusion, Leonardo.Ai, dan lainnya.">
+  <meta name="description" content="Prompt AI Generator is a free tool to automatically create AI-based drawing prompts. Suitable for Midjourney, DALL· E, Stable Diffusion, Leonardo.Ai, and more.">
   
-  <meta name="keywords" content="Prompt Builder, prompt generator AI, pembuat prompt gambar, prompt art generator, midjourney prompt, stable diffusion prompt, ai image prompt builder, buat prompt online">
+  <meta name="keywords" content="Prompt Builder, prompt generator AI, pembuat prompt gambar, prompt art generator, midjourney prompt, stable diffusion prompt, Flux Ai Prompt, SDXL prompt">
   
   <meta name="author" content="@AWVR@Misskey.ID">
   
@@ -26,13 +26,13 @@
 
 <form id="promptForm">
 
-  <label>Subjek Utama</label>
+  <label>Main Object</label>
   <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
 
   <!-- Genre -->
   <label>Genre</label>
   <select id="genreSelect" onchange="handleSelectChange('genre')">
-    <option value="">Tulis Manual</option>
+    <option value="">Write Manual</option>
     <option value="fantasy">Fantasi</option>
     <option value="sci-fi">Sains Fiksi</option>
     <option value="horror">Horor</option>
@@ -49,9 +49,9 @@
   <input type="text" id="genre" oninput="generatePrompt()" placeholder="Contoh: fantasy" />
 
   <!-- Gaya Visual Berdasarkan Negara -->
-  <label>Gaya Visual Berdasarkan Negara</label>
+  <label>Visual Styles by Country</label>
   <select id="negaraSelect" onchange="handleSelectChange('negara')">
-    <option value="">Tulis Manual</option>
+    <option value="">Write Manual</option>
     <option value="Japanese anime style character">Jepang (gaya karakter anime)</option>
     <option value="South Korean realistic beauty standard">Korea Selatan (realistis kecantikan)</option>
     <option value="American photorealistic portrait">Amerika Serikat (fotorealistis potret)</option>
@@ -978,7 +978,7 @@
   Dibuat dengan ❤️ oleh 
   <a href="https://linktr.ee/ahladigital"  target="_blank" style="color: #cc3399; text-decoration: none;">
     @AWVR@MISSKEY.ID
-  </a>
+  </a> - <a href="https://github.com/ahlawisnu" target="_blank" style="color: #cc3399; text-decoration: none;"> GitHub Repo</a>
 </footer>
 
 </body>
