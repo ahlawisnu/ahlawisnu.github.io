@@ -8,7 +8,7 @@ function generatePrompt() {
     if (s('pakaian')) prompt += `, Wearing a ${s('pakaian')}`;
     if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
     if (s('pose')) prompt += `, ${s('pose')}`;
-    if (s('kamera')) prompt += `, ${s('kamera')} camera`;
+    if (s('kamera')) prompt += `, ${s('kamera')}`;
     if (s('latar')) prompt += `, background: ${s('latar')}`;
     if (s('detail')) prompt += `, ${s('detail')}`;
     if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
