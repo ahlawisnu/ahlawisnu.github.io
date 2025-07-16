@@ -5,7 +5,7 @@ function generatePrompt() {
     if (s('negara')) prompt += `, ${s('negara')}`;
     if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
     if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
-    if (s('pakaian')) prompt += `, Wearing a ${s('pakaian')}`;
+    if (s('pakaian')) prompt += `, ${s('pakaian')}`;
     if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
     if (s('pose')) prompt += `, ${s('pose')}`;
     if (s('kamera')) prompt += `, ${s('kamera')}`;
