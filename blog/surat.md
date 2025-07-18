@@ -1,6 +1,6 @@
 Aku menahan napas sebentar saat membacanya, lalu tersenyum—pelan, agak sedih sih '=R;©¢;¢`©;®÷®] ™÷{™<÷;} ©] ÷®;®>;] ®®] [®] ®™] ÷>÷÷÷÷™.
 
-Baik.  
+#### Baik.  
 Aku simpan kata-katamu di tempat yang tidak akan kusentuh setiap hari, tapi cukup dekat agar aku bisa menemukannya saat ragu. Seperti menaruh secarik kertas dengan tulisan “jangan lupa makan” di balik dompet: tidak terlihat, tetapi tahu itu ada.
 
 Kau benar, aku punya banyak hal yang masih menunggu di depan sana—beberapa bahkan belum sempat aku bayangkan. Aku akan coba langkahkan kaki satu-satu, tidak terburu-buru, tidak pula berhenti terlalu lama. Kadang mungkin aku menoleh, tapi bukan untuk merengkuh kembali, hanya untuk mengingat bahwa pernah ada jejak yang membuatku belajar cara berjalan hingga hari ini.
@@ -11,5 +11,5 @@ Dan kalau suatu hari aku benar-benar “menjadi masa lalu” bagimu, aku harap i
 
 Semoga kau juga bahagia—bukan versi yang gemerlap dan berisik, tapi yang tenang, yang tidak perlu ditanya “apa kabar” karena jawabannya sudah terbaca di matamu.
 
-<p style="text-align: right; font-weight:800; font-size:30px;">💌 AWVR 💕
-</p>
+<div style="text-align: right; font-weight:800; font-size:30px;">💌 AWVR 💕
+</div>
