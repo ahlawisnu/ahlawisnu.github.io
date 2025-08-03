@@ -295,4 +295,4 @@ function generatePrompt() {
     localStorage.setItem("aiPrompts", JSON.stringify(favorites));
 
     alert("Prompt berhasil disimpan sebagai favorit!");
-        }
+  }
