@@ -1,3 +1,50 @@
+// Fungsi untuk menghasilkan data prompt dalam format JSON
+function generatePromptJson() {
+  const s = id => document.getElementById(id).value;
+  const data = {
+    subjek: s('subjek'),
+    genre: s('genre') || null,
+    negara: s('negara') || null,
+    gayaRambut: s('gayaRambut') || null,
+    warnaRambut: s('warnaRambut') || null,
+    pakaian: s('pakaian') || null,
+    ekspresi: s('ekspresi') || null,
+    pose: s('pose') || null,
+    kamera: s('kamera') || null,
+    latar: s('latar') || null,
+    detail: s('detail') || null,
+    gaya: s('gaya') || null,
+    rasio: s('rasio') || null
+  };
+
+  // Hapus properti dengan nilai null agar JSON lebih bersih
+  for (const key in data) {
+    if (data[key] === null || data[key] === '') {
+      delete data[key];
+    }
+  }
+
+  // Tampilkan JSON di output, diformat agar mudah dibaca
+  document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+}
+
+// Fungsi untuk mengekspor output JSON ke file
+function exportToJson() {
+  const data = document.getElementById('output').textContent;
+  if (!data) {
+    alert("Output kosong, tidak ada yang bisa diekspor.");
+    return;
+  }
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'prompt_ai.json';
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+// Fungsi generatePrompt() yang lama kini akan memanggil generatePromptJson()
 function generatePrompt() {
     const s = id => document.getElementById(id).value;
     let prompt = s('subjek');
@@ -15,7 +62,8 @@ function generatePrompt() {
     if (s('rasio')) prompt += `, aspect ratio: ${s('rasio')}`;
     document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt;
   }
-
+  
+  // Fungsi-fungsi lain dari skrip Anda yang tidak diubah
   function copyPrompt() {
     const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
     navigator.clipboard.writeText(text).then(() => {
@@ -49,8 +97,8 @@ function generatePrompt() {
     URL.revokeObjectURL(url);
   }
   
- // hair style 
- function updateHair() {
+  // hair style 
+  function updateHair() {
     const select = document.getElementById("hairSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
     const input = document.getElementById("gayaRambut");
@@ -59,8 +107,8 @@ function generatePrompt() {
     generatePrompt();
   }
 
- // pakaian 
-function updatePakaian() {
+  // pakaian 
+  function updatePakaian() {
     const select = document.getElementById("pakaianSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
     const input = document.getElementById("pakaian");
@@ -79,17 +127,17 @@ function updatePakaian() {
     generatePrompt();
   }
 
- // KAMERA
- function updateKamera() {
+  // KAMERA
+  function updateKamera() {
     const select = document.getElementById("kameraSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
     const input = document.getElementById("kamera");
-     
+      
     // Masukkan hasil pilihan ke dalam input
     input.value = selectedOptions.join(", ");
     generatePrompt();
- }
-function updateDetail() {
+  }
+  function updateDetail() {
     const select = document.getElementById("detailSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
     document.getElementById("detail").value = selectedOptions.join(", ");
@@ -101,9 +149,9 @@ function updateDetail() {
     const isDark = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
   }
- // background multiple
- 
- function updateLatar() {
+  // background multiple
+  
+  function updateLatar() {
     const select = document.getElementById("latarSelect");
     const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
     const input = document.getElementById("latar");
@@ -131,120 +179,120 @@ function updateDetail() {
   // if
   let deferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  
-  const btnInstall = document.getElementById('installBtn');
-  btnInstall.style.display = 'block';
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    const btnInstall = document.getElementById('installBtn');
+    btnInstall.style.display = 'block';
 
-  btnInstall.addEventListener('click', () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      });
+    btnInstall.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      }
+    });
+  }); 
+    
+  // Tampilkan modal
+  function openFavoritesModal() {
+    showFavorites();
+    document.getElementById("favoritesModal").style.display = "flex";
+  }
+
+  // Tutup modal
+  function closeFavoritesModal() {
+    document.getElementById("favoritesModal").style.display = "none";
+  }
+
+  // Tampilkan semua favorit
+  function showFavorites() {
+    const list = document.getElementById("favoritesList");
+    const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+    list.innerHTML = "";
+
+    if (favorites.length === 0) {
+      list.innerHTML = "<em>Belum ada prompt favorit.</em>";
+      return;
     }
-  });
-}); 
-  
-// Tampilkan modal
-function openFavoritesModal() {
-  showFavorites();
-  document.getElementById("favoritesModal").style.display = "flex";
-}
 
-// Tutup modal
-function closeFavoritesModal() {
-  document.getElementById("favoritesModal").style.display = "none";
-}
+    favorites.forEach((prompt, index) => {
+      const li = document.createElement("li");
+      li.textContent = prompt;
 
-// Tampilkan semua favorit
-function showFavorites() {
-  const list = document.getElementById("favoritesList");
-  const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
-  list.innerHTML = "";
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "🗑️";
+      deleteBtn.style.marginLeft = "10px";
+      deleteBtn.onclick = () => {
+        const updated = favorites.filter((_, i) => i !== index);
+        localStorage.setItem("aiPrompts", JSON.stringify(updated));
+        showFavorites();
+      };
 
-  if (favorites.length === 0) {
-    list.innerHTML = "<em>Belum ada prompt favorit.</em>";
-    return;
+      li.appendChild(deleteBtn);
+      list.appendChild(li);
+    });
   }
 
-  favorites.forEach((prompt, index) => {
-    const li = document.createElement("li");
-    li.textContent = prompt;
+  // Filter pencarian di modal
+  function filterFavorites() {
+    const search = document.getElementById("searchFav").value.toLowerCase();
+    const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
+    const filtered = favorites.filter(prompt => prompt.toLowerCase().includes(search));
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "🗑️";
-    deleteBtn.style.marginLeft = "10px";
-    deleteBtn.onclick = () => {
-      const updated = favorites.filter((_, i) => i !== index);
-      localStorage.setItem("aiPrompts", JSON.stringify(updated));
-      showFavorites();
-    };
+    const list = document.getElementById("favoritesList");
+    list.innerHTML = "";
 
-    li.appendChild(deleteBtn);
-    list.appendChild(li);
-  });
-}
+    if (filtered.length === 0) {
+      list.innerHTML = "<em>Tidak ada hasil ditemukan.</em>";
+      return;
+    }
 
-// Filter pencarian di modal
-function filterFavorites() {
-  const search = document.getElementById("searchFav").value.toLowerCase();
-  const favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
-  const filtered = favorites.filter(prompt => prompt.toLowerCase().includes(search));
+    filtered.forEach((prompt, index) => {
+      const li = document.createElement("li");
+      li.textContent = prompt;
 
-  const list = document.getElementById("favoritesList");
-  list.innerHTML = "";
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "🗑️";
+      deleteBtn.style.marginLeft = "10px";
+      deleteBtn.onclick = () => {
+        const updated = favorites.filter((_, i) => i !== index);
+        localStorage.setItem("aiPrompts", JSON.stringify(updated));
+        filterFavorites(); // Update tampilan setelah hapus
+      };
 
-  if (filtered.length === 0) {
-    list.innerHTML = "<em>Tidak ada hasil ditemukan.</em>";
-    return;
+      li.appendChild(deleteBtn);
+      list.appendChild(li);
+    });
   }
 
-  filtered.forEach((prompt, index) => {
-    const li = document.createElement("li");
-    li.textContent = prompt;
+  function saveToFavorites() {
+    const output = document.getElementById("output").textContent.replace("🎨 Prompt:\n", "").trim();
+    
+    if (!output) {
+      alert("Prompt kosong, tidak ada yang bisa disimpan.");
+      return;
+    }
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "🗑️";
-    deleteBtn.style.marginLeft = "10px";
-    deleteBtn.onclick = () => {
-      const updated = favorites.filter((_, i) => i !== index);
-      localStorage.setItem("aiPrompts", JSON.stringify(updated));
-      filterFavorites(); // Update tampilan setelah hapus
-    };
+    // Ambil data dari localStorage
+    let favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
 
-    li.appendChild(deleteBtn);
-    list.appendChild(li);
-  });
-}
+    // Cek duplikasi
+    if (favorites.includes(output)) {
+      alert("Prompt ini sudah tersimpan sebelumnya.");
+      return;
+    }
 
-function saveToFavorites() {
-  const output = document.getElementById("output").textContent.replace("🎨 Prompt:\n", "").trim();
-  
-  if (!output) {
-    alert("Prompt kosong, tidak ada yang bisa disimpan.");
-    return;
-  }
+    // Tambahkan ke daftar
+    favorites.push(output);
+    localStorage.setItem("aiPrompts", JSON.stringify(favorites));
 
-  // Ambil data dari localStorage
-  let favorites = JSON.parse(localStorage.getItem("aiPrompts")) || [];
-
-  // Cek duplikasi
-  if (favorites.includes(output)) {
-    alert("Prompt ini sudah tersimpan sebelumnya.");
-    return;
-  }
-
-  // Tambahkan ke daftar
-  favorites.push(output);
-  localStorage.setItem("aiPrompts", JSON.stringify(favorites));
-
-  alert("Prompt berhasil disimpan sebagai favorit!");
-}
+    alert("Prompt berhasil disimpan sebagai favorit!");
+        }
