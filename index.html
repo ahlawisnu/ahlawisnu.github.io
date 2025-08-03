@@ -944,6 +944,17 @@
   </div>
 
 </form>
+  <!-- Tombol Buka Modal -->
+<button onclick="openFavoritesModal()">🔖 Note / Bookmarks</button>
+  <!-- Modal Daftar Favorit -->
+<div id="favoritesModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeFavoritesModal()">&times;</span>
+    <h3>Daftar Favorit</h3>
+    <input type="text" id="searchFav" oninput="filterFavorites()" placeholder="Cari prompt...">
+    <ul id="favoritesList"></ul>
+  </div>
+</div>
   
       <div>
         <button onclick="resetForm()">Reset Formulir</button>
@@ -960,20 +971,7 @@
     <h3>Output JSON Real-time</h3>
     <pre id="outputJSON" class="output-container"></pre>
     <button onclick="copyJson()">Salin JSON</button>
-    
-
     <script src="app.js"></script>
-  <!-- Tombol Buka Modal -->
-<button onclick="openFavoritesModal()">🔖 Note / Bookmarks</button>
-  <!-- Modal Daftar Favorit -->
-<div id="favoritesModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeFavoritesModal()">&times;</span>
-    <h3>Daftar Favorit</h3>
-    <input type="text" id="searchFav" oninput="filterFavorites()" placeholder="Cari prompt...">
-    <ul id="favoritesList"></ul>
-  </div>
-</div>
   <!-- File js -->
       <script src="script.js"></script>
     <script src="sw.js"></script>
