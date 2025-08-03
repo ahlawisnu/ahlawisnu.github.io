@@ -945,14 +945,24 @@
 
 </form>
   
-<hr>
+      <div>
+        <button onclick="resetForm()">Reset Formulir</button>
+        <button onclick="exportToTxt()">Ekspor TXT</button>
+        <button onclick="exportToJson()">Ekspor JSON</button>
+    </div>
+
+    <hr>
 
     <h3>Output Prompt Teks</h3>
     <pre id="output" class="output-container">🎨 Prompt:</pre>
+    <button onclick="copyPrompt()">Salin Prompt</button>
 
     <h3>Output JSON Real-time</h3>
     <pre id="outputJSON" class="output-container"></pre>
-<button id="copyBtn" onclick="copyPrompt()" class="small-btn">📋 Salin Prompt</button>
+    <button onclick="copyJson()">Salin JSON</button>
+    
+
+    <script src="app.js"></script>
   <!-- Tombol Buka Modal -->
 <button onclick="openFavoritesModal()">🔖 Note / Bookmarks</button>
   <!-- Modal Daftar Favorit -->
@@ -966,8 +976,6 @@
 </div>
   <!-- File js -->
       <script src="script.js"></script>
-  
-      <script src="app.js"></script>  
     <script src="sw.js"></script>
   <!-- file js end -->
 
