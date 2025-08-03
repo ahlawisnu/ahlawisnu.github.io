@@ -16,7 +16,7 @@ function generatePrompt() {
     if (s('gaya')) promptText += `, art style: ${s('gaya')}`;
     if (s('rasio')) promptText += `, aspect ratio: ${s('rasio')}`;
 
-    document.getElementById('output').textContent = "🎨 Prompt:\n" + promptText;
+    document.getElementById('output').textContent = "💌 Prompt:\n" + promptText;
     
     // Memanggil fungsi untuk menampilkan JSON secara real-time
     displayJsonRealtime();
