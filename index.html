@@ -935,7 +935,32 @@
     <option value="9:16">9:16 (Portrait)</option>
     <option value="4:3">4:3</option>
   </select>
+<!-- Input tambahan untuk struktur baru -->
+<div>
+  <label for="model">Model:</label>
+  <input type="text" id="model" placeholder="Contoh: SDXL, DALL·E 3">
+</div>
 
+<div>
+  <label for="count">Count:</label>
+  <input type="number" id="count" placeholder="Jumlah gambar">
+</div>
+
+<div>
+  <label for="rasio">Aspect Ratio:</label>
+  <input type="text" id="rasio" placeholder="Contoh: 16:9, 1:1">
+</div>
+
+<div>
+  <label for="negative">Negative Prompt:</label>
+  <textarea id="negative" placeholder="Hal-hal yang ingin dihindari dalam gambar"></textarea>
+</div>
+
+<div>
+  <label for="parameter">Parameters:</label>
+  <textarea id="parameter" placeholder="Contoh: CFG scale, steps, seed, dsr"></textarea>
+</div>
+  
   <div class="buttons">
     <button onclick="resetForm()">🔄 Reset</button>
     <button onclick="exportToTxt()">📄 Ekspor.txt</button>
@@ -968,7 +993,11 @@
     <h3>Output JSON Real-time</h3>
     <pre id="outputJSON" class="output-container">💌 Prompt:</pre>
     <button onclick="copyJson()">Salin JSON</button>
-    
+    <!-- Output Prompt -->
+<pre id="output" style="white-space: pre-wrap; background: #f0f0f0; padding: 1em;"></pre>
+
+<!-- Output JSON -->
+<pre id="outputJSON" style="white-space: pre-wrap; background: #e8f5e9; padding: 1em;"></pre>
  <!-- File js -->
     <script src="app.js"></script>
       <script src="script.js"></script>
