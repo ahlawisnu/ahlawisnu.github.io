@@ -329,14 +329,7 @@ function applyTheme(name){
     biru:   {primary:"#2962ff", secondary:"#ff6d00", accent:"#00c853", bg:"#f6f9fc"},
     teal:   {primary:"#00bfa6", secondary:"#ff4081", accent:"#00e676", bg:"#f4fbfa"},
     ungu:   {primary:"#7b5cff", secondary:"#aeea00", accent:"#00c853", bg:"#f8f6ff"},
-    whatsapp: {
-      primary: "#075E54",     // Hijau tua khas WhatsApp
-      secondary: "#25D366",   // Hijau terang untuk aksen
-      accent: "#128C7E",      // Hijau medium untuk elemen interaktif
-      bg: "#ECE5DD"           // Latar belakang chat
-    }
   };
-}
 
       const t = map[name] || map.biru;
       Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty(`--${k}`, v));
