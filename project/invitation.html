@@ -1,352 +1,548 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Undangan Karang Taruna - Profesional</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  <style id="theme-style">
-    :root {
-      --primary: #1976d2;
-      --primary-dark: #1565c0;
-      --secondary: #d32f2f;
-      --accent: #ff6f00;
-      --bg-card: #ffffff;
-      --bg-body: #f8f9fc;
-      --text: #2c3e50;
-      --border-radius: 16px;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      --transition: all 0.25s ease;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Editor Undangan Karang Taruna</title>
+  <style>
+    :root{
+      --primary:#2962ff;   /* Biru */
+      --secondary:#ff6d00; /* Oranye */
+      --accent:#00c853;    /* Hijau */
+      --bg:#f6f9fc;
+      --text:#243043;
+      --muted:#5a6b87;
+      --card:#ffffff;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(16,24,40,0.12);
     }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-body);
-      padding: 30px 20px;
-      margin: 0;
-      color: var(--text);
-      line-height: 1.7;
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{
+      font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, #e6f0ff 0%, transparent 60%),
+                  radial-gradient(900px 600px at 110% 10%, #fff0e6 0%, transparent 60%),
+                  var(--bg);
+      padding: 24px;
     }
-
-    .container {
-      max-width: 820px;
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
+    .app-title{
+      display:flex; align-items:center; gap:12px; margin: 4px 0 20px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 6px 16px rgba(41,98,255,0.35);
+    }
+    .app-title h1{font-size:22px; margin:0;}
+    .wrap{
+      display:grid; gap:20px;
+      grid-template-columns: 1fr;
+      max-width: 1100px; margin: 0 auto;
+    }
+    @media(min-width: 980px){
+      .wrap{grid-template-columns: 420px 1fr;}
+    }
+    .card{
+      background:var(--card);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 50px 60px;
-      margin: 30px auto;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid #e0e0e0;
+      overflow:hidden;
+    }
+    .panel{padding:22px 22px 6px;}
+    .panel h2{
+      margin:0 0 14px; font-size:18px; color:var(--muted); letter-spacing:.3px;
+    }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field{margin-bottom:14px}
+    .field label{
+      display:block; font-size:12px; color:var(--muted); margin:0 0 6px;
+      letter-spacing:.2px;
+    }
+    input[type="text"], textarea, select{
+      width:100%;
+      border:1px solid #d7deea;
+      border-radius:12px;
+      padding:12px 14px;
+      font:inherit;
+      color:var(--text);
+      background:#fff;
+      outline:none;
+      transition: box-shadow .2s, border-color .2s, transform .05s;
+    }
+    textarea{min-height:96px; resize:vertical}
+    input:focus, textarea:focus, select:focus{
+      border-color: color-mix(in srgb, var(--primary) 60%, #8aa7ff);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 15%, transparent);
+    }
+    .btn{
+      appearance:none; border:0; border-radius:12px; padding:10px 14px;
+      background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 70%, #8aa7ff));
+      color:#fff; cursor:pointer; font-weight:600;
+      box-shadow: 0 6px 16px rgba(41,98,255,.35);
+      transition: transform .06s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover{filter:brightness(1.05)}
+    .btn:active{transform: translateY(1px)}
+    .btn-ghost{
+      background:#fff; color:var(--primary); border:1px solid rgba(41,98,255,.25);
+      box-shadow:none;
+    }
+    .btn-danger{
+      background: linear-gradient(135deg, #ff3d5b, #ff8a80);
+      box-shadow: 0 6px 16px rgba(255,61,91,.35);
+    }
+    .btn-row{display:flex; gap:10px; flex-wrap:wrap; margin: 6px 0 16px;}
+    .hint{font-size:12px; color:var(--muted); margin-top:8px}
+
+    /* Agenda editor */
+    .agenda-editor{display:flex; flex-direction:column; gap:8px; margin-bottom:6px}
+    .agenda-item{
+      display:flex; gap:8px; align-items:center;
+    }
+    .agenda-item input{flex:1}
+    .chip{
+      display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px;
+      background: color-mix(in srgb, var(--secondary) 16%, #fff);
+      color: color-mix(in srgb, var(--secondary) 60%, #7a3300);
+      border:1px dashed color-mix(in srgb, var(--secondary) 30%, #edc5a3);
+      margin: 0 6px 0 0;
     }
 
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
+    /* Invitation preview (Material look) */
+    .invite{
+      background:#fff; border-radius: 20px; overflow:hidden;
     }
-
-    h1 {
-      font-size: 30px;
-      font-weight: 700;
-      color: var(--primary);
-      margin: 0 0 8px 0;
-      letter-spacing: -0.8px;
+    .invite__header{
+      padding: 32px 26px;
+      color:#fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      position:relative;
+      isolation:isolate;
     }
-
-    h2 {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--secondary);
-      margin: 0;
-      font-style: italic;
+    .invite__header::after{
+      content:""; position:absolute; inset:auto -30px -60px auto; width:220px; height:220px;
+      background: radial-gradient(closest-side, rgba(255,255,255,0.25), transparent 70%);
+      filter: blur(2px); border-radius:50%; z-index:-1;
     }
-
-    .editable {
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: text;
-      transition: var(--transition);
-      position: relative;
-      margin: 12px 0;
+    .invite__title{font-size:28px; margin:0 0 6px; letter-spacing:.3px}
+    .invite__subtitle{margin:0; opacity:.95}
+    .invite__body{padding: 22px 26px 26px}
+    .section{margin: 14px 0 16px}
+    .section h3{
+      font-size:14px; margin:0 0 8px; color: var(--muted); letter-spacing:.3px;
+      display:flex; align-items:center; gap:8px;
     }
-
-    .editable:hover {
-      background-color: #f5f8ff;
+    .cardlet{
+      background: #f7fbff;
+      border:1px solid #e3edff;
+      padding: 14px; border-radius: 14px;
     }
-
-    .editable:focus {
-      outline: 3px solid rgba(25, 118, 210, 0.25);
-      background-color: #edf3ff;
-      z-index: 1;
+    .cardlet--warm{
+      background:#fff8f1; border-color:#ffe2c4;
     }
-
-    p, ul, li {
-      margin: 12px 0;
-      font-weight: 400;
-    }
-
-    ul {
-      padding-left: 22px;
-    }
-
-    li {
-      line-height: 1.8;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #e0e0e0;
-      margin: 40px 0;
-      opacity: 0.8;
-    }
-
-    .signature {
-      text-align: right;
-      margin-top: 80px;
-      font-size: 16px;
-    }
-
-    .signature strong {
-      font-weight: 600;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-      margin: 30px auto;
-      max-width: 900px;
-    }
-
-    button {
-      padding: 14px 22px;
-      font-size: 15px;
-      font-weight: 500;
-      border: none;
+    .kv{display:grid; grid-template-columns: 120px 1fr; gap:8px; font-size:15px}
+    .agenda-list{margin:6px 0 0; padding-left:18px}
+    .footer-note{
+      margin-top: 16px; padding: 12px 14px; border-left:4px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, #fff);
       border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    }
+    .sign{
+      text-align:right; margin-top: 26px;
+    }
+    .sign .name{margin-top:36px; font-style:italic; font-weight:600}
+
+    /* Toolbar under preview */
+    .toolbar{
+      display:flex; justify-content:flex-end; gap:10px; padding: 12px 16px 16px;
+      border-top:1px solid #eef2f7; background: #fff;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+    /* Small helper UI */
+    .theme-row{display:flex; gap:10px; align-items:center; margin-bottom:10px}
+    .swatch{
+      width:28px;height:28px;border-radius:8px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15);
+      cursor:pointer; position:relative; overflow:hidden;
     }
-
-    #edit-mode {
-      background: var(--accent);
-      color: white;
-    }
-
-    #download-html {
-      background: #2e7d32;
-      color: white;
-    }
-
-    #download-png {
-      background: var(--primary);
-      color: white;
-    }
-
-    #theme-selector {
-      padding: 14px;
-      font-size: 15px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      min-width: 200px;
-    }
-
-    @media (max-width: 650px) {
-      .container {
-        padding: 30px 20px;
-      }
-      h1 { font-size: 26px; }
-      h2 { font-size: 18px; }
-      .controls { flex-direction: column; align-items: center; }
-      #theme-selector { min-width: auto; }
-    }
+    .swatch::after{content:""; position:absolute; inset:0; background: linear-gradient(135deg,var(--a),var(--b))}
+    .swatch[aria-pressed="true"]{outline: 3px solid color-mix(in srgb, var(--primary) 50%, #9bb6ff)}
   </style>
 </head>
 <body>
-
-  <!-- Tombol Kontrol -->
-  <div class="controls">
-    <button id="edit-mode">✏️ Edit Konten</button>
-    <button id="download-html">💾 Simpan sebagai HTML</button>
-    <select id="theme-selector">
-      <option value="blue-red">Biru-Merah (Default)</option>
-      <option value="green-teal">Hijau-Toska</option>
-      <option value="purple-amber">Ungu-Kuning Emas</option>
-      <option value="indigo-pink">Indigo-Merah Muda</option>
-    </select>
+  <div class="app-title">
+    <div class="logo" aria-hidden="true"></div>
+    <h1>Editor Undangan Karang Taruna</h1>
   </div>
 
-  <!-- Kartu Undangan -->
-  <div class="container" id="invitation">
-    <div class="header">
-      <h1 class="editable">UNDANGAN ACARA RUTIN KARANG TARUNA</h1>
-      <h2 class="editable">"BERSATU, BERGERAK, BERKARYA"</h2>
+  <div class="wrap">
+    <!-- ============ Editor Panel ============ -->
+    <div class="card">
+      <div class="panel">
+        <h2>Isi data undangan</h2>
+
+        <div class="field">
+          <label for="judul">Judul</label>
+          <input id="judul" type="text" placeholder="Undangan Karang Taruna" />
+        </div>
+
+        <div class="field">
+          <label for="subjudul">Sub Judul</label>
+          <input id="subjudul" type="text" placeholder="Slogan atau tema acara" />
+        </div>
+
+        <div class="field">
+          <label for="sambutan">Sambutan / Pembuka</label>
+          <textarea id="sambutan" placeholder="Tuliskan pembuka undangan..."></textarea>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="hariTanggal">Hari / Tanggal</label>
+            <input id="hariTanggal" type="text" placeholder="Sabtu, 16 Agustus 2025" />
+          </div>
+          <div class="field">
+            <label for="waktu">Waktu</label>
+            <input id="waktu" type="text" placeholder="1930 WIB – selesai" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="tempat">Tempat</label>
+          <input id="tempat" type="text" placeholder="Rumah Pak RT" />
+        </div>
+
+        <div class="field">
+          <label>Detail Acara / Agenda</label>
+          <div class="agenda-editor" id="agendaEditor"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btnAddAgenda" type="button">+ Tambah Agenda</button>
+            <span class="hint">Susun agenda sesuai kebutuhan. Klik Hapus untuk menghilangkan item.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="penutup">Penutup / Anjuran untuk hadir</label>
+          <textarea id="penutup" placeholder="Harapan kehadiran dan penutup undangan..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="ketua">TTD Ketua</label>
+          <input id="ketua" type="text" placeholder="Nama Ketua Karang Taruna" />
+        </div>
+
+        <div class="field">
+          <label>Tema warna</label>
+          <div class="theme-row">
+            <button class="swatch" type="button" data-theme="biru"
+              style="--a:#2962ff;--b:#ff6d00" aria-pressed="true" title="Biru – Oranye"></button>
+            <button class="swatch" type="button" data-theme="teal"
+              style="--a:#00bfa6;--b:#ff4081" aria-pressed="false" title="Teal – Magenta"></button>
+            <button class="swatch" type="button" data-theme="ungu"
+              style="--a:#7b5cff;--b:#aeea00" aria-pressed="false" title="Ungu – Lime"></button>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" id="btnDownload" type="button">📥 Unduh sebagai HTML</button>
+          <button class="btn btn-ghost" id="btnReset" type="button">↺ Reset contoh</button>
+        </div>
+      </div>
     </div>
 
-    <div class="editable">
-      <p><strong>Halo, Sobat Karang Taruna!</strong></p>
-      <p>Kami dengan penuh suka cita mengundang seluruh anggota untuk hadir dalam kumpulan rutin Karang Taruna. Mari satukan langkah, salurkan ide, dan wujudkan aksi nyata untuk kemajuan desa dan pemuda.</p>
-    </div>
+    <!-- ============ Live Preview ============ -->
+    <div class="card invite" id="previewCard" aria-live="polite">
+      <div class="invite__header">
+        <h1 class="invite__title" id="pJudul">Undangan Karang Taruna</h1>
+        <p class="invite__subtitle" id="pSubjudul">Bersama Membangun Desa</p>
+      </div>
+      <div class="invite__body">
+        <div class="section">
+          <h3>📣 Sambutan</h3>
+          <div class="cardlet" id="pSambutan">
+            Dengan hormat, sehubungan dengan akan diselenggarakannya kegiatan Karang Taruna, kami mengundang seluruh anggota untuk hadir.
+          </div>
+        </div>
 
-    <div class="editable">
-      <p>📅 <strong>Hari/Tanggal</strong>: [Isi hari dan tanggal]</p>
-      <p>⏰ <strong>Waktu</strong>: [Isi waktu, contoh: Pukul 15.00 WIB]</p>
-      <p>📍 <strong>Tempat</strong>: [Nama tempat, contoh: Rumah Pak RT</p>
-    </div>
+        <div class="section">
+          <h3>🗓 Waktu & Tempat</h3>
+          <div class="cardlet cardlet--warm">
+            <div class="kv">
+              <div><span class="chip">Hari/Tanggal</span></div>
+              <div id="pHariTanggal">Sabtu, 16 Agustus 2025</div>
+              <div><span class="chip">Waktu</span></div>
+              <div id="pWaktu">19.00 WIB – selesai</div>
+              <div><span class="chip">Tempat</span></div>
+              <div id="pTempat">cth: Pak RT</div>
+            </div>
+          </div>
+        </div>
 
-    <hr>
+        <div class="section">
+          <h3>📋 Agenda Acara</h3>
+          <ul class="agenda-list" id="pAgenda"></ul>
+        </div>
 
-    <h3 class="editable">🎯 Agenda Kegiatan</h3>
-    <div class="editable">
-      <ul>
-        <li>Pembukaan & sambutan</li>
-        <li>Laporan kegiatan bulan lalu</li>
-        <li>Diskusi rencana program kerja</li>
-        <li>Evaluasi partisipasi anggota</li>
-        <li>Tanya jawab & masukan dari anggota</li>
-        <li>Penutup</li>
-      </ul>
-    </div>
+        <div class="section">
+          <h3>✅ Penutup</h3>
+          <div class="footer-note" id="pPenutup">
+            Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran Bapak/Ibu/Saudara/i.
+          </div>
+        </div>
 
-    <div class="editable">
-      <p>Terima kasih atas dedikasi dan semangatmu selama ini.<br>
-      Kehadiranmu adalah langkah nyata dalam membangun Karang Taruna yang lebih aktif, solid, dan bermanfaat.</p>
-      <p>Sampai jumpa di acara! 💙🤍</p>
-    </div>
+        <div class="sign">
+          <div>Hormat kami,</div>
+          <div>Ketua Karang Taruna</div>
+          <div class="name" id="pKetua">KETUA KATAR</div>
+        </div>
+      </div>
 
-    <div class="signature">
-      <p class="editable"><strong>Hormat kami,</strong></p>
-      <br><br>
-      <p class="editable">
-        Ketua Karang Taruna<br>
-        [Nama Ketua]</strong>
-      </p>
+      <div class="toolbar">
+        <button class="btn" id="btnDownload2" type="button">📥 Unduh sebagai HTML</button>
+      </div>
     </div>
   </div>
 
   <script>
-    // Aktifkan mode edit
-    document.getElementById("edit-mode").addEventListener("click", () => {
-      const editable = document.querySelectorAll(".editable");
-      const isEditable = editable[0].contentEditable === "true";
+    // ---------- State ----------
+    const state = {
+      judul: "Undangan Karang Taruna",
+      subjudul: "Bersama Membangun Desa",
+      sambutan: "Dengan hormat, sehubungan dengan akan diselenggarakannya kegiatan Karang Taruna, kami mengundang seluruh anggota untuk hadir.",
+      hariTanggal: "Sabtu, 16 Agustus 2025",
+      waktu: "19.00 WIB – selesai",
+      tempat: "Rumah Pak RT",
+      agenda: ["Pembukaan","Sambutan Ketua Karang Taruna","Pemaparan Program Kerja","Diskusi & Tanya Jawab","Penutupan"],
+      penutup: "Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran Bapak/Ibu/Saudara/i demi kemajuan bersama.",
+      ketua: "Ketua Katar",
+      theme: "biru"
+    };
 
-      editable.forEach(el => {
-        el.contentEditable = !isEditable;
+    // ---------- Helpers ----------
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const esc = s => String(s).replace(/[&<>\"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    const nl2br = s => esc(s).replace(/\n/g,"<br>");
+
+    function applyTheme(name){
+      const map = {
+        biru:     {primary:"#2962ff", secondary:"#ff6d00", accent:"#00c853", bg:"#f6f9fc"},
+        teal:     {primary:"#00bfa6", secondary:"#ff4081", accent:"#00e676", bg:"#f4fbfa"},
+        ungu:     {primary:"#7b5cff", secondary:"#aeea00", accent:"#00c853", bg:"#f8f6ff"}
+      };
+      const t = map[name] || map.biru;
+      Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty(`--${k}`, v));
+      state.theme = name;
+      // toggle pressed
+      $$(".swatch").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.theme===name)));
+    }
+
+    function bindField(id, key, cb){
+      const el = $(id);
+      el.addEventListener("input", e=>{
+        state[key] = e.target.value;
+        updatePreview();
+        cb && cb();
       });
+    }
 
-      document.getElementById("edit-mode").textContent = 
-        isEditable ? "✏️ Edit Konten" : "🛑 Selesai Edit";
-    });
+    function renderAgendaEditor(){
+      const holder = $("#agendaEditor");
+      holder.innerHTML = "";
+      state.agenda.forEach((val, idx)=>{
+        const row = document.createElement("div");
+        row.className = "agenda-item";
+        row.innerHTML = `
+          <input type="text" value="${esc(val)}" placeholder="Item agenda #${idx+1}" />
+          <button class="btn btn-danger" type="button" title="Hapus">✕</button>
+        `;
+        const input = row.querySelector("input");
+        const del = row.querySelector("button");
+        input.addEventListener("input", e=>{
+          state.agenda[idx] = e.target.value;
+          updatePreview();
+        });
+        del.addEventListener("click", ()=>{
+          state.agenda.splice(idx,1);
+          renderAgendaEditor();
+          updatePreview();
+        });
+        holder.appendChild(row);
+      });
+    }
 
-    // Unduh sebagai HTML
-    document.getElementById("download-html").addEventListener("click", () => {
-      const container = document.getElementById("invitation").outerHTML;
-      const currentStyle = document.getElementById("theme-style").innerHTML;
-      const htmlContent = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Undangan Karang Taruna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; background: #f8f9fc; margin: 0; padding: 30px 20px; color: #2c3e50; }
-    .container { max-width: 820px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 50px 60px; margin: 30px auto; }
-    ${currentStyle.replace(":root", "")}
-  </style>
-</head>
-<body>
-  <div class="container">
-    ${container}
-  </div>
-</body>
-</html>`;
-      const blob = new Blob([htmlContent], { type: "text/html" });
+    function updatePreview(){
+      $("#pJudul").textContent = state.judul || "—";
+      $("#pSubjudul").textContent = state.subjudul || "";
+      $("#pSambutan").innerHTML = nl2br(state.sambutan || "");
+      $("#pHariTanggal").textContent = state.hariTanggal || "—";
+      $("#pWaktu").textContent = state.waktu || "—";
+      $("#pTempat").textContent = state.tempat || "—";
+      const ul = $("#pAgenda");
+      ul.innerHTML = "";
+      (state.agenda && state.agenda.length ? state.agenda : []).forEach(item=>{
+        if(!item) return;
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      $("#pPenutup").innerHTML = nl2br(state.penutup || "");
+      $("#pKetua").textContent = state.ketua || "—";
+    }
+
+    function fillInputsFromState(){
+      $("#judul").value = state.judul;
+      $("#subjudul").value = state.subjudul;
+      $("#sambutan").value = state.sambutan;
+      $("#hariTanggal").value = state.hariTanggal;
+      $("#waktu").value = state.waktu;
+      $("#tempat").value = state.tempat;
+      $("#penutup").value = state.penutup;
+      $("#ketua").value = state.ketua;
+      renderAgendaEditor();
+    }
+
+    function resetToDefaults(){
+      Object.assign(state, {
+        judul: "Undangan Karang Taruna",
+        subjudul: "Bersama Membangun Desa",
+        sambutan: "Dengan hormat, sehubungan dengan akan diselenggarakannya kegiatan Karang Taruna, kami mengundang seluruh anggota untuk hadir.",
+        hariTanggal: "Sabtu, 16 Agustus 2025",
+        waktu: "19:30 WIB – selesai",
+        tempat: "Rumah Pak RT",
+        agenda: ["Pembukaan","Sambutan Ketua Karang Taruna","Pemaparan Program Kerja","Diskusi & Tanya Jawab","Penutupan"],
+        penutup: "Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran Bapak/Ibu/Saudara/i demi kemajuan bersama.",
+        ketua: "Ketua Katar"
+      });
+      fillInputsFromState();
+      updatePreview();
+    }
+
+    function getCurrentThemeVars(){
+      const rs = getComputedStyle(document.documentElement);
+      return {
+        primary: rs.getPropertyValue("--primary").trim(),
+        secondary: rs.getPropertyValue("--secondary").trim(),
+        accent: rs.getPropertyValue("--accent").trim(),
+        bg: rs.getPropertyValue("--bg").trim(),
+        text: rs.getPropertyValue("--text").trim(),
+        muted: rs.getPropertyValue("--muted").trim()
+      };
+    }
+
+    function buildInvitationHTML(){
+      const v = getCurrentThemeVars();
+      const css = `
+      :root{
+        --primary:${v.primary};--secondary:${v.secondary};--accent:${v.accent};
+        --bg:${v.bg};--text:${v.text};--muted:${v.muted};
+      }
+      body{margin:0;background:var(--bg);color:var(--text);font-family: ui-sans-serif, -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;}
+      .invite{max-width:840px;margin:24px auto;background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(16,24,40,0.12);overflow:hidden}
+      .invite__header{padding:32px 26px;color:#fff;background:linear-gradient(135deg,var(--primary),var(--secondary));position:relative;isolation:isolate}
+      .invite__header::after{content:"";position:absolute;inset:auto -30px -60px auto;width:220px;height:220px;background:radial-gradient(closest-side,rgba(255,255,255,0.25),transparent 70%);filter:blur(2px);border-radius:50%;z-index:-1}
+      .invite__title{font-size:28px;margin:0 0 6px;letter-spacing:.3px}
+      .invite__subtitle{margin:0;opacity:.95}
+      .invite__body{padding:22px 26px 26px}
+      .section{margin:14px 0 16px}
+      .section h3{font-size:14px;margin:0 0 8px;color:var(--muted);letter-spacing:.3px;display:flex;align-items:center;gap:8px}
+      .cardlet{background:#f7fbff;border:1px solid #e3edff;padding:14px;border-radius:14px}
+      .cardlet--warm{background:#fff8f1;border-color:#ffe2c4}
+      .kv{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:15px}
+      .agenda-list{margin:6px 0 0;padding-left:18px}
+      .footer-note{margin-top:16px;padding:12px 14px;border-left:4px solid var(--accent);background: color-mix(in srgb, var(--accent) 12%, #fff);border-radius:10px}
+      .sign{text-align:right;margin-top:26px}
+      .sign .name{margin-top:36px;font-style:italic;font-weight:600}
+      `;
+      const html = `
+      <!DOCTYPE html>
+      <html lang="id"><head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>${esc(state.judul || "Undangan Karang Taruna")}</title>
+        <style>${css}</style>
+      </head>
+      <body>
+        <div class="invite">
+          <div class="invite__header">
+            <h1 class="invite__title">${esc(state.judul || "")}</h1>
+            <p class="invite__subtitle">${esc(state.subjudul || "")}</p>
+          </div>
+          <div class="invite__body">
+            <div class="section">
+              <h3>📣 Sambutan</h3>
+              <div class="cardlet">${nl2br(state.sambutan || "")}</div>
+            </div>
+            <div class="section">
+              <h3>🗓 Waktu & Tempat</h3>
+              <div class="cardlet cardlet--warm">
+                <div class="kv">
+                  <div><strong>Hari/Tanggal</strong></div><div>${esc(state.hariTanggal || "")}</div>
+                  <div><strong>Waktu</strong></div><div>${esc(state.waktu || "")}</div>
+                  <div><strong>Tempat</strong></div><div>${esc(state.tempat || "")}</div>
+                </div>
+              </div>
+            </div>
+            <div class="section">
+              <h3>📋 Agenda Acara</h3>
+              <ul class="agenda-list">
+                ${(state.agenda||[]).filter(Boolean).map(item=>`<li>${esc(item)}</li>`).join("")}
+              </ul>
+            </div>
+            <div class="section">
+              <h3>✅ Penutup</h3>
+              <div class="footer-note">${nl2br(state.penutup || "")}</div>
+            </div>
+            <div class="sign">
+              <div>Hormat kami,</div>
+              <div>Ketua Karang Taruna</div>
+              <div class="name">${esc(state.ketua || "")}</div>
+            </div>
+          </div>
+        </div>
+      </body></html>`;
+      return html.trim();
+    }
+
+    function downloadHTML(){
+      const content = buildInvitationHTML();
+      const blob = new Blob([content], {type: "text/html;charset=utf-8"});
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "undangan-karang-taruna-professional.html";
+      a.download = (state.judul ? state.judul.toLowerCase().replace(/\s+/g,"_") : "undangan_karang_taruna") + ".html";
+      document.body.appendChild(a);
       a.click();
+      a.remove();
       URL.revokeObjectURL(url);
+    }
+
+    // ---------- Events ----------
+    bindField("#judul","judul");
+    bindField("#subjudul","subjudul");
+    bindField("#sambutan","sambutan");
+    bindField("#hariTanggal","hariTanggal");
+    bindField("#waktu","waktu");
+    bindField("#tempat","tempat");
+    bindField("#penutup","penutup");
+    bindField("#ketua","ketua");
+
+    $("#btnAddAgenda").addEventListener("click", ()=>{
+      state.agenda.push("");
+      renderAgendaEditor();
+      updatePreview();
+    });
+    $("#btnDownload").addEventListener("click", downloadHTML);
+    $("#btnDownload2").addEventListener("click", downloadHTML);
+    $("#btnReset").addEventListener("click", resetToDefaults);
+    $$(".swatch").forEach(btn=>{
+      btn.addEventListener("click", ()=> applyTheme(btn.dataset.theme));
     });
 
-    // Unduh sebagai PNG
-    document.getElementById("download-png").addEventListener("click", () => {
-      html2canvas(document.getElementById("invitation"), {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-        logging: false,
-        scrollY: -window.scrollY,
-        width: 820,
-        height: document.getElementById("invitation").scrollHeight,
-        windowHeight: document.getElementById("invitation").scrollHeight,
-        allowTaint: true
-      }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "undangan-karang-taruna.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      }).catch(err => {
-        console.error("Error generating PNG:", err);
-        alert("Gagal membuat gambar. Coba lagi.");
-      });
-    });
-
-    // Ganti Tema
-    document.getElementById("theme-selector").addEventListener("change", (e) => {
-      const themes = {
-        "blue-red": `
-          :root { --primary: #1976d2; --secondary: #d32f2f; --accent: #ff6f00; }
-        `,
-        "green-teal": `
-          :root { --primary: #2e7d32; --secondary: #00796b; --accent: #fb8c00; }
-        `,
-        "purple-amber": `
-          :root { --primary: #7b1fa2; --secondary: #ff8f00; --accent: #c2185b; }
-        `,
-        "indigo-pink": `
-          :root { --primary: #283593; --secondary: #c2185b; --accent: #f57c00; }
-        `
-      };
-      document.getElementById("theme-style").innerHTML = themes[e.target.value] + `
-        :root {
-          --bg-card: #ffffff;
-          --bg-body: #f8f9fc;
-          --text: #2c3e50;
-          --border-radius: 16px;
-          --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-          --transition: all 0.25s ease;
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-body); padding: 30px 20px; margin: 0; color: var(--text); line-height: 1.7; }
-        .container { max-width: 820px; background: var(--bg-card); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 50px 60px; margin: 30px auto; }
-        h1 { color: var(--primary); }
-        h2 { color: var(--secondary); }
-        .editable:hover { background-color: #f5f8ff; }
-        .editable:focus { outline: 3px solid rgba(25, 118, 210, 0.25); background-color: #edf3ff; }
-        #edit-mode { background: var(--accent); color: white; }
-        #download-html { background: #2e7d32; color: white; }
-        #download-png { background: var(--primary); color: white; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.18); }
-        #theme-selector { padding: 14px; font-size: 15px; border-radius: 10px; border: 1px solid #ddd; background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-        @media (max-width: 650px) { .container { padding: 30px 20px; } }
-      `;
-    });
-
-    // Inisialisasi tema default
-    document.getElementById("theme-selector").dispatchEvent(new Event("change"));
+    // ---------- Init ----------
+    fillInputsFromState();
+    updatePreview();
+    applyTheme(state.theme);
   </script>
 </body>
 </html>
