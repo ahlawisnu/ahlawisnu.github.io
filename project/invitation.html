@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Editor Undangan Karang Taruna</title>
   <style>
-    :root {
-  --primary: #075E54;     /* Hijau tua khas WhatsApp */
-  --secondary: #25D366;   /* Hijau terang untuk aksen */
-  --accent: #128C7E;      /* Hijau medium untuk elemen interaktif */
-  --bg: #ECE5DD;          /* Latar belakang chat */
-  --text: #111B21;        /* Warna teks utama */
-  --muted: #667781;       /* Teks redup atau sekunder */
-  --card: #FFFFFF;        /* Warna kartu/chat bubble */
-  --radius: 12px;         /* Sudut membulat yang lebih lembut */
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Bayangan ringan */
-}
+    :root{
+      --primary:#2962ff;   /* Biru */
+      --secondary:#ff6d00; /* Oranye */
+      --accent:#00c853;    /* Hijau */
+      --bg:#f6f9fc;
+      --text:#243043;
+      --muted:#5a6b87;
+      --card:#ffffff;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(16,24,40,0.12);
+    }
     *{box-sizing:border-box}
     html,body{margin:0}
     body{
@@ -125,8 +125,8 @@
       background: radial-gradient(closest-side, rgba(255,255,255,0.25), transparent 70%);
       filter: blur(2px); border-radius:50%; z-index:-1;
     }
-    .invite__title{font-size:28px; margin:0 0 6px; letter-spacing:.3px}
-    .invite__subtitle{margin:0; opacity:.95}
+    .invite__title{font-size:28px; margin:0 0 6px; letter-spacing:.3px;text-align: center;}
+    .invite__subtitle{margin:0; opacity:.95;text-align: center;}
     .invite__body{padding: 22px 26px 26px}
     .section{margin: 14px 0 16px}
     .section h3{
@@ -199,7 +199,7 @@
         <div class="grid-2">
           <div class="field">
             <label for="hariTanggal">Hari / Tanggal</label>
-            <input id="hariTanggal" type="text" placeholder="Sabtu, 16 Agustus 2025" />
+            <input id="hariTanggal" type="text" placeholder="Sabtu, Tgl Bulan Thn" />
           </div>
           <div class="field">
             <label for="waktu">Waktu</label>
@@ -252,7 +252,7 @@
 
     <!-- ============ Live Preview ============ -->
     <div class="card invite" id="previewCard" aria-live="polite">
-      <div class="invite__header">
+      <div class="invite__header"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/National_emblem_of_Indonesia_Garuda_Pancasila.svg/330px-National_emblem_of_Indonesia_Garuda_Pancasila.svg.png" style="height:60px; margin:0 auto; display:block;">
         <h1 class="invite__title" id="pJudul">Undangan Karang Taruna</h1>
         <p class="invite__subtitle" id="pSubjudul">Bersama Membangun Desa</p>
       </div>
@@ -269,9 +269,9 @@
           <div class="cardlet cardlet--warm">
             <div class="kv">
               <div><span class="chip">Hari/Tanggal</span></div>
-              <div id="pHariTanggal">Sabtu, 16 Agustus 2025</div>
+              <div id="pHariTanggal">Sabtu, Tgl Bulan Thn</div>
               <div><span class="chip">Waktu</span></div>
-              <div id="pWaktu">19.00 WIB – selesai</div>
+              <div id="pWaktu"> WIB – selesai</div>
               <div><span class="chip">Tempat</span></div>
               <div id="pTempat">cth: Pak RT</div>
             </div>
@@ -286,14 +286,14 @@
         <div class="section">
           <h3>✅ Penutup</h3>
           <div class="footer-note" id="pPenutup">
-            Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran Bapak/Ibu/Saudara/i.
+            Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadira.
           </div>
         </div>
 
         <div class="sign">
           <div>Hormat kami,</div>
           <div>Ketua Karang Taruna</div>
-          <div class="name" id="pKetua">KETUA KATAR</div>
+          <div class="name" id="pKetua">Edit Sini</div>
         </div>
       </div>
 
@@ -309,12 +309,12 @@
       judul: "Undangan Karang Taruna",
       subjudul: "Bersama Membangun Desa",
       sambutan: "Dengan hormat, sehubungan dengan akan diselenggarakannya kegiatan Karang Taruna, kami mengundang seluruh anggota untuk hadir.",
-      hariTanggal: "Sabtu, 16 Agustus 2025",
-      waktu: "19.00 WIB – selesai",
+      hariTanggal: "Sabtu, Tgl Bulan Thn",
+      waktu: "19:30 WIB – selesai",
       tempat: "Rumah Pak RT",
       agenda: ["Pembukaan","Sambutan Ketua Karang Taruna","Pemaparan Program Kerja","Diskusi & Tanya Jawab","Penutupan"],
-      penutup: "Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran Bapak/Ibu/Saudara/i demi kemajuan bersama.",
-      ketua: "Ketua Katar",
+      penutup: "Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran seluruh anggota Karang Taruna demi kemajuan bersama.",
+      ketua: "Edit Sini",
       theme: "biru"
     };
 
@@ -324,13 +324,12 @@
     const esc = s => String(s).replace(/[&<>\"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const nl2br = s => esc(s).replace(/\n/g,"<br>");
 
-function applyTheme(name){
-  const map = {
-    biru:   {primary:"#2962ff", secondary:"#ff6d00", accent:"#00c853", bg:"#f6f9fc"},
-    teal:   {primary:"#00bfa6", secondary:"#ff4081", accent:"#00e676", bg:"#f4fbfa"},
-    ungu:   {primary:"#7b5cff", secondary:"#aeea00", accent:"#00c853", bg:"#f8f6ff"},
-  };
-
+    function applyTheme(name){
+      const map = {
+        biru:     {primary:"#2962ff", secondary:"#ff6d00", accent:"#00c853", bg:"#f6f9fc"},
+        teal:     {primary:"#00bfa6", secondary:"#ff4081", accent:"#00e676", bg:"#f4fbfa"},
+        ungu:     {primary:"#7b5cff", secondary:"#aeea00", accent:"#00c853", bg:"#f8f6ff"}
+      };
       const t = map[name] || map.biru;
       Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty(`--${k}`, v));
       state.theme = name;
@@ -408,12 +407,12 @@ function applyTheme(name){
         judul: "Undangan Karang Taruna",
         subjudul: "Bersama Membangun Desa",
         sambutan: "Dengan hormat, sehubungan dengan akan diselenggarakannya kegiatan Karang Taruna, kami mengundang seluruh anggota untuk hadir.",
-        hariTanggal: "Sabtu, 16 Agustus 2025",
+        hariTanggal: "Sabtu, Tgl Bulan Thn",
         waktu: "19:30 WIB – selesai",
         tempat: "Rumah Pak RT",
         agenda: ["Pembukaan","Sambutan Ketua Karang Taruna","Pemaparan Program Kerja","Diskusi & Tanya Jawab","Penutupan"],
-        penutup: "Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran Bapak/Ibu/Saudara/i demi kemajuan bersama.",
-        ketua: "Ketua Katar"
+        penutup: "Demikian undangan ini kami sampaikan. Besar harapan kami atas kehadiran seluruh anggota Karang Taruna demi kemajuan bersama.",
+        ketua: "Edit Sini"
       });
       fillInputsFromState();
       updatePreview();
@@ -442,8 +441,8 @@ function applyTheme(name){
       .invite{max-width:840px;margin:24px auto;background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(16,24,40,0.12);overflow:hidden}
       .invite__header{padding:32px 26px;color:#fff;background:linear-gradient(135deg,var(--primary),var(--secondary));position:relative;isolation:isolate}
       .invite__header::after{content:"";position:absolute;inset:auto -30px -60px auto;width:220px;height:220px;background:radial-gradient(closest-side,rgba(255,255,255,0.25),transparent 70%);filter:blur(2px);border-radius:50%;z-index:-1}
-      .invite__title{font-size:28px;margin:0 0 6px;letter-spacing:.3px}
-      .invite__subtitle{margin:0;opacity:.95}
+      .invite__title{font-size:28px;margin:0 0 6px;letter-spacing:.3px;text-align: center;}
+      .invite__subtitle{margin:0;opacity:.95;text-align: center;}
       .invite__body{padding:22px 26px 26px}
       .section{margin:14px 0 16px}
       .section h3{font-size:14px;margin:0 0 8px;color:var(--muted);letter-spacing:.3px;display:flex;align-items:center;gap:8px}
