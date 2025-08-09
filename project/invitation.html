@@ -1,0 +1,308 @@
+l<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Undangan Karang Taruna</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style id="theme-style">
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f8ff;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 800px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 40px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .editable {
+      outline: 2px dashed #007bff;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 10px 0;
+    }
+    .editable:focus {
+      outline: 2px solid #0056b3;
+      background: #f8f9fa;
+    }
+    h1, h2 {
+      color: #d32f2f;
+      text-align: center;
+    }
+    h1 {
+      font-size: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #1976d2;
+    }
+    ul {
+      line-height: 1.8;
+    }
+    .signature {
+      text-align: right;
+      margin-top: 50px;
+    }
+    .controls {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      padding: 10px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      margin: 5px;
+    }
+    #download-html {
+      background: #2e7d32;
+      color: white;
+    }
+    #download-png {
+      background: #1976d2;
+      color: white;
+    }
+    #edit-mode {
+      background: #ff6f00;
+      color: white;
+    }
+    #theme-selector {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button id="edit-mode">✏️ Aktifkan Edit</button>
+    <button id="download-html">💾 Unduh sebagai HTML</button>
+    <button id="download-png">🖼️ Unduh sebagai PNG</button>
+    <select id="theme-selector">
+      <option value="red-blue">Merah-Biru (Default)</option>
+      <option value="green-yellow">Hijau-Kuning</option>
+      <option value="purple-gold">Ungu-Emas</option>
+      <option value="teal-orange">Biru Toska-Oranye</option>
+    </select>
+  </div>
+
+  <div class="container" id="invitation">
+    <h1 class="editable">🎉 UNDANGAN ACARA RUTIN KARANG TARUNA 🎉</h1>
+    <h2 class="editable">"BERSATU, BERGERAK, BERKARYA"</h2>
+
+    <div class="editable">
+      <p><strong>Halo, Sobat Karang Taruna!</strong><br>
+      Kami dengan penuh suka cita mengundang seluruh anggota untuk hadir dalam kumpulan rutin Karang Taruna. Mari satukan langkah, salurkan ide, dan wujudkan aksi nyata untuk kemajuan desa dan pemuda.</p>
+    </div>
+
+    <div class="editable">
+      <p>📅 <strong>Hari/Tanggal</strong>: [Isi hari dan tanggal]<br>
+      ⏰ <strong>Waktu</strong>: [Isi waktu, contoh: Pukul 15.00 WIB]<br>
+      📍 <strong>Tempat</strong>: [Nama tempat, contoh: Rumah Pak RT<br>
+      🗺️ <strong>Alamat</strong>: [Isi alamat lengkap]</p>
+    </div>
+
+    <hr>
+
+    <h3 class="editable">🎯 Agenda Kegiatan</h3>
+    <div class="editable">
+      <ul>
+        <li>Pembukaan & sambutan</li>
+        <li>Laporan kegiatan bulan lalu</li>
+        <li>Diskusi rencana program kerja</li>
+        <li>Evaluasi partisipasi anggota</li>
+        <li>Tanya jawab & masukan dari anggota</li>
+        <li>Penutup</li>
+      </ul>
+    </div>
+
+    <div class="editable">
+      <p>Terima kasih atas dedikasi dan semangatmu selama ini.<br>
+      Kehadiranmu adalah langkah nyata dalam membangun Karang Taruna yang lebih aktif, solid, dan bermanfaat.</p>
+      <p>Sampai jumpa di acara! 💙🤍</p>
+    </div>
+
+    <div class="signature">
+      <br><br>
+      <strong class="editable">Hormat kami,</strong><br><br><br>
+      <strong class="editable">Ketua Karang Taruna<br>
+      [Nama Ketua]</strong>
+    </div>
+  </div>
+
+  <script>
+    // Aktifkan mode edit di semua elemen dengan class "editable"
+    document.getElementById("edit-mode").addEventListener("click", () => {
+      const editable = document.querySelectorAll(".editable");
+      editable.forEach(el => {
+        el.contentEditable = el.contentEditable === "true" ? "false" : "true";
+      });
+      const btn = document.getElementById("edit-mode");
+      btn.textContent = 
+        editable[0].contentEditable === "true" ? "🛑 Nonaktifkan Edit" : "✏️ Aktifkan Edit";
+    });
+
+    // Unduh sebagai HTML
+    document.getElementById("download-html").addEventListener("click", () => {
+      const container = document.getElementById("invitation").outerHTML;
+      const currentTheme = document.getElementById("theme-style").innerHTML;
+      const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Undangan Karang Taruna</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f8ff; padding: 20px; }
+    .container { max-width: 800px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 40px; margin: 20px auto; }
+    ${currentTheme}
+  </style>
+</head>
+<body>
+  <div class="container">
+    ${container}
+  </div>
+  <script>
+    // Tombol edit bisa berfungsi lagi di file yang diunduh
+    document.addEventListener("click", (e) => {
+      if (e.target.id === "edit-mode-local") {
+        document.querySelectorAll(".editable").forEach(el => {
+          el.contentEditable = el.contentEditable === "true" ? "false" : "true";
+        });
+      }
+    });
+  <\/script>
+</body>
+</html>`;
+      const blob = new Blob([htmlContent], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "undangan-karang-taruna.html";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Unduh sebagai PNG
+    document.getElementById("download-png").addEventListener("click", () => {
+      html2canvas(document.getElementById("invitation"), {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+        scrollY: -window.scrollY,
+        width: 800,
+        height: document.getElementById("invitation").scrollHeight
+      }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "undangan-karang-taruna.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      }).catch(err => {
+        console.error("Error generating PNG:", err);
+        alert("Gagal membuat gambar. Coba lagi.");
+      });
+    });
+
+    // Ganti tema
+    document.getElementById("theme-selector").addEventListener("change", (e) => {
+      const style = document.getElementById("theme-style");
+      const colors = {
+        "red-blue": `
+          h1, h2 { color: #d32f2f; }
+          h2 { color: #1976d2; }
+          body { background: #fff3f3; }
+          #download-html { background: #2e7d32; }
+          #download-png { background: #1976d2; }
+        `,
+        "green-yellow": `
+          h1, h2 { color: #33691e; }
+          h2 { color: #f57f17; }
+          body { background: #f9fbe7; }
+          #download-html { background: #33691e; }
+          #download-png { background: #f57f17; }
+        `,
+        "purple-gold": `
+          h1, h2 { color: #7b1fa2; }
+          h2 { color: #ff8f00; }
+          body { background: #f3e5f5; }
+          #download-html { background: #7b1fa2; }
+          #download-png { background: #ff8f00; }
+        `,
+        "teal-orange": `
+          h1, h2 { color: #00695c; }
+          h2 { color: #e65100; }
+          body { background: #e0f7fa; }
+          #download-html { background: #00695c; }
+          #download-png { background: #e65100; }
+        `
+      };
+      style.innerHTML = `
+        body {
+          font-family: 'Segoe UI', Arial, sans-serif;
+          background: #f0f8ff;
+          padding: 20px;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .container {
+          max-width: 800px;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+          padding: 40px;
+          margin: 20px 0;
+        }
+        .editable {
+          outline: 2px dashed #007bff;
+          padding: 10px;
+          border-radius: 6px;
+          margin: 10px 0;
+        }
+        h1, h2 {
+          text-align: center;
+        }
+        h1 { font-size: 28px; }
+        h2 { font-size: 22px; }
+        ul { line-height: 1.8; }
+        .signature { text-align: right; margin-top: 50px; }
+        .controls { margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        button { padding: 10px 18px; font-size: 16px; cursor: pointer; border: none; border-radius: 6px; margin: 5px; }
+        #download-html { background: #2e7d32; color: white; }
+        #download-png { background: #1976d2; color: white; }
+        #edit-mode { background: #ff6f00; color: white; }
+        #theme-selector { padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; }
+        @media (max-width: 600px) {
+          .container { padding: 20px; }
+          h1 { font-size: 24px; }
+          h2 { font-size: 20px; }
+        }
+      ` + colors[e.target.value];
+    });
+  </script>
+</body>
+</html>
