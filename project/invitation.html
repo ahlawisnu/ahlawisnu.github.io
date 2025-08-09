@@ -3,125 +3,210 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Undangan Karang Taruna</title>
+  <title>Undangan Karang Taruna - Profesional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style id="theme-style">
+    :root {
+      --primary: #1976d2;
+      --primary-dark: #1565c0;
+      --secondary: #d32f2f;
+      --accent: #ff6f00;
+      --bg-card: #ffffff;
+      --bg-body: #f8f9fc;
+      --text: #2c3e50;
+      --border-radius: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.25s ease;
+    }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f0f8ff;
-      padding: 20px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-body);
+      padding: 30px 20px;
       margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      color: var(--text);
+      line-height: 1.7;
     }
+
     .container {
-      max-width: 800px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      padding: 40px;
-      margin: 20px 0;
+      max-width: 820px;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 50px 60px;
+      margin: 30px auto;
       position: relative;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
     }
-    .editable {
-      outline: 2px dashed #007bff;
-      padding: 10px;
-      border-radius: 6px;
-      margin: 10px 0;
-    }
-    .editable:focus {
-      outline: 2px solid #0056b3;
-      background: #f8f9fa;
-    }
-    h1, h2 {
-      color: #d32f2f;
+
+    .header {
       text-align: center;
+      margin-bottom: 24px;
     }
+
     h1 {
-      font-size: 28px;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.8px;
     }
+
     h2 {
-      font-size: 22px;
-      color: #1976d2;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--secondary);
+      margin: 0;
+      font-style: italic;
     }
+
+    .editable {
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: text;
+      transition: var(--transition);
+      position: relative;
+      margin: 12px 0;
+    }
+
+    .editable:hover {
+      background-color: #f5f8ff;
+    }
+
+    .editable:focus {
+      outline: 3px solid rgba(25, 118, 210, 0.25);
+      background-color: #edf3ff;
+      z-index: 1;
+    }
+
+    p, ul, li {
+      margin: 12px 0;
+      font-weight: 400;
+    }
+
     ul {
+      padding-left: 22px;
+    }
+
+    li {
       line-height: 1.8;
     }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 40px 0;
+      opacity: 0.8;
+    }
+
     .signature {
       text-align: right;
-      margin-top: 50px;
-    }
-    .controls {
-      margin: 20px 0;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    button {
-      padding: 10px 18px;
+      margin-top: 80px;
       font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 6px;
-      margin: 5px;
     }
+
+    .signature strong {
+      font-weight: 600;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin: 30px auto;
+      max-width: 900px;
+    }
+
+    button {
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+    }
+
+    #edit-mode {
+      background: var(--accent);
+      color: white;
+    }
+
     #download-html {
       background: #2e7d32;
       color: white;
     }
+
     #download-png {
-      background: #1976d2;
+      background: var(--primary);
       color: white;
     }
-    #edit-mode {
-      background: #ff6f00;
-      color: white;
-    }
+
     #theme-selector {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      padding: 14px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      min-width: 200px;
     }
-    @media (max-width: 600px) {
+
+    @media (max-width: 650px) {
       .container {
-        padding: 20px;
+        padding: 30px 20px;
       }
-      h1 { font-size: 24px; }
-      h2 { font-size: 20px; }
+      h1 { font-size: 26px; }
+      h2 { font-size: 18px; }
+      .controls { flex-direction: column; align-items: center; }
+      #theme-selector { min-width: auto; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Tombol Kontrol -->
   <div class="controls">
-    <button id="edit-mode">✏️ Aktifkan Edit</button>
-    <button id="download-html">💾 Unduh sebagai HTML</button>
-    <button id="download-png">🖼️ Unduh sebagai PNG</button>
+    <button id="edit-mode">✏️ Edit Konten</button>
+    <button id="download-html">💾 Simpan sebagai HTML</button>
+    <button id="download-png">🖼️ Ekspor sebagai PNG</button>
     <select id="theme-selector">
-      <option value="red-blue">Merah-Biru (Default)</option>
-      <option value="green-yellow">Hijau-Kuning</option>
-      <option value="purple-gold">Ungu-Emas</option>
-      <option value="teal-orange">Biru Toska-Oranye</option>
+      <option value="blue-red">Biru-Merah (Default)</option>
+      <option value="green-teal">Hijau-Toska</option>
+      <option value="purple-amber">Ungu-Kuning Emas</option>
+      <option value="indigo-pink">Indigo-Merah Muda</option>
     </select>
   </div>
 
+  <!-- Kartu Undangan -->
   <div class="container" id="invitation">
-    <h1 class="editable">🎉 UNDANGAN ACARA RUTIN KARANG TARUNA 🎉</h1>
-    <h2 class="editable">"BERSATU, BERGERAK, BERKARYA"</h2>
-
-    <div class="editable">
-      <p><strong>Halo, Sobat Karang Taruna!</strong><br>
-      Kami dengan penuh suka cita mengundang seluruh anggota untuk hadir dalam kumpulan rutin Karang Taruna. Mari satukan langkah, salurkan ide, dan wujudkan aksi nyata untuk kemajuan desa dan pemuda.</p>
+    <div class="header">
+      <h1 class="editable">UNDANGAN ACARA RUTIN KARANG TARUNA</h1>
+      <h2 class="editable">"BERSATU, BERGERAK, BERKARYA"</h2>
     </div>
 
     <div class="editable">
-      <p>📅 <strong>Hari/Tanggal</strong>: [Isi hari dan tanggal]<br>
-      ⏰ <strong>Waktu</strong>: [Isi waktu, contoh: Pukul 15.00 WIB]<br>
-      📍 <strong>Tempat</strong>: [Nama tempat, contoh: Rumah Pak RT<br>
-      🗺️ <strong>Alamat</strong>: [Isi alamat lengkap]</p>
+      <p><strong>Halo, Sobat Karang Taruna!</strong></p>
+      <p>Kami dengan penuh suka cita mengundang seluruh anggota untuk hadir dalam kumpulan rutin Karang Taruna. Mari satukan langkah, salurkan ide, dan wujudkan aksi nyata untuk kemajuan desa dan pemuda.</p>
+    </div>
+
+    <div class="editable">
+      <p>📅 <strong>Hari/Tanggal</strong>: [Isi hari dan tanggal]</p>
+      <p>⏰ <strong>Waktu</strong>: [Isi waktu, contoh: Pukul 15.00 WIB]</p>
+      <p>📍 <strong>Tempat</strong>: [Nama tempat, contoh: Balai Desa Mekar Jaya]</p>
+      <p>🗺️ <strong>Alamat</strong>: [Isi alamat lengkap]</p>
     </div>
 
     <hr>
@@ -145,62 +230,57 @@
     </div>
 
     <div class="signature">
+      <p class="editable"><strong>Hormat kami,</strong></p>
       <br><br>
-      <strong class="editable">Hormat kami,</strong><br><br><br>
-      <strong class="editable">Ketua Karang Taruna<br>
-      [Nama Ketua]</strong>
+      <p class="editable">
+        <strong>(_________________________)<br>
+        Ketua Karang Taruna<br>
+        [Nama Ketua]</strong>
+      </p>
     </div>
   </div>
 
   <script>
-    // Aktifkan mode edit di semua elemen dengan class "editable"
+    // Aktifkan mode edit
     document.getElementById("edit-mode").addEventListener("click", () => {
       const editable = document.querySelectorAll(".editable");
+      const isEditable = editable[0].contentEditable === "true";
+
       editable.forEach(el => {
-        el.contentEditable = el.contentEditable === "true" ? "false" : "true";
+        el.contentEditable = !isEditable;
       });
-      const btn = document.getElementById("edit-mode");
-      btn.textContent = 
-        editable[0].contentEditable === "true" ? "🛑 Nonaktifkan Edit" : "✏️ Aktifkan Edit";
+
+      document.getElementById("edit-mode").textContent = 
+        isEditable ? "✏️ Edit Konten" : "🛑 Selesai Edit";
     });
 
     // Unduh sebagai HTML
     document.getElementById("download-html").addEventListener("click", () => {
       const container = document.getElementById("invitation").outerHTML;
-      const currentTheme = document.getElementById("theme-style").innerHTML;
-      const htmlContent = `
-<!DOCTYPE html>
+      const currentStyle = document.getElementById("theme-style").innerHTML;
+      const htmlContent = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Undangan Karang Taruna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f8ff; padding: 20px; }
-    .container { max-width: 800px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 40px; margin: 20px auto; }
-    ${currentTheme}
+    body { font-family: 'Inter', sans-serif; background: #f8f9fc; margin: 0; padding: 30px 20px; color: #2c3e50; }
+    .container { max-width: 820px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 50px 60px; margin: 30px auto; }
+    ${currentStyle.replace(":root", "")}
   </style>
 </head>
 <body>
   <div class="container">
     ${container}
   </div>
-  <script>
-    // Tombol edit bisa berfungsi lagi di file yang diunduh
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "edit-mode-local") {
-        document.querySelectorAll(".editable").forEach(el => {
-          el.contentEditable = el.contentEditable === "true" ? "false" : "true";
-        });
-      }
-    });
-  <\/script>
 </body>
 </html>`;
       const blob = new Blob([htmlContent], { type: "text/html" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "undangan-karang-taruna.html";
+      a.download = "undangan-karang-taruna-professional.html";
       a.click();
       URL.revokeObjectURL(url);
     });
@@ -213,8 +293,10 @@
         backgroundColor: "#ffffff",
         logging: false,
         scrollY: -window.scrollY,
-        width: 800,
-        height: document.getElementById("invitation").scrollHeight
+        width: 820,
+        height: document.getElementById("invitation").scrollHeight,
+        windowHeight: document.getElementById("invitation").scrollHeight,
+        allowTaint: true
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "undangan-karang-taruna.png";
@@ -226,83 +308,48 @@
       });
     });
 
-    // Ganti tema
+    // Ganti Tema
     document.getElementById("theme-selector").addEventListener("change", (e) => {
-      const style = document.getElementById("theme-style");
-      const colors = {
-        "red-blue": `
-          h1, h2 { color: #d32f2f; }
-          h2 { color: #1976d2; }
-          body { background: #fff3f3; }
-          #download-html { background: #2e7d32; }
-          #download-png { background: #1976d2; }
+      const themes = {
+        "blue-red": `
+          :root { --primary: #1976d2; --secondary: #d32f2f; --accent: #ff6f00; }
         `,
-        "green-yellow": `
-          h1, h2 { color: #33691e; }
-          h2 { color: #f57f17; }
-          body { background: #f9fbe7; }
-          #download-html { background: #33691e; }
-          #download-png { background: #f57f17; }
+        "green-teal": `
+          :root { --primary: #2e7d32; --secondary: #00796b; --accent: #fb8c00; }
         `,
-        "purple-gold": `
-          h1, h2 { color: #7b1fa2; }
-          h2 { color: #ff8f00; }
-          body { background: #f3e5f5; }
-          #download-html { background: #7b1fa2; }
-          #download-png { background: #ff8f00; }
+        "purple-amber": `
+          :root { --primary: #7b1fa2; --secondary: #ff8f00; --accent: #c2185b; }
         `,
-        "teal-orange": `
-          h1, h2 { color: #00695c; }
-          h2 { color: #e65100; }
-          body { background: #e0f7fa; }
-          #download-html { background: #00695c; }
-          #download-png { background: #e65100; }
+        "indigo-pink": `
+          :root { --primary: #283593; --secondary: #c2185b; --accent: #f57c00; }
         `
       };
-      style.innerHTML = `
-        body {
-          font-family: 'Segoe UI', Arial, sans-serif;
-          background: #f0f8ff;
-          padding: 20px;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+      document.getElementById("theme-style").innerHTML = themes[e.target.value] + `
+        :root {
+          --bg-card: #ffffff;
+          --bg-body: #f8f9fc;
+          --text: #2c3e50;
+          --border-radius: 16px;
+          --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          --transition: all 0.25s ease;
         }
-        .container {
-          max-width: 800px;
-          background: white;
-          border-radius: 12px;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-          padding: 40px;
-          margin: 20px 0;
-        }
-        .editable {
-          outline: 2px dashed #007bff;
-          padding: 10px;
-          border-radius: 6px;
-          margin: 10px 0;
-        }
-        h1, h2 {
-          text-align: center;
-        }
-        h1 { font-size: 28px; }
-        h2 { font-size: 22px; }
-        ul { line-height: 1.8; }
-        .signature { text-align: right; margin-top: 50px; }
-        .controls { margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        button { padding: 10px 18px; font-size: 16px; cursor: pointer; border: none; border-radius: 6px; margin: 5px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-body); padding: 30px 20px; margin: 0; color: var(--text); line-height: 1.7; }
+        .container { max-width: 820px; background: var(--bg-card); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 50px 60px; margin: 30px auto; }
+        h1 { color: var(--primary); }
+        h2 { color: var(--secondary); }
+        .editable:hover { background-color: #f5f8ff; }
+        .editable:focus { outline: 3px solid rgba(25, 118, 210, 0.25); background-color: #edf3ff; }
+        #edit-mode { background: var(--accent); color: white; }
         #download-html { background: #2e7d32; color: white; }
-        #download-png { background: #1976d2; color: white; }
-        #edit-mode { background: #ff6f00; color: white; }
-        #theme-selector { padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; }
-        @media (max-width: 600px) {
-          .container { padding: 20px; }
-          h1 { font-size: 24px; }
-          h2 { font-size: 20px; }
-        }
-      ` + colors[e.target.value];
+        #download-png { background: var(--primary); color: white; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.18); }
+        #theme-selector { padding: 14px; font-size: 15px; border-radius: 10px; border: 1px solid #ddd; background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        @media (max-width: 650px) { .container { padding: 30px 20px; } }
+      `;
     });
+
+    // Inisialisasi tema default
+    document.getElementById("theme-selector").dispatchEvent(new Event("change"));
   </script>
 </body>
 </html>
