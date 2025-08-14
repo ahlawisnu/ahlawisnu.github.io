@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Generator Prompt Artikel Blog</title>
+  <style>
+    /* WA Style */
+.whatsapp-link {
+  display: inline-block;
+  background-color: #25D366;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-link:hover {
+  background-color: #128C7E;
+}
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 40px;
+      background-color: #f0f4f8;
+      color: #333;
+    }
+    h1 {
+      color: #0078D4;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #output {
+      margin-top: 30px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Generator Prompt Artikel Blog</h1>
+
+  <label for="topic">Topik Artikel</label>
+  <input type="text" id="topic" placeholder="Contoh: Tips Menabung untuk Pelajar">
+
+  <label for="style">Gaya Bahasa</label>
+  <select id="style">
+    <option value="santai">Santai</option>
+    <option value="profesional">Profesional</option>
+    <option value="persuasif">Persuasif</option>
+    <option value="storytelling">Storytelling</option>
+  </select>
+
+  <label for="audience">Target Audiens</label>
+  <input type="text" id="audience" placeholder="Contoh: Mahasiswa, Freelancer, Ibu Rumah Tangga">
+
+  <label for="length">Panjang Artikel (jumlah kata)</label>
+  <input type="text" id="length" placeholder="Contoh: 800 kata">
+
+  <button onclick="generatePrompt()">🔧 Buat Prompt</button>
+
+  <div id="output"></div>
+  <button onclick="copyPrompt()">📋 Salin Prompt</button>
+
+  <script>
+    function generatePrompt() {
+      const topic = document.getElementById("topic").value;
+      const style = document.getElementById("style").value;
+      const audience = document.getElementById("audience").value;
+      const length = document.getElementById("length").value;
+
+      const prompt = `Buatkan artikel blog dengan struktur lengkap berdasarkan topik berikut: ${topic}.
+
+Struktur yang harus diikuti:
+1. Judul yang menarik dan memancing rasa penasaran, maksimal 12 kata.
+2. Pendahuluan yang menjelaskan latar belakang topik dan mengapa penting dibahas. Sertakan fakta menarik, pertanyaan retoris, atau cerita singkat.
+3. Isi utama yang dibagi menjadi beberapa subjudul. Setiap subjudul harus berisi penjelasan yang informatif, contoh nyata, dan tips praktis. Gunakan poin-poin jika perlu.
+4. Kesimpulan yang merangkum isi artikel dan memberikan insight akhir.
+5. Call to Action (CTA) yang mendorong pembaca untuk berinteraksi, seperti komentar, membagikan artikel, atau membaca artikel lain.
+
+Gaya bahasa: ${style}
+Target audiens: ${audience}
+Panjang artikel: ${length}
+
+Output yang diharapkan: Artikel blog utuh dengan format yang rapi dan mudah dibaca.`;
+
+      document.getElementById("output").textContent = prompt;
+    }
+
+    function copyPrompt() {
+      const output = document.getElementById("output");
+      const range = document.createRange();
+      range.selectNode(output);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      alert("Prompt berhasil disalin!");
+    }
+  </script>
+
+</body>
+</html>
