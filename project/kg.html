@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Generator Prompt AI untuk Blogger</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, textarea, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .output-box, .preview-box { margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 6px; position: relative; }
+    pre { white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    .copy-btn:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <a class="whatsapp-link" href="/">Home</a>
+  <div class="container">
+    <h1>Generator Konten Prompt AI untuk Blogger</h1>
+
+    <label for="imageUrl">URL Gambar:</label>
+    <input type="text" id="imageUrl" placeholder="https://...">
+
+    <label for="ratio">Rasio Gambar:</label>
+    <input type="text" id="ratio" placeholder="Contoh: 9:16">
+
+    <label for="model">Model Gaya:</label>
+    <select id="model">
+      <option value="Anime Style">Anime Style</option>
+      <option value="Realism">Realism</option>
+      <option value="Cyberpunk">Cyberpunk</option>
+      <option value="Fantasy">Fantasy</option>
+    </select>
+
+    <label for="description">Deskripsi Prompt:</label>
+    <textarea id="description" rows="4" placeholder="Contoh: Seorang wanita muda berambut hitam panjang dengan bunga putih..."></textarea>
+
+    <label for="hashtags">Hashtag:</label>
+    <input type="text" id="hashtags" placeholder="#anime #aiart #digitalfashion">
+
+    <button onclick="generateHTML()">Buat Kode HTML</button>
+
+    <div class="output-box" id="outputSection" style="display:none;">
+      <button class="copy-btn" onclick="copyHTML()">Salin HTML</button>
+      <pre id="htmlOutput"></pre>
+    </div>
+
+    <div class="preview-box" id="previewSection" style="display:none;">
+      <h2>Pratinjau Postingan Blogger</h2>
+      <div id="previewContent" style="border:1px solid #ccc; padding:15px; border-radius:6px;"></div>
+    </div>
+  </div>
+
+  <script>
+    function generateHTML() {
+      const imageUrl = document.getElementById("imageUrl").value;
+      const ratio = document.getElementById("ratio").value;
+      const model = document.getElementById("model").value;
+      const description = document.getElementById("description").value;
+      const hashtags = document.getElementById("hashtags").value;
+
+      const htmlContent = `
+<!-- POSTINGAN BLOGGER: Karya AI Generatif -->
+<div class="ai-art-post">
+  <h2>Prompt: ${model}</h2>
+  <img src="${imageUrl}" alt="AI Generated Art" style="max-width:100%; border-radius:8px;">
+  <p><strong>Rasio Gambar:</strong> ${ratio}</p>
+  <p><strong>Model Gaya:</strong> ${model}</p>
+  <p><strong>Deskripsi:</strong> ${description}</p>
+  <p><strong>Hashtag:</strong> ${hashtags}</p>
+</div>
+<!-- AKHIR POSTINGAN -->
+      `.trim();
+
+      document.getElementById("htmlOutput").textContent = htmlContent;
+      document.getElementById("outputSection").style.display = "block";
+
+      // Tampilkan preview
+      document.getElementById("previewContent").innerHTML = `
+        <div class="ai-art-post">
+          <h2>Prompt: ${model}</h2>
+          <img src="${imageUrl}" alt="AI Generated Art" style="max-width:100%; border-radius:8px;">
+          <p><strong>Rasio Gambar:</strong> ${ratio}</p>
+          <p><strong>Model Gaya:</strong> ${model}</p>
+          <p><strong>Deskripsi:</strong> ${description}</p>
+          <p><strong>Hashtag:</strong> ${hashtags}</p>
+        </div>
+      `;
+      document.getElementById("previewSection").style.display = "block";
+    }
+
+    function copyHTML() {
+      const html = document.getElementById("htmlOutput").textContent;
+      navigator.clipboard.writeText(html).then(() => {
+        alert("Kode HTML berhasil disalin!");
+      }).catch(err => {
+        alert("Gagal menyalin: " + err);
+      });
+    }
+  </script>
+</body>
+</html>
