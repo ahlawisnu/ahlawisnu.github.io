@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generator Prompt AI</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    select, textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #bdc3c7;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #preview {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px dashed #95a5a6;
+      border-radius: 6px;
+      background-color: #ecf0f1;
+      min-height: 50px;
+      word-wrap: break-word;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn-copy { background-color: #2ecc71; }
+    .btn-copy:hover { background-color: #27ae60; }
+    .btn-save { background-color: #f39c12; }
+    .btn-save:hover { background-color: #d35400; }
+    .btn-generate { background-color: #3498db; }
+    .success { color: #2ecc71; font-size: 0.9em; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Generator Prompt AI</h1>
+
+    <label for="jenis">Jenis Konten:</label>
+    <select id="jenis">
+      <option value="cerita pendek">Cerita Pendek</option>
+      <option value="gambar">Gambar</option>
+      <option value="puisi">Puisi</option>
+      <option value="skrip video">Skrip Video</option>
+      <option value="musik">Musik</option>
+      <option value="artikel">Artikel</option>
+    </select>
+
+    <label for="tema">Tema/Subjek:</label>
+    <input type="text" id="tema" placeholder="Misalnya: dunia bawah laut, cinta pertama, teknologi masa depan" />
+
+    <label for="gaya">Gaya atau Suasana:</label>
+    <input type="text" id="gaya" placeholder="Misalnya: misterius, lucu, epik, puitis, futuristik" />
+
+    <label for="detail">Detail Tambahan (opsional):</label>
+    <textarea id="detail" placeholder="Tambahkan karakter, panjang, format, atau elemen khusus..."></textarea>
+
+    <button class="btn-generate" onclick="generatePrompt()">Buat Prompt</button>
+
+    <h3>Preview Prompt:</h3>
+    <div id="preview">Prompt akan muncul di sini...</div>
+
+    <div class="btn-group">
+      <button class="btn-copy" onclick="copyPrompt()">Salin</button>
+      <button class="btn-save" onclick="savePrompt()">Simpan (TXT)</button>
+    </div>
+    
+    <p id="status" class="success"></p>
+  </div>
+
+  <script>
+    let currentPrompt = "";
+
+    function generatePrompt() {
+      const jenis = document.getElementById("jenis").value;
+      const tema = document.getElementById("tema").value.trim() || "[tema]";
+      const gaya = document.getElementById("gaya").value.trim() || "kreatif";
+      const detail = document.getElementById("detail").value.trim();
+
+      let basePrompt = `Buatkan sebuah ${jenis} dengan tema "${tema}". Gaya ${gaya}.`;
+
+      if (detail) {
+        basePrompt += ` Detail: ${detail}.`;
+      }
+
+      basePrompt += ` Hasilkan konten yang orisinal, menarik, dan sesuai untuk audiens umum.`;
+
+      currentPrompt = basePrompt;
+      document.getElementById("preview").textContent = currentPrompt;
+      document.getElementById("status").textContent = "";
+    }
+
+    function copyPrompt() {
+      if (!currentPrompt) {
+        alert("Silakan buat prompt terlebih dahulu!");
+        return;
+      }
+      navigator.clipboard.writeText(currentPrompt).then(() => {
+        document.getElementById("status").textContent = "Prompt berhasil disalin ke clipboard!";
+      }).catch(err => {
+        console.error("Gagal menyalin: ", err);
+        alert("Gagal menyalin ke clipboard.");
+      });
+    }
+
+    function savePrompt() {
+      if (!currentPrompt) {
+        alert("Tidak ada prompt untuk disimpan!");
+        return;
+      }
+      const blob = new Blob([currentPrompt], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `prompt-ai-${new Date().toISOString().slice(0,10)}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      document.getElementById("status").textContent = "Prompt berhasil disimpan!";
+    }
+
+    // Generate default prompt on load
+    window.onload = generatePrompt;
+  </script>
+</body>
+</html>
