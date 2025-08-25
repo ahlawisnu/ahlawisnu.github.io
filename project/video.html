@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Prompt Video</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .preview {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f3f6;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .preview-text {
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn-copy {
+            background: #27ae60;
+            margin-left: 10px;
+        }
+        .btn-copy:hover {
+            background: #219955;
+        }
+        .flex {
+            display: flex;
+            gap: 10px;
+        }
+      /* WA Style */
+.whatsapp-link {
+  display: inline-block;
+  background-color: #25D366;
+  color: white;
+  margin: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-link:hover {
+  background-color: #128C7E;
+}
+
+#searchFav {
+  width: 100%;
+  padding: 8px;
+  color: red;
+  margin-bottom: 10px;
+}
+    </style>
+</head>
+<body>
+    <a class="whatsapp-link" href="/">Home</a>
+    <div class="container">
+        <h1>Generator Prompt Video</h1>
+        
+        <div class="form-group">
+            <label for="subject">Subjek Video:</label>
+            <input type="text" id="subject" placeholder="Contoh: seorang penjelajah di hutan" value="seorang penjelajah di hutan">
+        </div>
+
+        <div class="form-group">
+            <label for="motion">Gerakan (Motion):</label>
+            <select id="motion">
+                <option value="slow pan left">Slow Pan Left</option>
+                <option value="slow pan right">Slow Pan Right</option>
+                <option value="zoom in gradually">Zoom In Gradually</option>
+                <option value="zoom out gradually">Zoom Out Gradually</option>
+                <option value="dolly forward">Dolly Forward</option>
+                <option value="dolly backward">Dolly Backward</option>
+                <option value="steady cam follow">Steady Cam Follow</option>
+                <option value="static shot">Static Shot</option>
+                <option value="handheld shaky cam">Handheld Shaky Cam</option>
+                <option value="aerial drone shot">Aerial Drone Shot</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="angle">Sudut Kamera (Angle):</label>
+            <select id="angle">
+                <option value="wide angle">Wide Angle</option>
+                <option value="close-up">Close-Up</option>
+                <option value="extreme close-up">Extreme Close-Up</option>
+                <option value="low angle">Low Angle</option>
+                <option value="high angle">High Angle</option>
+                <option value="bird's eye view">Bird's Eye View</option>
+                <option value="worm's eye view">Worm's Eye View</option>
+                <option value="over the shoulder">Over the Shoulder</option>
+                <option value="Dutch angle">Dutch Angle</option>
+                <option value="eye level">Eye Level</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Durasi (detik):</label>
+            <input type="number" id="duration" min="1" max="60" value="10">
+        </div>
+
+        <div class="form-group">
+            <label for="style">Gaya Visual (Opsional):</label>
+            <input type="text" id="style" placeholder="Contoh: cinematic, realistic, anime, watercolor">
+        </div>
+
+        <div class="form-group">
+            <label for="lighting">Pencahayaan (Opsional):</label>
+            <input type="text" id="lighting" placeholder="Contoh: golden hour, neon lights, softbox lighting">
+        </div>
+
+        <div class="preview">
+            <div class="preview-title">Prompt Hasil:</div>
+            <div id="prompt-output" class="preview-text">Seorang penjelajah di hutan, gerakan kamera: slow pan left, sudut kamera: wide angle, durasi: 10 detik.</div>
+        </div>
+
+        <div class="flex">
+            <button id="generate" class="btn">Perbarui Prompt</button>
+            <button id="copy" class="btn btn-copy">Salin</button>
+        </div>
+    </div>
+
+    <script>
+        // Ambil elemen DOM
+        const subjectInput = document.getElementById('subject');
+        const motionSelect = document.getElementById('motion');
+        const angleSelect = document.getElementById('angle');
+        const durationInput = document.getElementById('duration');
+        const styleInput = document.getElementById('style');
+        const lightingInput = document.getElementById('lighting');
+        const promptOutput = document.getElementById('prompt-output');
+        const generateBtn = document.getElementById('generate');
+        const copyBtn = document.getElementById('copy');
+
+        // Fungsi untuk menghasilkan prompt
+        function generatePrompt() {
+            const subject = subjectInput.value.trim() || "sebuah subjek";
+            const motion = motionSelect.value;
+            const angle = angleSelect.value;
+            const duration = durationInput.value || "5";
+            const style = styleInput.value.trim();
+            const lighting = lightingInput.value.trim();
+
+            let prompt = `Seorang penjelajah di hutan, gerakan kamera: ${motion}, sudut kamera: ${angle}, durasi: ${duration} detik`;
+
+            if (style) {
+                prompt += `, gaya visual: ${style}`;
+            }
+            if (lighting) {
+                prompt += `, pencahayaan: ${lighting}`;
+            }
+            prompt += '.';
+
+            promptOutput.textContent = prompt;
+            return prompt;
+        }
+
+        // Event listener untuk semua input
+        [subjectInput, motionSelect, angleSelect, durationInput, styleInput, lightingInput].forEach(input => {
+            input.addEventListener('input', generatePrompt);
+        });
+
+        // Tombol generate
+        generateBtn.addEventListener('click', generatePrompt);
+
+        // Tombol salin
+        copyBtn.addEventListener('click', () => {
+            const promptText = promptOutput.textContent;
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Tersalin!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert('Gagal menyalin: ' + err);
+            });
+        });
+
+        // Generate awal saat load
+        generatePrompt();
+    </script>
+</body>
+                                                               </html>
