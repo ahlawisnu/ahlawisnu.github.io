@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Artikel</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const App = () => {
+            const [formData, setFormData] = React.useState({
+                topic: '',
+                audience: '',
+                language: 'Bahasa Indonesia',
+                tone: 'Informal tapi Profesional',
+                style: 'Ringkas',
+                length: '1000 kata',
+                structure: '5 subbab (Pendahuluan, Ruang Kerja Ideal, Manajemen Waktu, Hindari Distraksi, Kesimpulan)',
+                specialContent: '',
+                sources: '',
+                visuals: '',
+                exampleOutput: ''
+            });
+
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+            };
+
+            const copyToClipboard = () => {
+                const textArea = document.createElement('textarea');
+                textArea.value = `
+Prompt: Buat Artikel Berdasarkan Spesifikasi  
+Topik/Ide Utama: ${formData.topic}  
+Target Audiens: ${formData.audience}  
+Bahasa & Gaya Penulisan:  
+- Bahasa: ${formData.language}  
+- Tone: ${formData.tone}  
+- Gaya: ${formData.style}  
+
+Struktur yang Diinginkan:  
+- Panjang: ${formData.length}  
+- Subbab: ${formData.structure}  
+
+Isi Khusus yang Harus Ada:  
+${formData.specialContent ? `- ${formData.specialContent}` : ''}  
+${formData.sources ? `- Sumber: ${formData.sources}` : ''}  
+
+Visual/Elemen Tambahan:  
+${formData.visuals ? `- ${formData.visuals}` : ''}  
+
+Contoh Output yang Diinginkan (opsional):  
+${formData.exampleOutput ? formData.exampleOutput : ''}
+                `;
+                
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                alert('Prompt berhasil disalin!');
+            };
+
+            return (
+                <div className="container mx-auto px-4 py-8 max-w-6xl">
+                    <h1 className="text-3xl font-bold text-center mb-8">Generator Template Artikel</h1>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Form Input Section */}
+                        <div className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-xl font-semibold mb-4">Edit Parameter Artikel</h2>
+                            
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Topik/Ide Utama:</label>
+                                    <input 
+                                        type="text" 
+                                        name="topic"
+                                        value={formData.topic}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: Tips Meningkatkan Produktivitas Kerja dari Rumah"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Target Audiens:</label>
+                                    <input 
+                                        type="text" 
+                                        name="audience"
+                                        value={formData.audience}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: Pekerja remote usia 25-35 tahun"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Bahasa:</label>
+                                        <select 
+                                            name="language"
+                                            value={formData.language}
+                                            onChange={handleChange}
+                                            className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        >
+                                            <option>Bahasa Indonesia</option>
+                                            <option>English</option>
+                                            <option>Bahasa Inggris</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Tone:</label>
+                                        <select 
+                                            name="tone"
+                                            value={formData.tone}
+                                            onChange={handleChange}
+                                            className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        >
+                                            <option>Informal tapi Profesional</option>
+                                            <option>Formal</option>
+                                            <option>Persuasif</option>
+                                            <option>Edukatif</option>
+                                            <option>Humoris</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Gaya Penulisan:</label>
+                                    <select 
+                                        name="style"
+                                        value={formData.style}
+                                        onChange={handleChange}
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                        <option>Ringkas</option>
+                                        <option>Naratif</option>
+                                        <option>Analitis</option>
+                                        <option>Opini</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Panjang Artikel:</label>
+                                    <input 
+                                        type="text" 
+                                        name="length"
+                                        value={formData.length}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: 1000 kata"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Struktur Subbab:</label>
+                                    <input 
+                                        type="text" 
+                                        name="structure"
+                                        value={formData.structure}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: 5 subbab (Pendahuluan, Ruang Kerja Ideal, Manajemen Waktu, Hindari Distraksi, Kesimpulan)"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Isi Khusus yang Harus Ada:</label>
+                                    <textarea 
+                                        name="specialContent"
+                                        value={formData.specialContent}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: Sertakan data survei '74% pekerja remote merasa kurang fokus'"
+                                        rows="3"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    ></textarea>
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Sumber Referensi:</label>
+                                    <input 
+                                        type="text" 
+                                        name="sources"
+                                        value={formData.sources}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: Gunakan data dari WHO tahun 2023"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Visual/Elemen Tambahan:</label>
+                                    <input 
+                                        type="text" 
+                                        name="visuals"
+                                        value={formData.visuals}
+                                        onChange={handleChange}
+                                        placeholder="Contoh: Butuh gambar infografis tentang rutinitas kerja"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Contoh Output yang Diinginkan (opsional):</label>
+                                    <textarea 
+                                        name="exampleOutput"
+                                        value={formData.exampleOutput}
+                                        onChange={handleChange}
+                                        placeholder="Salin cuplikan artikel sebelumnya..."
+                                        rows="4"
+                                        className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Preview Section */}
+                        <div className="bg-white rounded-lg shadow-md p-6">
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="text-xl font-semibold">Preview Prompt</h2>
+                                <button 
+                                    onClick={copyToClipboard}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center space-x-2 transition-colors"
+                                >
+                                    <i className="fas fa-copy"></i>
+                                    <span>Copy Prompt</span>
+                                </button>
+                            </div>
+                            
+                            <div className="border rounded-md p-4 bg-gray-50 min-h-[400px] whitespace-pre-wrap font-mono text-sm">
+                                {`
+Prompt: Buat Artikel Berdasarkan Spesifikasi  
+Topik/Ide Utama: ${formData.topic || '[Masukkan topik]'}  
+Target Audiens: ${formData.audience || '[Masukkan audiens]'}  
+Bahasa & Gaya Penulisan:  
+- Bahasa: ${formData.language}  
+- Tone: ${formData.tone}  
+- Gaya: ${formData.style}  
+
+Struktur yang Diinginkan:  
+- Panjang: ${formData.length}  
+- Subbab: ${formData.structure}  
+
+Isi Khusus yang Harus Ada:  
+${formData.specialContent ? `- ${formData.specialContent}` : '- [Tambahkan poin khusus]'}  
+${formData.sources ? `- Sumber: ${formData.sources}` : ''}  
+
+Visual/Elemen Tambahan:  
+${formData.visuals ? `- ${formData.visuals}` : ''}  
+
+Contoh Output yang Diinginkan (opsional):  
+${formData.exampleOutput || '[Tambahkan contoh output]'}
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
