@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Kontak WhatsApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .contact-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-header h2 {
+            color: #25D366;
+            font-weight: bold;
+        }
+        .form-header p {
+            color: #6c757d;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control:focus {
+            border-color: #25D366;
+            box-shadow: 0 0 0 0.25rem rgba(37, 211, 102, 0.25);
+        }
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+            color: white;
+        }
+        .whatsapp-info {
+            background-color: #f0f9f0;
+            border-left: 4px solid #25D366;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        .notification {
+            display: none;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="contact-container">
+            <div class="form-header">
+                <h2><i class="fab fa-whatsapp"></i> Hubungi Kami via WhatsApp</h2>
+                <p>Isi formulir di bawah ini dan kami akan segera menghubungi Anda</p>
+            </div>
+            
+            <form id="whatsappForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Nomor Telepon</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subjek</label>
+                            <select class="form-select" id="subject" required>
+                                <option value="" selected disabled>Pilih Subjek</option>
+                                <option value="Informasi Produk">Informasi Produk</option>
+                                <option value="Layanan Pelanggan">Layanan Pelanggan</option>
+                                <option value="Kerjasama">Kerjasama</option>
+                                <option value="Keluhan">Keluhan</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Pesan</label>
+                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
+                    <button type="submit" class="btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
+                    </button>
+                </div>
+            </form>
+            
+            <div class="whatsapp-info">
+                <p><i class="fas fa-info-circle"></i> <strong>Informasi:</strong> Setelah Anda mengirim formulir ini, Anda akan diarahkan ke WhatsApp untuk mengirim pesan ke nomor kami.</p>
+            </div>
+            
+            <div id="notification" class="notification"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Ganti dengan nomor WhatsApp Anda (format internasional tanpa +)
+            const phoneNumber = '6281234567890';
+            
+            // Ambil nilai dari form
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Format pesan
+            const formattedMessage = `*Halo, saya tertarik dengan layanan Anda*\n\n` +
+                                   `*Nama:* ${name}\n` +
+                                   `*Email:* ${email}\n` +
+                                   `*Telepon:* ${phone}\n` +
+                                   `*Subjek:* ${subject}\n\n` +
+                                   `*Pesan:*\n${message}`;
+            
+            // Encode pesan untuk URL
+            const encodedMessage = encodeURIComponent(formattedMessage);
+            
+            // Buat URL WhatsApp
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Tampilkan notifikasi
+            showNotification('Mengarahkan ke WhatsApp...', 'success');
+            
+            // Buka WhatsApp setelah delay singkat
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+            }, 1000);
+        });
+        
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            
+            // Sembunyikan notifikasi setelah 5 detik
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
