@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Template Prompt Editor — Gemini Nano Banana</title>
+  <style>
+    :root{
+      --bg:#0f1216;--surface:#171b22;--surface-2:#1e2430;--text:#e8edf5;--muted:#96a3b4;
+      --primary:#7c9cff;--primary-2:#5c7bf5;--accent:#2fd8a9;--border:#2a3240;--danger:#ff6b6b;
+      --shadow:0 10px 30px rgba(0,0,0,.35)
+    }
+    .light{
+      --bg:#f6f8fb;--surface:#ffffff;--surface-2:#f1f3f7;--text:#0e1116;--muted:#596377;
+      --primary:#4b6bff;--primary-2:#3955df;--accent:#18b98b;--border:#e2e7f0;--danger:#e64949;
+      --shadow:0 10px 26px rgba(17,24,39,.15)
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    body{display:grid;grid-template-rows:auto 1fr auto}
+    header{backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(124,156,255,.14), transparent);
+      border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+    .bar{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:12px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    .logo{width:28px;height:28px;border-radius:8px;background:
+      radial-gradient(circle at 30% 30%, var(--accent), transparent 60%),
+      linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 6px 18px rgba(124,156,255,.35)}
+    .chip{background:var(--surface-2);color:var(--muted);border:1px solid var(--border);
+      padding:6px 10px;border-radius:10px;font-size:12px}
+    main{max-width:1100px;margin:20px auto;padding:0 20px;display:grid;grid-template-columns:1fr 420px;gap:20px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
+      display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+    .section-title{margin:0;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface-2);font-size:14px}
+    .panel{padding:16px;display:grid;gap:12px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field label{font-size:12px;color:var(--muted)}
+    .input, select, textarea{
+      width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+      background:var(--surface);color:var(--text);outline:none
+    }
+    .input:focus, select:focus, textarea:focus{
+      border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,156,255,.25)
+    }
+    textarea{min-height:180px;resize:vertical;font-family:ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;line-height:1.6}
+    .btn{border:1px solid var(--border);background:linear-gradient(180deg, var(--surface), var(--surface-2));
+      color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+    .btn.primary{background:linear-gradient(180deg, var(--primary), var(--primary-2));color:#fff;border:none}
+    .btn.ghost{background:var(--surface)}
+    .btn.danger{background:linear-gradient(180deg,#ff8a8a,var(--danger));color:#fff;border:none}
+    .actions{display:flex;flex-wrap:wrap;gap:10px}
+    .status{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;color:var(--muted);background:var(--surface-2);font-size:12px}
+    .preview{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+    .preview-area{padding:16px}
+    .prompt-output{white-space:pre-wrap;font-family:ui-monospace, Menlo, Consolas;line-height:1.6;
+      background:linear-gradient(180deg, var(--surface), var(--surface-2));border:1px dashed var(--border);border-radius:12px;padding:14px}
+    .footer{padding:16px;display:flex;justify-content:space-between;align-items:center}
+    .kbd{font-family:ui-monospace, Menlo, Consolas;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:2px 6px;color:var(--text)}
+    @media (max-width:960px){main{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="light">
+  <header>
+    <div class="bar">
+      <div class="brand">
+        <div class="logo"></div>
+        <span>Template Prompt — Gemini Nano Banana</span>
+        <span class="chip">Ganti objek & pakaian • Wajah & latar tetap</span>
+      </div>
+      <div class="actions">
+        <button id="themeBtn" class="btn">🌗 Tema</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Form konfigurasi -->
+    <section class="card">
+      <h3 class="section-title">Konfigurasi prompt</h3>
+      <div class="panel">
+        <div class="row">
+          <div class="field">
+            <label>Identitas subjek (opsional)</label>
+            <input id="subject" class="input" placeholder="mis. pria dewasa, usia 30-an, rambut hitam, wajah oval"/>
+          </div>
+          <div class="field">
+            <label>Konteks lokasi (opsional)</label>
+            <input id="context" class="input" placeholder="mis. di kantor dengan meja kayu"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Ganti pakaian menjadi</label>
+            <input id="outfit" class="input" placeholder="mis. jas formal hitam, kemeja putih, dasi merah"/>
+          </div>
+          <div class="field">
+            <label>Objek baru / penggantian</label>
+            <input id="object" class="input" placeholder="mis. laptop di atas meja, buku di tangan kanan"/>
+          </div>
+        </div>
+
+        <div class="row-3">
+          <div class="field">
+            <label>Gaya visual</label>
+            <select id="style" class="input">
+              <option value="realistis">Realistis</option>
+              <option value="modern minimalis">Modern minimalis</option>
+              <option value="fotografi editorial">Fotografi editorial</option>
+              <option value="sinematik">Sinematik</option>
+              <option value="ilustratif realistis">Ilustratif realistis</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Pencahayaan</label>
+            <select id="lighting" class="input">
+              <option value="natural konsisten dengan latar">Natural konsisten dengan latar</option>
+              <option value="softbox lembut">Softbox lembut</option>
+              <option value="dramatis high-contrast">Dramatis high-contrast</option>
+              <option value="golden hour">Golden hour</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Resolusi (opsional)</label>
+            <input id="resolution" class="input" placeholder="mis. 2048x2048"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Detail tambahan (opsional)</label>
+            <input id="details" class="input" placeholder="mis. gelang emas di tangan kiri, tekstur kain halus"/>
+          </div>
+          <div class="field">
+            <label>Kata yang harus dihindari (opsional)</label>
+            <input id="avoid" class="input" placeholder="mis. blur wajah, perubahan latar, oversmoothing"/>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn" class="btn primary">⚙️ Buat prompt</button>
+          <button id="copyBtn" class="btn">📋 Salin prompt</button>
+          <button id="resetBtn" class="btn ghost">↺ Reset</button>
+        </div>
+      </div>
+      <div class="status">
+        <div>Panduan: isi pakaian dan objek secara spesifik (warna, bahan, posisi).</div>
+        <div>Tip: tekan <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> untuk membuat prompt.</div>
+      </div>
+    </section>
+
+    <!-- Preview prompt -->
+    <section class="preview">
+      <h3 class="section-title">Preview prompt</h3>
+      <div class="preview-area">
+        <div id="output" class="prompt-output">Prompt Anda akan muncul di sini.</div>
+      </div>
+      <div class="footer">
+        <div class="chip">Wajah asli & latar belakang dipertahankan secara ketat.</div>
+        <div class="chip">Deskripsi detail meningkatkan konsistensi hasil.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bar" style="padding:16px 20px;">
+    <div class="chip">Simpan file ini lalu buka di browser untuk membuat prompt personalisasi.</div>
+    <div class="chip">Material-inspired • Tanpa library eksternal</div>
+  </footer>
+
+  <script>
+    const els = {
+      subject: document.getElementById('subject'),
+      context: document.getElementById('context'),
+      outfit: document.getElementById('outfit'),
+      object: document.getElementById('object'),
+      style: document.getElementById('style'),
+      lighting: document.getElementById('lighting'),
+      resolution: document.getElementById('resolution'),
+      details: document.getElementById('details'),
+      avoid: document.getElementById('avoid'),
+      output: document.getElementById('output'),
+      themeBtn: document.getElementById('themeBtn'),
+      generateBtn: document.getElementById('generateBtn'),
+      copyBtn: document.getElementById('copyBtn'),
+      resetBtn: document.getElementById('resetBtn'),
+    };
+
+    const sanitize = (s) => (s ?? '').trim();
+
+    function buildPrompt(){
+      const subject = sanitize(els.subject.value);
+      const context = sanitize(els.context.value);
+      const outfit = sanitize(els.outfit.value);
+      const object = sanitize(els.object.value);
+      const style = sanitize(els.style.value);
+      const lighting = sanitize(els.lighting.value);
+      const resolution = sanitize(els.resolution.value);
+      const details = sanitize(els.details.value);
+      const avoid = sanitize(els.avoid.value);
+
+      const lines = [];
+
+      lines.push("Edit gambar berikut menggunakan Gemini Nano Banana dengan ketentuan:");
+      lines.push("- Pertahankan wajah asli subjek secara utuh (tanpa modifikasi identitas/fitur).");
+      lines.push("- Pertahankan latar belakang apa adanya (komposisi, warna, dan tekstur tetap).");
+
+      if (outfit) lines.push(`- Ganti pakaian subjek menjadi: ${outfit}.`);
+      if (object) lines.push(`- Tambahkan/ubah objek: ${object}.`);
+
+      if (subject) lines.push(`- Subjek: ${subject}.`);
+      if (context) lines.push(`- Konteks/lokasi: ${context}.`);
+
+      lines.push(`- Gaya visual: ${style}.`);
+      lines.push(`- Pencahayaan: ${lighting}.`);
+
+      if (details) lines.push(`- Detail tambahan: ${details}.`);
+      lines.push("- Konsistensi warna dan pencahayaan harus selaras dengan latar asli.");
+
+      if (resolution) lines.push(`- Resolusi akhir (opsional): ${resolution}.`);
+
+      // Guardrails / negatives
+      const negativesBase = [
+        "Jangan mengubah wajah (bentuk, fitur, ekspresi utama).",
+        "Jangan mengganti atau mengaburkan latar belakang.",
+        "Hindari artefak, oversmoothing, dan ketidakkonsistenan bayangan."
+      ];
+      if (avoid) negativesBase.push(`Hindari: ${avoid}.`);
+
+      lines.push("- Pembatasan:");
+      negativesBase.forEach(n => lines.push(`  • ${n}`));
+
+      lines.push("");
+      lines.push("Output: satu gambar yang mematuhi ketentuan di atas, siap digunakan.");
+
+      return lines.join("\n");
+    }
+
+    function render(){
+      els.output.textContent = buildPrompt();
+    }
+
+    // Theme toggle
+    els.themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+    });
+
+    // Generate, copy, reset
+    els.generateBtn.addEventListener('click', render);
+    document.addEventListener('keydown', (e)=>{
+      if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); render(); }
+    });
+
+    els.copyBtn.addEventListener('click', async ()=>{
+      const text = els.output.textContent.trim();
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        els.copyBtn.textContent = "✅ Disalin";
+        setTimeout(()=> els.copyBtn.textContent = "📋 Salin prompt", 1200);
+      } catch(e){
+        els.copyBtn.textContent = "⚠️ Gagal salin";
+        setTimeout(()=> els.copyBtn.textContent = "📋 Salin prompt", 1200);
+      }
+    });
+
+    els.resetBtn.addEventListener('click', ()=>{
+      ['subject','context','outfit','object','resolution','details','avoid'].forEach(id => els[id].value = '');
+      els.style.value = 'realistis';
+      els.lighting.value = 'natural konsisten dengan latar';
+      els.output.textContent = "Prompt Anda akan muncul di sini.";
+    });
+  </script>
+</body>
+</html>
