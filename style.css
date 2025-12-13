@@ -180,3 +180,72 @@ p {
   color: red;
   margin-bottom: 10px;
 }
+
+/* Container menu bar */
+.navbar {
+  width: 100%;
+  background-color: #2c3e50; /* warna latar */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo atau judul */
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ecf0f1;
+  text-decoration: none;
+}
+
+/* Menu item */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #ecf0f1;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  color: #1abc9c; /* efek hover */
+}
+
+/* Responsif untuk mobile */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    background-color: #34495e;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    display: none;
+    padding: 10px;
+  }
+
+  .navbar ul.active {
+    display: flex;
+  }
+
+  .navbar .menu-toggle {
+    display: block;
+    cursor: pointer;
+    color: #ecf0f1;
+    font-size: 1.5rem;
+  }
+}
+
+/* Default sembunyikan toggle di desktop */
+.menu-toggle {
+  display: none;
+}
