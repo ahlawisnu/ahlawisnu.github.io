@@ -972,6 +972,14 @@
     <pre id="output" class="output-container">🎨 Prompt:</pre>
     <button onclick="copyPrompt()">Salin Prompt</button>
  <!-- File js -->
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+const menu = document.querySelector('.navbar ul');
+
+toggle.addEventListener('click', () => {
+  menu.classList.toggle('active');
+});
+  </script>
       <script src="script.js"></script>
     <script src="sw.js"></script>
   <!-- file js end -->
