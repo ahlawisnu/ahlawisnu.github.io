@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown ke HTML Converter</title>
+  
+  <!-- Material Design Lite -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+  <!-- Markdown Parser (marked.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <style>
+    body {
+      margin: 20px;
+      font-family: 'Roboto', sans-serif;
+    }
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      font-family: monospace;
+      padding: 10px;
+      resize: vertical;
+    }
+    .preview {
+      border: 1px solid #ccc;
+      padding: 20px;
+      min-height: 300px;
+      background: #fafafa;
+      overflow: auto;
+    }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .mdl-button {
+      text-transform: none;
+    }
+    @media (max-width: 768px) {
+      .editor-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h3 class="mdl-typography--headline">Markdown ke HTML Converter</h3>
+  
+  <div class="editor-container">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('# ')">Heading</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('**bold**')">Bold</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('*italic*')">Italic</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('- list item')">List</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('> quote')">Quote</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('`code`')">Code</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('| Col1 | Col2 |\n|------|------|\n| Val1 | Val2 |')">Table</button>
+    </div>
+
+    <!-- Editor -->
+    <textarea id="markdown-input" placeholder="Tulis Markdown di sini..."></textarea>
+
+    <!-- Buttons -->
+    <div>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="updatePreview()">Preview</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="copyHTML()">Copy HTML</button>
+    </div>
+
+    <!-- Preview -->
+    <div id="preview" class="preview"></div>
+  </div>
+
+  <script>
+    const input = document.getElementById('markdown-input');
+    const preview = document.getElementById('preview');
+
+    // Preview otomatis saat mengetik
+    input.addEventListener('input', updatePreview);
+
+    function updatePreview() {
+      const markdownText = input.value;
+      preview.innerHTML = marked.parse(markdownText, { breaks: true, gfm: true });
+    }
+
+    function copyHTML() {
+      const htmlContent = preview.innerHTML;
+      navigator.clipboard.writeText(htmlContent).then(() => {
+        alert("HTML berhasil disalin!");
+      });
+    }
+
+    function insertTag(tag) {
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      const text = input.value;
+      input.value = text.substring(0, start) + tag + text.substring(end);
+      updatePreview();
+    }
+  </script>
+
+</body>
+</html>
