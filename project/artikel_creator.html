@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Generator - Material 3</title>
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Material Design 3 Color Palette (Light Theme) */
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+
+            --md-sys-color-tertiary: #7D5260;
+            --md-sys-color-tertiary-container: #FFD8E4;
+            --md-sys-color-on-tertiary-container: #31111D;
+
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface: #1D1B20;
+            --md-sys-color-on-surface-variant: #49454F;
+            
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-background: #FEF7FF;
+
+            --elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            --elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+
+            --radius-m: 12px;
+            --radius-l: 16px;
+            --radius-xl: 28px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 24px;
+            text-align: center;
+            background-color: var(--md-sys-color-surface);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--md-sys-color-on-surface);
+            font-weight: 400;
+        }
+        
+        h1 span {
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+        }
+
+        /* --- Main Layout --- */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+        }
+
+        /* --- Cards (Material 3 Style) --- */
+        .card {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--radius-l);
+            box-shadow: var(--elevation-1);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--md-sys-color-on-surface);
+            box-shadow: var(--elevation-2);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.875rem;
+            color: var(--md-sys-color-on-surface-variant);
+            font-weight: 500;
+        }
+
+        /* Text Inputs */
+        input[type="text"], textarea, select {
+            background-color: var(--md-sys-color-surface-variant);
+            border: 1px solid transparent;
+            border-radius: 4px; /* Material input usually has smaller radius initially */
+            padding: 12px 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--md-sys-color-on-surface);
+            transition: all 0.2s ease;
+            outline: none;
+            width: 100%;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            background-color: var(--md-sys-color-surface);
+            border-color: var(--md-sys-color-primary);
+            border-radius: 4px 4px 0 0; /* Animate to underline style roughly */
+            box-shadow: 0 1px 0 0 var(--md-sys-color-primary);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Topic Chips (Radio buttons styled as chips) */
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .topic-input {
+            display: none;
+        }
+
+        .topic-chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            text-align: center;
+        }
+
+        .topic-input:checked + .topic-chip {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            border-color: var(--md-sys-color-secondary);
+            box-shadow: var(--elevation-1);
+        }
+
+        .topic-chip:hover {
+            background-color: #D0C4E5; /* Hover state manually adjusted for visibility */
+        }
+        
+        .topic-input:checked + .topic-chip:hover {
+            background-color: var(--md-sys-color-secondary-container);
+        }
+
+        /* Output Area */
+        #output-area {
+            background-color: #F3EDF7; /* Light purple tint */
+            border-radius: var(--radius-m);
+            padding: 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--md-sys-color-on-surface);
+            white-space: pre-wrap;
+            min-height: 200px;
+            border: 1px dashed var(--md-sys-color-outline);
+        }
+
+        /* --- Buttons (Filled Tonal & Text) --- */
+        .btn-container {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px; /* Fully rounded pill shape */
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-filled {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .btn-filled:hover {
+            box-shadow: var(--elevation-1);
+            background-color: #553f93; /* Darker shade manually for demo */
+        }
+
+        .btn-tonal {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .btn-tonal:hover {
+            background-color: #D0BCFF;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--md-sys-color-on-surface);
+            color: var(--md-sys-color-surface);
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+        
+        .icon-small {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Artikel Prompt <span>AI</span> Generator</h1>
+        <p style="color: var(--md-sys-color-secondary);">Alat pembuat Prompt</p>
+    </header>
+
+    <main>
+        <!-- Kolom Kiri: Input -->
+        <section class="card">
+            <div class="card-title">
+                <span class="material-icons-round">edit_note</span>
+                Konfigurasi Prompt
+            </div>
+
+            <div class="form-group">
+                <label>Pilih Topik Utama</label>
+                <div class="topic-grid">
+                    <input type="radio" name="topic" id="topic-general" value="general" class="topic-input" checked>
+                    <label for="topic-general" class="topic-chip">Umum</label>
+
+                    <input type="radio" name="topic" id="topic-blog" value="blog" class="topic-input">
+                    <label for="topic-blog" class="topic-chip">Blog Post</label>
+
+                    <input type="radio" name="topic" id="topic-code" value="code" class="topic-input">
+                    <label for="topic-code" class="topic-chip">Coding</label>
+
+                    <input type="radio" name="topic" id="topic-story" value="story" class="topic-input">
+                    <label for="topic-story" class="topic-chip">Storytelling</label>
+
+                    <input type="radio" name="topic" id="topic-email" value="email" class="topic-input">
+                    <label for="topic-email" class="topic-chip">Email</label>
+                    
+                    <input type="radio" name="topic" id="topic-marketing" value="marketing" class="topic-input">
+                    <label for="topic-marketing" class="topic-chip">Marketing</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Peran AI (Role)</label>
+                <input type="text" id="role" placeholder="Contoh: Ahli SEO, Penulis Profesional...">
+            </div>
+
+            <div class="form-group">
+                <label for="task">Tugas / Instruksi Utama (Task)</label>
+                <textarea id="task" placeholder="Contoh: Buatkan artikel 1000 kata tentang tips membeli laptop..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="tone">Gaya Bahasa / Nada (Tone)</label>
+                <select id="tone">
+                    <option value="Profesional dan Informatif">Profesional & Informatif</option>
+                    <option value="Santai dan Bersahabat">Santai & Bersahabat</option>
+                    <option value="Persuasif dan Meyakinkan">Persuasif (Marketing)</option>
+                    <option value="Akademis dan Formal">Akademis & Formal</option>
+                    <option value="Lucu dan Menghibur">Lucu & Menghibur</option>
+                    <option value="Kritis dan Tajam">Kritis & Tajam</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="format">Format Output</label>
+                <input type="text" id="format" placeholder="Contoh: Artikel dengan bullet points, HTML, JSON...">
+            </div>
+
+            <div class="form-group">
+                <label for="context">Konteks Tambahan (Opsional)</label>
+                <input type="text" id="context" placeholder="Target audiens, batasan kata, spesifikasi teknis...">
+            </div>
+
+            <button class="btn btn-filled" onclick="generatePrompt()">
+                <span class="material-icons-round">auto_awesome</span>
+                Generate Prompt
+            </button>
+        </section>
+
+        <!-- Kolom Kanan: Output -->
+        <section class="card" style="background-color: transparent; box-shadow: none; padding-top: 0;">
+            <div class="card" style="height: 100%; position: sticky; top: 24px;">
+                <div class="card-title">
+                    <span class="material-icons-round">code</span>
+                    Hasil Prompt
+                </div>
+                <div id="output-area">
+                    Hasil prompt akan muncul di sini setelah Anda menekan tombol "Generate Prompt".
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn btn-tonal" onclick="copyToClipboard()" style="flex: 1;">
+                        <span class="material-icons-round icon-small">content_copy</span>
+                        Salin Prompt
+                    </button>
+                    <button class="btn btn-tonal" onclick="resetForm()">
+                        <span class="material-icons-round icon-small">refresh</span>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast">Prompt berhasil disalin ke clipboard!</div>
+
+    <script>
+        // Data Preset berdasarkan Topik untuk mengisi otomatis beberapa bagian
+        const presets = {
+            general: {
+                role: "Asisten AI yang membantu",
+                tone: "Profesional dan Informatif"
+            },
+            blog: {
+                role: "Penulis Blog SEO yang berpengalaman",
+                task: "Buatkan artikel blog yang menarik tentang [Topik] dengan kata kunci [Keyword].",
+                tone: "Informatif dan Mudah Dibaca",
+                format: "Markdown dengan heading (H1, H2) dan bullet points."
+            },
+            code: {
+                role: "Senior Software Engineer",
+                task: "Tuliskan kode [Bahasa Pemrograman] untuk fungsionalitas [Deskripsi Fungsi].",
+                tone: "Teknis dan Ringkas",
+                format: "Blok kode dengan komentar penjelasan."
+            },
+            story: {
+                role: "Penulis Novel Kreatif",
+                task: "Tuliskan sebuah cerita pendek dengan genre [Genre] tentang tokoh bernama [Nama Tokoh].",
+                tone: "Emosional dan Deskriptif",
+                format: "Narasi prosa."
+            },
+            email: {
+                role: "Ahli Komunikasi Bisnis",
+                task: "Tuliskan draf email untuk [Tujuan Email] kepada [Penerima].",
+                tone: "Profesional dan Sopan",
+                format: "Subject Line dan Body Email."
+            },
+            marketing: {
+                role: "Copywriter Ahli",
+                task: "Buatkan caption media sosial untuk produk [Nama Produk] dengan fitur utama [Fitur].",
+                tone: "Persuasif dan Menarik",
+                format: "Poin-poin singkat dengan emoji dan CTA (Call to Action)."
+            }
+        };
+
+        // Mendeteksi perubahan pada Radio Button Topik
+        const topicInputs = document.querySelectorAll('input[name="topic"]');
+        topicInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                applyPreset(e.target.value);
+            });
+        });
+
+        function applyPreset(topicKey) {
+            const preset = presets[topicKey];
+            if (preset) {
+                // Isi field jika belum diisi custom oleh user (atau timpa jika diinginkan)
+                // Di sini kita timpa agar perpindahan topik terasa instan
+                document.getElementById('role').value = preset.role;
+                document.getElementById('tone').value = preset.tone || "Profesional dan Informatif";
+                
+                // Hanya isi task jika task kosong atau placeholder
+                const taskInput = document.getElementById('task');
+                if (!taskInput.value || taskInput.placeholder.includes("Contoh")) {
+                     taskInput.value = preset.task;
+                }
+                
+                document.getElementById('format').value = preset.format || "";
+            }
+        }
+
+        function generatePrompt() {
+            const role = document.getElementById('role').value;
+            const task = document.getElementById('task').value;
+            const tone = document.getElementById('tone').value;
+            const format = document.getElementById('format').value;
+            const context = document.getElementById('context').value;
+
+            if (!role || !task) {
+                showToast("Mohon isi minimal 'Peran AI' dan 'Tugas'.");
+                return;
+            }
+
+            // Template Pembangun Prompt
+            let finalPrompt = `### Peran:\nAct as a ${role}.\n\n`;
+            finalPrompt += `### Tugas:\n${task}\n\n`;
+            
+            if (tone) {
+                finalPrompt += `### Gaya Bahasa / Nada:\n${tone}.\n\n`;
+            }
+            
+            if (format) {
+                finalPrompt += `### Format Output:\n${format}.\n\n`;
+            }
+
+            if (context) {
+                finalPrompt += `### Konteks Tambahan:\n${context}\n\n`;
+            }
+
+            finalPrompt += `### Instruksi Tambahan:\nPastikan output akurat, terstruktur dengan rapi, dan langsung to-the-point tanpa pengantar yang tidak perlu.`;
+
+            // Tampilkan ke output area
+            const outputArea = document.getElementById('output-area');
+            outputArea.textContent = finalPrompt;
+            
+            // Animasi kecil untuk feedback visual
+            outputArea.style.borderColor = "var(--md-sys-color-primary)";
+            setTimeout(() => {
+                outputArea.style.borderColor = "var(--md-sys-color-outline)";
+            }, 500);
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('output-area').textContent;
+            
+            if (!text || text.includes("Hasil prompt akan muncul")) {
+                showToast("Belum ada prompt untuk disalin.");
+                return;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Prompt berhasil disalin ke clipboard!");
+            }).catch(err => {
+                showToast("Gagal menyalin text.");
+                console.error('Gagal menyalin: ', err);
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('role').value = "";
+            document.getElementById('task').value = "";
+            document.getElementById('format').value = "";
+            document.getElementById('context').value = "";
+            document.getElementById('tone').selectedIndex = 0;
+            document.getElementById('output-area').textContent = "Hasil prompt akan muncul di sini setelah Anda menekan tombol \"Generate Prompt\".";
+            document.getElementById('topic-general').checked = true;
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>
