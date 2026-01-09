@@ -1,241 +1,443 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Video Prompt Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Video Motion Mobile</title>  
   <meta name="robots" content="index, follow">
-  <style>
-    /* WA Style */
-.whatsapp-link {
-  display: inline-block;
-  background-color: #25D366;
-  color: white;
-  margin: 10px;
-  padding: 10px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        :root {
+            --md-sys-color-primary: #009688;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #b2dfdb;
+            --md-sys-color-on-primary-container: #002020;
+            --md-sys-color-surface: #ffffff;
+            --md-sys-color-surface-variant: #e0e0e0;
+            --md-sys-color-outline: #747775;
+            --md-sys-color-on-surface: #1c1b1f;
+            --md-sys-color-background: #f5f5f5;
+        }
 
-.whatsapp-link:hover {
-  background-color: #128C7E;
-}
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f7fa;
-      padding: 20px;
-      color: #333;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
-    .form-group {
-      margin-bottom: 18px;
-    }
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #2c3e50;
-    }
-    select, input[type="text"], input[type="range"] {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-    .range-value {
-      font-size: 14px;
-      color: #666;
-      text-align: right;
-      margin-top: -8px;
-    }
-    .prompt-output {
-      margin-top: 20px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background-color: #f9f9f9;
-      min-height: 80px;
-      font-family: monospace;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-    .btn {
-      margin-top: 15px;
-      padding: 10px 15px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background-color: #2980b9;
-    }
-    .btn.copy {
-      background-color: #2ecc71;
-      float: right;
-    }
-    .btn.copy:hover {
-      background-color: #27ae60;
-    }
-    .clear {
-      clear: both;
-    }
-  </style>
+        /* Reset Base */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-surface);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 90px; /* Ruang untuk Sticky Bottom Bar pada Mobile */
+            min-height: 100vh;
+        }
+
+        /* Mobile Header */
+        header {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 1.1rem; font-weight: 500; }
+        .header-icon { font-size: 24px; }
+
+        /* Main Layout */
+        main {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Theme Tabs (Scroll Horizontal) */
+        .tabs-container {
+            position: sticky;
+            top: 56px; /* Di bawah header */
+            z-index: 90;
+            background: var(--md-sys-color-background);
+            padding: 8px 0;
+            box-shadow: 0 2px 0 rgba(0,0,0,0.05);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 0 16px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-surface);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--md-sys-color-primary);
+            color: white;
+            border-color: var(--md-sys-color-primary);
+        }
+
+        /* Motion Grid (2 Kolom di HP) */
+        .motion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Pakai 2 kolom di HP */
+            gap: 12px;
+        }
+
+        .motion-card {
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: 16px;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .motion-card.selected {
+            background-color: var(--md-sys-color-primary-container);
+            border: 2px solid var(--md-sys-color-primary);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 8px;
+        }
+
+        .card-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; line-height: 1.2;}
+        .card-desc { font-size: 0.75rem; color: #666; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
+
+        /* Sticky Bottom Output Panel (Khusus Mobile) */
+        .bottom-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--md-sys-color-surface);
+            border-top: 1px solid var(--md-sys-color-outline);
+            padding: 16px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 200;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .preview-container {
+            background: #f0f4f4;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+        }
+
+        #previewText {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Tampilkan elipsis jika panjang */
+        }
+        
+        /* Jika user tap text untuk melihat full */
+        #previewText.expanded {
+            white-space: normal;
+            word-break: break-all;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .mobile-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .mobile-select {
+            padding: 8px 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background: white;
+            max-width: 140px;
+        }
+
+        .btn-copy {
+            width: 100%;
+            background-color: var(--md-sys-color-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,150,136,0.3);
+        }
+
+        /* Desktop Override (Agar tetap bagus di PC) */
+        @media (min-width: 768px) {
+            body { padding-bottom: 24px; }
+            main {
+                grid-template-columns: 1fr 350px;
+                max-width: 1000px;
+                margin: 0 auto;
+            }
+            .bottom-panel {
+                position: sticky;
+                top: 24px;
+                border-radius: 16px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            .tabs-container {
+                position: static;
+                padding: 0;
+                box-shadow: none;
+                margin-bottom: 16px;
+            }
+            .tabs { padding: 0; }
+            .motion-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+        }
+
+        /* Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 12px 24px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 100px; /* Di atas bottom panel */
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+        #toast.show { visibility: visible; opacity: 1; }
+
+    </style>
 </head>
 <body>
-    <a class="whatsapp-link" href="/">Home</a>
-  <div class="container">
-    <h1>🎥 Video Prompt Generator</h1>
 
-    <div class="form-group">
-      <label for="subject">Subject</label>
-      <input type="text" id="subject" placeholder="e.g., a futuristic city, a dancing robot, a forest at dawn" />
-    </div>
+<header>
+    <span class="material-symbols-outlined header-icon">music_note</span>
+    <h1>Video Motion Generator</h1>  
+</header>
 
-    <div class="form-group">
-      <label for="motion">Motion Style</label>
-      <select id="motion">
-        <option value="smoothly panning">Smoothly Panning</option>
-        <option value="slow zoom in">Slow Zoom In</option>
-        <option value="fast tracking shot">Fast Tracking Shot</option>
-        <option value="rotating around">Rotating Around</option>
-        <option value="drone flythrough">Drone Flythrough</option>
-        <option value="handheld shaky cam">Handheld Shaky Cam</option>
-      </select>
-    </div>
+<main>
+    <!-- Kolom Kiri: Grid Gerakan -->
+    <section>
+        <!-- Navigasi Tema (Scrollable di Mobile) -->
+        <div class="tabs-container">
+            <div class="tabs" id="themeTabs">
+                <!-- JS generated -->
+            </div>
+        </div>
 
-    <div class="form-group">
-      <label for="angle">Camera Angle</label>
-      <select id="angle">
-        <option value="wide angle shot">Wide Angle Shot</option>
-        <option value="close-up">Close-Up</option>
-        <option value="extreme close-up">Extreme Close-Up</option>
-        <option value="bird's eye view">Bird's Eye View</option>
-        <option value="low angle shot">Low Angle Shot</option>
-        <option value="over-the-shoulder">Over-the-Shoulder</option>
-        <option value="dutch angle">Dutch Angle</option>
-      </select>
-    </div>
+        <!-- Grid Pilihan Gerakan -->
+        <div class="motion-grid" id="motionGrid">
+            <!-- JS generated -->
+        </div>
+    </section>
 
-    <div class="form-group">
-      <label for="duration">Duration (seconds)</label>
-      <input type="range" id="duration" min="1" max="30" value="10" />
-      <div class="range-value"><span id="durationValue">10</span>s</div>
-    </div>
+    <!-- Kolom Kanan / Bawah: Output & Kontrol (Sticky di Mobile) -->
+    <aside class="bottom-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:0.8rem; font-weight:bold; color:gray;">KONFIGURASI</span>
+            <span class="material-symbols-outlined" style="font-size:18px; color:var(--md-sys-color-primary)">expand_less</span>
+        </div>
 
-    <div class="form-group">
-      <label for="lighting">Lighting</label>
-      <select id="lighting">
-        <option value="soft natural light">Soft Natural Light</option>
-        <option value="dramatic shadows">Dramatic Shadows</option>
-        <option value="neon glow">Neon Glow</option>
-        <option value="golden hour">Golden Hour</option>
-        <option value="cinematic lighting">Cinematic Lighting</option>
-        <option value="foggy and dim">Foggy and Dim</option>
-      </select>
-    </div>
+        <div class="input-group">
+            <input type="text" id="charName" class="mobile-input" placeholder="Nama Karakter" value="Hatsune Miku">
+            <select id="visualStyle" class="mobile-select">
+                <option>3D Anime</option>
+                <option>Realistic</option>
+                <option>2D Vector</option>
+            </select>
+        </div>
 
-    <div class="form-group">
-      <label for="mood">Mood/Atmosphere</label>
-      <select id="mood">
-        <option value="serene and peaceful">Serene and Peaceful</option>
-        <option value="tense and suspenseful">Tense and Suspenseful</option>
-        <option value="joyful and vibrant">Joyful and Vibrant</option>
-        <option value="mysterious and dark">Mysterious and Dark</option>
-        <option value="epic and grand">Epic and Grand</option>
-        <option value="dreamy and surreal">Dreamy and Surreal</option>
-      </select>
-    </div>
+        <div class="preview-container">
+            <div id="previewText" onclick="this.classList.toggle('expanded')">Pilih gerakan untuk membuat prompt...</div>
+        </div>
 
-    <div class="form-group">
-      <label for="details">Additional Details (optional)</label>
-      <input type="text" id="details" placeholder="e.g., with falling leaves, rainy night, lens flare" />
-    </div>
+        <button class="btn-copy" onclick="copyPrompt()">
+            <span class="material-symbols-outlined">content_copy</span> Salin Prompt
+        </button>
+    </aside>
+</main>
 
-    <h3>Generated Prompt:</h3>
-    <div class="prompt-output" id="promptOutput">
-      A video of a futuristic city, smoothly panning with a wide angle shot, soft natural light, serene and peaceful. Duration: 10 seconds.
-    </div>
+<div id="toast">Prompt Berhasil Disalin!</div>
 
-    <button class="btn copy" id="copyBtn">📋 Copy Prompt</button>
-    <div class="clear"></div>
-  </div>
+<script>
+    const motionData = {
+        "Tour Guide": [
+            { id: "tg1", icon: "map", title: "Peta Jalan", desc: "Menunjuk jalan dengan telapak tangan terbuka." },
+            { id: "tg2", icon: "groups", title: "Sapa Tamu", desc: "Menunduk sopan dan melambaikan tangan kanan." },
+            { id: "tg3", icon: "tour", title: "Jelaskan Objek", desc: "Mengangkat tangan ke atas menunjuk bangunan." },
+            { id: "tg4", icon: "back_hand", title: "Silakan Masuk", desc: "Gerakan tangan menyapu ke arah dalam (go-on)." },
+            { id: "tg5", icon: "waving_hand", title: "Sampaikan Info", desc: "Berdiri tegak, tangan bergerak aktif menjelaskan." }
+        ],
+        "Dance Pop": [
+            { id: "dp1", icon: "album", title: "Hook Step", desc: "Gerakan tangan tajam kiri kanan sesuai beat." },
+            { id: "dp2", icon: "front_hand", title: "Heart Sign", desc: "Membuat bentuk hati di atas kepala." },
+            { id: "dp3", icon: "directions_run", title: "Side Jump", desc: "Lompatan kecil samping kiri kanan yang energik." },
+            { id: "dp4", icon: "rotate_right", title: "Spin Move", desc: "Berputar 360 derajat cepat dengan ending pose." },
+            { id: "dp5", icon: "punch", title: "Arm Wave", desc: "Gerakan tangan bergelombang dari bahu ke ujung jari." }
+        ],
+        "Presentation": [
+            { id: "pr1", icon: "co_present", title: "Pembukaan", desc: "Berdiri tegak, mengangkat satu tangan menyapa." },
+            { id: "pr2", icon: "touch_app", title: "Penekanan Poin", desc: "Satu tangan mengepal, mengarahkan jari telunjuk ke depan." },
+            { id: "pr3", icon: "pan_tool", title: "Tawarkan Solusi", desc: "Kedua tangan terbuka ke depan menawarkan sesuatu." },
+            { id: "pr4", icon: "history_edu", title: "Penjelasan Papan", desc: "Tangan kanan menunjuk ke sisi kiri layar." },
+            { id: "pr5", icon: "thumb_up", title: "Penutup", desc: "Mengangkat kedua tangan telapak terbuka bangga." }
+        ],
+        "Singing Ballad": [
+            { id: "sb1", icon: "mic", title: "Verse Calm", desc: "Memegang mic dekat dada, badan berayun pelan." },
+            { id: "sb2", icon: "favorite", title: "Emosi Tangan", desc: "Satu tangan memegang mic, lainnya menekan dada." },
+            { id: "sb3", icon: "visibility", title: "Eye Contact", desc: "Membuka mata lebar, tangan merentang perlahan." },
+            { id: "sb4", icon: "air", title: "Angin Tangan", desc: "Gerakan tangan halus ke atas menyentuh udara." },
+            { id: "sb5", icon: "self_improvement", title: "Ending Pose", desc: "Menunduk perlahan, mic diturunkan, ekspresi tenang." }
+        ],
+        "Idol Interaction": [
+            { id: "ii1", icon: "sentiment_very_satisfied", title: "Wink & Peace", desc: "Mengedipkan mata sambil membuat tanda peace." },
+            { id: "ii2", icon: "waving_hand", title: "Say Hi All", desc: "Melambaikan kedua tangan tinggi di atas kepala." },
+            { id: "ii3", icon: "emoji_emotions", title: "Cheek Blush", desc: "Tangan di pipi sambil menggoyangkan badan lucu." },
+            { id: "ii4", icon: "accessibility", title: "Free Hug", desc: "Membuka kedua tangan lebar siap memeluk." },
+            { id: "ii5", icon: "star", title: "Sparkle Pose", desc: "Jari membentuk bintang di depan wajah." }
+        ]
+    };
 
-  <script>
-    // Get all elements
-    const subjectInput = document.getElementById("subject");
-    const motionSelect = document.getElementById("motion");
-    const angleSelect = document.getElementById("angle");
-    const durationInput = document.getElementById("duration");
-    const durationValue = document.getElementById("durationValue");
-    const lightingSelect = document.getElementById("lighting");
-    const moodSelect = document.getElementById("mood");
-    const detailsInput = document.getElementById("details");
-    const promptOutput = document.getElementById("promptOutput");
-    const copyBtn = document.getElementById("copyBtn");
+    let selectedTheme = "Tour Guide";
+    let selectedMotionId = null;
 
-    // Update duration value display
-    durationInput.addEventListener("input", function () {
-      durationValue.textContent = this.value;
-      generatePrompt();
-    });
-
-    // Function to generate prompt
-    function generatePrompt() {
-      const subject = subjectInput.value.trim() || "a futuristic city";
-      const motion = motionSelect.value;
-      const angle = angleSelect.value;
-      const duration = durationInput.value;
-      const lighting = lightingSelect.value;
-      const mood = moodSelect.value;
-      const details = detailsInput.value.trim() ? `, ${detailsInput.value}` : "";
-
-      const prompt = `A video of ${subject}, ${motion} with a ${angle}, ${lighting}, ${mood}${details}. Duration: ${duration} seconds.`;
-      promptOutput.textContent = prompt;
+    function init() {
+        renderTabs();
+        renderGrid(selectedTheme);
     }
 
-    // Regenerate prompt on any input change
-    [subjectInput, motionSelect, angleSelect, durationInput, lightingSelect, moodSelect, detailsInput].forEach(input => {
-      input.addEventListener("input", generatePrompt);
+    function renderTabs() {
+        const container = document.getElementById('themeTabs');
+        container.innerHTML = '';
+        Object.keys(motionData).forEach(theme => {
+            const btn = document.createElement('button');
+            btn.className = `tab-btn ${theme === selectedTheme ? 'active' : ''}`;
+            btn.innerText = theme;
+            btn.onclick = () => {
+                selectedTheme = theme;
+                selectedMotionId = null;
+                document.getElementById('previewText').innerText = "Pilih gerakan...";
+                renderTabs();
+                renderGrid(theme);
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function renderGrid(theme) {
+        const container = document.getElementById('motionGrid');
+        container.innerHTML = '';
+        const motions = motionData[theme];
+        
+        motions.forEach(m => {
+            const card = document.createElement('div');
+            card.className = `motion-card ${selectedMotionId === m.id ? 'selected' : ''}`;
+            card.onclick = () => selectMotion(m);
+            card.innerHTML = `
+                <span class="material-symbols-outlined card-icon">${m.icon}</span>
+                <div class="card-title">${m.title}</div>
+                <div class="card-desc">${m.desc}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectMotion(motion) {
+        selectedMotionId = motion.id;
+        renderGrid(selectedTheme);
+        generatePrompt(motion);
+        
+        // Scroll ke prompt area di mobile agar user sadar prompt berubah
+        if(window.innerWidth < 768) {
+            // Smooth scroll tidak perlu berlebihan karena panel sticky
+            document.getElementById('previewText').classList.add('expanded');
+        }
+    }
+
+    function generatePrompt(motion) {
+        const charName = document.getElementById('charName').value;
+        const style = document.getElementById('visualStyle').value;
+        const prompt = `${charName}, ${style}, performing ${motion.title} motion: ${motion.desc}. High quality animation, smooth motion, detailed expression, 4k.`;
+        
+        const preview = document.getElementById('previewText');
+        preview.innerText = prompt;
+        preview.classList.remove('expanded'); // Reset view
+    }
+
+    function copyPrompt() {
+        const text = document.getElementById('previewText').innerText;
+        if (!text || text.includes("Pilih gerakan")) return;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2000);
+        });
+    }
+
+    document.getElementById('charName').addEventListener('input', () => {
+        if(selectedMotionId) {
+            const currentMotion = motionData[selectedTheme].find(m => m.id === selectedMotionId);
+            generatePrompt(currentMotion);
+        }
     });
 
-    // Copy to clipboard
-    copyBtn.addEventListener("click", function () {
-      const textToCopy = promptOutput.textContent;
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        const originalText = copyBtn.textContent;
-        copyBtn.textContent = "✅ Copied!";
-        setTimeout(() => {
-          copyBtn.textContent = originalText;
-        }, 2000);
-      }).catch(err => {
-        console.error("Failed to copy: ", err);
-        alert("Failed to copy prompt. Please try again.");
-      });
+    document.getElementById('visualStyle').addEventListener('change', () => {
+        if(selectedMotionId) {
+            const currentMotion = motionData[selectedTheme].find(m => m.id === selectedMotionId);
+            generatePrompt(currentMotion);
+        }
     });
 
-    // Initial prompt
-    generatePrompt();
-  </script>
+    init();
+
+</script>
+
 </body>
 </html>
