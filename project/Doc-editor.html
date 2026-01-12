@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Doc Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Tambahkan baris ini di <head> sebelum </head> -->
+<meta name="robots" content="index, follow">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f5f5f5;
+      --primary: #00b8d4;
+      --primary-dark: #008ba3;
+      --text: #212121;
+      --text-secondary: #757575;
+      --accent: #00e5ff;
+    }
+    [data-theme="dark"] {
+      --bg: #121212;
+      --surface: #1e1e1e;
+      --primary: #00b8d4;
+      --primary-dark: #008ba3;
+      --text: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --accent: #00e5ff;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .3s, color .3s;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--surface);
+      box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      transition: background .2s;
+    }
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+    .btn.icon {
+      padding: 8px;
+    }
+    select, input[type=color], input[type=number] {
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .editor-wrap {
+      display: flex;
+      height: calc(100vh - 64px);
+    }
+    #editor {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      background: var(--bg);
+      outline: none;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    #preview {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      background: var(--surface);
+      border-left: 1px solid #ccc;
+    }
+    /* Miku accent */
+    .miku-accent {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,229,255,.4);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="material-icons" style="color:#00e5ff;">edit</span>
+      Doc Editor
+    </div>
+    <div class="toolbar">
+      <!-- Format -->
+      <select id="blockSelect">
+        <option value="">Format</option>
+        <option value="h1">Heading 1</option>
+        <option value="h2">Heading 2</option>
+        <option value="h3">Heading 3</option>
+        <option value="p">Paragraph</option>
+        <option value="ul">Bullet List</option>
+        <option value="ol">Number List</option>
+      </select>
+
+      <!-- Font -->
+      <input type="number" id="fontSize" min="10" max="72" value="16" title="Font Size">
+      <select id="fontFamily">
+        <option value="Roboto">Roboto</option>
+        <option value="Arial">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="'Courier New'">Courier New</option>
+      </select>
+
+      <!-- Align -->
+      <button class="btn icon" onclick="formatDoc('justifyLeft')" title="Align Left"><span class="material-icons">format_align_left</span></button>
+      <button class="btn icon" onclick="formatDoc('justifyCenter')" title="Center"><span class="material-icons">format_align_center</span></button>
+      <button class="btn icon" onclick="formatDoc('justifyRight')" title="Align Right"><span class="material-icons">format_align_right</span></button>
+
+      <!-- Style -->
+      <button class="btn icon" onclick="formatDoc('bold')" title="Bold"><span class="material-icons">format_bold</span></button>
+      <button class="btn icon" onclick="formatDoc('italic')" title="Italic"><span class="material-icons">format_italic</span></button>
+      <button class="btn icon" onclick="formatDoc('underline')" title="Underline"><span class="material-icons">format_underlined</span></button>
+
+      <!-- Color -->
+      <input type="color" id="textColor" value="#212121" title="Text Color">
+      <input type="color" id="bgColor" value="#ffffff" title="Highlight">
+
+      <!-- Actions -->
+      <button class="btn icon" onclick="toggleMode()" title="Dark/Light"><span class="material-icons" id="modeIcon">dark_mode</span></button>
+      <button class="btn" onclick="copyHTML()"><span class="material-icons">content_copy</span>Copy HTML</button>
+      <button class="btn" onclick="clearDoc()"><span class="material-icons">delete</span>Clear</button>
+    </div>
+  </header>
+
+  <div class="editor-wrap">
+    <div id="editor" contenteditable="true" spellcheck="false">Mulai menulis dokumen otomatis di sini...</div>
+    <div id="preview"></div>
+  </div>
+
+  <div class="miku-accent" onclick="insertMiku()" title="Insert Miku">
+    <span class="material-icons" style="color:#fff;">auto_awesome</span>
+  </div>
+
+  <script>
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview');
+    const blockSelect = document.getElementById('blockSelect');
+    const fontSize = document.getElementById('fontSize');
+    const fontFamily = document.getElementById('fontFamily');
+    const textColor = document.getElementById('textColor');
+    const bgColor = document.getElementById('bgColor');
+
+    function formatDoc(cmd, val) {
+      document.execCommand(cmd, false, val);
+      editor.focus();
+      updatePreview();
+    }
+
+    blockSelect.onchange = e => {
+      if (!e.target.value) return;
+      const tag = e.target.value;
+      if (tag === 'ul') formatDoc('insertUnorderedList');
+      else if (tag === 'ol') formatDoc('insertOrderedList');
+      else formatDoc('formatBlock', tag);
+      e.target.selectedIndex = 0;
+      updatePreview();
+    };
+
+    fontSize.oninput = () => {
+      formatDoc('fontSize', fontSize.value);
+      updatePreview();
+    };
+    fontFamily.onchange = () => {
+      formatDoc('fontName', fontFamily.value);
+      updatePreview();
+    };
+    textColor.oninput = () => {
+      formatDoc('foreColor', textColor.value);
+      updatePreview();
+    };
+    bgColor.oninput = () => {
+      formatDoc('hiliteColor', bgColor.value);
+      updatePreview();
+    };
+
+    editor.oninput = updatePreview;
+
+    function updatePreview() {
+      preview.innerHTML = editor.innerHTML;
+    }
+
+    function toggleMode() {
+      const body = document.body;
+      const icon = document.getElementById('modeIcon');
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        icon.textContent = 'dark_mode';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        icon.textContent = 'light_mode';
+      }
+    }
+
+    function copyHTML() {
+      navigator.clipboard.writeText(editor.innerHTML);
+      alert('HTML copied!');
+    }
+
+    function clearDoc() {
+      if (confirm('Hapus seluruh dokumen?')) {
+        editor.innerHTML = '';
+        updatePreview();
+      }
+    }
+
+    function insertMiku() {
+      const miku = `<span style="color:#00e5ff;font-weight:bold;">♪ Hatsune Miku ♪</span>`;
+      document.execCommand('insertHTML', false, miku);
+      updatePreview();
+    }
+
+    updatePreview();
+  </script>
+</body>
+</html>
