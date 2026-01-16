@@ -179,7 +179,7 @@
             background-color: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-surface-variant);
             border-radius: 8px;
-            cursor: pointer;
+            cursor: inter;
             font-size: 0.875rem;
             font-weight: 500;
             transition: all 0.2s;
@@ -355,6 +355,11 @@
                 <label for="context">Konteks Tambahan (Opsional)</label>
                 <textarea id="context" placeholder="Target audiens, batasan kata, spesifikasi teknis..."></textarea>
             </div>
+            
+            <div class="form-group">
+                <label for="addtional">Instruksi Tambahan:</label>
+                <textarea id="addtional" placeholder="">Pastikan output akurat, terstruktur dengan rapi, dan langsung to-the-point tanpa pengantar yang tidak perlu.</textarea>
+            </div>
 
             <button class="btn btn-filled" onclick="generatePrompt()">
                 <span class="material-icons-round">auto_awesome</span>
@@ -461,6 +466,7 @@
             const tone = document.getElementById('tone').value;
             const format = document.getElementById('format').value;
             const context = document.getElementById('context').value;
+            const addtional = document.getElementById('addtional').value;
 
             if (!role || !task) {
                 showToast("Mohon isi minimal 'Peran AI' dan 'Tugas'.");
@@ -483,7 +489,7 @@
                 finalPrompt += `### Konteks Tambahan:\n${context}\n\n`;
             }
 
-            finalPrompt += `### Instruksi Tambahan:\nPastikan output akurat, terstruktur dengan rapi, dan langsung to-the-point tanpa pengantar yang tidak perlu.`;
+            finalPrompt += `### Instruksi Tambahan:\n${addtional}\n\n`;
 
             // Tampilkan ke output area
             const outputArea = document.getElementById('output-area');
