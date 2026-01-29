@@ -1,112 +1,1040 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Markdown ke HTML Converter</title>
-  <meta name="robots" content="index, follow">
-  <!-- Material Design Lite -->
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  
-  <!-- Markdown Parser (marked.js) -->
+  <meta charset="UTF-8" />
+  <title>Markdown Studio - Hatsune Miku Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Marked.js untuk render Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  
+
   <style>
-    body {
-      margin: 20px;
-      font-family: 'Roboto', sans-serif;
+    :root {
+      --miku-teal: #00bcd4;
+      --miku-teal-dark: #0097a7;
+      --miku-cyan: #26c6da;
+      --miku-accent: #7c4dff;
+      --bg-light: #f5f7fb;
+      --bg-dark: #0b1020;
+      --surface-light: #ffffff;
+      --surface-dark: #151a2c;
+      --text-light: #111827;
+      --text-dark: #e5e7eb;
+      --border-subtle-light: #e5e7eb;
+      --border-subtle-dark: #1f2937;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.18);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --transition-fast: 0.2s ease-out;
     }
-    .editor-container {
+
+    body[data-theme="light"] {
+      --bg: var(--bg-light);
+      --surface: var(--surface-light);
+      --text: var(--text-light);
+      --border-subtle: var(--border-subtle-light);
+    }
+
+    body[data-theme="dark"] {
+      --bg: var(--bg-dark);
+      --surface: var(--surface-dark);
+      --text: var(--text-dark);
+      --border-subtle: var(--border-subtle-dark);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1de9b6 0, transparent 55%),
+                  radial-gradient(circle at bottom right, #00bcd4 0, transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1200px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.12));
+      border-radius: 24px;
+      padding: 20px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .title-group {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 4px;
     }
-    textarea {
-      width: 100%;
-      height: 300px;
-      font-family: monospace;
-      padding: 10px;
-      resize: vertical;
+
+    .title-group h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #e0f7fa;
     }
-    .preview {
-      border: 1px solid #ccc;
-      padding: 20px;
-      min-height: 300px;
-      background: #fafafa;
-      overflow: auto;
+
+    .title-group span {
+      font-size: 0.9rem;
+      color: #b2ebf2;
     }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 188, 212, 0.16);
+      color: #e0f7fa;
+      font-size: 0.75rem;
+    }
+
+    .chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 8px #00e5ff;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.25);
+      color: #e0f7fa;
+      cursor: pointer;
+      font-size: 0.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle span.icon {
+      font-size: 1rem;
+    }
+
+    .theme-toggle::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.25), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.35s ease-out;
+      pointer-events: none;
+    }
+
+    .theme-toggle.ripple::after {
+      opacity: 1;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: rgba(10, 15, 30, 0.9);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .card {
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(0, 229, 255, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(0, 230, 118, 0.12), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #b2ebf2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 8px #00e5ff;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: #90a4ae;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--miku-teal), var(--miku-cyan));
+      color: #001018;
+      box-shadow: 0 8px 18px rgba(0, 188, 212, 0.45);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn span.icon {
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 12px 26px rgba(0, 188, 212, 0.6);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(0, 188, 212, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #b2ebf2;
+      border: 1px solid rgba(178, 235, 242, 0.6);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 188, 212, 0.12);
+      box-shadow: none;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #b2ebf2;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(178, 235, 242, 0.3);
+      box-shadow: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(0, 188, 212, 0.12);
+    }
+
     .toolbar {
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pill-label {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #b2ebf2;
+    }
+
+    body[data-theme="light"] .pill-label {
+      background: rgba(0, 188, 212, 0.08);
+      color: #006064;
+    }
+
+    textarea,
+    .preview,
+    .output {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(3, 7, 18, 0.85);
+      color: var(--text-dark);
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      resize: vertical;
+      min-height: 220px;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    body[data-theme="light"] textarea,
+    body[data-theme="light"] .preview,
+    body[data-theme="light"] .output {
+      background: rgba(255, 255, 255, 0.96);
+      color: #111827;
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    textarea:focus,
+    .output:focus {
+      border-color: var(--miku-cyan);
+      box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.5);
+    }
+
+    .preview {
+      background: radial-gradient(circle at top left, rgba(0, 229, 255, 0.12), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(0, 230, 118, 0.12), transparent 55%),
+                  rgba(3, 7, 18, 0.9);
+      overflow: auto;
+    }
+
+    body[data-theme="light"] .preview {
+      background: radial-gradient(circle at top left, rgba(0, 188, 212, 0.08), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(0, 230, 118, 0.08), transparent 55%),
+                  #ffffff;
+    }
+
+    .preview h1,
+    .preview h2,
+    .preview h3,
+    .preview h4 {
+      color: #80deea;
+    }
+
+    body[data-theme="light"] .preview h1,
+    body[data-theme="light"] .preview h2,
+    body[data-theme="light"] .preview h3,
+    body[data-theme="light"] .preview h4 {
+      color: #006064;
+    }
+
+    .preview a {
+      color: #4dd0e1;
+    }
+
+    .preview code {
+      background: rgba(15, 23, 42, 0.9);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    body[data-theme="light"] .preview code {
+      background: rgba(226, 232, 240, 0.9);
+    }
+
+    .preview pre {
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px;
+      border-radius: 6px;
+      overflow: auto;
+    }
+
+    body[data-theme="light"] .preview pre {
+      background: rgba(226, 232, 240, 0.9);
+    }
+
+    .preview table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
+
+    .preview th,
+    .preview td {
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 6px 8px;
+    }
+
+    .preview th {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    body[data-theme="light"] .preview th {
+      background: rgba(226, 232, 240, 0.9);
+    }
+
+    .section {
+      margin-top: 10px;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #90a4ae;
+      margin-bottom: 6px;
+    }
+
+    .output {
+      min-height: 120px;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .copy-status {
+      font-size: 0.75rem;
+      color: #a5f3fc;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    body[data-theme="light"] .copy-status {
+      color: #00838f;
+    }
+
+    .table-form {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .table-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field label {
+      font-size: 0.75rem;
+      color: #b0bec5;
+    }
+
+    .field input,
+    .field select {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      background: rgba(3, 7, 18, 0.9);
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+    }
+
+    body[data-theme="light"] .field input,
+    body[data-theme="light"] .field select {
+      background: #ffffff;
+      color: #111827;
+      border-color: rgba(148, 163, 184, 0.7);
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--miku-cyan);
+      box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.5);
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: #90a4ae;
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0, 188, 212, 0.16);
+      color: #e0f7fa;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00e5ff;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 0.75rem;
+      color: #90a4ae;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
       flex-wrap: wrap;
     }
-    .mdl-button {
-      text-transform: none;
+
+    .footer-note a {
+      color: #4dd0e1;
+      text-decoration: none;
     }
-    @media (max-width: 768px) {
-      .editor-container {
-        flex-direction: column;
-      }
+
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+
+    .md-toolbar-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .md-toolbar-buttons .btn-ghost {
+      font-size: 0.7rem;
+      padding: 3px 8px;
     }
   </style>
 </head>
-<body>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="title-group">
+        <h1>Markdown Studio</h1>
+        <span>Hatsune Miku inspired · Live preview · Table & code helpers</span>
+        <div class="chip">
+          <span class="chip-dot"></span>
+          <span>Material-ish · Dark / Light</span>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-toggle">
+        <span class="icon" id="themeIcon">🌙</span>
+        <span id="themeLabel">Dark mode</span>
+      </button>
+    </header>
 
-  <h3 class="mdl-typography--headline">Markdown ke HTML Converter</h3>
-  
-  <div class="editor-container">
-    <!-- Toolbar -->
-    <div class="toolbar">
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('# ')">Heading</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('**bold**')">Bold</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('*italic*')">Italic</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('- list item')">List</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('> quote')">Quote</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('`code`')">Code</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="insertTag('| Col1 | Col2 |\n|------|------|\n| Val1 | Val2 |')">Table</button>
-    </div>
+    <main class="layout">
+      <!-- LEFT: Markdown editor + helpers -->
+      <section class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <span class="card-title-dot"></span>
+                <span>Markdown input</span>
+              </div>
+              <div class="card-subtitle">Tulis Markdown, gunakan toolbar, buat tabel & code block.</div>
+            </div>
+            <button class="btn btn-secondary" id="insertSample">
+              <span class="icon">✨</span>
+              <span>Sample</span>
+            </button>
+          </div>
 
-    <!-- Editor -->
-    <textarea id="markdown-input" placeholder="Tulis Markdown di sini..."></textarea>
+          <!-- TOOLBAR MARKDOWN HELPER -->
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <span class="pill-label">Editor</span>
+              <button class="btn-ghost" id="clearEditor">Clear</button>
+            </div>
+          </div>
 
-    <!-- Buttons -->
-    <div>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="updatePreview()">Preview</button>
-      <button class="mdl-button mdl-js-button mdl-button--raised" onclick="copyHTML()">Copy HTML</button>
-    </div>
+          <div class="toolbar" style="margin-top:-4px;">
+            <div class="md-toolbar-buttons">
+              <button class="btn-ghost" data-md="h1">H1</button>
+              <button class="btn-ghost" data-md="h2">H2</button>
+              <button class="btn-ghost" data-md="bold"><strong>B</strong></button>
+              <button class="btn-ghost" data-md="italic"><em>I</em></button>
+              <button class="btn-ghost" data-md="ul">• List</button>
+              <button class="btn-ghost" data-md="ol">1. List</button>
+              <button class="btn-ghost" data-md="quote">❝ Quote</button>
+              <button class="btn-ghost" data-md="inlinecode">`code`</button>
+              <button class="btn-ghost" data-md="codeblock">``` Code</button>
+              <button class="btn-ghost" data-md="link">🔗 Link</button>
+              <button class="btn-ghost" data-md="image">🖼️ Image</button>
+              <button class="btn-ghost" data-md="hr">─ HR</button>
+            </div>
+          </div>
 
-    <!-- Preview -->
-    <div id="preview" class="preview"></div>
+          <textarea id="markdownInput" placeholder="# Halo Miku! 🎶&#10;Tulis Markdown di sini..."></textarea>
+
+          <!-- TABLE GENERATOR -->
+          <div class="section">
+            <div class="section-label">Generator tabel Markdown</div>
+            <div class="table-form">
+              <div class="field">
+                <label for="rows">Jumlah baris (data)</label>
+                <input type="number" id="rows" min="1" value="3" />
+              </div>
+              <div class="field">
+                <label for="cols">Jumlah kolom</label>
+                <input type="number" id="cols" min="1" value="3" />
+              </div>
+              <div class="field">
+                <label for="align">Alignment default</label>
+                <select id="align">
+                  <option value="left">Left</option>
+                  <option value="center">Center</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn" id="generateTable">
+              <span class="icon">📊</span>
+              <span>Generate tabel</span>
+            </button>
+            <div class="hint">
+              Header akan otomatis dibuat sebagai <code>Header 1 | Header 2 | ...</code>.  
+              Setelah generate, silakan edit isi tabel langsung di editor.
+            </div>
+          </div>
+
+          <!-- CODE BLOCK GENERATOR -->
+          <div class="section">
+            <div class="section-label">Generator Code Block Markdown</div>
+
+            <div class="field" style="margin-bottom:8px;">
+              <label for="codeLang">Bahasa pemrograman</label>
+              <select id="codeLang">
+                <option value="plaintext">Plain Text</option>
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="python">Python</option>
+                <option value="php">PHP</option>
+                <option value="java">Java</option>
+                <option value="c">C</option>
+                <option value="cpp">C++</option>
+                <option value="csharp">C#</option>
+                <option value="go">Go</option>
+                <option value="rust">Rust</option>
+                <option value="bash">Bash / Shell</option>
+                <option value="sql">SQL</option>
+                <option value="json">JSON</option>
+                <option value="xml">XML</option>
+                <option value="yaml">YAML</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="codeInput">Isi kode</label>
+              <textarea id="codeInput" placeholder="console.log('Hello Miku!');" style="min-height:140px;"></textarea>
+            </div>
+
+            <button class="btn" id="generateCodeBlock" style="margin-top:10px;">
+              <span class="icon">💻</span>
+              <span>Generate Code Block</span>
+            </button>
+
+            <div class="hint">
+              Hasil akan otomatis dimasukkan ke editor Markdown.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Preview + copy tools -->
+      <section class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <span class="card-title-dot"></span>
+                <span>Preview & export</span>
+              </div>
+              <div class="card-subtitle">Lihat hasil render dan salin Markdown atau HTML dengan sekali klik.</div>
+            </div>
+            <div class="toolbar-right">
+              <button class="btn btn-secondary" id="copyMarkdown">
+                <span class="icon">📋</span>
+                <span>Copy MD</span>
+              </button>
+              <button class="btn btn-secondary" id="copyHTML">
+                <span class="icon">📋</span>
+                <span>Copy HTML</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <span class="pill-label">Preview</span>
+            </div>
+            <div class="toolbar-right">
+              <span class="copy-status" id="copyStatus">Ready</span>
+            </div>
+          </div>
+
+          <div id="preview" class="preview"></div>
+
+          <div class="section">
+            <div class="section-label">HTML output (read-only)</div>
+            <div id="htmlOutput" class="output" tabindex="0"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-note">
+      <span>Tips: gunakan <code>Ctrl + Enter</code> di editor untuk fokus ke preview.</span>
+      <span>Palette terinspirasi Hatsune Miku · teal, cyan, dan sedikit violet.</span>
+    </footer>
   </div>
 
   <script>
-    const input = document.getElementById('markdown-input');
-    const preview = document.getElementById('preview');
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+    const themeLabel = document.getElementById("themeLabel");
+    const markdownInput = document.getElementById("markdownInput");
+    const preview = document.getElementById("preview");
+    const htmlOutput = document.getElementById("htmlOutput");
+    const copyMarkdownBtn = document.getElementById("copyMarkdown");
+    const copyHTMLBtn = document.getElementById("copyHTML");
+    const copyStatus = document.getElementById("copyStatus");
+    const generateTableBtn = document.getElementById("generateTable");
+    const rowsInput = document.getElementById("rows");
+    const colsInput = document.getElementById("cols");
+    const alignSelect = document.getElementById("align");
+    const clearEditorBtn = document.getElementById("clearEditor");
+    const insertSampleBtn = document.getElementById("insertSample");
 
-    // Preview otomatis saat mengetik
-    input.addEventListener('input', updatePreview);
+    const codeLang = document.getElementById("codeLang");
+    const codeInput = document.getElementById("codeInput");
+    const generateCodeBlockBtn = document.getElementById("generateCodeBlock");
 
-    function updatePreview() {
-      const markdownText = input.value;
-      preview.innerHTML = marked.parse(markdownText, { breaks: true, gfm: true });
+    // --- THEME ---
+    function setTheme(theme) {
+      body.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        themeIcon.textContent = "🌙";
+        themeLabel.textContent = "Dark mode";
+      } else {
+        themeIcon.textContent = "☀️";
+        themeLabel.textContent = "Light mode";
+      }
+      localStorage.setItem("markdown-theme", theme);
     }
 
-    function copyHTML() {
-      const htmlContent = preview.innerHTML;
-      navigator.clipboard.writeText(htmlContent).then(() => {
-        alert("HTML berhasil disalin!");
+    const savedTheme = localStorage.getItem("markdown-theme");
+    if (savedTheme === "light" || savedTheme === "dark") {
+      setTheme(savedTheme);
+    } else {
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(prefersDark ? "dark" : "light");
+    }
+
+    themeToggle.addEventListener("click", (e) => {
+      const current = body.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      const next = current === "dark" ? "light" : "dark";
+      const rect = themeToggle.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      themeToggle.style.setProperty("--x", x + "%");
+      themeToggle.style.setProperty("--y", y + "%");
+      themeToggle.classList.add("ripple");
+      setTimeout(() => themeToggle.classList.remove("ripple"), 350);
+      setTheme(next);
+    });
+
+    // --- MARKDOWN RENDER ---
+    function renderMarkdown() {
+      const md = markdownInput.value || "";
+      const html = marked.parse(md, { breaks: true });
+      preview.innerHTML = html;
+      htmlOutput.textContent = html;
+    }
+
+    markdownInput.addEventListener("input", renderMarkdown);
+
+    markdownInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        preview.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
+    // --- COPY HELPERS ---
+    async function copyToClipboard(text, label) {
+      try {
+        await navigator.clipboard.writeText(text);
+        copyStatus.textContent = label + " copied!";
+      } catch (err) {
+        copyStatus.textContent = "Copy gagal";
+      }
+      setTimeout(() => {
+        copyStatus.textContent = "Ready";
+      }, 1500);
+    }
+
+    copyMarkdownBtn.addEventListener("click", () => {
+      copyToClipboard(markdownInput.value || "", "Markdown");
+    });
+
+    copyHTMLBtn.addEventListener("click", () => {
+      copyToClipboard(htmlOutput.textContent || "", "HTML");
+    });
+
+    // --- TABLE GENERATOR ---
+    function generateMarkdownTable(rows, cols, align) {
+      rows = Math.max(1, rows | 0);
+      cols = Math.max(1, cols | 0);
+
+      const headers = [];
+      for (let c = 1; c <= cols; c++) {
+        headers.push("Header " + c);
+      }
+
+      let alignToken = ":---";
+      if (align === "center") alignToken = ":---:";
+      if (align === "right") alignToken = "---:";
+
+      const alignRow = Array(cols).fill(alignToken);
+
+      const dataRows = [];
+      for (let r = 1; r <= rows; r++) {
+        const row = [];
+        for (let c = 1; c <= cols; c++) {
+          row.push("Data " + r + "." + c);
+        }
+        dataRows.push(row.join(" | "));
+      }
+
+      const tableLines = [
+        headers.join(" | "),
+        alignRow.join(" | "),
+        ...dataRows
+      ];
+
+      return tableLines.join("\n");
+    }
+
+    generateTableBtn.addEventListener("click", () => {
+      const rows = parseInt(rowsInput.value, 10) || 1;
+      const cols = parseInt(colsInput.value, 10) || 1;
+      const align = alignSelect.value || "left";
+
+      const tableMD = generateMarkdownTable(rows, cols, align);
+
+      const current = markdownInput.value;
+      const prefix = current && !current.endsWith("\n") ? "\n\n" : "\n";
+      markdownInput.value = (current || "") + prefix + tableMD + "\n";
+      renderMarkdown();
+    });
+
+    // --- CODE BLOCK GENERATOR ---
+    generateCodeBlockBtn.addEventListener("click", () => {
+      const lang = codeLang.value || "plaintext";
+      const code = codeInput.value || "";
+
+      const block =
+        "```" + lang + "\n" +
+        code + "\n" +
+        "```\n\n";
+
+      const current = markdownInput.value;
+      const prefix = current && !current.endsWith("\n") ? "\n\n" : "\n";
+
+      markdownInput.value = current + prefix + block;
+      renderMarkdown();
+    });
+
+    // --- EDITOR UTIL ---
+    clearEditorBtn.addEventListener("click", () => {
+      markdownInput.value = "";
+      renderMarkdown();
+    });
+
+    insertSampleBtn.addEventListener("click", () => {
+      const sample = `# 🎶 Hatsune Miku Markdown Studio
+
+Selamat datang di *Markdown Studio* dengan gaya **Hatsune Miku**!
+
+## Fitur utama
+
+- Live preview
+- Copy Markdown & HTML
+- Generator tabel Markdown
+- Generator code block
+- Toolbar helper untuk semua atribut Markdown umum
+
+## Contoh link & gambar
+
+[Link ke situs favorit](https://example.com)
+
+![Gambar Miku](https://example.com/miku.png)
+
+## Contoh kode
+
+\`\`\`js
+function helloMiku() {
+  console.log("Hello, Miku! 🎤");
+}
+\`\`\`
+
+> "Sekarang giliranmu menulis sesuatu yang keren!"
+
+`;
+      markdownInput.value = sample;
+      renderMarkdown();
+    });
+
+    // --- MARKDOWN TOOLBAR HELPERS ---
+    function surroundSelection(before, after, placeholder) {
+      const el = markdownInput;
+      const start = el.selectionStart;
+      const end = el.selectionEnd;
+      const value = el.value;
+      const selected = value.slice(start, end) || placeholder;
+
+      const newText = value.slice(0, start) + before + selected + after + value.slice(end);
+      el.value = newText;
+
+      const cursorStart = start + before.length;
+      const cursorEnd = cursorStart + selected.length;
+      el.focus();
+      el.setSelectionRange(cursorStart, cursorEnd);
+
+      renderMarkdown();
+    }
+
+    function insertAtLineStart(prefix) {
+      const el = markdownInput;
+      const start = el.selectionStart;
+      const value = el.value;
+
+      const lineStart = value.lastIndexOf("\n", start - 1) + 1;
+      const newText = value.slice(0, lineStart) + prefix + value.slice(lineStart);
+
+      el.value = newText;
+      el.focus();
+      el.setSelectionRange(start + prefix.length, start + prefix.length);
+      renderMarkdown();
+    }
+
+    function insertBlock(text) {
+      const el = markdownInput;
+      const start = el.selectionStart;
+      const value = el.value;
+
+      const prefix = value && !value.endsWith("\n") ? "\n\n" : "\n";
+      const newText = value.slice(0, start) + prefix + text + value.slice(start);
+
+      el.value = newText;
+      el.focus();
+      el.setSelectionRange(start + prefix.length, start + prefix.length + text.length);
+      renderMarkdown();
+    }
+
+    document.querySelectorAll(".md-toolbar-buttons .btn-ghost").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const type = btn.getAttribute("data-md");
+        switch (type) {
+          case "h1":
+            insertAtLineStart("# ");
+            break;
+          case "h2":
+            insertAtLineStart("## ");
+            break;
+          case "bold":
+            surroundSelection("**", "**", "teks tebal");
+            break;
+          case "italic":
+            surroundSelection("*", "*", "teks miring");
+            break;
+          case "ul":
+            insertAtLineStart("- ");
+            break;
+          case "ol":
+            insertAtLineStart("1. ");
+            break;
+          case "quote":
+            insertAtLineStart("> ");
+            break;
+          case "inlinecode":
+            surroundSelection("`", "`", "kode");
+            break;
+          case "codeblock":
+            insertBlock("```lang\nkode di sini\n```");
+            break;
+          case "link":
+            surroundSelection("[", "](https://example.com)", "teks link");
+            break;
+          case "image":
+            insertBlock("![alt text](https://example.com/gambar.png)");
+            break;
+          case "hr":
+            insertBlock("---");
+            break;
+        }
       });
-    }
+    });
 
-    function insertTag(tag) {
-      const start = input.selectionStart;
-      const end = input.selectionEnd;
-      const text = input.value;
-      input.value = text.substring(0, start) + tag + text.substring(end);
-      updatePreview();
-    }
+    // Render awal
+    renderMarkdown();
   </script>
-
 </body>
 </html>
