@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miku JSON Command Builder</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --miku:#39c5bb;
+  --miku-dark:#1ea9a2;
+  --bg:#08141a;
+  --card:#0f1b24;
+  --border:#1e2f3b;
+  --text:#e7fafa;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:Inter, sans-serif;
+}
+
+body{
+  margin:0;
+  background:linear-gradient(135deg,#061218,#0b1f26);
+  color:var(--text);
+  min-height:100vh;
+}
+
+header{
+  padding:18px;
+  text-align:center;
+  font-size:1.4rem;
+  font-weight:600;
+  background:linear-gradient(90deg,var(--miku),#8cf7ef);
+  color:#002;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+@media(max-width:900px){
+  .container{
+    grid-template-columns:1fr;
+  }
+}
+
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+h2{
+  margin-top:0;
+  color:var(--miku);
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+label{
+  font-size:.85rem;
+}
+
+input,textarea,select{
+  width:100%;
+  margin-top:6px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#08131a;
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+textarea{
+  min-height:70px;
+}
+
+button{
+  background:var(--miku);
+  color:#002;
+  border:none;
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:hover{
+  background:var(--miku-dark);
+}
+
+.btn-secondary{
+  background:#22323d;
+  color:white;
+}
+
+.btn-danger{
+  background:#aa3344;
+  color:white;
+}
+
+.flex{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.custom-row{
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.custom-row input{
+  flex:1;
+}
+
+pre{
+  background:#050b10;
+  padding:15px;
+  border-radius:12px;
+  min-height:320px;
+  overflow:auto;
+  font-size:.85rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+🎤 Hatsune Miku JSON Command Builder
+</header>
+
+<div class="container">
+
+<!-- LEFT -->
+<div class="card">
+<h2>Main Fields</h2>
+
+<div class="field">
+<label>Action</label>
+<input id="action" value="image_to_text">
+</div>
+
+<div class="field">
+<label>Prompt Target</label>
+<select id="prompt_target">
+<option>General</option>
+<option>Gemini Ai by Google</option>
+<option>Stable Diffusion/SDXL</option>
+<option>Flux Ai</option>
+<option>Grok AI</option>
+</select>
+</div>
+
+<div class="field">
+<label>Language</label>
+<input id="language" value="en">
+</div>
+
+<hr>
+
+<h2>Action Input</h2>
+
+<div class="field">
+<label>Task</label>
+<textarea id="task">buatkan prompt lengkap berdasarkan gambar</textarea>
+</div>
+
+<div class="field">
+<label>Output</label>
+<textarea id="output_desc">Prompt lengkap dalam satu paragraf siap pakai</textarea>
+</div>
+
+<div class="field">
+<label>Aspect Ratio</label
+<input id="aspect_ratio" value="9:16">
+</div>
+
+<hr>
+
+<h2>Custom Fields</h2>
+<div id="customFields"></div>
+
+<button onclick="addCustom()">➕ Add Field</button>
+
+<hr>
+
+<div class="flex">
+<button onclick="generateJSON()">Generate</button>
+<button class="btn-secondary" onclick="copyJSON()">Copy</button>
+<button class="btn-secondary" onclick="downloadJSON()">Download</button>
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="card">
+<h2>JSON Output</h2>
+<pre id="result">{}</pre>
+</div>
+
+</div>
+
+<script>
+// Tambah field custom
+function addCustom(){
+  const div=document.createElement("div");
+  div.className="custom-row";
+  div.innerHTML=`
+    <input placeholder="key">
+    <input placeholder="value (pisahkan dengan koma)">
+    <button class="btn-danger" onclick="this.parentElement.remove()">✖</button>
+  `;
+  document.getElementById("customFields").appendChild(div);
+}
+
+// Parsing multi value
+function parseValue(val){
+  if(val.includes(",")){
+    return val.split(",")
+      .map(v=>v.trim())
+      .filter(v=>v!=="");
+  }
+  return val;
+}
+
+// Generate JSON
+function generateJSON(){
+  const obj={
+    action:document.getElementById("action").value,
+    prompt_target:document.getElementById("prompt_target").value,
+    language:document.getElementById("language").value,
+    action_input:{
+      taks:document.getElementById("task").value,
+      output:document.getElementById("output_desc").value,
+      aspect_ratio:document.getElementById("aspect_ratio").value
+    }
+  };
+
+  document.querySelectorAll(".custom-row").forEach(row=>{
+    const key=row.children[0].value.trim();
+    const val=row.children[1].value.trim();
+    if(key!==""){
+      obj.action_input[key]=parseValue(val);
+    }
+  });
+
+  document.getElementById("result").textContent=
+    JSON.stringify(obj,null,2);
+}
+
+// Copy
+function copyJSON(){
+  navigator.clipboard.writeText(
+    document.getElementById("result").textContent
+  );
+  alert("JSON copied!");
+}
+
+// Download
+function downloadJSON(){
+  const text=document.getElementById("result").textContent;
+  const blob=new Blob([text],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="command.json";
+  a.click();
+}
+</script>
+
+</body>
+</html>
