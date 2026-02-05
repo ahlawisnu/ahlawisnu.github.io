@@ -1,346 +1,285 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Miku Prompt Builder</title>
+<title>Miku Prompt Builder ULTRA</title>
 
 <style>
-/* ===========================
-   MATERIAL 3 + MIKU GAME THEME
-=========================== */
-
-:root{
---bg:#070b14;
---surface:#0f1624;
---card:#172036;
---primary:#3df2e6;
---secondary:#8fd7ff;
---danger:#ff5b7c;
---text:#eaf6ff;
---muted:#93a4c5;
---radius:18px;
---glow:0 0 14px #3df2e6;
+body.dark{
+--bg:#070b14;--surface:#0f1624;--card:#172036;
+--primary:#3df2e6;--secondary:#8fd7ff;
+--value:#2ecc71;--array:#f1c40f;--object:#9b59b6;
+--danger:#ff5b7c;--text:#eaf6ff;
 }
-
-*{
-box-sizing:border-box;
-font-family:system-ui,-apple-system,Segoe UI,Roboto;
+body.light{
+--bg:#f5f7ff;--surface:#fff;--card:#eef1ff;
+--primary:#00bcd4;--secondary:#3f51b5;
+--value:#2e7d32;--array:#f9a825;--object:#6a1b9a;
+--danger:#d32f2f;--text:#111;
+}
+body.purple{
+--bg:#0c0014;--surface:#19002b;--card:#260040;
+--primary:#ff4dff;--secondary:#8fd7ff;
+--value:#00e676;--array:#ffea00;--object:#b388ff;
+--danger:#ff1744;--text:#f5e6ff;
 }
 
 body{
-margin:0;
-padding:16px;
-background:
-radial-gradient(circle at top,#112040,#05070d);
+margin:0;padding:16px;
+background:var(--bg);
 color:var(--text);
+font-family:system-ui;
+transition:.3s;
 }
 
-/* ========================= */
+h1{text-align:center;color:var(--primary);}
+.app{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:900px){.app{grid-template-columns:1fr;}}
 
-header{
-text-align:center;
-margin-bottom:18px;
-}
+.panel{background:var(--surface);padding:14px;border-radius:16px;}
 
-h1{
-margin:0;
-color:var(--primary);
-text-shadow:var(--glow);
-}
-
-/* ========================= */
-
-.app{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
-}
-
-@media(max-width:900px){
-.app{
-grid-template-columns:1fr;
-}
-}
-
-/* ========================= */
-
-.panel{
-background:var(--surface);
-border-radius:var(--radius);
-padding:16px;
-box-shadow:0 0 0 1px #1c2b4a inset;
-}
-
-/* ========================= */
-
-.toolbar{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-bottom:12px;
-}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
 
 button{
-border:none;
-padding:10px 18px;
-border-radius:999px;
-cursor:pointer;
-font-weight:600;
-color:#001;
-background:
-linear-gradient(135deg,var(--primary),var(--secondary));
-box-shadow:var(--glow);
-}
-
-button.secondary{
-background:#243256;
-color:var(--text);
-box-shadow:none;
-}
-
-button.danger{
-background:var(--danger);
-color:white;
-box-shadow:none;
-}
-
-/* ========================= */
-
-.row{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-bottom:8px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+border:none;padding:8px 14px;border-radius:999px;
+font-weight:600;cursor:pointer;
 }
 
 input,select{
-flex:1;
-min-width:120px;
-background:#0b1220;
-border:1px solid #2a3a5f;
-border-radius:10px;
-padding:8px 10px;
+background:var(--card);
+border:1px solid #555;
+border-radius:8px;
+padding:6px;
 color:var(--text);
 }
 
-input:focus,select:focus{
-outline:none;
-border-color:var(--primary);
-box-shadow:0 0 0 2px #3df2e640;
-}
-
-/* ========================= */
+input.error{border:2px solid var(--danger);}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
 
 .child{
-background:var(--card);
-border-radius:14px;
-padding:10px;
-margin-top:8px;
-margin-left:18px;
-border-left:2px solid var(--primary);
+padding:8px;border-radius:10px;
+margin-left:16px;margin-top:6px;
+border-left:4px solid var(--primary);
 }
+.child.value{border-color:var(--value);}
+.child.array{border-color:var(--array);}
+.child.object{border-color:var(--object);}
 
-/* ========================= */
-
-textarea{
-width:100%;
-height:260px;
-background:#05080f;
-border-radius:14px;
-border:1px solid #2a3a5f;
-padding:12px;
-color:#46ffe0;
+textarea,pre{
+width:100%;height:180px;
+background:black;color:#00ffd5;
+border-radius:10px;padding:10px;
 font-family:monospace;
 }
 
-/* ========================= */
-
-.section-title{
-color:var(--secondary);
-margin:10px 0;
-}
-
-/* ========================= */
+.highlight{outline:3px solid yellow;}
 </style>
 </head>
 
-<body>
+<body class="dark">
 
-<header>
-<h1>🎤 Miku Prompt Builder</h1>
-<p>Material Design 3 • Game Style • Escaped JSON Generator</p>
-</header>
+<h1>🎤 Miku Prompt Builder ULTRA</h1>
+
+<div class="toolbar">
+<button onclick="undo()">⏪ Undo</button>
+<button onclick="redo()">⏩ Redo</button>
+
+<select onchange="setTheme(this.value)">
+<option value="dark">Miku Dark</option>
+<option value="light">Light Neon</option>
+<option value="purple">Cyber Purple</option>
+</select>
+
+<input id="search" placeholder="Search key..." oninput="searchNode(this.value)">
+</div>
 
 <div class="app">
 
-<!-- LEFT PANEL -->
 <div class="panel">
+<h3>Outer</h3>
+<div id="outer"></div>
+<button onclick="addOuter()">➕ Outer</button>
 
-<h3 class="section-title">Outer Keys</h3>
-<div id="outerFields"></div>
-<button onclick="addOuter()">➕ Add Outer Key</button>
-
-<h3 class="section-title">Inner Structure (action_input)</h3>
-<div id="innerTree"></div>
-<button onclick="addInner(innerTree)">➕ Add Field</button>
-
-<h3 class="section-title">Templates</h3>
-<div class="toolbar">
-<button class="secondary" onclick="loadTemplate('image')">Image To Text</button>
-<button class="secondary" onclick="loadTemplate('txt2img')">Text To Image</button>
+<h3>Inner</h3>
+<div id="inner"></div>
+<button onclick="addInner(inner)">➕ Field</button>
 </div>
 
-</div>
-
-<!-- RIGHT PANEL -->
 <div class="panel">
-
-<h3 class="section-title">Output</h3>
-
 <div class="toolbar">
-<button onclick="copyOut()">📋 Copy</button>
-<button onclick="exportTXT()">⬇ Export TXT</button>
+<button onclick="copyOut()">Copy</button>
+<button onclick="exportFile('txt')">TXT</button>
+<button onclick="exportFile('yaml')">YAML</button>
+<button onclick="exportFile('xml')">XML</button>
 </div>
 
 <textarea id="output"></textarea>
-
+<pre id="tree"></pre>
 </div>
 
 </div>
 
 <script>
-const outerFields=document.getElementById("outerFields");
-const innerTree=document.getElementById("innerTree");
+const outer=document.getElementById("outer");
+const inner=document.getElementById("inner");
+const output=document.getElementById("output");
+const tree=document.getElementById("tree");
 
-/* ========== OUTER ========== */
+/* ===== HISTORY ===== */
+let history=[],future=[];
+function snapshot(){
+history.push(JSON.stringify(saveState()));
+future=[];
+}
+function undo(){
+if(!history.length)return;
+future.push(JSON.stringify(saveState()));
+loadState(JSON.parse(history.pop()));
+}
+function redo(){
+if(!future.length)return;
+history.push(JSON.stringify(saveState()));
+loadState(JSON.parse(future.pop()));
+}
 
+/* ===== OUTER ===== */
 function addOuter(k="",v=""){
 const r=document.createElement("div");
 r.className="row";
 r.innerHTML=`
-<input class="ok" placeholder="key" value="${k}">
-<input class="ov" placeholder="value" value="${v}">
-<button class="danger" onclick="this.parentElement.remove();update()">✖</button>
-`;
-outerFields.appendChild(r);
-update();
+<input class="ok" value="${k}">
+<input class="ov" value="${v}">
+<button onclick="this.parentElement.remove();update()">✖</button>`;
+outer.appendChild(r);
+snapshot();update();
 }
-
 addOuter("action","image_to_text");
 
-/* ========== INNER NODE ========== */
-
+/* ===== INNER ===== */
 function createInner(){
 const d=document.createElement("div");
-d.className="child";
+d.className="child value";
 d.innerHTML=`
 <div class="row">
-<input class="ik" placeholder="key">
-<select class="it">
+<input class="ik">
+<select class="it" onchange="setType(this)">
 <option value="value">value</option>
 <option value="array">array</option>
 <option value="object">object</option>
 </select>
-<input class="iv" placeholder="value / a,b,c">
+<input class="iv">
 <button onclick="addInner(this.parentElement.nextElementSibling)">＋</button>
-<button class="danger" onclick="this.closest('.child').remove();update()">✖</button>
+<button onclick="this.closest('.child').remove();update()">✖</button>
 </div>
-<div></div>
-`;
+<div></div>`;
 return d;
 }
-
-function addInner(parent){
-parent.appendChild(createInner());
+function addInner(p){
+p.appendChild(createInner());
+snapshot();update();
+}
+function setType(s){
+s.closest(".child").className="child "+s.value;
 update();
 }
 
-/* ========== BUILD INNER ========== */
-
-function buildInner(container){
-let obj={};
-container.querySelectorAll(":scope>.child").forEach(n=>{
-const k=n.querySelector(".ik").value;
+/* ===== BUILD ===== */
+function buildInner(p){
+let o={};
+p.querySelectorAll(":scope>.child").forEach(n=>{
+const k=n.querySelector(".ik");
+const v=n.querySelector(".iv");
+k.classList.toggle("error",!k.value);
 const t=n.querySelector(".it").value;
-const v=n.querySelector(".iv").value;
-const child=n.children[1];
-if(!k) return;
-
-if(t==="value") obj[k]=v;
-if(t==="array")
- obj[k]=v.split(",").map(x=>x.trim()).filter(Boolean);
-if(t==="object")
- obj[k]=buildInner(child);
+if(!k.value)return;
+if(t==="value")o[k.value]=v.value;
+if(t==="array")o[k.value]=v.value.split(",").map(x=>x.trim());
+if(t==="object")o[k.value]=buildInner(n.children[1]);
 });
-return obj;
+return o;
 }
 
-/* ========== UPDATE OUTPUT ========== */
+/* ===== TREE TEXT ===== */
+function treeText(o,i=""){
+let t="";
+for(const k in o){
+if(typeof o[k]==="object"&&!Array.isArray(o[k])){
+t+=`${i}${k}\n`+treeText(o[k],i+"  ");
+}else{
+t+=`${i}${k}: ${o[k]}\n`;
+}}
+return t;
+}
 
+/* ===== UPDATE ===== */
 function update(){
-let outer={};
+let outerObj={};
 document.querySelectorAll(".ok").forEach((k,i)=>{
-const key=k.value;
-const val=document.querySelectorAll(".ov")[i].value;
-if(key) outer[key]=val;
+const v=document.querySelectorAll(".ov")[i].value;
+if(k.value) outerObj[k.value]=v;
 });
-
-const innerObj=buildInner(innerTree);
-let escaped=JSON.stringify(innerObj).replace(/"/g,'\"');
-outer["action_input"]=`{ ${escaped.slice(1,-1)} }`;
-
-output.value=JSON.stringify(outer,null,2);
+const innerObj=buildInner(inner);
+const esc=JSON.stringify(innerObj).replace(/"/g,'\"');
+outerObj["action_input"]=`{ ${esc.slice(1,-1)} }`;
+output.value=JSON.stringify(outerObj,null,2);
+tree.textContent=treeText(innerObj);
+localStorage.setItem("miku_state",JSON.stringify(saveState()));
 }
+
+/* ===== STATE ===== */
+function saveState(){
+return{
+outer:outer.innerHTML,
+inner:inner.innerHTML,
+theme:document.body.className
+};
+}
+function loadState(s){
+outer.innerHTML=s.outer;
+inner.innerHTML=s.inner;
+setTheme(s.theme);
+update();
+}
+
+/* AUTO LOAD */
+const saved=localStorage.getItem("miku_state");
+if(saved) loadState(JSON.parse(saved));
 
 document.addEventListener("input",update);
-document.addEventListener("change",update);
 
-/* ========== COPY / EXPORT ========== */
-
-function copyOut(){
-navigator.clipboard.writeText(output.value);
-alert("Copied!");
+/* ===== SEARCH ===== */
+function searchNode(q){
+document.querySelectorAll(".child").forEach(n=>{
+const k=n.querySelector(".ik").value.toLowerCase();
+n.classList.toggle("highlight",q && k.includes(q.toLowerCase()));
+});
 }
 
-function exportTXT(){
-const b=new Blob([output.value],{type:"text/plain"});
+/* ===== THEME ===== */
+function setTheme(t){
+document.body.className=t;
+}
+
+/* ===== EXPORT ===== */
+function copyOut(){navigator.clipboard.writeText(output.value);}
+function exportFile(type){
+let data=output.value;
+if(type==="yaml"){
+const o=JSON.parse(data);
+data=Object.entries(o).map(e=>`${e[0]}: ${e[1]}`).join("\n");
+}
+if(type==="xml"){
+const o=JSON.parse(data);
+data="<root>\n"+Object.entries(o).map(e=>`<${e[0]}>${e[1]}</${e[0]}>`).join("\n")+"\n</root>";
+}
+const b=new Blob([data],{type:"text/plain"});
 const a=document.createElement("a");
 a.href=URL.createObjectURL(b);
-a.download="prompt.txt";
+a.download="prompt."+type;
 a.click();
-}
-
-/* ========== TEMPLATE ========== */
-
-function loadTemplate(type){
-innerTree.innerHTML="";
-
-if(type==="image"){
-addInner(innerTree);
-innerTree.querySelector(".ik").value="taks";
-innerTree.querySelector(".iv").value="buatkan prompt lengkap berdasarkan gambar";
-
-addInner(innerTree);
-innerTree.querySelectorAll(".ik")[1].value="output";
-innerTree.querySelectorAll(".iv")[1].value="Prompt lengkap satu paragraf";
-
-addInner(innerTree);
-innerTree.querySelectorAll(".ik")[2].value="Target";
-innerTree.querySelectorAll(".iv")[2].value="Prompt Gemini AI";
-}
-
-if(type==="txt2img"){
-addInner(innerTree);
-innerTree.querySelector(".ik").value="prompt";
-innerTree.querySelector(".iv").value="beautiful girl";
-
-addInner(innerTree);
-innerTree.querySelectorAll(".ik")[1].value="ratio";
-innerTree.querySelectorAll(".iv")[1].value="9:16";
-}
-
-update();
 }
 </script>
 
