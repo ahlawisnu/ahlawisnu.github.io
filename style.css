@@ -221,7 +221,7 @@ p {
 }
 
 /* Responsif untuk mobile */
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .navbar ul {
     flex-direction: column;
     background-color: #34495e;
