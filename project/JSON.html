@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature JSON Tree Builder - Material Design 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <style>
+        :root {
+            --md-sys-color-primary: #386a20;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #b7f397;
+            --md-sys-color-on-primary-container: #042100;
+            
+            --md-sys-color-secondary: #55624c;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #d9e7cb;
+            --md-sys-color-on-secondary-container: #131f0d;
+            
+            --md-sys-color-tertiary: #19686d;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-tertiary-container: #a4eff4;
+            --md-sys-color-on-tertiary-container: #002022;
+            
+            --md-sys-color-surface: #fdfdf6;
+            --md-sys-color-on-surface: #1a1c18;
+            --md-sys-color-surface-variant: #dfe4d6;
+            --md-sys-color-on-surface-variant: #43483e;
+            
+            --md-sys-color-outline: #73796e;
+            --md-sys-color-outline-variant: #c3c8bb;
+            
+            --md-sys-color-error: #ba1a1a;
+            --md-sys-color-error-container: #ffdad6;
+            
+            --md-sys-color-surface-tint: #386a20;
+            --md-sys-color-surface-1: #f4f9eb;
+            --md-sys-color-surface-2: #eef6e4;
+            --md-sys-color-surface-3: #e9f2dd;
+            --md-sys-color-surface-4: #e6f0d9;
+            --md-sys-color-surface-5: #e2eed3;
+            
+            --tree-line-color: var(--md-sys-color-outline-variant);
+            --tree-hover: var(--md-sys-color-surface-2);
+            
+            --md-sys-spacing-1: 4px;
+            --md-sys-spacing-2: 8px;
+            --md-sys-spacing-3: 12px;
+            --md-sys-spacing-4: 16px;
+            --md-sys-spacing-5: 20px;
+            --md-sys-spacing-6: 24px;
+            --md-sys-spacing-8: 32px;
+            --md-sys-spacing-12: 48px;
+            
+            --md-sys-shape-corner-none: 0px;
+            --md-sys-shape-corner-extra-small: 4px;
+            --md-sys-shape-corner-small: 8px;
+            --md-sys-shape-corner-medium: 12px;
+            --md-sys-shape-corner-large: 16px;
+            --md-sys-shape-corner-extra-large: 28px;
+            --md-sys-shape-corner-full: 50%;
+            
+            --md-sys-typescale-display-large: 400 3.5rem/4rem 'Roboto Flex';
+            --md-sys-typescale-display-medium: 400 2.8rem/3.2rem 'Roboto Flex';
+            --md-sys-typescale-headline-large: 400 2rem/2.5rem 'Roboto Flex';
+            --md-sys-typescale-headline-medium: 400 1.75rem/2.25rem 'Roboto Flex';
+            --md-sys-typescale-title-large: 400 1.375rem/1.75rem 'Roboto Flex';
+            --md-sys-typescale-title-medium: 500 1rem/1.5rem 'Roboto Flex';
+            --md-sys-typescale-body-large: 400 1rem/1.5rem 'Roboto Flex';
+            --md-sys-typescale-body-medium: 400 0.875rem/1.25rem 'Roboto Flex';
+            --md-sys-typescale-label-large: 500 0.875rem/1.25rem 'Roboto Flex';
+            --md-sys-typescale-label-medium: 500 0.75rem/1rem 'Roboto Flex';
+            
+            --md-sys-motion-duration-short: 150ms;
+            --md-sys-motion-duration-medium: 300ms;
+            --md-sys-motion-duration-long: 500ms;
+            --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+            --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        [data-theme="dark"] {
+            --md-sys-color-primary: #9cd67d;
+            --md-sys-color-on-primary: #0f3900;
+            --md-sys-color-primary-container: #205107;
+            --md-sys-color-on-primary-container: #b7f397;
+            
+            --md-sys-color-secondary: #bdcbaf;
+            --md-sys-color-on-secondary: #283420;
+            --md-sys-color-secondary-container: #3e4a35;
+            --md-sys-color-on-secondary-container: #d9e7cb;
+            
+            --md-sys-color-tertiary: #88d1d7;
+            --md-sys-color-on-tertiary: #00363a;
+            --md-sys-color-tertiary-container: #004f55;
+            --md-sys-color-on-tertiary-container: #a4eff4;
+            
+            --md-sys-color-surface: #1a1c18;
+            --md-sys-color-on-surface: #e2e3dc;
+            --md-sys-color-surface-variant: #43483e;
+            --md-sys-color-on-surface-variant: #c3c8bb;
+            
+            --md-sys-color-outline: #8d9287;
+            --md-sys-color-outline-variant: #43483e;
+            
+            --md-sys-color-surface-tint: #9cd67d;
+            --md-sys-color-surface-1: #1f241b;
+            --md-sys-color-surface-2: #232920;
+            --md-sys-color-surface-3: #282e25;
+            --md-sys-color-surface-4: #293026;
+            --md-sys-color-surface-5: #2c3328;
+            
+            --tree-line-color: #43483e;
+            --tree-hover: #2d322b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
+        }
+
+        .nature-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .leaf-ornament {
+            position: absolute;
+            opacity: 0.08;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .leaf-1 {
+            top: 10%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, var(--md-sys-color-primary), transparent 70%);
+            border-radius: 0 70% 0 70%;
+            transform: rotate(-45deg);
+            animation-delay: 0s;
+        }
+
+        .leaf-2 {
+            top: 60%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, var(--md-sys-color-tertiary), transparent 70%);
+            border-radius: 0 60% 0 60%;
+            transform: rotate(15deg);
+            animation-delay: -5s;
+        }
+
+        .leaf-3 {
+            bottom: 20%;
+            left: 15%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 40% 40%, var(--md-sys-color-secondary), transparent 70%);
+            border-radius: 0 80% 0 50%;
+            transform: rotate(45deg);
+            animation-delay: -10s;
+        }
+
+        .circle-ornament {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            background: var(--md-sys-color-primary);
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+            background: var(--md-sys-color-tertiary);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
+            50% { transform: translateY(-20px) rotate(calc(var(--rot, 0deg) + 5deg)); }
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--md-sys-spacing-6);
+        }
+
+        .app-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
+            background-color: var(--md-sys-color-surface);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            margin: calc(-1 * var(--md-sys-spacing-6));
+            margin-bottom: var(--md-sys-spacing-6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--md-sys-color-surface), 0.8);
+        }
+
+        .app-bar-left {
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-4);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--md-sys-color-primary-container), var(--md-sys-color-tertiary-container));
+            border-radius: var(--md-sys-shape-corner-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md-sys-color-on-primary-container);
+            font-variation-settings: 'FILL' 1, 'wght' 600;
+        }
+
+        .app-title {
+            font: var(--md-sys-typescale-title-large);
+            color: var(--md-sys-color-on-surface);
+            font-weight: 600;
+        }
+
+        .app-bar-actions {
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 500px;
+            gap: var(--md-sys-spacing-6);
+            align-items: start;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--md-sys-color-surface-1);
+            border-radius: var(--md-sys-shape-corner-large);
+            padding: var(--md-sys-spacing-6);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            font: var(--md-sys-typescale-title-medium);
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: var(--md-sys-spacing-4);
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+        }
+
+        .card-subtitle {
+            font: var(--md-sys-typescale-body-medium);
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        .tree-container {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--md-sys-shape-corner-medium);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            overflow: hidden;
+        }
+
+        .tree-node {
+            position: relative;
+        }
+
+        .tree-node-content {
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            transition: background-color var(--md-sys-motion-duration-short);
+            position: relative;
+        }
+
+        .tree-node-content:hover {
+            background-color: var(--tree-hover);
+        }
+
+        .tree-node-content.dragging {
+            opacity: 0.5;
+            background-color: var(--md-sys-color-primary-container);
+        }
+
+        .tree-node-content.drag-over {
+            border-top: 3px solid var(--md-sys-color-primary);
+        }
+
+        .tree-indent {
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-1);
+            flex-shrink: 0;
+        }
+
+        .tree-line {
+            width: 16px;
+            height: 20px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .tree-line::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: var(--tree-line-color);
+        }
+
+        .tree-line::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            right: 0;
+            height: 1px;
+            background-color: var(--tree-line-color);
+        }
+
+        .tree-line.last::before {
+            bottom: 50%;
+        }
+
+        .tree-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: var(--md-sys-shape-corner-small);
+            color: var(--md-sys-color-on-surface-variant);
+            transition: all var(--md-sys-motion-duration-short);
+            z-index: 2;
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            flex-shrink: 0;
+        }
+
+        .tree-toggle:hover {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-primary);
+        }
+
+        .tree-toggle.expanded {
+            transform: rotate(90deg);
+        }
+
+        .tree-toggle.leaf {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .drag-handle {
+            color: var(--md-sys-color-outline);
+            cursor: grab;
+            user-select: none;
+            padding: var(--md-sys-spacing-1);
+            border-radius: var(--md-sys-shape-corner-small);
+            transition: all var(--md-sys-motion-duration-short);
+            flex-shrink: 0;
+        }
+
+        .drag-handle:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .tree-icon {
+            color: var(--md-sys-color-primary);
+            font-variation-settings: 'FILL' 1;
+            flex-shrink: 0;
+        }
+
+        .tree-icon.object {
+            color: var(--md-sys-color-tertiary);
+        }
+
+        .tree-icon.array {
+            color: var(--md-sys-color-secondary);
+        }
+
+        .tree-inputs {
+            flex: 1;
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+            align-items: center;
+            min-width: 0;
+        }
+
+        .tree-key-input {
+            flex: 1;
+            min-width: 100px;
+            max-width: 200px;
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-small);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font: var(--md-sys-typescale-body-medium);
+            outline: none;
+            transition: all var(--md-sys-motion-duration-short);
+        }
+
+        .tree-key-input:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+        }
+
+        .tree-value-input {
+            flex: 2;
+            min-width: 150px;
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-small);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font: var(--md-sys-typescale-body-medium);
+            outline: none;
+            transition: all var(--md-sys-motion-duration-short);
+        }
+
+        .tree-value-input:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+        }
+
+        .tree-value-input:disabled,
+        .tree-value-input.object-mode {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            font-style: italic;
+            cursor: not-allowed;
+        }
+
+        .tree-type-select {
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-small);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font: var(--md-sys-typescale-body-medium);
+            cursor: pointer;
+            outline: none;
+            min-width: 90px;
+            flex-shrink: 0;
+        }
+
+        .tree-type-select:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+        }
+
+        .tree-actions {
+            display: flex;
+            gap: var(--md-sys-spacing-1);
+            flex-shrink: 0;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+            border-radius: var(--md-sys-shape-corner-full);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--md-sys-motion-duration-short);
+            font-variation-settings: 'FILL' 0, 'wght' 400;
+            flex-shrink: 0;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .icon-btn.delete:hover {
+            background-color: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-error);
+        }
+
+        .icon-btn.add-child:hover {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-primary);
+        }
+
+        .icon-btn.copy:hover {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .tree-children {
+            position: relative;
+            background-color: var(--md-sys-color-surface-1);
+        }
+
+        .tree-children.collapsed {
+            display: none;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--md-sys-spacing-2);
+            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-5);
+            border: none;
+            border-radius: var(--md-sys-shape-corner-full);
+            font: var(--md-sys-typescale-label-large);
+            cursor: pointer;
+            transition: all var(--md-sys-motion-duration-short);
+            text-transform: none;
+            letter-spacing: 0.025em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-filled {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .btn-filled:hover {
+            background-color: color-mix(in srgb, var(--md-sys-color-primary) 90%, black);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-tonal {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .btn-tonal:hover {
+            background-color: color-mix(in srgb, var(--md-sys-color-secondary-container) 90%, black);
+        }
+
+        .btn-outlined {
+            background-color: transparent;
+            color: var(--md-sys-color-primary);
+            border: 1px solid var(--md-sys-color-outline);
+        }
+
+        .btn-outlined:hover {
+            background-color: var(--md-sys-color-primary-container);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .btn-text {
+            background-color: transparent;
+            color: var(--md-sys-color-primary);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+        }
+
+        .btn-text:hover {
+            background-color: var(--md-sys-color-primary-container);
+        }
+
+        .output-section {
+            position: sticky;
+            top: 100px;
+        }
+
+        .output-card {
+            background-color: var(--md-sys-color-surface-2);
+        }
+
+        .json-preview {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-sys-shape-corner-medium);
+            padding: var(--md-sys-spacing-4);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--md-sys-color-on-surface);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 600px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .json-key {
+            color: var(--md-sys-color-primary);
+        }
+
+        .json-string {
+            color: var(--md-sys-color-tertiary);
+        }
+
+        .json-number {
+            color: var(--md-sys-color-secondary);
+        }
+
+        .json-boolean {
+            color: var(--md-sys-color-error);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: var(--md-sys-spacing-3);
+            right: var(--md-sys-spacing-3);
+            background-color: var(--md-sys-color-surface-1);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .action-bar {
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+            margin-top: var(--md-sys-spacing-4);
+            flex-wrap: wrap;
+        }
+
+        .chip-group {
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+            flex-wrap: wrap;
+            margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            border-radius: var(--md-sys-shape-corner-small);
+            font: var(--md-sys-typescale-label-medium);
+            cursor: pointer;
+            transition: all var(--md-sys-motion-duration-short);
+            border: 1px solid transparent;
+        }
+
+        .chip:hover {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .chip.active {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .snackbar {
+            position: fixed;
+            bottom: var(--md-sys-spacing-6);
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--md-sys-color-inverse-surface, #2d322b);
+            color: var(--md-sys-color-inverse-on-surface, #f0f2eb);
+            padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
+            border-radius: var(--md-sys-shape-corner-small);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-4);
+            z-index: 1000;
+            opacity: 0;
+            transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-emphasized);
+        }
+
+        .snackbar.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--md-sys-motion-duration-medium);
+            backdrop-filter: blur(4px);
+        }
+
+        .dialog-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dialog {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--md-sys-shape-corner-extra-large);
+            padding: var(--md-sys-spacing-6);
+            min-width: 320px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform var(--md-sys-motion-duration-medium);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .dialog-overlay.active .dialog {
+            transform: scale(1);
+        }
+
+        .dialog-title {
+            font: var(--md-sys-typescale-headline-small, 400 1.5rem/2rem 'Roboto Flex');
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        .dialog-content {
+            font: var(--md-sys-typescale-body-medium);
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: var(--md-sys-spacing-6);
+        }
+
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--md-sys-spacing-2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--md-sys-spacing-12) var(--md-sys-spacing-6);
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: var(--md-sys-spacing-4);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                padding: var(--md-sys-spacing-4);
+            }
+
+            .app-bar {
+                margin: calc(-1 * var(--md-sys-spacing-4));
+                margin-bottom: var(--md-sys-spacing-4);
+                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+            }
+
+            .tree-inputs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .tree-key-input, .tree-value-input, .tree-type-select {
+                width: 100%;
+                max-width: none;
+            }
+
+            .action-bar {
+                justify-content: center;
+            }
+
+            .json-preview {
+                font-size: 0.75rem;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .tree-node {
+            animation: slideIn 0.2s ease-out;
+        }
+
+        .texture-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            background-color: var(--md-sys-color-error);
+            color: var(--md-sys-color-on-error);
+            border-radius: var(--md-sys-shape-corner-full);
+            font: var(--md-sys-typescale-label-small, 500 0.7rem/1 'Roboto Flex');
+            margin-left: var(--md-sys-spacing-2);
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+            font: var(--md-sys-typescale-label-medium);
+            color: var(--md-sys-color-primary);
+            margin-left: auto;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--md-sys-color-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Article Generator Styles */
+        .article-generator {
+            margin-top: var(--md-sys-spacing-6);
+        }
+
+        .article-section {
+            margin-bottom: var(--md-sys-spacing-6);
+        }
+
+        .article-section-title {
+            font: var(--md-sys-typescale-title-medium);
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: var(--md-sys-spacing-3);
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+        }
+
+        .form-group {
+            margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        .form-label {
+            display: block;
+            font: var(--md-sys-typescale-label-large);
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: var(--md-sys-spacing-2);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-small);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font: var(--md-sys-typescale-body-medium);
+            outline: none;
+            transition: all var(--md-sys-motion-duration-short);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: 'Roboto Flex', sans-serif;
+            line-height: 1.6;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--md-sys-spacing-2);
+        }
+
+        .radio-item {
+            position: relative;
+        }
+
+        .radio-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            border-radius: var(--md-sys-shape-corner-small);
+            font: var(--md-sys-typescale-label-large);
+            cursor: pointer;
+            transition: all var(--md-sys-motion-duration-short);
+            border: 2px solid transparent;
+        }
+
+        .radio-item input[type="radio"]:checked + .radio-label {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .radio-label:hover {
+            background-color: var(--md-sys-color-secondary-container);
+        }
+
+        .output-area {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-sys-shape-corner-medium);
+            padding: var(--md-sys-spacing-4);
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            font: var(--md-sys-typescale-body-medium);
+            line-height: 1.8;
+            color: var(--md-sys-color-on-surface);
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .output-area:empty::before {
+            content: 'Hasil prompt akan muncul di sini...';
+            color: var(--md-sys-color-outline);
+            font-style: italic;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+            color: var(--md-sys-color-on-primary);
+            font-size: 1rem;
+            padding: var(--md-sys-spacing-4) var(--md-sys-spacing-8);
+            box-shadow: 0 4px 12px rgba(56, 106, 32, 0.3);
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 106, 32, 0.4);
+        }
+
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: var(--md-sys-spacing-3);
+            right: var(--md-sys-spacing-3);
+            background-color: var(--md-sys-color-surface-1);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--md-sys-spacing-4);
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hint-text {
+            font: var(--md-sys-typescale-label-medium);
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: var(--md-sys-spacing-1);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--md-sys-color-outline-variant);
+            margin: var(--md-sys-spacing-6) 0;
+        }
+
+        .article-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--md-sys-spacing-6);
+        }
+
+        .tool-nav {
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+            margin-bottom: var(--md-sys-spacing-4);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            padding-bottom: var(--md-sys-spacing-4);
+        }
+
+        .tool-nav-btn {
+            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-5);
+            background: transparent;
+            border: none;
+            color: var(--md-sys-color-on-surface-variant);
+            font: var(--md-sys-typescale-label-large);
+            cursor: pointer;
+            border-radius: var(--md-sys-shape-corner-small);
+            transition: all var(--md-sys-motion-duration-short);
+            position: relative;
+        }
+
+        .tool-nav-btn:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .tool-nav-btn.active {
+            color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-primary-container);
+        }
+
+        .tool-nav-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -17px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--md-sys-color-primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tool-content {
+            display: none;
+        }
+
+        .tool-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .char-counter {
+            text-align: right;
+            font: var(--md-sys-typescale-label-medium);
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: var(--md-sys-spacing-1);
+        }
+
+        .char-counter.warning {
+            color: var(--md-sys-color-error);
+        }
+
+        /* Example Box Styles */
+        .example-box {
+            background-color: var(--md-sys-color-secondary-container);
+            border-left: 4px solid var(--md-sys-color-secondary);
+            padding: var(--md-sys-spacing-4);
+            margin-top: var(--md-sys-spacing-3);
+            border-radius: 0 var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0;
+            font: var(--md-sys-typescale-body-medium);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .example-box-title {
+            font: var(--md-sys-typescale-label-large);
+            font-weight: 600;
+            margin-bottom: var(--md-sys-spacing-2);
+            display: flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+        }
+
+        .example-item {
+            margin-bottom: var(--md-sys-spacing-2);
+            padding-left: var(--md-sys-spacing-3);
+            border-left: 2px solid var(--md-sys-color-outline-variant);
+        }
+
+        .example-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .example-label {
+            font-weight: 600;
+            color: var(--md-sys-color-secondary);
+        }
+
+        .load-example-btn {
+            margin-top: var(--md-sys-spacing-3);
+            font-size: 0.875rem;
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+        }
+    </style>
+</head>
+<body>
+    <div class="nature-bg">
+        <div class="leaf-ornament leaf-1"></div>
+        <div class="leaf-ornament leaf-2"></div>
+        <div class="leaf-ornament leaf-3"></div>
+        <div class="circle-ornament circle-1"></div>
+        <div class="circle-ornament circle-2"></div>
+    </div>
+    <div class="texture-overlay"></div>
+
+    <div class="app-container">
+        <header class="app-bar">
+            <div class="app-bar-left">
+                <div class="logo">
+                    <span class="material-symbols-rounded">account_tree</span>
+                </div>
+                <h1 class="app-title">Nature JSON Tree Builder</h1>
+            </div>
+            <div class="app-bar-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    <span class="material-symbols-rounded">dark_mode</span>
+                </button>
+                <button class="icon-btn" onclick="showHelp()" title="Help">
+                    <span class="material-symbols-rounded">help</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="tool-nav">
+            <button class="tool-nav-btn active" onclick="switchTool('json')">
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px;">account_tree</span>
+                JSON Builder
+            </button>
+            <button class="tool-nav-btn" onclick="switchTool('article')">
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px;">article</span>
+                Article Generator
+            </button>
+        </div>
+
+        <!-- JSON Builder Tool -->
+        <div id="json-tool" class="tool-content active">
+            <div class="main-layout">
+                <div class="builder-section">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">tune</span>
+                            Tree Structure Editor
+                        </div>
+                        <div class="card-subtitle">Edit struktur JSON hierarkis - Live Preview otomatis</div>
+                        
+                        <div class="chip-group">
+                            <span class="chip active" onclick="loadTemplate('empty')">Empty</span>
+                            <span class="chip" onclick="loadTemplate('image_to_text')">Image to Text (Lite)</span>
+                            <span class="chip" onclick="loadTemplate('image_prompt')">Image Prompt (Pro)</span>
+                        </div>
+
+                        <div class="tree-container" id="treeContainer">
+                        </div>
+
+                        <div class="action-bar" style="margin-top: var(--md-sys-spacing-4);">
+                            <button class="btn btn-filled" onclick="addRootNode()">
+                                <span class="material-symbols-rounded">add</span>
+                                Tambah Root Field
+                            </button>
+                            <button class="btn btn-outlined" onclick="expandAll()">
+                                <span class="material-symbols-rounded">unfold_more</span>
+                                Expand All
+                            </button>
+                            <button class="btn btn-outlined" onclick="collapseAll()">
+                                <span class="material-symbols-rounded">unfold_less</span>
+                                Collapse All
+                            </button>
+                            <button class="btn btn-text" onclick="clearAll()">
+                                <span class="material-symbols-rounded">delete_sweep</span>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">tips_and_updates</span>
+                            Perbedaan Template
+                        </div>
+                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8;">
+                            <li><strong>Image to Text (Lite):</strong> Struktur sederhana dengan override dan output basic</li>
+                            <li><strong>Image Prompt (Pro):</strong> Struktur lengkap 8 kategori untuk AI image generation</li>
+                            <li><strong>Main Subject:</strong> Deskripsi karakter (Gender, Age, Ethnicity, Body Type, Skin Color)</li>
+                            <li><strong>Facial Features:</strong> Detail wajah dan rambut</li>
+                            <li><strong>Clothing:</strong> Pakaian lengkap dengan aksesoris</li>
+                            <li><strong>Pose:</strong> Gaya pose dan arah pandangan</li>
+                            <li><strong>Environment:</strong> Setting dan background</li>
+                            <li><strong>Visual Technique:</strong> Gaya seni dan pencahayaan</li>
+                            <li><strong>Quality:</strong> Resolusi dan parameter teknis</li>
+                            <li><strong>Negative Prompt:</strong> Elemen yang dihindari</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="card output-card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">code</span>
+                            Live Preview JSON
+                            <span class="badge" id="nodeCount">0</span>
+                            <div class="live-indicator">
+                                <div class="live-dot"></div>
+                                LIVE
+                            </div>
+                        </div>
+                        
+                        <div class="json-preview" id="jsonPreview">
+                            <button class="icon-btn copy-btn" onclick="copyOutput()" title="Copy to Clipboard">
+                                <span class="material-symbols-rounded">content_copy</span>
+                            </button>
+                            <code id="jsonCode"></code>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn btn-filled" onclick="copyOutput()">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Salin JSON
+                            </button>
+                            <button class="btn btn-tonal" onclick="downloadJSON()">
+                                <span class="material-symbols-rounded">download</span>
+                                Unduh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: var(--md-sys-spacing-4);">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">fact_check</span>
+                            Status
+                        </div>
+                        <div id="validationStatus" style="color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-body-medium);">
+                            <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-primary);">check_circle</span>
+                            Struktur valid
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article Generator Tool -->
+        <div id="article-tool" class="tool-content">
+            <div class="main-layout">
+                <div class="builder-section">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">edit_note</span>
+                            Konfigurasi Prompt Artikel
+                        </div>
+                        <div class="card-subtitle">Pilih topik dan lihat contoh konfigurasi untuk setiap kategori</div>
+                        
+                        <div class="article-section">
+                            <div class="form-group">
+                                <label class="form-label">Topik Utama</label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="topic-general" name="topic" value="general" checked onchange="updateTopicExample()">
+                                        <label for="topic-general" class="radio-label">
+                                            <span class="material-symbols-rounded" style="font-size: 18px;">article</span>
+                                            Umum
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="topic-blog" name="topic" value="blog" onchange="updateTopicExample()">
+                                        <label for="topic-blog" class="radio-label">
+                                            <span class="material-symbols-rounded" style="font-size: 18px;">rss_feed</span>
+                                            Blog Post
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="topic-coding" name="topic" value="coding" onchange="updateTopicExample()">
+                                        <label for="topic-coding" class="radio-label">
+                                            <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
+                                            Coding
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="topic-story" name="topic" value="storytelling" onchange="updateTopicExample()">
+                                        <label for="topic-story" class="radio-label">
+                                            <span class="material-symbols-rounded" style="font-size: 18px;">auto_stories</span>
+                                            Storytelling
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="topic-email" name="topic" value="email" onchange="updateTopicExample()">
+                                        <label for="topic-email" class="radio-label">
+                                            <span class="material-symbols-rounded" style="font-size: 18px;">email</span>
+                                            Email Marketing
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dynamic Example Box -->
+                            <div id="topic-example" class="example-box">
+                                <div class="example-box-title">
+                                    <span class="material-symbols-rounded">lightbulb</span>
+                                    Contoh Konfigurasi: Umum
+                                </div>
+                                <div id="example-content">
+                                    <!-- Content will be populated by JavaScript -->
+                                </div>
+                                <button class="btn btn-filled load-example-btn" onclick="loadExample()">
+                                    <span class="material-symbols-rounded">upload</span>
+                                    Gunakan Contoh Ini
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="article-section">
+                            <div class="two-column">
+                                <div class="form-group">
+                                    <label class="form-label" for="ai-role">Peran AI</label>
+                                    <input type="text" class="form-input" id="ai-role" placeholder="Contoh: Jurnalis senior...">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="language-style">Gaya Bahasa</label>
+                                    <select class="form-select" id="language-style">
+                                        <option value="formal">Formal</option>
+                                        <option value="casual">Casual/Santai</option>
+                                        <option value="professional">Profesional</option>
+                                        <option value="creative">Kreatif/Imajinatif</option>
+                                        <option value="academic">Akademis</option>
+                                        <option value="persuasive">Persuasif</option>
+                                        <option value="humorous">Humoris</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="two-column">
+                                <div class="form-group">
+                                    <label class="form-label" for="target-audience">Target Audiens</label>
+                                    <input type="text" class="form-input" id="target-audience" placeholder="Contoh: Pemula, Profesional...">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="word-limit">Batas Kata</label>
+                                    <input type="number" class="form-input" id="word-limit" placeholder="Contoh: 500, 1000...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="main-task">Tugas/Instruksi Utama</label>
+                                <textarea class="form-textarea" id="main-task" placeholder="Jelaskan tugas yang ingin dilakukan AI..." oninput="updateCharCounter()"></textarea>
+                                <div class="char-counter" id="task-counter">0 karakter</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="technical-specs">Spesifikasi Teknis/Konteks Tambahan (opsional)</label>
+                                <textarea class="form-textarea" id="technical-specs" placeholder="Instruksi teknis tambahan..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="action-bar" style="justify-content: center; margin-top: var(--md-sys-spacing-6);">
+                            <button class="btn btn-generate" onclick="generateArticlePrompt()">
+                                <span class="material-symbols-rounded">auto_fix_high</span>
+                                Generate JSON Prompt
+                            </button>
+                            <button class="btn btn-outlined" onclick="resetArticleForm()">
+                                <span class="material-symbols-rounded">refresh</span>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="card output-card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">code</span>
+                            JSON Output
+                            <div class="live-indicator">
+                                <div class="live-dot"></div>
+                                LIVE
+                            </div>
+                        </div>
+                        
+                        <div class="json-preview" id="article-json-preview">
+                            <button class="icon-btn copy-btn" onclick="copyArticleOutput()" title="Copy to Clipboard">
+                                <span class="material-symbols-rounded">content_copy</span>
+                            </button>
+                            <code id="article-json-code">{}</code>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn btn-filled" onclick="copyArticleOutput()">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Salin JSON
+                            </button>
+                            <button class="btn btn-tonal" onclick="downloadArticleJSON()">
+                                <span class="material-symbols-rounded">download</span>
+                                Unduh JSON
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: var(--md-sys-spacing-4);">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">info</span>
+                            Petunjuk Penggunaan
+                        </div>
+                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8; font: var(--md-sys-typescale-body-medium);">
+                            <li>Pilih topik untuk melihat contoh konfigurasi yang sesuai</li>
+                            <li>Klik "Gunakan Contoh Ini" untuk mengisi form otomatis</li>
+                            <li>Output berupa JSON yang bisa diparse oleh aplikasi lain</li>
+                            <li>Field "generated_prompt" berisi teks prompt siap pakai</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="snackbar" id="snackbar">
+        <span class="material-symbols-rounded">check_circle</span>
+        <span id="snackbarText">Tindakan berhasil!</span>
+    </div>
+
+    <div class="dialog-overlay" id="dialog" onclick="closeDialog(event)">
+        <div class="dialog" onclick="event.stopPropagation()">
+            <h2 class="dialog-title" id="dialogTitle">Title</h2>
+            <div class="dialog-content" id="dialogContent">Content</div>
+            <div class="dialog-actions">
+                <button class="btn btn-text" onclick="closeDialog()">Tutup</button>
+                <button class="btn btn-filled" id="dialogConfirm" onclick="confirmDialog()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let treeData = [];
+        let draggedNode = null;
+        let draggedPath = null;
+
+        // Article Generator Examples
+        const articleExamples = {
+            general: {
+                role: "Jurnalis senior dengan pengalaman 10 tahun di media nasional",
+                style: "formal",
+                audience: "Masyarakat umum, pembaca berusia 25-50 tahun",
+                wordLimit: "800",
+                task: "Tulis artikel berita tentang peluncuran teknologi renewable energy terbaru di Indonesia. Sertakan dampak ekonomi dan lingkungan, serta wawancara singkat dengan ahli energi.",
+                specs: "Gunakan fakta terkini dari tahun 2024, sertakan data statistik, hindari opini pribadi, gunakan struktur piramida terbalik."
+            },
+            blog: {
+                role: "Content writer profesional spesialis lifestyle dan wellness",
+                style: "casual",
+                audience: "Millennial dan Gen Z, pengguna aktif media sosial",
+                wordLimit: "1200",
+                task: "Buat blog post tentang '5 Morning Routine yang Bikin Hari Lebih Produktif'. Sertakan tips praktis, personal anecdote, dan rekomendasi tools/apps yang berguna.",
+                specs: "Gunakan tone friendly dan conversational, tambahkan emoji strategis, sertakan CTA di akhir, optimize untuk SEO dengan keyword 'morning routine' dan 'produktivitas'."
+            },
+            coding: {
+                role: "Senior Software Engineer dan technical writer",
+                style: "professional",
+                audience: "Developer pemula hingga menengah, programmer self-taught",
+                wordLimit: "1500",
+                task: "Buat tutorial lengkap tentang 'Membangun REST API dengan Node.js dan Express'. Jelaskan dari setup environment, routing, middleware, error handling, hingga deployment.",
+                specs: "Sertakan code snippet yang syntax-highlighted, penjelasan step-by-step, best practices, common pitfalls, dan contoh repository GitHub. Gunakan bahasa Indonesia dengan terminologi teknis dalam bahasa Inggris."
+            },
+            storytelling: {
+                role: "Penulis fiksi kreatif yang telah menerbitkan 3 novel thriller",
+                style: "creative",
+                audience: "Pecinta genre thriller psikologis, pembaca aktif Wattpad dan novel online",
+                wordLimit: "2000",
+                task: "Tulis cerita pendek thriller dengan setting di stasiun kereta api tua yang angker pada tengah malam. Karakter utama adalah seorang arsitek yang terjebak di sana karena kecelakaan tak terduga. Akhiri dengan plot twist yang tak terduga.",
+                specs: "Gunakan teknik show don't tell, bangun atmosfer tension secara gradual, deskripsikan setting dengan detail sensorial, dialog harus natural dan mengungkapkan karakter."
+            },
+            email: {
+                role: "Email marketing specialist dengan conversion rate tinggi",
+                style: "persuasive",
+                audience: "Customer existing dan potential leads, usia 25-45 tahun",
+                wordLimit: "300",
+                task: "Buat email marketing untuk launching produk skincare baru 'Glow Serum'. Fokus pada benefit anti-aging dan natural ingredients. Tujuan utama adalah mendrive traffic ke landing page dan meningkatkan pre-order.",
+                specs: "Gunakan subject line yang catchy (max 50 karakter), personalisasi dengan nama recipient, struktur: hook -> problem -> solution -> CTA, tambahkan urgency (limited time offer), A/B test ready."
+            }
+        };
+
+        // TEMPLATE Lite - Image to Text (struktur sederhana)
+        const templates = {
+            empty: [],
+            
+            image_to_text: [
+                {
+                    id: 'root_1',
+                    key: 'action',
+                    value: 'image_to_text',
+                    type: 'string',
+                    expanded: true,
+                    children: []
+                },
+                {
+                    id: 'root_2',
+                    key: 'taks',
+                    value: 'membuat prompt lengkap berdasarkan referensi gambar dengan lengkap',
+                    type: 'string',
+                    expanded: true,
+                    children: []
+                },
+                {
+                    id: 'root_3',
+                    key: 'action_input',
+                    value: '',
+                    type: 'object',
+                    expanded: true,
+                    children: [
+                        {
+                            id: 'child_1_1',
+                            key: 'override',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_1_1_1', key: 'Rasio', value: '9:16', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_1_2', key: 'Art Style', value: 'Photo Realistic', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_1_3', key: 'Photo Shot', value: 'Full Body', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_1_2',
+                            key: 'Output',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_1_2_1', key: 'Teks', value: 'maks 80 kata', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_2_2', key: 'bahasa', value: 'inggris', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_2_3', key: 'NB', value: 'hindari prompt ambigu', type: 'string', expanded: true, children: [] }
+                            ]
+                        }
+                    ]
+                }
+            ],
+
+            // TEMPLATE Pro - Image Prompt (struktur lengkap 8 kategori)
+            image_prompt: [
+                {
+                    id: 'root_1',
+                    key: 'action',
+                    value: 'image_to_text',
+                    type: 'string',
+                    expanded: true,
+                    children: []
+                },
+                {
+                    id: 'root_2',
+                    key: 'taks',
+                    value: 'membuat prompt lengkap berdasarkan referensi gambar dengan lengkap',
+                    type: 'string',
+                    expanded: true,
+                    children: []
+                },
+                {
+                    id: 'root_3',
+                    key: 'action_input',
+                    value: '',
+                    type: 'object',
+                    expanded: true,
+                    children: [
+                        {
+                            id: 'child_1',
+                            key: 'Main Subject',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_1_1', key: 'Description', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_2', key: 'Gender', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_3', key: 'Age', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_4', key: 'Ethnicity', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_5', key: 'Body Type', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_6', key: 'Skin Color', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_2',
+                            key: 'Facial Features',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_2_1', key: 'Face Shape', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_2', key: 'Eye Color', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_3', key: 'Hair Color', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_4', key: 'Hair Length', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_5', key: 'Hairstyle', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_6', key: 'Facial Expression', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_3',
+                            key: 'Clothing',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_3_1', key: 'Main Clothing Type', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_2', key: 'Top and bottom clothes', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_3', key: 'Clothing Details', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_4', key: 'Accessories', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_5', key: 'Footwear', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_4',
+                            key: 'Pose',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_4_1', key: 'Pose Style', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_4_2', key: 'Movement Details', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_4_3', key: 'Eye Gaze Direction', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_5',
+                            key: 'Environment',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_5_1', key: 'Location Setting', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_5_2', key: 'Background Description', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_5_3', key: 'Supporting Objects', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_6',
+                            key: 'Visual Technique',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_6_1', key: 'Art/Photo Style', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_2', key: 'Lighting', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_3', key: 'Visual Technique', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_4', key: 'Mood', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_7',
+                            key: 'Quality',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_7_1', key: 'Resolution', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_7_2', key: 'Seed', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_7_3', key: 'Aspect Ratio', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_8',
+                            key: 'Negative Prompt',
+                            value: '',
+                            type: 'string',
+                            expanded: true,
+                            children: []
+                        }
+                    ]
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTree();
+            updateOutput();
+            updateTopicExample();
+        });
+
+        function generateId() {
+            return 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function getNodeByPath(pathArray) {
+            let current = treeData;
+            let parent = null;
+            
+            for (let i = 0; i < pathArray.length; i++) {
+                parent = current;
+                current = current[pathArray[i]];
+                if (!current) return null;
+                if (i < pathArray.length - 1 && current.children) {
+                    current = current.children;
+                }
+            }
+            
+            return { node: current, parent: parent, isRoot: pathArray.length === 1 };
+        }
+
+        function renderTree() {
+            const container = document.getElementById('treeContainer');
+            
+            if (treeData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon material-symbols-rounded">account_tree</div>
+                        <p>Belum ada data. Klik "Tambah Root Field" untuk memulai.</p>
+                    </div>
+                `;
+                updateNodeCount();
+                return;
+            }
+
+            container.innerHTML = renderNodes(treeData, 0, []);
+            attachDragHandlers();
+            updateNodeCount();
+        }
+
+        function renderNodes(nodes, depth, parentPath) {
+            if (!nodes || nodes.length === 0) return '';
+
+            return nodes.map((node, index) => {
+                const hasChildren = node.children && node.children.length > 0;
+                const isExpandable = node.type === 'object' || node.type === 'array';
+                const currentPath = [...parentPath, index];
+                const pathString = currentPath.join('-');
+                
+                let indentHtml = '';
+                for (let i = 0; i < depth; i++) {
+                    const isLast = i === depth - 1;
+                    indentHtml += `<div class="tree-line ${isLast ? 'last' : ''}"></div>`;
+                }
+
+                const icon = node.type === 'object' ? 'data_object' : 
+                           node.type === 'array' ? 'data_array' : 'text_fields';
+                
+                const iconClass = node.type === 'object' ? 'tree-icon object' : 
+                                node.type === 'array' ? 'tree-icon array' : 'tree-icon';
+
+                const showToggle = isExpandable;
+                const toggleClass = node.expanded ? 'expanded' : '';
+                const childrenClass = node.expanded ? '' : 'collapsed';
+
+                return `
+                    <div class="tree-node" data-path="${pathString}" data-id="${node.id}">
+                        <div class="tree-node-content" draggable="true" data-path="${pathString}">
+                            <div class="tree-indent">
+                                ${indentHtml}
+                                ${showToggle ? `
+                                    <div class="tree-toggle ${toggleClass} ${hasChildren ? '' : 'leaf'}" onclick="toggleNode('${pathString}')">
+                                        <span class="material-symbols-rounded" style="font-size: 16px;">chevron_right</span>
+                                    </div>
+                                ` : '<div class="tree-toggle leaf"></div>'}
+                            </div>
+                            
+                            <div class="drag-handle" title="Drag untuk mengurutkan">
+                                <span class="material-symbols-rounded" style="font-size: 18px;">drag_indicator</span>
+                            </div>
+
+                            <span class="material-symbols-rounded ${iconClass}">${icon}</span>
+
+                            <div class="tree-inputs">
+                                <input type="text" class="tree-key-input" placeholder="Key" value="${escapeHtml(node.key)}" 
+                                    oninput="updateNode('${pathString}', 'key', this.value)"
+                                    onkeydown="handleInputKey(event, '${pathString}', 'key')">
+                                
+                                <input type="text" class="tree-value-input ${isExpandable ? 'object-mode' : ''}" 
+                                    placeholder="Value" value="${escapeHtml(node.value)}" 
+                                    oninput="updateNode('${pathString}', 'value', this.value)"
+                                    onkeydown="handleInputKey(event, '${pathString}', 'value')"
+                                    ${isExpandable ? 'disabled title="Object/Array memiliki children"' : ''}>
+                                
+                                <select class="tree-type-select" onchange="updateNode('${pathString}', 'type', this.value)">
+                                    <option value="string" ${node.type === 'string' ? 'selected' : ''}>String</option>
+                                    <option value="number" ${node.type === 'number' ? 'selected' : ''}>Number</option>
+                                    <option value="boolean" ${node.type === 'boolean' ? 'selected' : ''}>Boolean</option>
+                                    <option value="object" ${node.type === 'object' ? 'selected' : ''}>Object</option>
+                                    <option value="array" ${node.type === 'array' ? 'selected' : ''}>Array</option>
+                                    <option value="null" ${node.type === 'null' ? 'selected' : ''}>Null</option>
+                                </select>
+                            </div>
+
+                            <div class="tree-actions">
+                                ${isExpandable ? `
+                                    <button class="icon-btn add-child" onclick="addChildNode('${pathString}')" title="Tambah child">
+                                        <span class="material-symbols-rounded">add</span>
+                                    </button>
+                                ` : ''}
+                                <button class="icon-btn copy" onclick="duplicateNode('${pathString}')" title="Duplikat">
+                                    <span class="material-symbols-rounded">content_copy</span>
+                                </button>
+                                <button class="icon-btn delete" onclick="deleteNode('${pathString}')" title="Hapus">
+                                    <span class="material-symbols-rounded">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        ${hasChildren ? `
+                            <div class="tree-children ${childrenClass}">
+                                ${renderNodes(node.children, depth + 1, currentPath)}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function handleInputKey(event, path, field) {
+            if (event.key === 'Enter') {
+                event.target.blur();
+            }
+        }
+
+        function attachDragHandlers() {
+            const items = document.querySelectorAll('.tree-node-content');
+            items.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDrop);
+                item.addEventListener('dragenter', handleDragEnter);
+                item.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedNode = this;
+            draggedPath = this.dataset.path;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedPath);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.tree-node-content').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+            draggedNode = null;
+            draggedPath = null;
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            if (this !== draggedNode) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (draggedNode !== this) {
+                const sourcePath = draggedPath.split('-').map(Number);
+                const targetPath = this.dataset.path.split('-').map(Number);
+                
+                const sourceResult = getNodeByPath(sourcePath);
+                if (!sourceResult) return;
+                
+                const sourceNode = sourceResult.node;
+                
+                if (sourceResult.isRoot) {
+                    treeData.splice(sourcePath[0], 1);
+                } else {
+                    const parentPath = sourcePath.slice(0, -1);
+                    const parentResult = getNodeByPath(parentPath);
+                    if (parentResult && parentResult.node.children) {
+                        parentResult.node.children.splice(sourcePath[sourcePath.length - 1], 1);
+                    }
+                }
+                
+                if (targetPath.length === 1) {
+                    treeData.splice(targetPath[0], 0, sourceNode);
+                } else {
+                    const targetParentPath = targetPath.slice(0, -1);
+                    const targetParentResult = getNodeByPath(targetParentPath);
+                    if (targetParentResult && targetParentResult.node.children) {
+                        targetParentResult.node.children.splice(targetPath[targetPath.length - 1], 0, sourceNode);
+                    }
+                }
+                
+                renderTree();
+                updateOutput();
+                showSnackbar('Node dipindahkan');
+            }
+            
+            return false;
+        }
+
+        function toggleNode(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getNodeByPath(path);
+            if (result && result.node) {
+                result.node.expanded = !result.node.expanded;
+                renderTree();
+            }
+        }
+
+        function updateNode(pathString, property, value) {
+            const path = pathString.split('-').map(Number);
+            const result = getNodeByPath(path);
+            
+            if (!result || !result.node) {
+                console.error('Node not found at path:', path);
+                return;
+            }
+            
+            const node = result.node;
+            
+            if (property === 'type') {
+                const oldType = node.type;
+                node.type = value;
+                
+                if ((value === 'object' || value === 'array') && !node.children) {
+                    node.children = [];
+                    node.expanded = true;
+                }
+                
+                if ((oldType === 'object' || oldType === 'array') && 
+                    (value !== 'object' && value !== 'array')) {
+                    node.children = [];
+                    node.value = '';
+                }
+                
+                renderTree();
+            } else {
+                node[property] = value;
+            }
+            
+            updateOutput();
+        }
+
+        function addRootNode() {
+            const newNode = {
+                id: generateId(),
+                key: '',
+                value: '',
+                type: 'string',
+                expanded: true,
+                children: []
+            };
+            treeData.push(newNode);
+            renderTree();
+            updateOutput();
+            
+            setTimeout(() => {
+                const inputs = document.querySelectorAll('.tree-key-input');
+                if (inputs.length > 0) {
+                    inputs[inputs.length - 1].focus();
+                }
+            }, 100);
+        }
+
+        function addChildNode(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getNodeByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            const node = result.node;
+            
+            if (!node.children) {
+                node.children = [];
+            }
+            
+            const newChild = {
+                id: generateId(),
+                key: '',
+                value: '',
+                type: 'string',
+                expanded: true,
+                children: []
+            };
+            
+            node.children.push(newChild);
+            node.expanded = true;
+            renderTree();
+            updateOutput();
+        }
+
+        function duplicateNode(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getNodeByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            const node = result.node;
+            const clonedNode = JSON.parse(JSON.stringify(node));
+            
+            function updateIds(n) {
+                n.id = generateId();
+                if (n.children) {
+                    n.children.forEach(updateIds);
+                }
+            }
+            updateIds(clonedNode);
+            
+            if (result.isRoot) {
+                treeData.splice(path[0] + 1, 0, clonedNode);
+            } else {
+                const parentPath = path.slice(0, -1);
+                const parentResult = getNodeByPath(parentPath);
+                if (parentResult && parentResult.node.children) {
+                    parentResult.node.children.splice(path[path.length - 1] + 1, 0, clonedNode);
+                }
+            }
+            
+            renderTree();
+            updateOutput();
+        }
+
+        function deleteNode(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getNodeByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            showDialog(
+                'Hapus Node?',
+                'Anda yakin ingin menghapus node ini dan semua children-nya?',
+                () => {
+                    if (result.isRoot) {
+                        treeData.splice(path[0], 1);
+                    } else {
+                        const parentPath = path.slice(0, -1);
+                        const parentResult = getNodeByPath(parentPath);
+                        if (parentResult && parentResult.node.children) {
+                            parentResult.node.children.splice(path[path.length - 1], 1);
+                        }
+                    }
+                    renderTree();
+                    updateOutput();
+                }
+            );
+        }
+
+        function expandAll() {
+            function expand(node) {
+                node.expanded = true;
+                if (node.children) {
+                    node.children.forEach(expand);
+                }
+            }
+            treeData.forEach(expand);
+            renderTree();
+        }
+
+        function collapseAll() {
+            function collapse(node) {
+                node.expanded = false;
+                if (node.children) {
+                    node.children.forEach(collapse);
+                }
+            }
+            treeData.forEach(collapse);
+            renderTree();
+        }
+
+        function clearAll() {
+            if (treeData.length === 0) return;
+            
+            showDialog(
+                'Hapus Semua?',
+                `Anda yakin ingin menghapus ${countAllNodes(treeData)} node?`,
+                () => {
+                    treeData = [];
+                    renderTree();
+                    updateOutput();
+                }
+            );
+        }
+
+        function countAllNodes(nodes) {
+            let count = nodes.length;
+            nodes.forEach(node => {
+                if (node.children) {
+                    count += countAllNodes(node.children);
+                }
+            });
+            return count;
+        }
+
+        function loadTemplate(templateName) {
+            if (treeData.length > 0) {
+                showDialog(
+                    'Load Template',
+                    'Data yang ada akan digantikan. Lanjutkan?',
+                    () => {
+                        applyTemplate(templateName);
+                    }
+                );
+            } else {
+                applyTemplate(templateName);
+            }
+        }
+
+        function applyTemplate(templateName) {
+            treeData = JSON.parse(JSON.stringify(templates[templateName]));
+            
+            function updateIds(node) {
+                node.id = generateId();
+                if (node.children) {
+                    node.children.forEach(updateIds);
+                }
+            }
+            treeData.forEach(updateIds);
+            
+            document.querySelectorAll('.chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderTree();
+            updateOutput();
+            
+            // Show notification about loaded template
+            const templateNames = {
+                'empty': 'Empty',
+                'image_to_text': 'Image to Text (Lite)',
+                'image_prompt': 'Image Prompt (Pro)'
+            };
+            showSnackbar(`Template "${templateNames[templateName]}" dimuat`);
+        }
+
+        function generateJSON() {
+            function convertNode(node) {
+                let value;
+                
+                switch(node.type) {
+                    case 'number':
+                        value = parseFloat(node.value) || 0;
+                        break;
+                    case 'boolean':
+                        value = node.value.toLowerCase() === 'true' || node.value === true || node.value === '1';
+                        break;
+                    case 'null':
+                        value = null;
+                        break;
+                    case 'object':
+                        value = {};
+                        if (node.children) {
+                            node.children.forEach(child => {
+                                value[child.key] = convertNode(child);
+                            });
+                        }
+                        break;
+                    case 'array':
+                        value = [];
+                        if (node.children) {
+                            node.children.forEach(child => {
+                                value.push(convertNode(child));
+                            });
+                        }
+                        break;
+                    default:
+                        value = node.value;
+                }
+                
+                return value;
+            }
+
+            const result = {};
+            treeData.forEach(node => {
+                result[node.key] = convertNode(node);
+            });
+            
+            return result;
+        }
+
+        function updateOutput() {
+            const json = generateJSON();
+            const jsonString = JSON.stringify(json, null, 2);
+            
+            const highlighted = jsonString
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, (match) => {
+                    let cls = 'json-string';
+                    if (/:\s*$/.test(match)) {
+                        cls = 'json-key';
+                        return `<span class="${cls}">${match}</span>`;
+                    }
+                    return `<span class="${cls}">${match}</span>`;
+                })
+                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
+            
+            document.getElementById('jsonCode').innerHTML = highlighted;
+            validateJSON();
+        }
+
+        function validateJSON() {
+            try {
+                const json = generateJSON();
+                JSON.stringify(json);
+                document.getElementById('validationStatus').innerHTML = `
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-primary);">check_circle</span>
+                    Struktur valid
+                `;
+                return true;
+            } catch(e) {
+                document.getElementById('validationStatus').innerHTML = `
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-error);">error</span>
+                    Error: ${e.message}
+                `;
+                return false;
+            }
+        }
+
+        function copyOutput() {
+            const json = JSON.stringify(generateJSON(), null, 2);
+            navigator.clipboard.writeText(json).then(() => {
+                showSnackbar('JSON disalin!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = json;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('JSON disalin!');
+            });
+        }
+
+        function downloadJSON() {
+            const json = JSON.stringify(generateJSON(), null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showSnackbar('File diunduh');
+        }
+
+        function updateNodeCount() {
+            document.getElementById('nodeCount').textContent = countAllNodes(treeData);
+        }
+
+        function showSnackbar(message) {
+            const snackbar = document.getElementById('snackbar');
+            document.getElementById('snackbarText').textContent = message;
+            snackbar.classList.add('show');
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+            }, 3000);
+        }
+
+        function showDialog(title, content, onConfirm, confirmText = 'OK') {
+            document.getElementById('dialogTitle').textContent = title;
+            document.getElementById('dialogContent').innerHTML = content;
+            document.getElementById('dialog').classList.add('active');
+            
+            const confirmBtn = document.getElementById('dialogConfirm');
+            if (onConfirm) {
+                confirmBtn.style.display = 'inline-flex';
+                confirmBtn.textContent = confirmText;
+                window.dialogCallback = onConfirm;
+            } else {
+                confirmBtn.style.display = 'none';
+            }
+        }
+
+        function closeDialog(e) {
+            if (!e || e.target.id === 'dialog') {
+                document.getElementById('dialog').classList.remove('active');
+            }
+        }
+
+        function confirmDialog() {
+            closeDialog();
+            if (window.dialogCallback) {
+                window.dialogCallback();
+                window.dialogCallback = null;
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            
+            const icon = document.querySelector('.app-bar-actions .icon-btn .material-symbols-rounded');
+            icon.textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
+            
+            showSnackbar(`Tema ${newTheme === 'dark' ? 'gelap' : 'terang'} aktif`);
+        }
+
+        function showHelp() {
+            showDialog(
+                'Bantuan',
+                `
+                <div style="line-height: 1.8;">
+                    <p><strong>Dua Tools Tersedia:</strong></p>
+                    <p><strong>1. JSON Builder:</strong> Buat dan edit struktur JSON hierarkis dengan drag-drop. Tersedia template Image to Text dan Image Prompt.</p>
+                    <p><strong>2. Article Generator:</strong> Buat prompt optimal untuk AI writer dengan konfigurasi lengkap (topik, peran AI, gaya bahasa, dll).</p>
+                    <br>
+                    <p><strong>Shortcut Keyboard:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Ctrl+Enter: Tambah root node (JSON Builder)</li>
+                        <li>Ctrl+S: Download JSON (JSON Builder)</li>
+                    </ul>
+                </div>
+                `,
+                null,
+                'Mengerti'
+            );
+        }
+
+        // Tool Switching
+        function switchTool(tool) {
+            document.querySelectorAll('.tool-nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tool-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tool + '-tool').classList.add('active');
+            
+            showSnackbar(`Beralih ke ${tool === 'json' ? 'JSON Builder' : 'Article Generator'}`);
+        }
+
+        // Article Generator Functions
+        const topicLabels = {
+            'general': 'Umum',
+            'blog': 'Blog Post',
+            'coding': 'Coding',
+            'storytelling': 'Storytelling',
+            'email': 'Email Marketing'
+        };
+
+        function updateTopicExample() {
+            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
+            const example = articleExamples[topic];
+            const container = document.getElementById('topic-example');
+            const contentDiv = document.getElementById('example-content');
+            
+            // Update title
+            container.querySelector('.example-box-title').innerHTML = `
+                <span class="material-symbols-rounded">lightbulb</span>
+                Contoh Konfigurasi: ${topicLabels[topic]}
+            `;
+            
+            // Update content
+            contentDiv.innerHTML = `
+                <div class="example-item">
+                    <span class="example-label">Peran AI:</span> ${example.role}
+                </div>
+                <div class="example-item">
+                    <span class="example-label">Gaya Bahasa:</span> ${example.style}
+                </div>
+                <div class="example-item">
+                    <span class="example-label">Target Audiens:</span> ${example.audience}
+                </div>
+                <div class="example-item">
+                    <span class="example-label">Batas Kata:</span> ${example.wordLimit}
+                </div>
+                <div class="example-item">
+                    <span class="example-label">Tugas:</span> ${example.task}
+                </div>
+                <div class="example-item">
+                    <span class="example-label">Spesifikasi:</span> ${example.specs}
+                </div>
+            `;
+        }
+
+        function loadExample() {
+            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
+            const example = articleExamples[topic];
+            
+            document.getElementById('ai-role').value = example.role;
+            document.getElementById('language-style').value = example.style;
+            document.getElementById('target-audience').value = example.audience;
+            document.getElementById('word-limit').value = example.wordLimit;
+            document.getElementById('main-task').value = example.task;
+            document.getElementById('technical-specs').value = example.specs;
+            
+            updateCharCounter();
+            showSnackbar(`Contoh ${topicLabels[topic]} dimuat!`);
+        }
+
+        function updateCharCounter() {
+            const textarea = document.getElementById('main-task');
+            const counter = document.getElementById('task-counter');
+            const length = textarea.value.length;
+            counter.textContent = `${length} karakter`;
+            
+            if (length > 1000) {
+                counter.classList.add('warning');
+            } else {
+                counter.classList.remove('warning');
+            }
+        }
+
+        function generateArticlePrompt() {
+            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
+            const role = document.getElementById('ai-role').value;
+            const style = document.getElementById('language-style').value;
+            const audience = document.getElementById('target-audience').value;
+            const wordLimit = document.getElementById('word-limit').value;
+            const task = document.getElementById('main-task').value;
+            const specs = document.getElementById('technical-specs').value;
+
+            if (!task.trim()) {
+                showSnackbar('Tugas/Instruksi utama wajib diisi!');
+                document.getElementById('main-task').focus();
+                return;
+            }
+
+            const styleLabels = {
+                'formal': 'formal dan profesional',
+                'casual': 'santai dan mudah dipahami',
+                'professional': 'profesional dengan data akurat',
+                'creative': 'kreatif dan imajinatif',
+                'academic': 'akademis dengan referensi',
+                'persuasive': 'persuasif dan konversi',
+                'humorous': 'humoris dan menghibur'
+            };
+
+            // Generate the text prompt
+            let generatedPrompt = `Anda adalah ${role || 'seorang penulis profesional'}. `;
+            generatedPrompt += `Buatlah konten ${topicLabels[topic]} dengan gaya bahasa ${styleLabels[style]}. `;
+            
+            if (audience) {
+                generatedPrompt += `Target audiens Anda adalah ${audience}. `;
+            }
+
+            generatedPrompt += `\n\nTUGAS UTAMA:\n${task}\n\n`;
+
+            if (wordLimit) {
+                generatedPrompt += `PANJANG TEKS: Maksimal ${wordLimit} kata.\n\n`;
+            }
+
+            generatedPrompt += `SPESIFIKASI TAMBAHAN:\n${specs || 'Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan.'}\n\n`;
+
+            generatedPrompt += `INSTRUKSI PENTING:
+- Hindari pengulangan informasi yang tidak perlu
+- Pastikan konten original dan berkualitas tinggi
+- Gunakan paragraf yang terstruktur dengan baik`;
+
+            // Create JSON output
+            const jsonOutput = {
+                metadata: {
+                    tool: "article_generator",
+                    version: "1.0",
+                    generated_at: new Date().toISOString()
+                },
+                configuration: {
+                    topic: topic,
+                    topic_label: topicLabels[topic],
+                    ai_role: role,
+                    language_style: style,
+                    language_style_label: styleLabels[style],
+                    target_audience: audience,
+                    word_limit: wordLimit ? parseInt(wordLimit) : null,
+                    main_task: task,
+                    technical_specs: specs
+                },
+                generated_prompt: generatedPrompt,
+                instructions: {
+                    note: "Copy generated_prompt dan gunakan di AI chatbot favorit Anda (ChatGPT, Claude, Gemini, dll)",
+                    usage: "Prompt ini dioptimalkan untuk menghasilkan output sesuai konfigurasi yang ditentukan"
+                }
+            };
+
+            // Display JSON
+            const jsonString = JSON.stringify(jsonOutput, null, 2);
+            const highlighted = jsonString
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, (match) => {
+                    let cls = 'json-string';
+                    if (/:\s*$/.test(match)) {
+                        cls = 'json-key';
+                        return `<span class="${cls}">${match}</span>`;
+                    }
+                    return `<span class="${cls}">${match}</span>`;
+                })
+                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
+
+            document.getElementById('article-json-code').innerHTML = highlighted;
+            showSnackbar('JSON Prompt berhasil dibuat!');
+        }
+
+        function copyArticleOutput() {
+            const codeElement = document.getElementById('article-json-code');
+            const text = codeElement.textContent;
+            
+            if (!text || text === '{}') {
+                showSnackbar('Belum ada hasil untuk disalin!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showSnackbar('JSON disalin ke clipboard!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('JSON disalin ke clipboard!');
+            });
+        }
+
+        function downloadArticleJSON() {
+            const codeElement = document.getElementById('article-json-code');
+            const text = codeElement.textContent;
+            
+            if (!text || text === '{}') {
+                showSnackbar('Belum ada hasil untuk diunduh!');
+                return;
+            }
+            
+            const blob = new Blob([text], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'article-prompt.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showSnackbar('File JSON diunduh!');
+        }
+
+        function resetArticleForm() {
+            document.querySelector('input[name="topic"][value="general"]').checked = true;
+            document.getElementById('ai-role').value = '';
+            document.getElementById('language-style').value = 'formal';
+            document.getElementById('target-audience').value = '';
+            document.getElementById('word-limit').value = '';
+            document.getElementById('main-task').value = '';
+            document.getElementById('technical-specs').value = '';
+            document.getElementById('article-json-code').textContent = '{}';
+            document.getElementById('task-counter').textContent = '0 karakter';
+            document.getElementById('task-counter').classList.remove('warning');
+            
+            updateTopicExample();
+            showSnackbar('Form direset!');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (document.getElementById('json-tool').classList.contains('active')) {
+                        addRootNode();
+                    }
+                } else if (e.key === 's') {
+                    e.preventDefault();
+                    if (document.getElementById('json-tool').classList.contains('active')) {
+                        downloadJSON();
+                    } else {
+                        downloadArticleJSON();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
