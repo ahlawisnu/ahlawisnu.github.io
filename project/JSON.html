@@ -2,47 +2,64 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nature JSON Tree Builder - Material Design 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     <style>
-        :root {
-            --md-sys-color-primary: #386a20;
-            --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #b7f397;
-            --md-sys-color-on-primary-container: #042100;
+       :root {
+            /* Hatsune Miku Color Palette - Light Theme */
+            /* Primary: Miku Teal/Cyan #39C5BB */
+            --md-sys-color-primary: #39C5BB;
+            --md-sys-color-on-primary: #003735;
+            --md-sys-color-primary-container: #A6F4EF;
+            --md-sys-color-on-primary-container: #00201E;
             
-            --md-sys-color-secondary: #55624c;
-            --md-sys-color-on-secondary: #ffffff;
-            --md-sys-color-secondary-container: #d9e7cb;
-            --md-sys-color-on-secondary-container: #131f0d;
+            /* Secondary: Soft Teal */
+            --md-sys-color-secondary: #4A6361;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #CCE8E5;
+            --md-sys-color-on-secondary-container: #051F1D;
             
-            --md-sys-color-tertiary: #19686d;
-            --md-sys-color-on-tertiary: #ffffff;
-            --md-sys-color-tertiary-container: #a4eff4;
-            --md-sys-color-on-tertiary-container: #002022;
+            /* Tertiary: Miku Hair Blue */
+            --md-sys-color-tertiary: #0066CC;
+            --md-sys-color-on-tertiary: #FFFFFF;
+            --md-sys-color-tertiary-container: #D1E4FF;
+            --md-sys-color-on-tertiary-container: #001D36;
             
-            --md-sys-color-surface: #fdfdf6;
-            --md-sys-color-on-surface: #1a1c18;
-            --md-sys-color-surface-variant: #dfe4d6;
-            --md-sys-color-on-surface-variant: #43483e;
+            /* Surface Colors - Cool Gray with Teal Tint */
+            --md-sys-color-surface: #FAFDFC;
+            --md-sys-color-on-surface: #161D1C;
+            --md-sys-color-surface-variant: #DAE5E3;
+            --md-sys-color-on-surface-variant: #3F4948;
             
-            --md-sys-color-outline: #73796e;
-            --md-sys-color-outline-variant: #c3c8bb;
+            /* Outline Colors */
+            --md-sys-color-outline: #6F7978;
+            --md-sys-color-outline-variant: #BEC9C7;
             
-            --md-sys-color-error: #ba1a1a;
-            --md-sys-color-error-container: #ffdad6;
+            /* Error Colors */
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error: #FFFFFF;
             
-            --md-sys-color-surface-tint: #386a20;
-            --md-sys-color-surface-1: #f4f9eb;
-            --md-sys-color-surface-2: #eef6e4;
-            --md-sys-color-surface-3: #e9f2dd;
-            --md-sys-color-surface-4: #e6f0d9;
-            --md-sys-color-surface-5: #e2eed3;
+            /* Surface Tints */
+            --md-sys-color-surface-tint: #39C5BB;
+            --md-sys-color-surface-1: #F0F9F8;
+            --md-sys-color-surface-2: #E8F6F5;
+            --md-sys-color-surface-3: #E0F3F2;
+            --md-sys-color-surface-4: #D8F0EF;
+            --md-sys-color-surface-5: #D0EDEC;
             
             --tree-line-color: var(--md-sys-color-outline-variant);
             --tree-hover: var(--md-sys-color-surface-2);
+            
+            /* Miku Accent Colors */
+            --miku-hair: #39C5BB;
+            --miku-hair-dark: #2DA8A0;
+            --miku-hair-light: #5DDCD3;
+            --miku-tie: #FF4081;
+            --miku-tie-light: #FF79B0;
+            --miku-sleeve: #E0F7FA;
             
             --md-sys-spacing-1: 4px;
             --md-sys-spacing-2: 8px;
@@ -80,44 +97,60 @@
         }
 
         [data-theme="dark"] {
-            --md-sys-color-primary: #9cd67d;
-            --md-sys-color-on-primary: #0f3900;
-            --md-sys-color-primary-container: #205107;
-            --md-sys-color-on-primary-container: #b7f397;
+            /* Hatsune Miku Color Palette - Dark Theme */
+            --md-sys-color-primary: #39C5BB;
+            --md-sys-color-on-primary: #003735;
+            --md-sys-color-primary-container: #00504C;
+            --md-sys-color-on-primary-container: #A6F4EF;
             
-            --md-sys-color-secondary: #bdcbaf;
-            --md-sys-color-on-secondary: #283420;
-            --md-sys-color-secondary-container: #3e4a35;
-            --md-sys-color-on-secondary-container: #d9e7cb;
+            --md-sys-color-secondary: #B1CCC9;
+            --md-sys-color-on-secondary: #1C3533;
+            --md-sys-color-secondary-container: #334B49;
+            --md-sys-color-on-secondary-container: #CCE8E5;
             
-            --md-sys-color-tertiary: #88d1d7;
-            --md-sys-color-on-tertiary: #00363a;
-            --md-sys-color-tertiary-container: #004f55;
-            --md-sys-color-on-tertiary-container: #a4eff4;
+            --md-sys-color-tertiary: #9ECAFF;
+            --md-sys-color-on-tertiary: #003258;
+            --md-sys-color-tertiary-container: #00497D;
+            --md-sys-color-on-tertiary-container: #D1E4FF;
             
-            --md-sys-color-surface: #1a1c18;
-            --md-sys-color-on-surface: #e2e3dc;
-            --md-sys-color-surface-variant: #43483e;
-            --md-sys-color-on-surface-variant: #c3c8bb;
+            --md-sys-color-surface: #0F1514;
+            --md-sys-color-on-surface: #DDE4E3;
+            --md-sys-color-surface-variant: #3F4948;
+            --md-sys-color-on-surface-variant: #BEC9C7;
             
-            --md-sys-color-outline: #8d9287;
-            --md-sys-color-outline-variant: #43483e;
+            --md-sys-color-outline: #899391;
+            --md-sys-color-outline-variant: #3F4948;
             
-            --md-sys-color-surface-tint: #9cd67d;
-            --md-sys-color-surface-1: #1f241b;
-            --md-sys-color-surface-2: #232920;
-            --md-sys-color-surface-3: #282e25;
-            --md-sys-color-surface-4: #293026;
-            --md-sys-color-surface-5: #2c3328;
+            --md-sys-color-error: #FFB4AB;
+            --md-sys-color-error-container: #93000A;
             
-            --tree-line-color: #43483e;
-            --tree-hover: #2d322b;
+            --md-sys-color-surface-tint: #39C5BB;
+            --md-sys-color-surface-1: #14201F;
+            --md-sys-color-surface-2: #192624;
+            --md-sys-color-surface-3: #1E2C2A;
+            --md-sys-color-surface-4: #223230;
+            --md-sys-color-surface-5: #273836;
+            
+            --tree-line-color: #3F4948;
+            --tree-hover: #1C3533;
         }
+
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
         }
 
         body {
@@ -127,6 +160,8 @@
             min-height: 100vh;
             overflow-x: hidden;
             transition: background-color var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .nature-bg {
@@ -214,6 +249,12 @@
             padding: var(--md-sys-spacing-6);
         }
 
+        @media (max-width: 768px) {
+            .app-container {
+                padding: var(--md-sys-spacing-3);
+            }
+        }
+
         .app-bar {
             display: flex;
             align-items: center;
@@ -230,10 +271,24 @@
             background-color: rgba(var(--md-sys-color-surface), 0.8);
         }
 
+        @media (max-width: 768px) {
+            .app-bar {
+                margin: calc(-1 * var(--md-sys-spacing-3));
+                margin-bottom: var(--md-sys-spacing-3);
+                padding: var(--md-sys-spacing-3);
+            }
+        }
+
         .app-bar-left {
             display: flex;
             align-items: center;
-            gap: var(--md-sys-spacing-4);
+            gap: var(--md-sys-spacing-3);
+        }
+
+        @media (max-width: 480px) {
+            .app-bar-left {
+                gap: var(--md-sys-spacing-2);
+            }
         }
 
         .logo {
@@ -246,12 +301,38 @@
             justify-content: center;
             color: var(--md-sys-color-on-primary-container);
             font-variation-settings: 'FILL' 1, 'wght' 600;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 32px;
+                height: 32px;
+            }
         }
 
         .app-title {
             font: var(--md-sys-typescale-title-large);
             color: var(--md-sys-color-on-surface);
             font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 768px) {
+            .app-title {
+                font: var(--md-sys-typescale-title-medium);
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-title {
+                font: var(--md-sys-typescale-body-large);
+                font-weight: 600;
+                max-width: 150px;
+            }
         }
 
         .app-bar-actions {
@@ -272,6 +353,12 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .main-layout {
+                gap: var(--md-sys-spacing-4);
+            }
+        }
+
         .card {
             background-color: var(--md-sys-color-surface-1);
             border-radius: var(--md-sys-shape-corner-large);
@@ -279,6 +366,19 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
             border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: var(--md-sys-spacing-4);
+                border-radius: var(--md-sys-shape-corner-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: var(--md-sys-spacing-3);
+            }
         }
 
         .card:hover {
@@ -292,6 +392,15 @@
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .card-title {
+                font: var(--md-sys-typescale-body-large);
+                font-weight: 600;
+                margin-bottom: var(--md-sys-spacing-3);
+            }
         }
 
         .card-subtitle {
@@ -300,18 +409,28 @@
             margin-bottom: var(--md-sys-spacing-4);
         }
 
-        .tree-container {
+        @media (max-width: 480px) {
+            .card-subtitle {
+                font: var(--md-sys-typescale-body-medium);
+                margin-bottom: var(--md-sys-spacing-3);
+            }
+        }
+
+        .tree-container, .article-field-container {
             background-color: var(--md-sys-color-surface);
             border-radius: var(--md-sys-shape-corner-medium);
             border: 1px solid var(--md-sys-color-outline-variant);
             overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .tree-node {
+        .tree-node, .article-field-node {
             position: relative;
+            min-width: fit-content;
         }
 
-        .tree-node-content {
+        .tree-node-content, .article-field-content {
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
@@ -319,36 +438,50 @@
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
             transition: background-color var(--md-sys-motion-duration-short);
             position: relative;
+            min-width: fit-content;
         }
 
-        .tree-node-content:hover {
+        @media (max-width: 768px) {
+            .tree-node-content, .article-field-content {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
+        .tree-node-content:hover, .article-field-content:hover {
             background-color: var(--tree-hover);
         }
 
-        .tree-node-content.dragging {
+        .tree-node-content.dragging, .article-field-content.dragging {
             opacity: 0.5;
             background-color: var(--md-sys-color-primary-container);
         }
 
-        .tree-node-content.drag-over {
+        .tree-node-content.drag-over, .article-field-content.drag-over {
             border-top: 3px solid var(--md-sys-color-primary);
         }
 
-        .tree-indent {
+        .tree-indent, .field-indent {
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-1);
             flex-shrink: 0;
         }
 
-        .tree-line {
+        .tree-line, .field-line {
             width: 16px;
             height: 20px;
             position: relative;
             flex-shrink: 0;
         }
 
-        .tree-line::before {
+        @media (max-width: 480px) {
+            .tree-line, .field-line {
+                width: 12px;
+            }
+        }
+
+        .tree-line::before, .field-line::before {
             content: '';
             position: absolute;
             left: 50%;
@@ -358,7 +491,7 @@
             background-color: var(--tree-line-color);
         }
 
-        .tree-line::after {
+        .tree-line::after, .field-line::after {
             content: '';
             position: absolute;
             left: 50%;
@@ -368,11 +501,11 @@
             background-color: var(--tree-line-color);
         }
 
-        .tree-line.last::before {
+        .tree-line.last::before, .field-line.last::before {
             bottom: 50%;
         }
 
-        .tree-toggle {
+        .tree-toggle, .field-toggle {
             width: 20px;
             height: 20px;
             display: flex;
@@ -388,21 +521,21 @@
             flex-shrink: 0;
         }
 
-        .tree-toggle:hover {
+        .tree-toggle:hover, .field-toggle:hover {
             background-color: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-primary);
         }
 
-        .tree-toggle.expanded {
+        .tree-toggle.expanded, .field-toggle.expanded {
             transform: rotate(90deg);
         }
 
-        .tree-toggle.leaf {
+        .tree-toggle.leaf, .field-toggle.leaf {
             visibility: hidden;
             pointer-events: none;
         }
 
-        .drag-handle {
+        .drag-handle, .field-drag-handle {
             color: var(--md-sys-color-outline);
             cursor: grab;
             user-select: none;
@@ -410,32 +543,50 @@
             border-radius: var(--md-sys-shape-corner-small);
             transition: all var(--md-sys-motion-duration-short);
             flex-shrink: 0;
+            touch-action: none;
         }
 
-        .drag-handle:hover {
+        @media (max-width: 768px) {
+            .drag-handle, .field-drag-handle {
+                padding: var(--md-sys-spacing-1);
+            }
+            
+            .drag-handle .material-symbols-rounded,
+            .field-drag-handle .material-symbols-rounded {
+                font-size: 16px !important;
+            }
+        }
+
+        .drag-handle:hover, .field-drag-handle:hover {
             background-color: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-surface);
         }
 
-        .drag-handle:active {
+        .drag-handle:active, .field-drag-handle:active {
             cursor: grabbing;
         }
 
-        .tree-icon {
+        .tree-icon, .field-icon {
             color: var(--md-sys-color-primary);
             font-variation-settings: 'FILL' 1;
             flex-shrink: 0;
         }
 
-        .tree-icon.object {
+        @media (max-width: 768px) {
+            .tree-icon, .field-icon {
+                font-size: 18px !important;
+            }
+        }
+
+        .tree-icon.object, .field-icon.object {
             color: var(--md-sys-color-tertiary);
         }
 
-        .tree-icon.array {
+        .tree-icon.array, .field-icon.array {
             color: var(--md-sys-color-secondary);
         }
 
-        .tree-inputs {
+        .tree-inputs, .field-inputs {
             flex: 1;
             display: flex;
             gap: var(--md-sys-spacing-2);
@@ -443,7 +594,14 @@
             min-width: 0;
         }
 
-        .tree-key-input {
+        @media (max-width: 768px) {
+            .tree-inputs, .field-inputs {
+                flex-wrap: wrap;
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
+        .tree-key-input, .field-key-input {
             flex: 1;
             min-width: 100px;
             max-width: 200px;
@@ -457,12 +615,29 @@
             transition: all var(--md-sys-motion-duration-short);
         }
 
-        .tree-key-input:focus {
+        @media (max-width: 768px) {
+            .tree-key-input, .field-key-input {
+                min-width: 80px;
+                max-width: 150px;
+                font: var(--md-sys-typescale-body-medium);
+                padding: var(--md-sys-spacing-2);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tree-key-input, .field-key-input {
+                min-width: 60px;
+                max-width: 120px;
+                font-size: 0.875rem;
+            }
+        }
+
+        .tree-key-input:focus, .field-key-input:focus {
             border-color: var(--md-sys-color-primary);
             box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
         }
 
-        .tree-value-input {
+        .tree-value-input, .field-value-input {
             flex: 2;
             min-width: 150px;
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
@@ -475,20 +650,37 @@
             transition: all var(--md-sys-motion-duration-short);
         }
 
-        .tree-value-input:focus {
+        @media (max-width: 768px) {
+            .tree-value-input, .field-value-input {
+                min-width: 100px;
+                font: var(--md-sys-typescale-body-medium);
+                padding: var(--md-sys-spacing-2);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tree-value-input, .field-value-input {
+                min-width: 80px;
+                font-size: 0.875rem;
+            }
+        }
+
+        .tree-value-input:focus, .field-value-input:focus {
             border-color: var(--md-sys-color-primary);
             box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
         }
 
         .tree-value-input:disabled,
-        .tree-value-input.object-mode {
+        .tree-value-input.object-mode,
+        .field-value-input:disabled,
+        .field-value-input.object-mode {
             background-color: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-surface-variant);
             font-style: italic;
             cursor: not-allowed;
         }
 
-        .tree-type-select {
+        .tree-type-select, .field-type-select {
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
             border: 1px solid var(--md-sys-color-outline);
             border-radius: var(--md-sys-shape-corner-small);
@@ -501,15 +693,36 @@
             flex-shrink: 0;
         }
 
-        .tree-type-select:focus {
+        @media (max-width: 768px) {
+            .tree-type-select, .field-type-select {
+                min-width: 80px;
+                font: var(--md-sys-typescale-body-medium);
+                padding: var(--md-sys-spacing-2);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tree-type-select, .field-type-select {
+                min-width: 70px;
+                font-size: 0.875rem;
+            }
+        }
+
+        .tree-type-select:focus, .field-type-select:focus {
             border-color: var(--md-sys-color-primary);
             box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
         }
 
-        .tree-actions {
+        .tree-actions, .field-actions {
             display: flex;
             gap: var(--md-sys-spacing-1);
             flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tree-actions, .field-actions {
+                gap: 2px;
+            }
         }
 
         .icon-btn {
@@ -526,6 +739,17 @@
             transition: all var(--md-sys-motion-duration-short);
             font-variation-settings: 'FILL' 0, 'wght' 400;
             flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .icon-btn {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .icon-btn .material-symbols-rounded {
+                font-size: 18px !important;
+            }
         }
 
         .icon-btn:hover {
@@ -548,12 +772,12 @@
             color: var(--md-sys-color-on-secondary-container);
         }
 
-        .tree-children {
+        .tree-children, .field-children {
             position: relative;
             background-color: var(--md-sys-color-surface-1);
         }
 
-        .tree-children.collapsed {
+        .tree-children.collapsed, .field-children.collapsed {
             display: none;
         }
 
@@ -572,6 +796,26 @@
             letter-spacing: 0.025em;
             position: relative;
             overflow: hidden;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-label-medium);
+                gap: var(--md-sys-spacing-1);
+            }
+            
+            .btn .material-symbols-rounded {
+                font-size: 18px !important;
+            }
         }
 
         .btn::after {
@@ -639,6 +883,13 @@
             top: 100px;
         }
 
+        @media (max-width: 1200px) {
+            .output-section {
+                position: relative;
+                top: 0;
+            }
+        }
+
         .output-card {
             background-color: var(--md-sys-color-surface-2);
         }
@@ -658,6 +909,22 @@
             max-height: 600px;
             overflow-y: auto;
             position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .json-preview {
+                padding: var(--md-sys-spacing-3);
+                font-size: 0.75rem;
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .json-preview {
+                padding: var(--md-sys-spacing-2);
+                font-size: 0.7rem;
+            }
         }
 
         .json-key {
@@ -682,6 +949,16 @@
             right: var(--md-sys-spacing-3);
             background-color: var(--md-sys-color-surface-1);
             border: 1px solid var(--md-sys-color-outline-variant);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .copy-btn {
+                top: var(--md-sys-spacing-2);
+                right: var(--md-sys-spacing-2);
+                width: 28px;
+                height: 28px;
+            }
         }
 
         .action-bar {
@@ -691,11 +968,36 @@
             flex-wrap: wrap;
         }
 
+        @media (max-width: 768px) {
+            .action-bar {
+                gap: var(--md-sys-spacing-2);
+                margin-top: var(--md-sys-spacing-3);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .action-bar {
+                justify-content: stretch;
+            }
+            
+            .action-bar .btn {
+                flex: 1;
+                min-width: calc(50% - var(--md-sys-spacing-1));
+            }
+        }
+
         .chip-group {
             display: flex;
             gap: var(--md-sys-spacing-2);
             flex-wrap: wrap;
             margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        @media (max-width: 768px) {
+            .chip-group {
+                margin-bottom: var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
         }
 
         .chip {
@@ -710,6 +1012,14 @@
             cursor: pointer;
             transition: all var(--md-sys-motion-duration-short);
             border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .chip {
+                padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+                font: var(--md-sys-typescale-label-small);
+            }
         }
 
         .chip:hover {
@@ -739,6 +1049,16 @@
             z-index: 1000;
             opacity: 0;
             transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-emphasized);
+            max-width: 90vw;
+            width: auto;
+        }
+
+        @media (max-width: 480px) {
+            .snackbar {
+                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+                font: var(--md-sys-typescale-body-medium);
+                gap: var(--md-sys-spacing-2);
+            }
         }
 
         .snackbar.show {
@@ -761,6 +1081,7 @@
             visibility: hidden;
             transition: all var(--md-sys-motion-duration-medium);
             backdrop-filter: blur(4px);
+            padding: var(--md-sys-spacing-4);
         }
 
         .dialog-overlay.active {
@@ -779,6 +1100,21 @@
             transform: scale(0.9);
             transition: transform var(--md-sys-motion-duration-medium);
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .dialog {
+                padding: var(--md-sys-spacing-4);
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dialog {
+                padding: var(--md-sys-spacing-3);
+                border-radius: var(--md-sys-shape-corner-large);
+            }
         }
 
         .dialog-overlay.active .dialog {
@@ -791,10 +1127,24 @@
             margin-bottom: var(--md-sys-spacing-4);
         }
 
+        @media (max-width: 768px) {
+            .dialog-title {
+                font: var(--md-sys-typescale-title-large);
+                margin-bottom: var(--md-sys-spacing-3);
+            }
+        }
+
         .dialog-content {
             font: var(--md-sys-typescale-body-medium);
             color: var(--md-sys-color-on-surface-variant);
             margin-bottom: var(--md-sys-spacing-6);
+        }
+
+        @media (max-width: 768px) {
+            .dialog-content {
+                font: var(--md-sys-typescale-body-medium);
+                margin-bottom: var(--md-sys-spacing-4);
+            }
         }
 
         .dialog-actions {
@@ -803,10 +1153,33 @@
             gap: var(--md-sys-spacing-2);
         }
 
+        @media (max-width: 480px) {
+            .dialog-actions {
+                flex-direction: column-reverse;
+            }
+            
+            .dialog-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .empty-state {
             text-align: center;
             padding: var(--md-sys-spacing-12) var(--md-sys-spacing-6);
             color: var(--md-sys-color-on-surface-variant);
+        }
+
+        @media (max-width: 768px) {
+            .empty-state {
+                padding: var(--md-sys-spacing-8) var(--md-sys-spacing-4);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-state {
+                padding: var(--md-sys-spacing-6) var(--md-sys-spacing-3);
+            }
         }
 
         .empty-state-icon {
@@ -816,48 +1189,71 @@
         }
 
         @media (max-width: 768px) {
-            .app-container {
-                padding: var(--md-sys-spacing-4);
+            .empty-state-icon {
+                font-size: 36px;
+                margin-bottom: var(--md-sys-spacing-3);
             }
+        }
 
-            .app-bar {
-                margin: calc(-1 * var(--md-sys-spacing-4));
-                margin-bottom: var(--md-sys-spacing-4);
-                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-            }
-
-            .tree-inputs {
+        @media (max-width: 768px) {
+            .tree-inputs, .field-inputs {
                 flex-direction: column;
                 align-items: stretch;
+                width: 100%;
             }
 
-            .tree-key-input, .tree-value-input, .tree-type-select {
+            .tree-key-input, .field-key-input,
+            .tree-value-input, .field-value-input,
+            .tree-type-select, .field-type-select {
                 width: 100%;
                 max-width: none;
+                min-width: unset;
             }
 
-            .action-bar {
-                justify-content: center;
+            .tree-key-input, .field-key-input {
+                order: 1;
             }
 
-            .json-preview {
-                font-size: 0.75rem;
+            .tree-type-select, .field-type-select {
+                order: 2;
+                width: auto;
+                align-self: flex-start;
+            }
+
+            .tree-value-input, .field-value-input {
+                order: 3;
             }
         }
 
-        @keyframes slideIn {
-            from {
+        @media (max-width: 480px) {
+            .tree-actions, .field-actions {
+                position: absolute;
+                top: var(--md-sys-spacing-2);
+                right: var(--md-sys-spacing-2);
+                background: rgba(var(--md-sys-color-surface), 0.9);
+                border-radius: var(--md-sys-shape-corner-small);
+                padding: 2px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
                 opacity: 0;
-                transform: translateX(-10px);
+                transition: opacity 0.2s;
             }
-            to {
+
+            .tree-node-content:active .tree-actions,
+            .tree-node-content:hover .tree-actions,
+            .article-field-content:active .field-actions,
+            .article-field-content:hover .field-actions {
                 opacity: 1;
-                transform: translateX(0);
             }
         }
 
-        .tree-node {
-            animation: slideIn 0.2s ease-out;
+        .json-preview {
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 480px) {
+            .json-preview {
+                font-size: 0.7rem;
+            }
         }
 
         .texture-overlay {
@@ -895,6 +1291,12 @@
             margin-left: auto;
         }
 
+        @media (max-width: 480px) {
+            .live-indicator {
+                display: none;
+            }
+        }
+
         .live-dot {
             width: 8px;
             height: 8px;
@@ -913,8 +1315,20 @@
             margin-top: var(--md-sys-spacing-6);
         }
 
+        @media (max-width: 768px) {
+            .article-generator {
+                margin-top: var(--md-sys-spacing-4);
+            }
+        }
+
         .article-section {
             margin-bottom: var(--md-sys-spacing-6);
+        }
+
+        @media (max-width: 768px) {
+            .article-section {
+                margin-bottom: var(--md-sys-spacing-4);
+            }
         }
 
         .article-section-title {
@@ -926,8 +1340,21 @@
             gap: var(--md-sys-spacing-2);
         }
 
+        @media (max-width: 480px) {
+            .article-section-title {
+                font: var(--md-sys-typescale-body-large);
+                font-weight: 600;
+            }
+        }
+
         .form-group {
             margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                margin-bottom: var(--md-sys-spacing-3);
+            }
         }
 
         .form-label {
@@ -935,6 +1362,12 @@
             font: var(--md-sys-typescale-label-large);
             color: var(--md-sys-color-on-surface);
             margin-bottom: var(--md-sys-spacing-2);
+        }
+
+        @media (max-width: 480px) {
+            .form-label {
+                font: var(--md-sys-typescale-label-medium);
+            }
         }
 
         .form-input,
@@ -951,6 +1384,15 @@
             transition: all var(--md-sys-motion-duration-short);
         }
 
+        @media (max-width: 768px) {
+            .form-input,
+            .form-select,
+            .form-textarea {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-body-medium);
+            }
+        }
+
         .form-input:focus,
         .form-select:focus,
         .form-textarea:focus {
@@ -963,6 +1405,12 @@
             resize: vertical;
             font-family: 'Roboto Flex', sans-serif;
             line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .form-textarea {
+                min-height: 100px;
+            }
         }
 
         .form-select {
@@ -979,6 +1427,12 @@
             display: flex;
             flex-wrap: wrap;
             gap: var(--md-sys-spacing-2);
+        }
+
+        @media (max-width: 480px) {
+            .radio-group {
+                gap: var(--md-sys-spacing-1);
+            }
         }
 
         .radio-item {
@@ -1003,6 +1457,26 @@
             cursor: pointer;
             transition: all var(--md-sys-motion-duration-short);
             border: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .radio-label {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .radio-label {
+                padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+                font: var(--md-sys-typescale-label-small);
+                gap: var(--md-sys-spacing-1);
+            }
+            
+            .radio-label .material-symbols-rounded {
+                font-size: 16px !important;
+            }
         }
 
         .radio-item input[type="radio"]:checked + .radio-label {
@@ -1028,6 +1502,16 @@
             color: var(--md-sys-color-on-surface);
             white-space: pre-wrap;
             position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .output-area {
+                padding: var(--md-sys-spacing-3);
+                min-height: 150px;
+                max-height: 300px;
+                font: var(--md-sys-typescale-body-medium);
+            }
         }
 
         .output-area:empty::before {
@@ -1042,6 +1526,20 @@
             font-size: 1rem;
             padding: var(--md-sys-spacing-4) var(--md-sys-spacing-8);
             box-shadow: 0 4px 12px rgba(56, 106, 32, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .btn-generate {
+                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-6);
+                font-size: 0.9375rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-generate {
+                width: 100%;
+                padding: var(--md-sys-spacing-3);
+            }
         }
 
         .btn-generate:hover {
@@ -1070,6 +1568,7 @@
         @media (max-width: 768px) {
             .two-column {
                 grid-template-columns: 1fr;
+                gap: var(--md-sys-spacing-3);
             }
         }
 
@@ -1079,10 +1578,22 @@
             margin-top: var(--md-sys-spacing-1);
         }
 
+        @media (max-width: 480px) {
+            .hint-text {
+                font: var(--md-sys-typescale-label-small);
+            }
+        }
+
         .divider {
             height: 1px;
             background-color: var(--md-sys-color-outline-variant);
             margin: var(--md-sys-spacing-6) 0;
+        }
+
+        @media (max-width: 768px) {
+            .divider {
+                margin: var(--md-sys-spacing-4) 0;
+            }
         }
 
         .article-tools-grid {
@@ -1091,12 +1602,29 @@
             gap: var(--md-sys-spacing-6);
         }
 
+        @media (max-width: 768px) {
+            .article-tools-grid {
+                grid-template-columns: 1fr;
+                gap: var(--md-sys-spacing-4);
+            }
+        }
+
         .tool-nav {
             display: flex;
             gap: var(--md-sys-spacing-2);
             margin-bottom: var(--md-sys-spacing-4);
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
             padding-bottom: var(--md-sys-spacing-4);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .tool-nav {
+                margin-bottom: var(--md-sys-spacing-3);
+                padding-bottom: var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
         }
 
         .tool-nav-btn {
@@ -1109,6 +1637,27 @@
             border-radius: var(--md-sys-shape-corner-small);
             transition: all var(--md-sys-motion-duration-short);
             position: relative;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tool-nav-btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-nav-btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-label-medium);
+            }
+            
+            .tool-nav-btn .material-symbols-rounded {
+                margin-right: 4px !important;
+                font-size: 18px !important;
+            }
         }
 
         .tool-nav-btn:hover {
@@ -1132,6 +1681,12 @@
             border-radius: 3px 3px 0 0;
         }
 
+        @media (max-width: 768px) {
+            .tool-nav-btn.active::after {
+                bottom: -13px;
+            }
+        }
+
         .tool-content {
             display: none;
         }
@@ -1153,6 +1708,12 @@
             margin-top: var(--md-sys-spacing-1);
         }
 
+        @media (max-width: 480px) {
+            .char-counter {
+                font: var(--md-sys-typescale-label-small);
+            }
+        }
+
         .char-counter.warning {
             color: var(--md-sys-color-error);
         }
@@ -1168,6 +1729,20 @@
             color: var(--md-sys-color-on-secondary-container);
         }
 
+        @media (max-width: 768px) {
+            .example-box {
+                padding: var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-body-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .example-box {
+                padding: var(--md-sys-spacing-2);
+                font: var(--md-sys-typescale-body-small);
+            }
+        }
+
         .example-box-title {
             font: var(--md-sys-typescale-label-large);
             font-weight: 600;
@@ -1177,10 +1752,23 @@
             gap: var(--md-sys-spacing-2);
         }
 
+        @media (max-width: 480px) {
+            .example-box-title {
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
         .example-item {
             margin-bottom: var(--md-sys-spacing-2);
             padding-left: var(--md-sys-spacing-3);
             border-left: 2px solid var(--md-sys-color-outline-variant);
+        }
+
+        @media (max-width: 480px) {
+            .example-item {
+                margin-bottom: var(--md-sys-spacing-1);
+                padding-left: var(--md-sys-spacing-2);
+            }
         }
 
         .example-item:last-child {
@@ -1196,6 +1784,168 @@
             margin-top: var(--md-sys-spacing-3);
             font-size: 0.875rem;
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+        }
+
+        @media (max-width: 480px) {
+            .load-example-btn {
+                width: 100%;
+                margin-top: var(--md-sys-spacing-2);
+            }
+        }
+
+        /* Field Editor Tabs */
+        .field-editor-tabs {
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+            margin-bottom: var(--md-sys-spacing-4);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .field-editor-tabs {
+                margin-bottom: var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
+        .field-editor-tab {
+            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+            background: transparent;
+            border: none;
+            color: var(--md-sys-color-on-surface-variant);
+            font: var(--md-sys-typescale-label-large);
+            cursor: pointer;
+            border-radius: var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0 0;
+            transition: all var(--md-sys-motion-duration-short);
+            position: relative;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .field-editor-tab {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        .field-editor-tab:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .field-editor-tab.active {
+            color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-primary-container);
+        }
+
+        .field-editor-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--md-sys-color-primary);
+        }
+
+        .field-editor-content {
+            display: none;
+        }
+
+        .field-editor-content.active {
+            display: block;
+        }
+
+        .preset-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--md-sys-spacing-2);
+            margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        @media (max-width: 768px) {
+            .preset-fields {
+                gap: var(--md-sys-spacing-1);
+                margin-bottom: var(--md-sys-spacing-3);
+            }
+        }
+
+        .preset-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-1);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            background-color: var(--md-sys-color-tertiary-container);
+            color: var(--md-sys-color-on-tertiary-container);
+            border-radius: var(--md-sys-shape-corner-small);
+            font: var(--md-sys-typescale-label-medium);
+            cursor: pointer;
+            transition: all var(--md-sys-motion-duration-short);
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .preset-chip {
+                padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+                font: var(--md-sys-typescale-label-small);
+            }
+            
+            .preset-chip .material-symbols-rounded {
+                font-size: 16px !important;
+            }
+        }
+
+        .preset-chip:hover {
+            background-color: var(--md-sys-color-tertiary);
+            color: var(--md-sys-color-on-tertiary);
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .drag-handle, .field-drag-handle {
+                opacity: 1;
+                padding: var(--md-sys-spacing-2);
+            }
+            
+            .icon-btn {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .tree-toggle, .field-toggle {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        /* Prevent text selection during drag */
+        .dragging, .dragging * {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus visible for accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--md-sys-color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -1215,13 +1965,13 @@
                 <div class="logo">
                     <span class="material-symbols-rounded">account_tree</span>
                 </div>
-                <h1 class="app-title">Nature JSON Tree Builder</h1>
+                <h1 class="app-title">Nature JSON Builder</h1>
             </div>
             <div class="app-bar-actions">
-                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme" aria-label="Toggle theme">
                     <span class="material-symbols-rounded">dark_mode</span>
                 </button>
-                <button class="icon-btn" onclick="showHelp()" title="Help">
+                <button class="icon-btn" onclick="showHelp()" title="Help" aria-label="Show help">
                     <span class="material-symbols-rounded">help</span>
                 </button>
             </div>
@@ -1230,11 +1980,11 @@
         <div class="tool-nav">
             <button class="tool-nav-btn active" onclick="switchTool('json')">
                 <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px;">account_tree</span>
-                JSON Builder
+                <span class="nav-text">JSON Builder</span>
             </button>
             <button class="tool-nav-btn" onclick="switchTool('article')">
                 <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px;">article</span>
-                Prompt Generator
+                <span class="nav-text">Article Generator</span>
             </button>
         </div>
 
@@ -1261,19 +2011,19 @@
                         <div class="action-bar" style="margin-top: var(--md-sys-spacing-4);">
                             <button class="btn btn-filled" onclick="addRootNode()">
                                 <span class="material-symbols-rounded">add</span>
-                                Tambah Root Field
+                                <span class="btn-tex">Tambah Root</span>
                             </button>
                             <button class="btn btn-outlined" onclick="expandAll()">
                                 <span class="material-symbols-rounded">unfold_more</span>
-                                Expand All
+                                <span class="btn-text">Expand</span>
                             </button>
                             <button class="btn btn-outlined" onclick="collapseAll()">
                                 <span class="material-symbols-rounded">unfold_less</span>
-                                Collapse All
+                                <span class="btn-text">Collapse</span>
                             </button>
                             <button class="btn btn-text" onclick="clearAll()">
                                 <span class="material-symbols-rounded">delete_sweep</span>
-                                Clear
+                                <span class="btn-text">Clear</span>
                             </button>
                         </div>
                     </div>
@@ -1311,7 +2061,7 @@
                         </div>
                         
                         <div class="json-preview" id="jsonPreview">
-                            <button class="icon-btn copy-btn" onclick="copyOutput()" title="Copy to Clipboard">
+                            <button class="icon-btn copy-btn" onclick="copyOutput()" title="Copy to Clipboard" aria-label="Copy to clipboard">
                                 <span class="material-symbols-rounded">content_copy</span>
                             </button>
                             <code id="jsonCode"></code>
@@ -1350,125 +2100,124 @@
                     <div class="card">
                         <div class="card-title">
                             <span class="material-symbols-rounded">edit_note</span>
-                            Konfigurasi Prompt Artikel
+                            Article Generator - Field Editor
                         </div>
-                        <div class="card-subtitle">Pilih topik dan lihat contoh konfigurasi untuk setiap kategori</div>
+                        <div class="card-subtitle">Buat struktur field dinamis untuk konfigurasi artikel</div>
                         
-                        <div class="article-section">
-                            <div class="form-group">
-                                <label class="form-label">Topik Utama</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-general" name="topic" value="general" checked onchange="updateTopicExample()">
-                                        <label for="topic-general" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">article</span>
-                                            Umum
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-blog" name="topic" value="blog" onchange="updateTopicExample()">
-                                        <label for="topic-blog" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">rss_feed</span>
-                                            Blog Post
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-coding" name="topic" value="coding" onchange="updateTopicExample()">
-                                        <label for="topic-coding" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
-                                            Coding
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-story" name="topic" value="storytelling" onchange="updateTopicExample()">
-                                        <label for="topic-story" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">auto_stories</span>
-                                            Storytelling
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-email" name="topic" value="email" onchange="updateTopicExample()">
-                                        <label for="topic-email" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">email</span>
-                                            Email Marketing
-                                        </label>
-                                    </div>
-                                </div>
+                        <!-- Field Editor Tabs -->
+                        <div class="field-editor-tabs">
+                            <button class="field-editor-tab active" onclick="switchFieldTab('fields')">
+                                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 6px; font-size: 18px;">account_tree</span>
+                                Edit Fields
+                            </button>
+                            <button class="field-editor-tab" onclick="switchFieldTab('presets')">
+                                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 6px; font-size: 18px;">bookmark</span>
+                                Presets
+                            </button>
+                        </div>
+
+                        <!-- Fields Tab -->
+                        <div id="fields-tab" class="field-editor-content active">
+                            <div class="preset-fields">
+                                <span class="preset-chip" onclick="addPresetField('topic')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Topik
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('role')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Peran AI
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('style')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Gaya
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('audience')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Audiens
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('task')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Tugas
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('word_count')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Kata
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('format')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Format
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('custom')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Custom
+                                </span>
                             </div>
 
-                            <!-- Dynamic Example Box -->
-                            <div id="topic-example" class="example-box">
-                                <div class="example-box-title">
-                                    <span class="material-symbols-rounded">lightbulb</span>
-                                    Contoh Konfigurasi: Umum
-                                </div>
-                                <div id="example-content">
-                                    <!-- Content will be populated by JavaScript -->
-                                </div>
-                                <button class="btn btn-filled load-example-btn" onclick="loadExample()">
-                                    <span class="material-symbols-rounded">upload</span>
-                                    Gunakan Contoh Ini
+                            <div class="article-field-container" id="articleFieldContainer">
+                                <!-- Fields will be rendered here -->
+                            </div>
+
+                            <div class="action-bar">
+                                <button class="btn btn-filled" onclick="addArticleRootField()">
+                                    <span class="material-symbols-rounded">add</span>
+                                    <span class="btn-text">Tambah Field</span>
+                                </button>
+                                <button class="btn btn-outlined" onclick="expandAllArticleFields()">
+                                    <span class="material-symbols-rounded">unfold_more</span>
+                                    <span class="btn-text">Expand</span>
+                                </button>
+                                <button class="btn btn-outlined" onclick="collapseAllArticleFields()">
+                                    <span class="material-symbols-rounded">unfold_less</span>
+                                    <span class="btn-text">Collapse</span>
+                                </button>
+                                <button class="btn btn-text" onclick="clearAllArticleFields()">
+                                    <span class="material-symbols-rounded">delete_sweep</span>
+                                    <span class="btn-text">Clear</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="divider"></div>
-
-                        <div class="article-section">
-                            <div class="two-column">
-                                <div class="form-group">
-                                    <label class="form-label" for="ai-role">Peran AI</label>
-                                    <input type="text" class="form-input" id="ai-role" placeholder="Contoh: Jurnalis senior...">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="language-style">Gaya Bahasa</label>
-                                    <select class="form-select" id="language-style">
-                                        <option value="formal">Formal</option>
-                                        <option value="casual">Casual/Santai</option>
-                                        <option value="professional">Profesional</option>
-                                        <option value="creative">Kreatif/Imajinatif</option>
-                                        <option value="academic">Akademis</option>
-                                        <option value="persuasive">Persuasif</option>
-                                        <option value="humorous">Humoris</option>
-                                    </select>
-                                </div>
+                        <!-- Presets Tab -->
+                        <div id="presets-tab" class="field-editor-content">
+                            <div class="chip-group">
+                                <span class="chip active" onclick="loadArticlePreset('empty')">Empty</span>
+                                <span class="chip" onclick="loadArticlePreset('general')">Umum</span>
+                                <span class="chip" onclick="loadArticlePreset('blog')">Blog Post</span>
+                                <span class="chip" onclick="loadArticlePreset('coding')">Coding</span>
+                                <span class="chip" onclick="loadArticlePreset('storytelling')">Storytelling</span>
+                                <span class="chip" onclick="loadArticlePreset('email')">Email Marketing</span>
                             </div>
 
-                            <div class="two-column">
-                                <div class="form-group">
-                                    <label class="form-label" for="target-audience">Target Audiens</label>
-                                    <input type="text" class="form-input" id="target-audience" placeholder="Contoh: Pemula, Profesional...">
+                            <div class="example-box" style="margin-top: var(--md-sys-spacing-4);">
+                                <div class="example-box-title">
+                                    <span class="material-symbols-rounded">info</span>
+                                    Tentang Preset
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="word-limit">Batas Kata</label>
-                                    <input type="number" class="form-input" id="word-limit" placeholder="Contoh: 500, 1000...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="main-task">Tugas/Instruksi Utama</label>
-                                <textarea class="form-textarea" id="main-task" placeholder="Jelaskan tugas yang ingin dilakukan AI..." oninput="updateCharCounter()"></textarea>
-                                <div class="char-counter" id="task-counter">0 karakter</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="technical-specs">Spesifikasi Teknis/Konteks Tambahan (opsional)</label>
-                                <textarea class="form-textarea" id="technical-specs" placeholder="Instruksi teknis tambahan..."></textarea>
+                                <p style="margin-bottom: var(--md-sys-spacing-2);">Preset akan mengisi field editor dengan struktur yang sudah dioptimalkan untuk setiap jenis konten.</p>
+                                <ul style="padding-left: 20px; line-height: 1.8;">
+                                    <li><strong>Umum:</strong> Struktur dasar untuk artikel berita umum</li>
+                                    <li><strong>Blog Post:</strong> Optimasi untuk konten blog dengan SEO</li>
+                                    <li><strong>Coding:</strong> Struktur untuk tutorial teknis</li>
+                                    <li><strong>Storytelling:</strong> Setup untuk cerita fiksi</li>
+                                    <li><strong>Email Marketing:</strong> Konfigurasi untuk email konversi</li>
+                                </ul>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="action-bar" style="justify-content: center; margin-top: var(--md-sys-spacing-6);">
-                            <button class="btn btn-generate" onclick="generateArticlePrompt()">
-                                <span class="material-symbols-rounded">auto_fix_high</span>
-                                Generate JSON Prompt
-                            </button>
-                            <button class="btn btn-outlined" onclick="resetArticleForm()">
-                                <span class="material-symbols-rounded">refresh</span>
-                                Reset
-                            </button>
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">tips_and_updates</span>
+                            Panduan Field Editor
                         </div>
+                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8;">
+                            <li><strong>Tambah Field:</strong> Gunakan tombol preset cepat atau "Tambah Field"</li>
+                            <li><strong>Drag & Drop:</strong> Seret handle (garis-garis) untuk mengurutkan ulang field</li>
+                            <li><strong>Tipe Data:</strong> Pilih String, Number, Boolean, Object, atau Array</li>
+                            <li><strong>Object/Array:</strong> Field bertipe Object/Array bisa memiliki child fields</li>
+                            <li><strong>Custom Field:</strong> Buat field dengan nama dan struktur bebas</li>
+                            <li><strong>Live Preview:</strong> JSON di panel kanan update otomatis</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -1477,6 +2226,7 @@
                         <div class="card-title">
                             <span class="material-symbols-rounded">code</span>
                             JSON Output
+                            <span class="badge" id="articleFieldCount">0</span>
                             <div class="live-indicator">
                                 <div class="live-dot"></div>
                                 LIVE
@@ -1484,7 +2234,7 @@
                         </div>
                         
                         <div class="json-preview" id="article-json-preview">
-                            <button class="icon-btn copy-btn" onclick="copyArticleOutput()" title="Copy to Clipboard">
+                            <button class="icon-btn copy-btn" onclick="copyArticleOutput()" title="Copy to Clipboard" aria-label="Copy to clipboard">
                                 <span class="material-symbols-rounded">content_copy</span>
                             </button>
                             <code id="article-json-code">{}</code>
@@ -1499,20 +2249,38 @@
                                 <span class="material-symbols-rounded">download</span>
                                 Unduh JSON
                             </button>
+                            <button class="btn btn-outlined" onclick="generateFromFields()">
+                                <span class="material-symbols-rounded">auto_fix_high</span>
+                                Generate
+                            </button>
                         </div>
                     </div>
 
                     <div class="card" style="margin-top: var(--md-sys-spacing-4);">
                         <div class="card-title">
-                            <span class="material-symbols-rounded">info</span>
-                            Petunjuk Penggunaan
+                            <span class="material-symbols-rounded">auto_stories</span>
+                            Generated Prompt
                         </div>
-                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8; font: var(--md-sys-typescale-body-medium);">
-                            <li>Pilih topik untuk melihat contoh konfigurasi yang sesuai</li>
-                            <li>Klik "Gunakan Contoh Ini" untuk mengisi form otomatis</li>
-                            <li>Output berupa JSON yang bisa diparse oleh aplikasi lain</li>
-                            <li>Field "generated_prompt" berisi teks prompt siap pakai</li>
-                        </ul>
+                        <div class="output-area" id="generated-prompt-area" style="min-height: 150px; font-size: 0.875rem;">
+                            Prompt akan muncul di sini setelah klik "Generate"
+                        </div>
+                        <div class="action-bar" style="margin-top: var(--md-sys-spacing-3);">
+                            <button class="btn btn-tonal" onclick="copyGeneratedPrompt()">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Salin Prompt
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: var(--md-sys-spacing-4);">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">fact_check</span>
+                            Status
+                        </div>
+                        <div id="article-validation-status" style="color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-body-medium);">
+                            <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-primary);">check_circle</span>
+                            Struktur valid - Siap generate prompt
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1536,55 +2304,90 @@
     </div>
 
     <script>
+        // Global variables for JSON Builder
         let treeData = [];
         let draggedNode = null;
         let draggedPath = null;
 
-        // Article Generator Examples
-        const articleExamples = {
-            general: {
-                role: "Jurnalis senior dengan pengalaman 10 tahun di media nasional",
-                style: "formal",
-                audience: "Masyarakat umum, pembaca berusia 25-50 tahun",
-                wordLimit: "800",
-                task: "Tulis artikel berita tentang peluncuran teknologi renewable energy terbaru di Indonesia. Sertakan dampak ekonomi dan lingkungan, serta wawancara singkat dengan ahli energi.",
-                specs: "Gunakan fakta terkini dari tahun 2024, sertakan data statistik, hindari opini pribadi, gunakan struktur piramida terbalik."
-            },
-            blog: {
-                role: "Content writer profesional spesialis lifestyle dan wellness",
-                style: "casual",
-                audience: "Millennial dan Gen Z, pengguna aktif media sosial",
-                wordLimit: "1200",
-                task: "Buat blog post tentang '5 Morning Routine yang Bikin Hari Lebih Produktif'. Sertakan tips praktis, personal anecdote, dan rekomendasi tools/apps yang berguna.",
-                specs: "Gunakan tone friendly dan conversational, tambahkan emoji strategis, sertakan CTA di akhir, optimize untuk SEO dengan keyword 'morning routine' dan 'produktivitas'."
-            },
-            coding: {
-                role: "Senior Software Engineer dan technical writer",
-                style: "professional",
-                audience: "Developer pemula hingga menengah, programmer self-taught",
-                wordLimit: "1500",
-                task: "Buat tutorial lengkap tentang 'Membangun REST API dengan Node.js dan Express'. Jelaskan dari setup environment, routing, middleware, error handling, hingga deployment.",
-                specs: "Sertakan code snippet yang syntax-highlighted, penjelasan step-by-step, best practices, common pitfalls, dan contoh repository GitHub. Gunakan bahasa Indonesia dengan terminologi teknis dalam bahasa Inggris."
-            },
-            storytelling: {
-                role: "Penulis fiksi kreatif yang telah menerbitkan 3 novel thriller",
-                style: "creative",
-                audience: "Pecinta genre thriller psikologis, pembaca aktif Wattpad dan novel online",
-                wordLimit: "2000",
-                task: "Tulis cerita pendek thriller dengan setting di stasiun kereta api tua yang angker pada tengah malam. Karakter utama adalah seorang arsitek yang terjebak di sana karena kecelakaan tak terduga. Akhiri dengan plot twist yang tak terduga.",
-                specs: "Gunakan teknik show don't tell, bangun atmosfer tension secara gradual, deskripsikan setting dengan detail sensorial, dialog harus natural dan mengungkapkan karakter."
-            },
-            email: {
-                role: "Email marketing specialist dengan conversion rate tinggi",
-                style: "persuasive",
-                audience: "Customer existing dan potential leads, usia 25-45 tahun",
-                wordLimit: "300",
-                task: "Buat email marketing untuk launching produk skincare baru 'Glow Serum'. Fokus pada benefit anti-aging dan natural ingredients. Tujuan utama adalah mendrive traffic ke landing page dan meningkatkan pre-order.",
-                specs: "Gunakan subject line yang catchy (max 50 karakter), personalisasi dengan nama recipient, struktur: hook -> problem -> solution -> CTA, tambahkan urgency (limited time offer), A/B test ready."
-            }
+        // Global variables for Article Generator Field Editor
+        let articleFields = [];
+        let draggedArticleField = null;
+        let draggedArticlePath = null;
+
+        // Article Presets
+        const articlePresets = {
+            empty: [],
+            
+            general: [
+                { id: 'af_1', key: 'topic', value: 'general', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Jurnalis senior dengan pengalaman 10 tahun', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'formal', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Masyarakat umum, pembaca 25-50 tahun', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 800, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Tulis artikel berita tentang peluncuran teknologi renewable energy terbaru di Indonesia', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'technical_specs', value: 'Gunakan fakta terkini, sertakan data statistik, hindari opini pribadi', type: 'string', expanded: true, children: [] }
+            ],
+            
+            blog: [
+                { id: 'af_1', key: 'topic', value: 'blog', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Content writer profesional spesialis lifestyle', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'casual', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Millennial dan Gen Z, pengguna aktif media sosial', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 1200, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Buat blog post tentang 5 Morning Routine yang Bikin Hari Lebih Produktif', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'seo_keywords', value: 'morning routine, produktivitas, habits', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'technical_specs', value: 'Gunakan tone friendly, tambahkan emoji strategis, sertakan CTA di akhir', type: 'string', expanded: true, children: [] }
+            ],
+            
+            coding: [
+                { id: 'af_1', key: 'topic', value: 'coding', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Senior Software Engineer dan technical writer', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'professional', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Developer pemula hingga menengah', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 1500, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Buat tutorial lengkap Membangun REST API dengan Node.js dan Express', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'code_requirements', value: 'Sertakan code snippet, penjelasan step-by-step, best practices', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'technical_specs', value: 'Gunakan bahasa Indonesia dengan terminologi teknis dalam bahasa Inggris', type: 'string', expanded: true, children: [] }
+            ],
+            
+            storytelling: [
+                { id: 'af_1', key: 'topic', value: 'storytelling', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Penulis fiksi kreatif yang telah menerbitkan 3 novel thriller', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'creative', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Pecinta genre thriller psikologis', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 2000, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Tulis cerita pendek thriller dengan setting di stasiun kereta api tua yang angker', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'character', value: 'Alex Mercer, mantan detektif yang kehilangan ingatan', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'plot_twist', value: 'Ending dengan twist yang tak terduga', type: 'string', expanded: true, children: [] },
+                { id: 'af_9', key: 'technical_specs', value: 'Gunakan teknik show dont tell, deskripsikan setting dengan detail sensorial', type: 'string', expanded: true, children: [] }
+            ],
+            
+            email: [
+                { id: 'af_1', key: 'topic', value: 'email', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Email marketing specialist dengan conversion rate tinggi', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'persuasive', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Customer existing dan potential leads, usia 25-45 tahun', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 300, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Buat email marketing untuk launching produk skincare baru Glow Serum', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'cta_goal', value: 'Drive traffic ke landing page dan tingkatkan pre-order', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'urgency', value: 'Limited time offer - 48 jam', type: 'string', expanded: true, children: [] },
+                { id: 'af_9', key: 'technical_specs', value: 'Subject line catchy max 50 karakter, personalisasi dengan nama recipient', type: 'string', expanded: true, children: [] }
+            ]
         };
 
-        // TEMPLATE Lite - Image to Text (struktur sederhana)
+        // Preset field definitions
+        const presetFieldDefinitions = {
+            topic: { key: 'topic', value: 'general', type: 'string' },
+            role: { key: 'ai_role', value: '', type: 'string' },
+            style: { key: 'language_style', value: 'formal', type: 'string' },
+            audience: { key: 'target_audience', value: '', type: 'string' },
+            task: { key: 'main_task', value: '', type: 'string' },
+            word_count: { key: 'word_limit', value: 1000, type: 'number' },
+            format: { key: 'output_format', value: 'narrative', type: 'string' },
+            custom: { key: 'custom_field', value: '', type: 'string' }
+        };
+
+        // TEMPLATE definitions
         const templates = {
             empty: [],
             
@@ -1640,7 +2443,6 @@
                 }
             ],
 
-            // TEMPLATE Pro - Image Prompt (struktur lengkap 8 kategori)
             image_prompt: [
                 {
                     id: 'root_1',
@@ -1774,13 +2576,19 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderTree();
             updateOutput();
-            updateTopicExample();
+            renderArticleFields();
+            updateArticleOutput();
         });
 
         function generateId() {
             return 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
+        function generateArticleFieldId() {
+            return 'af_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // JSON Builder Functions
         function getNodeByPath(pathArray) {
             let current = treeData;
             let parent = null;
@@ -1804,7 +2612,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon material-symbols-rounded">account_tree</div>
-                        <p>Belum ada data. Klik "Tambah Root Field" untuk memulai.</p>
+                        <p>Belum ada data. Klik "Tambah Root" untuk memulai.</p>
                     </div>
                 `;
                 updateNodeCount();
@@ -2228,7 +3036,7 @@
             }
             treeData.forEach(updateIds);
             
-            document.querySelectorAll('.chip').forEach(chip => {
+            document.querySelectorAll('#json-tool .chip').forEach(chip => {
                 chip.classList.remove('active');
             });
             event.target.classList.add('active');
@@ -2236,7 +3044,6 @@
             renderTree();
             updateOutput();
             
-            // Show notification about loaded template
             const templateNames = {
                 'empty': 'Empty',
                 'image_to_text': 'Image to Text (Lite)',
@@ -2365,6 +3172,723 @@
             document.getElementById('nodeCount').textContent = countAllNodes(treeData);
         }
 
+        // Article Generator Field Editor Functions
+        function getArticleFieldByPath(pathArray) {
+            let current = articleFields;
+            let parent = null;
+            
+            for (let i = 0; i < pathArray.length; i++) {
+                parent = current;
+                current = current[pathArray[i]];
+                if (!current) return null;
+                if (i < pathArray.length - 1 && current.children) {
+                    current = current.children;
+                }
+            }
+            
+            return { node: current, parent: parent, isRoot: pathArray.length === 1 };
+        }
+
+        function renderArticleFields() {
+            const container = document.getElementById('articleFieldContainer');
+            
+            if (articleFields.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon material-symbols-rounded">edit_note</div>
+                        <p>Belum ada field. Klik "Tambah Field" atau pilih preset untuk memulai.</p>
+                    </div>
+                `;
+                updateArticleFieldCount();
+                return;
+            }
+
+            container.innerHTML = renderArticleFieldNodes(articleFields, 0, []);
+            attachArticleFieldDragHandlers();
+            updateArticleFieldCount();
+        }
+
+        function renderArticleFieldNodes(nodes, depth, parentPath) {
+            if (!nodes || nodes.length === 0) return '';
+
+            return nodes.map((node, index) => {
+                const hasChildren = node.children && node.children.length > 0;
+                const isExpandable = node.type === 'object' || node.type === 'array';
+                const currentPath = [...parentPath, index];
+                const pathString = currentPath.join('-');
+                
+                let indentHtml = '';
+                for (let i = 0; i < depth; i++) {
+                    const isLast = i === depth - 1;
+                    indentHtml += `<div class="field-line ${isLast ? 'last' : ''}"></div>`;
+                }
+
+                const icon = node.type === 'object' ? 'data_object' : 
+                           node.type === 'array' ? 'data_array' : 'text_fields';
+                
+                const iconClass = node.type === 'object' ? 'field-icon object' : 
+                                node.type === 'array' ? 'field-icon array' : 'field-icon';
+
+                const showToggle = isExpandable;
+                const toggleClass = node.expanded ? 'expanded' : '';
+                const childrenClass = node.expanded ? '' : 'collapsed';
+
+                return `
+                    <div class="article-field-node" data-path="${pathString}" data-id="${node.id}">
+                        <div class="article-field-content" draggable="true" data-path="${pathString}">
+                            <div class="field-indent">
+                                ${indentHtml}
+                                ${showToggle ? `
+                                    <div class="field-toggle ${toggleClass} ${hasChildren ? '' : 'leaf'}" onclick="toggleArticleField('${pathString}')">
+                                        <span class="material-symbols-rounded" style="font-size: 16px;">chevron_right</span>
+                                    </div>
+                                ` : '<div class="field-toggle leaf"></div>'}
+                            </div>
+                            
+                            <div class="field-drag-handle" title="Drag untuk mengurutkan">
+                                <span class="material-symbols-rounded" style="font-size: 18px;">drag_indicator</span>
+                            </div>
+
+                            <span class="material-symbols-rounded ${iconClass}">${icon}</span>
+
+                            <div class="field-inputs">
+                                <input type="text" class="field-key-input" placeholder="Key" value="${escapeHtml(node.key)}" 
+                                    oninput="updateArticleField('${pathString}', 'key', this.value)"
+                                    onkeydown="handleArticleFieldInputKey(event, '${pathString}', 'key')">
+                                
+                                <input type="text" class="field-value-input ${isExpandable ? 'object-mode' : ''}" 
+                                    placeholder="Value" value="${escapeHtml(node.value)}" 
+                                    oninput="updateArticleField('${pathString}', 'value', this.value)"
+                                    onkeydown="handleArticleFieldInputKey(event, '${pathString}', 'value')"
+                                    ${isExpandable ? 'disabled title="Object/Array memiliki children"' : ''}>
+                                
+                                <select class="field-type-select" onchange="updateArticleField('${pathString}', 'type', this.value)">
+                                    <option value="string" ${node.type === 'string' ? 'selected' : ''}>String</option>
+                                    <option value="number" ${node.type === 'number' ? 'selected' : ''}>Number</option>
+                                    <option value="boolean" ${node.type === 'boolean' ? 'selected' : ''}>Boolean</option>
+                                    <option value="object" ${node.type === 'object' ? 'selected' : ''}>Object</option>
+                                    <option value="array" ${node.type === 'array' ? 'selected' : ''}>Array</option>
+                                    <option value="null" ${node.type === 'null' ? 'selected' : ''}>Null</option>
+                                </select>
+                            </div>
+
+                            <div class="field-actions">
+                                ${isExpandable ? `
+                                    <button class="icon-btn add-child" onclick="addArticleChildField('${pathString}')" title="Tambah child">
+                                        <span class="material-symbols-rounded">add</span>
+                                    </button>
+                                ` : ''}
+                                <button class="icon-btn copy" onclick="duplicateArticleField('${pathString}')" title="Duplikat">
+                                    <span class="material-symbols-rounded">content_copy</span>
+                                </button>
+                                <button class="icon-btn delete" onclick="deleteArticleField('${pathString}')" title="Hapus">
+                                    <span class="material-symbols-rounded">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        ${hasChildren ? `
+                            <div class="field-children ${childrenClass}">
+                                ${renderArticleFieldNodes(node.children, depth + 1, currentPath)}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleArticleFieldInputKey(event, path, field) {
+            if (event.key === 'Enter') {
+                event.target.blur();
+            }
+        }
+
+        function attachArticleFieldDragHandlers() {
+            const items = document.querySelectorAll('.article-field-content');
+            items.forEach(item => {
+                item.addEventListener('dragstart', handleArticleFieldDragStart);
+                item.addEventListener('dragend', handleArticleFieldDragEnd);
+                item.addEventListener('dragover', handleArticleFieldDragOver);
+                item.addEventListener('drop', handleArticleFieldDrop);
+                item.addEventListener('dragenter', handleArticleFieldDragEnter);
+                item.addEventListener('dragleave', handleArticleFieldDragLeave);
+            });
+        }
+
+        function handleArticleFieldDragStart(e) {
+            draggedArticleField = this;
+            draggedArticlePath = this.dataset.path;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedArticlePath);
+        }
+
+        function handleArticleFieldDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.article-field-content').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+            draggedArticleField = null;
+            draggedArticlePath = null;
+        }
+
+        function handleArticleFieldDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleArticleFieldDragEnter(e) {
+            if (this !== draggedArticleField) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleArticleFieldDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleArticleFieldDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (draggedArticleField !== this) {
+                const sourcePath = draggedArticlePath.split('-').map(Number);
+                const targetPath = this.dataset.path.split('-').map(Number);
+                
+                const sourceResult = getArticleFieldByPath(sourcePath);
+                if (!sourceResult) return;
+                
+                const sourceNode = sourceResult.node;
+                
+                if (sourceResult.isRoot) {
+                    articleFields.splice(sourcePath[0], 1);
+                } else {
+                    const parentPath = sourcePath.slice(0, -1);
+                    const parentResult = getArticleFieldByPath(parentPath);
+                    if (parentResult && parentResult.node.children) {
+                        parentResult.node.children.splice(sourcePath[sourcePath.length - 1], 1);
+                    }
+                }
+                
+                if (targetPath.length === 1) {
+                    articleFields.splice(targetPath[0], 0, sourceNode);
+                } else {
+                    const targetParentPath = targetPath.slice(0, -1);
+                    const targetParentResult = getArticleFieldByPath(targetParentPath);
+                    if (targetParentResult && targetParentResult.node.children) {
+                        targetParentResult.node.children.splice(targetPath[targetPath.length - 1], 0, sourceNode);
+                    }
+                }
+                
+                renderArticleFields();
+                updateArticleOutput();
+                showSnackbar('Field dipindahkan');
+            }
+            
+            return false;
+        }
+
+        function toggleArticleField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            if (result && result.node) {
+                result.node.expanded = !result.node.expanded;
+                renderArticleFields();
+            }
+        }
+
+        function updateArticleField(pathString, property, value) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) {
+                console.error('Field not found at path:', path);
+                return;
+            }
+            
+            const node = result.node;
+            
+            if (property === 'type') {
+                const oldType = node.type;
+                node.type = value;
+                
+                if ((value === 'object' || value === 'array') && !node.children) {
+                    node.children = [];
+                    node.expanded = true;
+                }
+                
+                if ((oldType === 'object' || oldType === 'array') && 
+                    (value !== 'object' && value !== 'array')) {
+                    node.children = [];
+                    node.value = '';
+                }
+                
+                renderArticleFields();
+            } else {
+                node[property] = value;
+            }
+            
+            updateArticleOutput();
+        }
+
+        function addArticleRootField() {
+            const newNode = {
+                id: generateArticleFieldId(),
+                key: '',
+                value: '',
+                type: 'string',
+                expanded: true,
+                children: []
+            };
+            articleFields.push(newNode);
+            renderArticleFields();
+            updateArticleOutput();
+            
+            setTimeout(() => {
+                const inputs = document.querySelectorAll('.field-key-input');
+                if (inputs.length > 0) {
+                    inputs[inputs.length - 1].focus();
+                }
+            }, 100);
+        }
+
+        function addArticleChildField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            const node = result.node;
+            
+            if (!node.children) {
+                node.children = [];
+            }
+            
+            const newChild = {
+                id: generateArticleFieldId(),
+                key: '',
+                value: '',
+                type: 'string',
+                expanded: true,
+                children: []
+            };
+            
+            node.children.push(newChild);
+            node.expanded = true;
+            renderArticleFields();
+            updateArticleOutput();
+        }
+
+        function duplicateArticleField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            const node = result.node;
+            const clonedNode = JSON.parse(JSON.stringify(node));
+            
+            function updateIds(n) {
+                n.id = generateArticleFieldId();
+                if (n.children) {
+                    n.children.forEach(updateIds);
+                }
+            }
+            updateIds(clonedNode);
+            
+            if (result.isRoot) {
+                articleFields.splice(path[0] + 1, 0, clonedNode);
+            } else {
+                const parentPath = path.slice(0, -1);
+                const parentResult = getArticleFieldByPath(parentPath);
+                if (parentResult && parentResult.node.children) {
+                    parentResult.node.children.splice(path[path.length - 1] + 1, 0, clonedNode);
+                }
+            }
+            
+            renderArticleFields();
+            updateArticleOutput();
+        }
+
+        function deleteArticleField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            showDialog(
+                'Hapus Field?',
+                'Anda yakin ingin menghapus field ini dan semua children-nya?',
+                () => {
+                    if (result.isRoot) {
+                        articleFields.splice(path[0], 1);
+                    } else {
+                        const parentPath = path.slice(0, -1);
+                        const parentResult = getArticleFieldByPath(parentPath);
+                        if (parentResult && parentResult.node.children) {
+                            parentResult.node.children.splice(path[path.length - 1], 1);
+                        }
+                    }
+                    renderArticleFields();
+                    updateArticleOutput();
+                }
+            );
+        }
+
+        function expandAllArticleFields() {
+            function expand(node) {
+                node.expanded = true;
+                if (node.children) {
+                    node.children.forEach(expand);
+                }
+            }
+            articleFields.forEach(expand);
+            renderArticleFields();
+        }
+
+        function collapseAllArticleFields() {
+            function collapse(node) {
+                node.expanded = false;
+                if (node.children) {
+                    node.children.forEach(collapse);
+                }
+            }
+            articleFields.forEach(collapse);
+            renderArticleFields();
+        }
+
+        function clearAllArticleFields() {
+            if (articleFields.length === 0) return;
+            
+            showDialog(
+                'Hapus Semua Field?',
+                `Anda yakin ingin menghapus ${countAllArticleFields(articleFields)} field?`,
+                () => {
+                    articleFields = [];
+                    renderArticleFields();
+                    updateArticleOutput();
+                    document.getElementById('generated-prompt-area').textContent = 'Prompt akan muncul di sini setelah klik "Generate"';
+                }
+            );
+        }
+
+        function countAllArticleFields(nodes) {
+            let count = nodes.length;
+            nodes.forEach(node => {
+                if (node.children) {
+                    count += countAllArticleFields(node.children);
+                }
+            });
+            return count;
+        }
+
+        function updateArticleFieldCount() {
+            document.getElementById('articleFieldCount').textContent = countAllArticleFields(articleFields);
+        }
+
+        function addPresetField(presetType) {
+            const preset = presetFieldDefinitions[presetType];
+            const newNode = {
+                id: generateArticleFieldId(),
+                key: preset.key,
+                value: preset.value,
+                type: preset.type,
+                expanded: true,
+                children: []
+            };
+            articleFields.push(newNode);
+            renderArticleFields();
+            updateArticleOutput();
+            showSnackbar(`Field "${preset.key}" ditambahkan`);
+        }
+
+        function switchFieldTab(tab) {
+            document.querySelectorAll('.field-editor-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.field-editor-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        function loadArticlePreset(presetName) {
+            if (articleFields.length > 0) {
+                showDialog(
+                    'Load Preset',
+                    'Field yang ada akan digantikan. Lanjutkan?',
+                    () => {
+                        applyArticlePreset(presetName);
+                    }
+                );
+            } else {
+                applyArticlePreset(presetName);
+            }
+        }
+
+        function applyArticlePreset(presetName) {
+            articleFields = JSON.parse(JSON.stringify(articlePresets[presetName]));
+            
+            function updateIds(node) {
+                node.id = generateArticleFieldId();
+                if (node.children) {
+                    node.children.forEach(updateIds);
+                }
+            }
+            articleFields.forEach(updateIds);
+            
+            document.querySelectorAll('#presets-tab .chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderArticleFields();
+            updateArticleOutput();
+            
+            const presetNames = {
+                'empty': 'Empty',
+                'general': 'Umum',
+                'blog': 'Blog Post',
+                'coding': 'Coding',
+                'storytelling': 'Storytelling',
+                'email': 'Email Marketing'
+            };
+            showSnackbar(`Preset "${presetNames[presetName]}" dimuat`);
+            
+            // Switch back to fields tab
+            document.querySelectorAll('.field-editor-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.field-editor-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('.field-editor-tab:first-child').classList.add('active');
+            document.getElementById('fields-tab').classList.add('active');
+        }
+
+        function generateArticleJSON() {
+            function convertNode(node) {
+                let value;
+                
+                switch(node.type) {
+                    case 'number':
+                        value = parseFloat(node.value) || 0;
+                        break;
+                    case 'boolean':
+                        value = node.value.toLowerCase() === 'true' || node.value === true || node.value === '1';
+                        break;
+                    case 'null':
+                        value = null;
+                        break;
+                    case 'object':
+                        value = {};
+                        if (node.children) {
+                            node.children.forEach(child => {
+                                value[child.key] = convertNode(child);
+                            });
+                        }
+                        break;
+                    case 'array':
+                        value = [];
+                        if (node.children) {
+                            node.children.forEach(child => {
+                                value.push(convertNode(child));
+                            });
+                        }
+                        break;
+                    default:
+                        value = node.value;
+                }
+                
+                return value;
+            }
+
+            const result = {};
+            articleFields.forEach(node => {
+                result[node.key] = convertNode(node);
+            });
+            
+            return result;
+        }
+
+        function updateArticleOutput() {
+            const json = generateArticleJSON();
+            const jsonString = JSON.stringify(json, null, 2);
+            
+            const highlighted = jsonString
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, (match) => {
+                    let cls = 'json-string';
+                    if (/:\s*$/.test(match)) {
+                        cls = 'json-key';
+                        return `<span class="${cls}">${match}</span>`;
+                    }
+                    return `<span class="${cls}">${match}</span>`;
+                })
+                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
+            
+            document.getElementById('article-json-code').innerHTML = highlighted;
+            validateArticleJSON();
+        }
+
+        function validateArticleJSON() {
+            try {
+                const json = generateArticleJSON();
+                JSON.stringify(json);
+                document.getElementById('article-validation-status').innerHTML = `
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-primary);">check_circle</span>
+                    Struktur valid - Siap generate prompt
+                `;
+                return true;
+            } catch(e) {
+                document.getElementById('article-validation-status').innerHTML = `
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-error);">error</span>
+                    Error: ${e.message}
+                `;
+                return false;
+            }
+        }
+
+        function generateFromFields() {
+            const json = generateArticleJSON();
+            
+            if (Object.keys(json).length === 0) {
+                showSnackbar('Tidak ada field untuk digenerate!');
+                return;
+            }
+
+            const styleLabels = {
+                'formal': 'formal dan profesional',
+                'casual': 'santai dan mudah dipahami',
+                'professional': 'profesional dengan data akurat',
+                'creative': 'kreatif dan imajinatif',
+                'academic': 'akademis dengan referensi',
+                'persuasive': 'persuasif dan konversi',
+                'humorous': 'humoris dan menghibur'
+            };
+
+            const topicLabels = {
+                'general': 'Artikel/Berita Umum',
+                'blog': 'Blog Post',
+                'coding': 'Tutorial/Kode',
+                'storytelling': 'Cerita/Naratif',
+                'email': 'Email Marketing'
+            };
+
+            let prompt = `Anda adalah ${json.ai_role || 'seorang penulis profesional'}. `;
+            
+            if (json.topic && topicLabels[json.topic]) {
+                prompt += `Buatlah ${topicLabels[json.topic]} `;
+            }
+            
+            if (json.language_style && styleLabels[json.language_style]) {
+                prompt += `dengan gaya bahasa ${styleLabels[json.language_style]}. `;
+            }
+            
+            if (json.target_audience) {
+                prompt += `Target audiens Anda adalah ${json.target_audience}. `;
+            }
+
+            prompt += `\n\nTUGAS UTAMA:\n${json.main_task || 'Buat konten sesuai spesifikasi.'}\n\n`;
+
+            if (json.word_limit) {
+                prompt += `PANJANG TEKS: Maksimal ${json.word_limit} kata.\n\n`;
+            }
+
+            if (json.output_format) {
+                prompt += `FORMAT OUTPUT: ${json.output_format}.\n\n`;
+            }
+
+            // Add any additional fields
+            const skipFields = ['topic', 'ai_role', 'language_style', 'target_audience', 'main_task', 'word_limit', 'output_format'];
+            const extraFields = Object.keys(json).filter(key => !skipFields.includes(key));
+            
+            if (extraFields.length > 0) {
+                prompt += `SPESIFIKASI TAMBAHAN:\n`;
+                extraFields.forEach(key => {
+                    prompt += `- ${key}: ${json[key]}\n`;
+                });
+                prompt += `\n`;
+            }
+
+            prompt += `INSTRUKSI PENTING:
+- Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan
+- Hindari pengulangan informasi yang tidak perlu
+- Pastikan konten original dan berkualitas tinggi
+- Gunakan paragraf yang terstruktur dengan baik`;
+
+            document.getElementById('generated-prompt-area').textContent = prompt;
+            showSnackbar('Prompt berhasil digenerate!');
+        }
+
+        function copyArticleOutput() {
+            const codeElement = document.getElementById('article-json-code');
+            const text = codeElement.textContent;
+            
+            if (!text || text === '{}') {
+                showSnackbar('Belum ada hasil untuk disalin!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showSnackbar('JSON disalin ke clipboard!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('JSON disalin ke clipboard!');
+            });
+        }
+
+        function downloadArticleJSON() {
+            const codeElement = document.getElementById('article-json-code');
+            const text = codeElement.textContent;
+            
+            if (!text || text === '{}') {
+                showSnackbar('Belum ada hasil untuk diunduh!');
+                return;
+            }
+            
+            const blob = new Blob([text], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'article-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showSnackbar('File JSON diunduh!');
+        }
+
+        function copyGeneratedPrompt() {
+            const promptArea = document.getElementById('generated-prompt-area');
+            const text = promptArea.textContent;
+            
+            if (!text || text.includes('Prompt akan muncul di sini')) {
+                showSnackbar('Belum ada prompt untuk disalin!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showSnackbar('Prompt disalin ke clipboard!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('Prompt disalin ke clipboard!');
+            });
+        }
+
+        // Common Functions
         function showSnackbar(message) {
             const snackbar = document.getElementById('snackbar');
             document.getElementById('snackbarText').textContent = message;
@@ -2421,13 +3945,17 @@
                 `
                 <div style="line-height: 1.8;">
                     <p><strong>Dua Tools Tersedia:</strong></p>
-                    <p><strong>1. JSON Builder:</strong> Buat dan edit struktur JSON hierarkis dengan drag-drop. Tersedia template Image to Text dan Image Prompt.</p>
-                    <p><strong>2. Article Generator:</strong> Buat prompt optimal untuk AI writer dengan konfigurasi lengkap (topik, peran AI, gaya bahasa, dll).</p>
+                    <p><strong>1. JSON Builder:</strong> Buat dan edit struktur JSON hierarkis dengan drag-drop.</p>
+                    <p><strong>2. Article Generator:</strong> Buat konfigurasi artikel dengan field editor yang fleksibel.</p>
                     <br>
-                    <p><strong>Shortcut Keyboard:</strong></p>
+                    <p><strong>Fitur Article Generator:</strong></p>
                     <ul style="margin-left: 20px;">
-                        <li>Ctrl+Enter: Tambah root node (JSON Builder)</li>
-                        <li>Ctrl+S: Download JSON (JSON Builder)</li>
+                        <li>Edit Fields: Tambah, hapus, edit field dengan tipe data beragam</li>
+                        <li>Preset Templates: Pilih dari 5 template siap pakai</li>
+                        <li>Drag & Drop: Urutkan ulang field sesuai kebutuhan</li>
+                        <li>Nested Structure: Buat Object/Array dengan child fields</li>
+                        <li>Live Preview: JSON update otomatis saat field berubah</li>
+                        <li>Generate Prompt: Konversi field menjadi teks prompt</li>
                     </ul>
                 </div>
                 `,
@@ -2436,7 +3964,6 @@
             );
         }
 
-        // Tool Switching
         function switchTool(tool) {
             document.querySelectorAll('.tool-nav-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tool-content').forEach(content => content.classList.remove('active'));
@@ -2447,236 +3974,15 @@
             showSnackbar(`Beralih ke ${tool === 'json' ? 'JSON Builder' : 'Article Generator'}`);
         }
 
-        // Article Generator Functions
-        const topicLabels = {
-            'general': 'Umum',
-            'blog': 'Blog Post',
-            'coding': 'Coding',
-            'storytelling': 'Storytelling',
-            'email': 'Email Marketing'
-        };
-
-        function updateTopicExample() {
-            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
-            const example = articleExamples[topic];
-            const container = document.getElementById('topic-example');
-            const contentDiv = document.getElementById('example-content');
-            
-            // Update title
-            container.querySelector('.example-box-title').innerHTML = `
-                <span class="material-symbols-rounded">lightbulb</span>
-                Contoh Konfigurasi: ${topicLabels[topic]}
-            `;
-            
-            // Update content
-            contentDiv.innerHTML = `
-                <div class="example-item">
-                    <span class="example-label">Peran AI:</span> ${example.role}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Gaya Bahasa:</span> ${example.style}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Target Audiens:</span> ${example.audience}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Batas Kata:</span> ${example.wordLimit}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Tugas:</span> ${example.task}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Spesifikasi:</span> ${example.specs}
-                </div>
-            `;
-        }
-
-        function loadExample() {
-            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
-            const example = articleExamples[topic];
-            
-            document.getElementById('ai-role').value = example.role;
-            document.getElementById('language-style').value = example.style;
-            document.getElementById('target-audience').value = example.audience;
-            document.getElementById('word-limit').value = example.wordLimit;
-            document.getElementById('main-task').value = example.task;
-            document.getElementById('technical-specs').value = example.specs;
-            
-            updateCharCounter();
-            showSnackbar(`Contoh ${topicLabels[topic]} dimuat!`);
-        }
-
-        function updateCharCounter() {
-            const textarea = document.getElementById('main-task');
-            const counter = document.getElementById('task-counter');
-            const length = textarea.value.length;
-            counter.textContent = `${length} karakter`;
-            
-            if (length > 1000) {
-                counter.classList.add('warning');
-            } else {
-                counter.classList.remove('warning');
-            }
-        }
-
-        function generateArticlePrompt() {
-            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
-            const role = document.getElementById('ai-role').value;
-            const style = document.getElementById('language-style').value;
-            const audience = document.getElementById('target-audience').value;
-            const wordLimit = document.getElementById('word-limit').value;
-            const task = document.getElementById('main-task').value;
-            const specs = document.getElementById('technical-specs').value;
-
-            if (!task.trim()) {
-                showSnackbar('Tugas/Instruksi utama wajib diisi!');
-                document.getElementById('main-task').focus();
-                return;
-            }
-
-            const styleLabels = {
-                'formal': 'formal dan profesional',
-                'casual': 'santai dan mudah dipahami',
-                'professional': 'profesional dengan data akurat',
-                'creative': 'kreatif dan imajinatif',
-                'academic': 'akademis dengan referensi',
-                'persuasive': 'persuasif dan konversi',
-                'humorous': 'humoris dan menghibur'
-            };
-
-            // Generate the text prompt
-            let generatedPrompt = `Anda adalah ${role || 'seorang penulis profesional'}. `;
-            generatedPrompt += `Buatlah konten ${topicLabels[topic]} dengan gaya bahasa ${styleLabels[style]}. `;
-            
-            if (audience) {
-                generatedPrompt += `Target audiens Anda adalah ${audience}. `;
-            }
-
-            generatedPrompt += `TUGAS UTAMA:${task}`;
-
-            if (wordLimit) {
-                generatedPrompt += `PANJANG TEKS: Maksimal ${wordLimit} kata.`;
-            }
-
-            generatedPrompt += `SPESIFIKASI TAMBAHAN:${specs || 'Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan.'}`;
-
-            generatedPrompt += `INSTRUKSI PENTING:
-- Hindari pengulangan informasi yang tidak perlu
-- Pastikan konten original dan berkualitas tinggi
-- Gunakan paragraf yang terstruktur dengan baik`;
-
-            // Create JSON output
-            const jsonOutput = {
-                metadata: {
-                    tool: "article_generator",
-                    version: "1.0",
-                    generated_at: new Date().toISOString()
-                },
-                configuration: {
-                    topic: topic,
-                    topic_label: topicLabels[topic],
-                    ai_role: role,
-                    language_style: style,
-                    language_style_label: styleLabels[style],
-                    target_audience: audience,
-                    word_limit: wordLimit ? parseInt(wordLimit) : null,
-                    main_task: task,
-                    technical_specs: specs
-                },
-                generated_prompt: generatedPrompt,
-                instructions: {
-                    note: "Copy generated_prompt dan gunakan di AI chatbot favorit Anda (ChatGPT, Claude, Gemini, dll)",
-                    usage: "Prompt ini dioptimalkan untuk menghasilkan output sesuai konfigurasi yang ditentukan"
-                }
-            };
-
-            // Display JSON
-            const jsonString = JSON.stringify(jsonOutput, null, 2);
-            const highlighted = jsonString
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, (match) => {
-                    let cls = 'json-string';
-                    if (/:\s*$/.test(match)) {
-                        cls = 'json-key';
-                        return `<span class="${cls}">${match}</span>`;
-                    }
-                    return `<span class="${cls}">${match}</span>`;
-                })
-                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
-                .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
-                .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
-
-            document.getElementById('article-json-code').innerHTML = highlighted;
-            showSnackbar('JSON Prompt berhasil dibuat!');
-        }
-
-        function copyArticleOutput() {
-            const codeElement = document.getElementById('article-json-code');
-            const text = codeElement.textContent;
-            
-            if (!text || text === '{}') {
-                showSnackbar('Belum ada hasil untuk disalin!');
-                return;
-            }
-            
-            navigator.clipboard.writeText(text).then(() => {
-                showSnackbar('JSON disalin ke clipboard!');
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showSnackbar('JSON disalin ke clipboard!');
-            });
-        }
-
-        function downloadArticleJSON() {
-            const codeElement = document.getElementById('article-json-code');
-            const text = codeElement.textContent;
-            
-            if (!text || text === '{}') {
-                showSnackbar('Belum ada hasil untuk diunduh!');
-                return;
-            }
-            
-            const blob = new Blob([text], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'article-prompt.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showSnackbar('File JSON diunduh!');
-        }
-
-        function resetArticleForm() {
-            document.querySelector('input[name="topic"][value="general"]').checked = true;
-            document.getElementById('ai-role').value = '';
-            document.getElementById('language-style').value = 'formal';
-            document.getElementById('target-audience').value = '';
-            document.getElementById('word-limit').value = '';
-            document.getElementById('main-task').value = '';
-            document.getElementById('technical-specs').value = '';
-            document.getElementById('article-json-code').textContent = '{}';
-            document.getElementById('task-counter').textContent = '0 karakter';
-            document.getElementById('task-counter').classList.remove('warning');
-            
-            updateTopicExample();
-            showSnackbar('Form direset!');
-        }
-
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     if (document.getElementById('json-tool').classList.contains('active')) {
                         addRootNode();
+                    } else {
+                        addArticleRootField();
                     }
                 } else if (e.key === 's') {
                     e.preventDefault();
@@ -2688,6 +3994,27 @@
                 }
             }
         });
+
+        // Touch event improvements for mobile drag and drop
+        let touchStartY = 0;
+        let touchStartX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!draggedNode && !draggedArticleField) return;
+            
+            const touchY = e.touches[0].clientY;
+            const touchX = e.touches[0].clientX;
+            
+            // Prevent scrolling while dragging
+            if (Math.abs(touchY - touchStartY) > 10 || Math.abs(touchX - touchStartX) > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
