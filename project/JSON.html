@@ -2552,13 +2552,13 @@
                 generatedPrompt += `Target audiens Anda adalah ${audience}. `;
             }
 
-            generatedPrompt += `\n\nTUGAS UTAMA:\n${task}\n\n`;
+            generatedPrompt += `TUGAS UTAMA:${task}`;
 
             if (wordLimit) {
-                generatedPrompt += `PANJANG TEKS: Maksimal ${wordLimit} kata.\n\n`;
+                generatedPrompt += `PANJANG TEKS: Maksimal ${wordLimit} kata.`;
             }
 
-            generatedPrompt += `SPESIFIKASI TAMBAHAN:\n${specs || 'Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan.'}\n\n`;
+            generatedPrompt += `SPESIFIKASI TAMBAHAN:${specs || 'Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan.'}`;
 
             generatedPrompt += `INSTRUKSI PENTING:
 - Hindari pengulangan informasi yang tidak perlu
