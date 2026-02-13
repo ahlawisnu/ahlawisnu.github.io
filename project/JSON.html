@@ -446,7 +446,7 @@
         .tree-key-input {
             flex: 1;
             min-width: 100px;
-            max-width: 180px;
+            max-width: 200px;
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
             border: 1px solid var(--md-sys-color-outline);
             border-radius: var(--md-sys-shape-corner-small);
@@ -948,7 +948,8 @@
                     
                     <div class="chip-group">
                         <span class="chip active" onclick="loadTemplate('empty')">Empty</span>
-                        <span class="chip" onclick="loadTemplate('image_to_text')">Image to Text</span>
+                        <span class="chip" onclick="loadTemplate('image_to_text')">Image to Text (Lite)</span>
+                        <span class="chip" onclick="loadTemplate('image_prompt')">Image Prompt (Pro)</span>
                     </div>
 
                     <div class="tree-container" id="treeContainer">
@@ -977,13 +978,62 @@
                 <div class="card">
                     <div class="card-title">
                         <span class="material-symbols-rounded">tips_and_updates</span>
-                        Tips Penggunaan
+                        Perbedaan Template
                     </div>
                     <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8;">
-                        <li><strong>Live Preview:</strong> Output JSON update otomatis saat Anda mengetik</li>
-                        <li><strong>Drag & Drop:</strong> Gunakan ikon garis untuk mengatur urutan node</li>
-                        <li><strong>Object/Array:</strong> Pilih tipe ini untuk membuat nested structure</li>
-                        <li><strong>Format Bersih:</strong> Output tanpa escape characters (\n, \t)</li>
+                        <li><strong>Image to Text (Lite):</strong> Struktur sederhana dengan override dan output basic</li>
+                        <li><strong>Image Prompt (Pro):</strong> Struktur lengkap card">
+                    <div class="card-title">
+                        <span class="material-symbols-rounded">tune</span>
+                        Tree Structure Editor
+                    </div>
+                    <div class="card-subtitle">Edit struktur JSON hierarkis - Live Preview otomatis</div>
+                    
+                    <div class="chip-group">
+                        <span class="chip active" onclick="loadTemplate('empty')">Empty</span>
+                        <span class="chip" onclick="loadTemplate('image_to_text')">Image to Text (Lite)</span>
+                        <span class="chip" onclick="loadTemplate('image_prompt')">Image Prompt (Pro)</span>
+                    </div>
+
+                    <div class="tree-container" id="treeContainer">
+                    </div>
+
+                    <div class="action-bar" style="margin-top: var(--md-sys-spacing-4);">
+                        <button class="btn btn-filled" onclick="addRootNode()">
+                            <span class="material-symbols-rounded">add</span>
+                            Tambah Root Field
+                        </button>
+                        <button class="btn btn-outlined" onclick="expandAll()">
+                            <span class="material-symbols-rounded">unfold_more</span>
+                            Expand All
+                        </button>
+                        <button class="btn btn-outlined" onclick="collapseAll()">
+                            <span class="material-symbols-rounded">unfold_less</span>
+                            Collapse All
+                        </button>
+                        <button class="btn btn-text" onclick="clearAll()">
+                            <span class="material-symbols-rounded">delete_sweep</span>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span class="material-symbols-rounded">tips_and_updates</span>
+                        Perbedaan Template
+                    </div>
+                    <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8;">
+                        <li><strong>Image to Text (Lite):</strong> Struktur sederhana dengan override dan output basic</li>
+                        <li><strong>Image Prompt (Pro):</strong> Struktur lengkap 8 kategori untuk AI image generation</li>
+                        <li><strong>Main Subject:</strong> Deskripsi karakter (Gender, Age, Ethnicity, Body Type, Skin Color)</li>
+                        <li><strong>Facial Features:</strong> Detail wajah dan rambut</li>
+                        <li><strong>Clothing:</strong> Pakaian lengkap dengan aksesoris</li>
+                        <li><strong>Pose:</strong> Gaya pose dan arah pandangan</li>
+                        <li><strong>Environment:</strong> Setting dan background</li>
+                        <li><strong>Visual Technique:</strong> Gaya seni dan pencahayaan</li>
+                        <li><strong>Quality:</strong> Resolusi dan parameter teknis</li>
+                        <li><strong>Negative Prompt:</strong> Elemen yang dihindari</li>
                     </ul>
                 </div>
             </div>
@@ -1054,8 +1104,10 @@
         let draggedNode = null;
         let draggedPath = null;
 
+        // TEMPLATE Lite - Image to Text (struktur sederhana)
         const templates = {
             empty: [],
+            
             image_to_text: [
                 {
                     id: 'root_1',
@@ -1103,6 +1155,136 @@
                                 { id: 'child_1_2_2', key: 'bahasa', value: 'inggris', type: 'string', expanded: true, children: [] },
                                 { id: 'child_1_2_3', key: 'NB', value: 'hindari prompt ambigu', type: 'string', expanded: true, children: [] }
                             ]
+                        }
+                    ]
+                }
+            ],
+
+            // TEMPLATE Pro - Image Prompt (struktur lengkap 8 kategori)
+            image_prompt: [
+                {
+                    id: 'root_1',
+                    key: 'action',
+                    value: 'image_to_text',
+                    type: 'string',
+                    expanded: true,
+                    children: []
+                },
+                {
+                    id: 'root_2',
+                    key: 'taks',
+                    value: 'membuat prompt lengkap berdasarkan referensi gambar dengan lengkap',
+                    type: 'string',
+                    expanded: true,
+                    children: []
+                },
+                {
+                    id: 'root_3',
+                    key: 'action_input',
+                    value: '',
+                    type: 'object',
+                    expanded: true,
+                    children: [
+                        {
+                            id: 'child_1',
+                            key: 'Main Subject',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_1_1', key: 'Description', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_2', key: 'Gender', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_3', key: 'Age', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_4', key: 'Ethnicity', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_5', key: 'Body Type', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_6', key: 'Skin Color', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_2',
+                            key: 'Facial Features',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_2_1', key: 'Face Shape', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_2', key: 'Eye Color', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_3', key: 'Hair Color', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_4', key: 'Hair Length', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_5', key: 'Hairstyle', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_6', key: 'Facial Expression', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_3',
+                            key: 'Clothing',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_3_1', key: 'Main Clothing Type', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_2', key: 'Top and bottom clothes', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_3', key: 'Clothing Details', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_4', key: 'Accessories', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_5', key: 'Footwear', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_4',
+                            key: 'Pose',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_4_1', key: 'Pose Style', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_4_2', key: 'Movement Details', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_4_3', key: 'Eye Gaze Direction', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_5',
+                            key: 'Environment',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_5_1', key: 'Location Setting', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_5_2', key: 'Background Description', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_5_3', key: 'Supporting Objects', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_6',
+                            key: 'Visual Technique',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_6_1', key: 'Art/Photo Style', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_2', key: 'Lighting', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_3', key: 'Visual Technique', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_4', key: 'Mood', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_7',
+                            key: 'Quality',
+                            value: '',
+                            type: 'object',
+                            expanded: true,
+                            children: [
+                                { id: 'child_7_1', key: 'Resolution', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_7_2', key: 'Seed', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_7_3', key: 'Aspect Ratio', value: '', type: 'string', expanded: true, children: [] }
+                            ]
+                        },
+                        {
+                            id: 'child_8',
+                            key: 'Negative Prompt',
+                            value: '',
+                            type: 'string',
+                            expanded: true,
+                            children: []
                         }
                     ]
                 }
@@ -1572,6 +1754,14 @@
             
             renderTree();
             updateOutput();
+            
+            // Show notification about loaded template
+            const templateNames = {
+                'empty': 'Empty',
+                'image_to_text': 'Image to Text (Lite)',
+                'image_prompt': 'Image Prompt (Pro)'
+            };
+            showSnackbar(`Template "${templateNames[templateName]}" dimuat`);
         }
 
         function generateJSON() {
@@ -1621,12 +1811,8 @@
 
         function updateOutput() {
             const json = generateJSON();
-            
-            // Generate clean JSON without escape characters for newlines/tabs
-            // Using custom replacer to handle strings with newlines/tabs
             const jsonString = JSON.stringify(json, null, 2);
             
-            // Syntax highlighting - clean version without escape sequences visualization
             const highlighted = jsonString
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
@@ -1753,10 +1939,19 @@
                 'Bantuan',
                 `
                 <div style="line-height: 1.8;">
-                    <p><strong>Live Preview:</strong> Output update otomatis saat mengetik</p>
-                    <p><strong>Drag & Drop:</strong> Ikon garis (⋮⋮) untuk mengurutkan</p>
-                    <p><strong>Object/Array:</strong> Klik + untuk menambah children</p>
-                    <p><strong>Format Bersih:</strong> Tanpa escape characters (\\n, \\t) di preview</p>
+                    <p><strong>Dua Template Tersedia:</strong></p>
+                    <p><strong>1. Image to Text (Lite):</strong> Struktur sederhana dengan override dan output basic. Cocok untuk konfigurasi basic OCR/image analysis.</p>
+                    <p><strong>2. Image Prompt (Pro):</strong> Struktur lengkap 8 kategori untuk AI image generation:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Main Subject - Karakter utama</li>
+                        <li>Facial Features - Detail wajah</li>
+                        <li>Clothing - Pakaian & aksesoris</li>
+                        <li>Pose - Gaya dan gerakan</li>
+                        <li>Environment - Setting lokasi</li>
+                        <li>Visual Technique - Gaya seni</li>
+                        <li>Quality - Parameter teknis</li>
+                        <li>Negative Prompt - Elemen dihindari</li>
+                    </ul>
                 </div>
                 `,
                 null,
