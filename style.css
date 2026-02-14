@@ -192,7 +192,6 @@ p {
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-sizing: border-box; /* Tambahan: memastikan padding tidak melebihi width */
 }
 
 /* Logo atau judul */
@@ -207,9 +206,8 @@ p {
 .navbar ul {
   list-style: none;
   display: flex;
+  max-width: 800px;
   gap: 20px;
-  margin: 0; /* Tambahan: menghilangkan default margin */
-  padding: 0; /* Tambahan: menghilangkan default padding */
 }
 
 .navbar ul li a {
@@ -217,63 +215,34 @@ p {
   color: #ecf0f1;
   font-size: 1rem;
   transition: color 0.3s ease;
-  display: block; /* Tambahan: memudahkan klik area */
-  padding: 5px 0; /* Tambahan: area klik lebih besar */
 }
 
 .navbar ul li a:hover {
   color: #1abc9c; /* efek hover */
 }
 
-/* Menu toggle button - hidden di desktop */
-.navbar .menu-toggle {
-  display: none; /* Sembunyikan di desktop */
-  cursor: pointer;
-  color: #ecf0f1;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  padding: 5px;
-}
-
-/* Responsif untuk mobile (max-width: 800px) */
-@media (max-width: 600px) {
-  .navbar {
-    flex-wrap: wrap; /* Tambahan: memungkinkan wrapping jika diperlukan */
-  }
+/* Responsif untuk mobile */
+@media (max-width: 800px) {
   .navbar ul {
     flex-direction: column;
     background-color: #34495e;
     position: absolute;
-    top: 100%; /* Ubah: posisi tepat di bawah navbar */
-    right: 20px; /* Ubah: sejajar dengan padding navbar */
+    top: 60px;
+    right: 0;
     width: 200px;
     display: none;
     padding: 10px;
-    border-radius: 0 0 8px 8px; /* Tambahan: sudut membulat di bawah */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Tambahan: bayangan untuk depth */
-    gap: 0; /* Ubah: hapus gap, gunakan padding pada link saja */
   }
 
   .navbar ul.active {
     display: flex;
   }
 
-  .navbar ul li {
-    width: 100%; /* Tambahan: full width */
-  }
-
-  .navbar ul li a {
-    padding: 12px 15px; /* Tambahan: padding lebih besar untuk touch target */
-    border-bottom: 1px solid rgba(255,255,255,0.1); /* Tambahan: pemisah antar item */
-  }
-
-  .navbar ul li:last-child a {
-    border-bottom: none; /* Tambahan: hapus border di item terakhir */
-  }
-
-  .navbar ul li a:hover {
-    background-color: rgba(255,255,255,0.1); /* Tambahan: efek hover background */
-    color: #1abc9c;
+  .navbar .menu-toggle {
+    display: block;
+    cursor: pointer;
+    color: #ecf0f1;
+    font-size: 1.5rem;
+    
   }
 }
