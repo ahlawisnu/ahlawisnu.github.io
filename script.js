@@ -257,3 +257,87 @@ document.querySelector('.menu-toggle').addEventListener('click', function() {
   document.querySelector('.navbar ul').classList.toggle('active');
 });
 
+// Toggle Navbar on Mobile
+      const navToggle = document.getElementById('navToggle');
+      const navbar = document.getElementById('navbar');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      navToggle.addEventListener('click', () => {
+          navbar.classList.toggle('active');
+          navToggle.textContent = navbar.classList.contains('active') ? '✕' : '☰';
+      });
+
+      // Close navbar when clicking on mobile
+      navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+              if (window.innerWidth <= 768) {
+                  navbar.classList.remove('active');
+                  navToggle.textContent = '☰';
+              }
+          });
+      });
+
+      // Active State Management & Smooth Scroll
+      navLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+              e.preventDefault();
+              
+              // Remove active class from all links
+              navLinks.forEach(l => l.classList.remove('active'));
+              
+              // Add active class to clicked link
+              link.classList.add('active');
+              
+              // Smooth scroll to section
+              const targetId = link.getAttribute('href');
+              const targetSection = document.querySelector(targetId);
+              
+              if (targetSection) {
+                  targetSection.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start'
+                  });
+              }
+          });
+      });
+
+      // Scroll Spy - Update active state on scroll
+      const sections = document.querySelectorAll('.section');
+      
+      window.addEventListener('scroll', () => {
+          let current = '';
+          
+          sections.forEach(section => {
+              const sectionTop = section.offsetTop;
+              const sectionHeight = section.clientHeight;
+              
+              if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                  current = section.getAttribute('id');
+              }
+          });
+
+          navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${current}`) {
+                  link.classList.add('active');
+              }
+          });
+      });
+
+      // Close navbar when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768) {
+              if (!navbar.contains(e.target) && !navToggle.contains(e.target)) {
+                  navbar.classList.remove('active');
+                  navToggle.textContent = '☰';
+              }
+          }
+      });
+
+      // Handle resize
+      window.addEventListener('resize', () => {
+          if (window.innerWidth > 768) {
+              navbar.classList.remove('active');
+              navToggle.textContent = '☰';
+          }
+      });
