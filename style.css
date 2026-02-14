@@ -241,11 +241,6 @@ p {
   .navbar {
     flex-wrap: wrap; /* Tambahan: memungkinkan wrapping jika diperlukan */
   }
-
-  .navbar .menu-toggle {
-    display: block; /* Tampilkan hamburger menu */
-  }
-
   .navbar ul {
     flex-direction: column;
     background-color: #34495e;
