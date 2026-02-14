@@ -221,7 +221,7 @@ p {
 }
 
 /* Responsif untuk mobile */
-@media (max-width: 1080px) {
+@media (max-width: 600px) {
   .navbar ul {
     flex-direction: column;
     background-color: #34495e;
@@ -246,6 +246,7 @@ p {
 }
 
 /* Default sembunyikan toggle di desktop */
-/* .menu-toggle {
-  display: none;
-} */
+.menu-toggle {
+  display: none;  
+tampilan: tidak ada;
+}
