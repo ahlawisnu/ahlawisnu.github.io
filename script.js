@@ -250,9 +250,3 @@ function generatePrompt() {
 
     alert("Prompt berhasil disimpan sebagai favorit!");
   }
-
-// toggle menu
-
-document.querySelector('.menu-toggle').addEventListener('click', function() {
-  document.querySelector('.navbar ul').classList.toggle('active');
-});
