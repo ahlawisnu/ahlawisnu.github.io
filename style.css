@@ -12,6 +12,7 @@ body {
       font-family: sans-serif;
       background: #f4f4fa;
       color: #333;
+  		max-width: 800px;
       padding: 30px;
       margin: auto;
       transition: all 0.3s ease-in-out;
@@ -236,16 +237,7 @@ p {
 }
 
 /* Responsif untuk mobile (max-width: 800px) */
-@media (max-width: 800px) {
-  body {
-      font-family: sans-serif;
-      background: #f4f4fa;
-      color: #333;
-      padding: 30px;
-      margin: auto;
-      transition: all 0.3s ease-in-out;
-}
-
+@media (max-width: 600px) {
   .navbar {
     flex-wrap: wrap; /* Tambahan: memungkinkan wrapping jika diperlukan */
   }
