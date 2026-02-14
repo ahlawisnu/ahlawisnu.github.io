@@ -206,6 +206,7 @@ p {
 .navbar ul {
   list-style: none;
   display: flex;
+  max-width: 800px;
   gap: 20px;
 }
 
@@ -221,7 +222,7 @@ p {
 }
 
 /* Responsif untuk mobile */
-@media (max-width: 1080px) {
+@media (max-width: 800px) {
   .navbar ul {
     flex-direction: column;
     background-color: #34495e;
@@ -240,7 +241,6 @@ p {
   .navbar .menu-toggle {
     display: block;
     cursor: pointer;
-    max-width: 800px;
     color: #ecf0f1;
     font-size: 1.5rem;
     
