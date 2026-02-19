@@ -1,108 +1,818 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generator Prompt AI untuk Blogger</title>
-    <meta name="robots" content="index, follow">
-  <style>
-    body {font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
-    .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h1 { text-align: center; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input, textarea, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
-    button { margin-top: 20px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #0056b3; }
-    .output-box, .preview-box { margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 6px; position: relative; }
-    pre { white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; }
-    .copy-btn { position: absolute; top: 10px; right: 10px; background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
-    .copy-btn:hover { background: #218838; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Miku Blog Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            /* Sakura Miku Dark Palette */
+            --primary: #ff9ecd;
+            --on-primary: #58002c;
+            --primary-container: #8b0049;
+            --on-primary-container: #ffd9e3;
+            
+            --secondary: #ffb7d5;
+            --on-secondary: #5c1138;
+            --secondary-container: #7a2950;
+            --on-secondary-container: #ffd9e6;
+            
+            --tertiary: #f4b8e4;
+            --on-tertiary: #4a1a3d;
+            --tertiary-container: #633154;
+            --on-tertiary-container: #ffd7f0;
+            
+            --surface: #1f1a1d;
+            --on-surface: #e9e0e3;
+            --surface-variant: #4f4449;
+            --on-surface-variant: #d2c3c9;
+            
+            --background: #121012;
+            --on-background: #e9e0e3;
+            
+            --outline: #9e8d93;
+            --outline-variant: #4f4449;
+            
+            --error: #ffb4ab;
+            --on-error: #690005;
+            
+            --shadow: #000000;
+            --scrim: #000000;
+            
+            --miku-teal: #39c5bb;
+            --sakura-pink: #ffb7c5;
+            --deep-purple: #2d1f2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .app-bar {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--deep-purple) 100%);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .app-bar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--miku-teal) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(255, 158, 205, 0.4);
+        }
+
+        .logo .material-icons-round {
+            color: var(--on-primary);
+            font-size: 28px;
+        }
+
+        .app-title {
+            flex: 1;
+        }
+
+        .app-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .app-title p {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            margin-top: 0.25rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--surface);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--outline-variant);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 158, 205, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-container);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon .material-icons-round {
+            color: var(--on-primary-container);
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+
+        /* Input Fields */
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--on-surface-variant);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .text-field {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background-color: var(--surface-variant);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            color: var(--on-surface);
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .text-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--surface);
+            box-shadow: 0 0 0 4px rgba(255, 158, 205, 0.1);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--on-surface-variant);
+            font-size: 20px;
+        }
+
+        textarea.text-field {
+            min-height: 120px;
+            resize: vertical;
+            padding: 1rem;
+            padding-left: 3rem;
+            line-height: 1.6;
+        }
+
+        select.text-field {
+            cursor: pointer;
+            appearance: none;
+            padding-right: 3rem;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--on-surface-variant);
+            pointer-events: none;
+        }
+
+        /* Aspect Ratio Preview */
+        .aspect-preview {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background-color: var(--surface-variant);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+        }
+
+        .aspect-box {
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--miku-teal) 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--on-primary);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        /* Preview Section */
+        .preview-container {
+            background-color: var(--background);
+            border-radius: 16px;
+            padding: 2rem;
+            min-height: 400px;
+            border: 2px dashed var(--outline-variant);
+        }
+
+        .preview-content {
+            max-width: 100%;
+        }
+
+        .preview-image {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .preview-image.loaded {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .preview-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .preview-description {
+            font-size: 1.125rem;
+            color: var(--on-surface);
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--on-surface-variant);
+        }
+
+        .empty-state .material-icons-round {
+            font-size: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Markdown Output */
+        .code-container {
+            position: relative;
+            background-color: #0d0d0d;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--outline-variant);
+        }
+
+        .code-header {
+            background-color: var(--surface-variant);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .code-label {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background-color: transparent;
+            color: var(--on-surface-variant);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--primary-container);
+            color: var(--on-primary-container);
+        }
+
+        .icon-btn.copied {
+            background-color: var(--miku-teal);
+            color: #000;
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #e9e0e3;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Action Buttons */
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            box-shadow: 0 2px 8px rgba(255, 158, 205, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--sakura-pink);
+            box-shadow: 0 4px 16px rgba(255, 158, 205, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-container);
+            color: var(--on-secondary-container);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            color: var(--on-secondary);
+        }
+
+        .btn-tertiary {
+            background-color: var(--tertiary-container);
+            color: var(--on-tertiary-container);
+        }
+
+        .btn-tertiary:hover {
+            background-color: var(--tertiary);
+            color: var(--on-tertiary);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--surface);
+            color: var(--on-surface);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            border: 1px solid var(--outline-variant);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            color: var(--miku-teal);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .app-bar {
+                padding: 1rem;
+            }
+            
+            .app-title h1 {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-container);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 158, 205, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-  <a class="whatsapp-link" href="/">Home</a>
-  <div class="container">
-    <h1>Generator Konten Prompt AI untuk Blogger</h1>
-
-    <label for="imageUrl">URL Gambar:</label>
-    <input type="text" id="imageUrl" placeholder="https://...">
-
-    <label for="ratio">Rasio Gambar:</label>
-    <input type="text" id="ratio" placeholder="Contoh: 9:16">
-
-    <label for="model">Model Gaya:</label>
-    <select id="model">
-      <option value="Anime Style">Anime Style</option>
-      <option value="Realism">Realism</option>
-      <option value="Cyberpunk">Cyberpunk</option>
-      <option value="Fantasy">Fantasy</option>
-    </select>
-
-    <label for="description">Deskripsi Prompt:</label>
-    <textarea id="description" rows="4" placeholder="Contoh: Seorang wanita muda berambut hitam panjang dengan bunga putih..."></textarea>
-
-    <label for="hashtags">Hashtag:</label>
-    <input type="text" id="hashtags" placeholder="#anime #aiart #digitalfashion">
-
-    <button onclick="generateHTML()">Buat Kode HTML</button>
-
-    <div class="output-box" id="outputSection" style="display:none;">
-      <button class="copy-btn" onclick="copyHTML()">Salin HTML</button>
-      <pre id="htmlOutput"></pre>
-    </div>
-
-    <div class="preview-box" id="previewSection" style="display:none;">
-      <h2>Pratinjau Postingan Blogger</h2>
-      <div id="previewContent" style="border:1px solid #ccc; padding:15px; border-radius:6px;"></div>
-    </div>
-  </div>
-
-  <script>
-    function generateHTML() {
-      const imageUrl = document.getElementById("imageUrl").value;
-      const ratio = document.getElementById("ratio").value;
-      const model = document.getElementById("model").value;
-      const description = document.getElementById("description").value;
-      const hashtags = document.getElementById("hashtags").value;
-
-      const htmlContent = `
-<!-- POSTINGAN BLOGGER: Karya AI Generatif -->
-<div class="ai-art-post">
-  <h2>Prompt: ${model}</h2>
-  <img src="${imageUrl}" alt="AI Generated Art" style="max-width:100%; border-radius:8px;">
-  <p><strong>Rasio Gambar:</strong> ${ratio}</p>
-  <p><strong>Model Gaya:</strong> ${model}</p>
-  <p><strong>Deskripsi:</strong> ${description}</p>
-  <p><strong>Hashtag:</strong> ${hashtags}</p>
-</div>
-<!-- AKHIR POSTINGAN -->
-      `.trim();
-
-      document.getElementById("htmlOutput").textContent = htmlContent;
-      document.getElementById("outputSection").style.display = "block";
-
-      // Tampilkan preview
-      document.getElementById("previewContent").innerHTML = `
-        <div class="ai-art-post">
-          <h2>Prompt: ${model}</h2>
-          <img src="${imageUrl}" alt="AI Generated Art" style="max-width:100%; border-radius:8px;">
-          <p><strong>Rasio Gambar:</strong> ${ratio}</p>
-          <p><strong>Model Gaya:</strong> ${model}</p>
-          <p><strong>Deskripsi:</strong> ${description}</p>
-          <p><strong>Hashtag:</strong> ${hashtags}</p>
+    <!-- App Bar -->
+    <header class="app-bar">
+        <div class="app-bar-content">
+            <div class="logo">
+                <span class="material-icons-round">edit_note</span>
+            </div>
+            <div class="app-title">
+                <h1>Sakura Miku Blog Generator</h1>
+                <p>Material Design 3 • Markdown Output</p>
+            </div>
         </div>
-      `;
-      document.getElementById("previewSection").style.display = "block";
-    }
+    </header>
 
-    function copyHTML() {
-      const html = document.getElementById("htmlOutput").textContent;
-      navigator.clipboard.writeText(html).then(() => {
-        alert("Kode HTML berhasil disalin!");
-      }).catch(err => {
-        alert("Gagal menyalin: " + err);
-      });
-    }
-  </script>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Input Section -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <span class="material-icons-round">create</span>
+                </div>
+                <h2 class="card-title">Input Konten</h2>
+            </div>
+
+            <form id="blogForm">
+                <!-- Judul -->
+                <div class="input-group">
+                    <label class="input-label">Judul Artikel</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons-round input-icon">title</span>
+                        <input type="text" id="judul" class="text-field" placeholder="Masukkan judul blog post..." required>
+                    </div>
+                </div>
+
+                <!-- Link Image -->
+                <div class="input-group">
+                    <label class="input-label">Link Gambar</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons-round input-icon">image</span>
+                        <input type="url" id="imageLink" class="text-field" placeholder="https://example.com/image.jpg" required>
+                    </div>
+                </div>
+
+                <!-- Aspect Ratio -->
+                <div class="input-group">
+                    <label class="input-label">Aspect Ratio</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons-round input-icon">aspect_ratio</span>
+                        <select id="aspectRatio" class="text-field" required>
+                            <option value="16:9">16:9 (Widescreen)</option>
+                            <option value="4:3">4:3 (Standard)</option>
+                            <option value="1:1">1:1 (Square)</option>
+                            <option value="3:2">3:2 (Photo)</option>
+                            <option value="21:9">21:9 (Ultrawide)</option>
+                            <option value="9:16">9:16 (Portrait)</option>
+                        </select>
+                        <span class="material-icons-round select-arrow">expand_more</span>
+                    </div>
+                    <div class="aspect-preview">
+                        <div class="aspect-box" id="aspectBox">16:9</div>
+                        <span>Preview ratio gambar akan ditampilkan</span>
+                    </div>
+                </div>
+
+                <!-- Deskripsi -->
+                <div class="input-group">
+                    <label class="input-label">Deskripsi / Konten</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons-round input-icon" style="top: 1.5rem;">description</span>
+                        <textarea id="deskripsi" class="text-field" placeholder="Tulis deskripsi atau konten lengkap di sini... Markdown didukung!" required></textarea>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="btn btn-primary" onclick="generatePost()">
+                        <span class="material-icons-round">auto_fix_high</span>
+                        Generate
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                        <span class="material-icons-round">clear</span>
+                        Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Output Section -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <span class="material-icons-round">preview</span>
+                </div>
+                <h2 class="card-title">Live Preview & Output</h2>
+            </div>
+
+            <!-- Live Preview -->
+            <div class="preview-container" id="previewContainer">
+                <div class="empty-state" id="emptyState">
+                    <span class="material-icons-round">visibility_off</span>
+                    <h3>Preview akan muncul di sini</h3>
+                    <p>Isi form di sebelah kiri dan klik Generate</p>
+                </div>
+                <div class="preview-content" id="previewContent" style="display: none;">
+                    <img id="previewImg" class="preview-image" src="" alt="Blog Image">
+                    <h1 class="preview-title" id="previewTitle"></h1>
+                    <div class="preview-description" id="previewDesc"></div>
+                </div>
+            </div>
+
+            <!-- Markdown Output -->
+            <div style="margin-top: 1.5rem;">
+                <label class="input-label">Markdown Code</label>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">
+                            <span class="material-icons-round" style="font-size: 16px;">code</span>
+                            markdown
+                        </span>
+                        <div class="code-actions">
+                            <button class="icon-btn" onclick="copyMarkdown()" title="Copy to Clipboard">
+                                <span class="material-icons-round" id="copyIcon">content_copy</span>
+                            </button>
+                            <button class="icon-btn" onclick="downloadTXT()" title="Export to TXT">
+                                <span class="material-icons-round">download</span>
+                            </button>
+                        </div>
+                    </div>
+                    <pre id="markdownOutput"><code># Output akan muncul di sini...
+
+Isi form dan klik Generate untuk membuat markdown.</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="material-icons-round toast-icon">check_circle</span>
+        <span id="toastMessage">Berhasil disalin!</span>
+    </div>
+
+    <script>
+        // Aspect Ratio Change Handler
+        document.getElementById('aspectRatio').addEventListener('change', function(e) {
+            const box = document.getElementById('aspectBox');
+            const ratio = e.target.value;
+            box.textContent = ratio;
+            
+            // Update visual box
+            const [w, h] = ratio.split(':').map(Number);
+            const width = 60;
+            const height = (width * h) / w;
+            box.style.width = width + 'px';
+            box.style.height = Math.min(Math.max(height, 20), 60) + 'px';
+        });
+
+        // Live Input Update
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', debounce(generatePost, 500));
+        });
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function generatePost() {
+            const judul = document.getElementById('judul').value;
+            const imageLink = document.getElementById('imageLink').value;
+            const aspectRatio = document.getElementById('aspectRatio').value;
+            const deskripsi = document.getElementById('deskripsi').value;
+
+            if (!judul || !imageLink || !deskripsi) {
+                return; // Don't generate if empty
+            }
+
+            // Update Preview
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('previewContent').style.display = 'block';
+            
+            const img = document.getElementById('previewImg');
+            img.src = imageLink;
+            img.classList.add('loaded');
+            
+            // Set aspect ratio for image
+            const [w, h] = aspectRatio.split(':').map(Number);
+            img.style.aspectRatio = `${w}/${h}`;
+            
+            document.getElementById('previewTitle').textContent = judul;
+            document.getElementById('previewDesc').textContent = deskripsi;
+
+            // Generate Markdown
+            const markdown = generateMarkdown(judul, imageLink, aspectRatio, deskripsi);
+            document.getElementById('markdownOutput').textContent = markdown;
+        }
+
+        function generateMarkdown(judul, imageLink, aspectRatio, deskripsi) {
+            const date = new Date().toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            return `# ${judul}
+
+![${judul}](${imageLink})
+*Aspect Ratio: ${aspectRatio}*
+
+---
+
+${deskripsi}
+
+---
+
+*Dipublikasikan pada: ${date}*
+`;
+        }
+
+        function copyMarkdown() {
+            const code = document.getElementById('markdownOutput').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('Markdown berhasil disalin ke clipboard!');
+                
+                // Visual feedback
+                const btn = document.querySelector('.icon-btn');
+                const icon = document.getElementById('copyIcon');
+                btn.classList.add('copied');
+                icon.textContent = 'check';
+                
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    icon.textContent = 'content_copy';
+                }, 2000);
+            });
+        }
+
+        function downloadTXT() {
+            const judul = document.getElementById('judul').value || 'blog-post';
+            const code = document.getElementById('markdownOutput').textContent;
+            const blob = new Blob([code], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${judul.toLowerCase().replace(/\s+/g, '-')}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('File markdown berhasil diunduh!');
+        }
+
+        function clearForm() {
+            document.getElementById('blogForm').reset();
+            document.getElementById('emptyState').style.display = 'block';
+            document.getElementById('previewContent').style.display = 'none';
+            document.getElementById('markdownOutput').textContent = '# Output akan muncul di sini...\n\nIsi form dan klik Generate untuk membuat markdown.';
+            document.getElementById('aspectBox').textContent = '16:9';
+            document.getElementById('aspectBox').style.width = '60px';
+            document.getElementById('aspectBox').style.height = '40px';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Image Error Handler
+        document.getElementById('previewImg').addEventListener('error', function() {
+            this.style.display = 'none';
+            showToast('Gambar tidak dapat dimuat. Periksa URL.');
+        });
+
+        document.getElementById('previewImg').addEventListener('load', function() {
+            this.style.display = 'block';
+        });
+    </script>
 </body>
 </html>
