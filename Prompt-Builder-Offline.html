@@ -2,884 +2,1745 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   
-  <title>Prompt Generator AI - Buat Prompt Gambar AI Secara Cepat</title>
+  <title>Prompt Builder</title>
   
-  <meta name="description" content="Prompt Generator AI adalah alat gratis untuk membuat prompt gambar berbasis AI secara otomatis. Cocok untuk Midjourney, DALL·E, Stable Diffusion, Leonardo.Ai, dan lainnya.">
-  
-  <meta name="keywords" content="Prompt Builder, prompt generator AI, pembuat prompt gambar, prompt art generator, midjourney prompt, stable diffusion prompt, ai image prompt builder, buat prompt online">
-  
+  <meta name="description" content="Prompt AI Generator is a free tool to automatically create AI-based drawing prompts. Suitable for Midjourney, DALL· E, Stable Diffusion, Leonardo.Ai, and more.">
+  <meta name="keywords" content="Prompt Builder, prompt generator AI, pembuat prompt gambar, prompt art generator, midjourney prompt, stable diffusion prompt, Flux Ai Prompt, SDXL prompt">
   <meta name="author" content="@AWVR@Misskey.ID">
-  
   <meta name="robots" content="index, follow"> 
-  <link rel="manifest" href="manifest.json" />
-  <!--- STYLE CSS --->
+  <meta name="fediverse:creator" content="@awvr@misskey.id">
+  <meta name="theme-color" content="#39C5BB">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f4f4fa;
-      color: #333;
-      padding: 30px;
-      max-width: 800px;
-      margin: auto;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .dark-mode {
-      background: #1e1e1e;
-      color: #eee;
+    /* ============================================
+       CSS VARIABLES - MATERIAL DESIGN 3
+       HATSUNE MIKU THEME
+       ============================================ */
+    :root {
+      /* Miku Colors */
+      --miku-primary: #39C5BB;
+      --miku-primary-dark: #2AA89F;
+      --miku-secondary: #FF4081;
+      --miku-secondary-light: #FF80AB;
+      
+      /* Light Theme */
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F5;
+      --bg-tertiary: #EEEEEE;
+      --text-primary: #1C1B1F;
+      --text-secondary: #49454F;
+      --text-tertiary: #79747E;
+      --border-color: #E0E0E0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 20px rgba(0,0,0,0.15);
+      
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      
+      /* Safe area */
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     
-    .dark-mode H1 
-    {color: #eee;} 
-    .dark-mode input,
-    .dark-mode textarea,
-    .dark-mode select,
-    .dark-mode button {
-      background-color: #2d2d2d;
-      color: #eee;
-      border: 1px solid #555;
+    /* Dark Theme */
+    [data-theme="dark"] {
+      --bg-primary: #121212;
+      --bg-secondary: #1E1E1E;
+      --bg-tertiary: #2D2D2D;
+      --text-primary: #E6E1E5;
+      --text-secondary: #CAC4D0;
+      --text-tertiary: #938F99;
+      --border-color: #424242;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.5);
+      --shadow-lg: 0 10px 20px rgba(0,0,0,0.6);
     }
-
-    .dark-mode #output {
-      background: #2a2a2a;
-      border-left-color: #4db6ac;
+    
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-
+    
+    html {
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background var(--transition-normal), color var(--transition-normal);
+      padding-top: 60px;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--text-tertiary);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--miku-primary);
+    }
+    
+    /* ============================================
+       NAVBAR - RESPONSIVE
+       ============================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(135deg, var(--miku-primary) 0%, var(--miku-primary-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-md);
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+    
+    .navbar-brand .material-icons-round {
+      font-size: 24px;
+    }
+    
+    /* Desktop Menu - Horizontal Scroll */
+    .navbar-menu {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      list-style: none;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      flex: 1;
+      margin-left: var(--space-lg);
+      padding: var(--space-sm) 0;
+    }
+    
+    .navbar-menu::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .navbar-menu li {
+      flex-shrink: 0;
+    }
+    
+    .navbar-menu a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 8px 14px;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 20px;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+    
+    .navbar-menu a:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+    }
+    
+    .navbar-menu a.active {
+      background: rgba(255,255,255,0.25);
+      color: white;
+    }
+    
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .menu-toggle:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .menu-toggle .material-icons-round {
+      font-size: 24px;
+    }
+    
+    /* Theme Toggle */
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      margin-left: var(--space-sm);
+      transition: all var(--transition-fast);
+    }
+    
+    .theme-toggle:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    /* Mobile Menu Overlay */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-normal);
+      z-index: 999;
+    }
+    
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      top: 60px;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: calc(100vh - 60px);
+      background: var(--bg-primary);
+      overflow-y: auto;
+      transition: right var(--transition-normal);
+      z-index: 1001;
+      box-shadow: var(--shadow-lg);
+      padding-bottom: var(--safe-bottom);
+    }
+    
+    .mobile-menu.active {
+      right: 0;
+    }
+    
+    .mobile-menu-header {
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--miku-primary) 0%, var(--miku-primary-dark) 100%);
+      color: white;
+    }
+    
+    .mobile-menu-header h3 {
+      font-size: 1.2rem;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .mobile-menu-header p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+    
+    .mobile-menu-list {
+      list-style: none;
+      padding: var(--space-sm) 0;
+    }
+    
+    .mobile-menu-list li {
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .mobile-menu-list a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all var(--transition-fast);
+    }
+    
+    .mobile-menu-list a:hover {
+      background: var(--bg-secondary);
+      color: var(--miku-primary);
+    }
+    
+    .mobile-menu-list a .material-icons-round {
+      color: var(--miku-primary);
+      font-size: 20px;
+    }
+    
+    .mobile-menu-list a.external .material-icons-round {
+      color: var(--miku-secondary);
+    }
+    
+    /* ============================================
+       MAIN CONTENT
+       ============================================ */
+    .main-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-lg) var(--space-md);
+    }
+    
     h1 {
-      color: #333;
-      margin-bottom: 20px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
     }
-
+    
+    h1 .material-icons-round {
+      color: var(--miku-primary);
+    }
+    
+    /* ============================================
+       FORM COMPONENTS - MATERIAL DESIGN
+       ============================================ */
+    .form-group {
+      margin-bottom: var(--space-lg);
+      padding: var(--space-md);
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .form-group-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--miku-primary);
+      margin-bottom: var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
     label {
       display: block;
-      margin: 15px 0 5px;
-      font-weight: bold;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+      margin-top: var(--space-md);
     }
-
-    input, textarea, select, button {
+    
+    label:first-of-type {
+      margin-top: 0;
+    }
+    
+    input[type="text"],
+    select,
+    textarea {
       width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 14px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
+      outline: none;
     }
-select[multiple] {
-      height: 50px;
-      padding: 6px;
+    
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--miku-primary);
+      box-shadow: 0 0 0 4px rgba(57, 197, 187, 0.15);
     }
-    #output {
-      background: #fff;
-      padding: 15px;
-      border-left: 4px solid #007bff;
-      white-space: pre-wrap;
-      margin-bottom: 10px;
+    
+    input[type="text"]::placeholder {
+      color: var(--text-tertiary);
     }
-
-    .buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      font-weight: bold;
+    
+    select {
       cursor: pointer;
-      width: auto;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%2379747E'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
     }
-
-    button:hover {
-      background-color: #0056b3;
+    
+    select[multiple] {
+      background-image: none;
+      padding-right: 16px;
+      min-height: 150px;
     }
-
-    .small-btn {
-      padding: 6px 12px;
-      font-size: 14px;
+    
+    select option {
+      padding: 8px;
+    }
+    
+    select optgroup {
+      font-weight: 600;
+      color: var(--miku-primary);
+    }
+    
+    .helper-text {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin-top: var(--space-xs);
+    }
+    
+    /* ============================================
+       BUTTONS
+       ============================================ */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: 12px 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-primary {
+      background: var(--miku-primary);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-primary:hover {
+      background: var(--miku-primary-dark);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+    
+    .btn-secondary {
+      background: var(--miku-secondary);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #E91E63;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--miku-primary);
+      border: 2px solid var(--miku-primary);
+    }
+    
+    .btn-outline:hover {
+      background: rgba(57, 197, 187, 0.1);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    
+    .btn-ghost:hover {
+      background: var(--bg-tertiary);
+    }
+    
+    /* ============================================
+       OUTPUT SECTION
+       ============================================ */
+    .output-section {
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      border: 2px solid var(--miku-primary);
+    }
+    
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+    }
+    
+    .output-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--miku-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    #output {
+      background: var(--bg-primary);
+      padding: var(--space-md);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 80px;
+    }
+    
+    .output-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    
+    /* ============================================
+       MODAL - FAVORITES
+       ============================================ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: var(--space-md);
+    }
+    
+    .modal-overlay.active {
+      display: flex;
+    }
+    
+    .modal {
+      background: var(--bg-primary);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      border: none;
+      border-radius: 50%;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .modal-close:hover {
+      background: var(--miku-secondary);
+      color: white;
+    }
+    
+    .modal-body {
+      padding: var(--space-md);
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      border-top: 1px solid var(--border-color);
+    }
+    
+    /* Favorites List */
+    .favorites-list {
+      list-style: none;
+    }
+    
+    .favorite-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      margin-bottom: var(--space-sm);
+      transition: all var(--transition-fast);
+    }
+    
+    .favorite-item:hover {
+      background: var(--bg-tertiary);
+    }
+    
+    .favorite-text {
+      flex: 1;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    
+    .favorite-actions {
+      display: flex;
+      gap: var(--space-xs);
+    }
+    
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .icon-btn:hover {
+      background: var(--bg-primary);
+      color: var(--miku-primary);
+    }
+    
+    .icon-btn.delete:hover {
+      background: #FFEBEE;
+      color: #C62828;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: var(--space-xl);
+      color: var(--text-tertiary);
+    }
+    
+    .empty-state .material-icons-round {
+      font-size: 48px;
+      margin-bottom: var(--space-sm);
+      opacity: 0.5;
+    }
+    
+    /* Search in modal */
+    .search-box {
+      margin-bottom: var(--space-md);
+    }
+    
+    .search-box input {
+      padding-left: 40px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%2379747E'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+    
+    /* ============================================
+       SNACKBAR
+       ============================================ */
+    .snackbar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #323033;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 3000;
+      opacity: 0;
+      transition: all var(--transition-normal);
+    }
+    
+    .snackbar.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+      margin-top: var(--space-xl);
+      border-top: 1px solid var(--border-color);
+    }
+    
+    footer p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: var(--space-sm);
+    }
+    
+    footer a {
+      color: var(--miku-primary);
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* ============================================
+       RESPONSIVE DESIGN
+       ============================================ */
+    @media (max-width: 1024px) {
+      /* Tablet: Show horizontal scroll menu */
+      .navbar-menu {
+        margin-left: var(--space-md);
+      }
+      
+      .navbar-menu a {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      /* Mobile: Hide desktop menu, show hamburger */
+      .navbar-menu {
+        display: none;
+      }
+      
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .main-content {
+        padding: var(--space-md);
+      }
+      
+      h1 {
+        font-size: 1.25rem;
+      }
+      
+      .form-group {
+        padding: var(--space-md);
+      }
+      
+      .btn-group {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .output-actions {
+        flex-direction: column;
+      }
+      
+      .modal {
+        max-height: 90vh;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      /* Desktop: Always hide mobile menu */
+      .mobile-menu-overlay,
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      animation: fadeIn 0.3s ease-out;
     }
   </style>
 </head>
 <body>
-
-<h1>Pembuat Prompt Gambar AI</h1>
-
-<form id="promptForm">
-
-  <label>Subjek Utama</label>
-  <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
-
-  <!-- Genre -->
-  <label>Genre</label>
-  <select id="genreSelect" onchange="handleSelectChange('genre')">
-    <option value="">Tulis Manual</option>
-    <option value="fantasy">Fantasi</option>
-    <option value="sci-fi">Sains Fiksi</option>
-    <option value="horror">Horor</option>
-    <option value="romance">Romantis</option>
-    <option value="cyberpunk">Cyberpunk</option>
-    <option value="historical">Historis</option>
-    <option value="adventure">Petualangan</option>
-    <option value="mystery">Misteri</option>
-    <option value="drama">Drama</option>
-    <option value="Cybernetic">Cybernetic</option>
-    <option value="post-apocalyptic">Post-Apocalyptic</option>
-    <option value="magical girl">Magical Girl</option>
-  </select>
-  <input type="text" id="genre" oninput="generatePrompt()" placeholder="Contoh: fantasy" />
-
-  <!-- Gaya Visual Berdasarkan Negara -->
-  <label>Gaya Visual Berdasarkan Negara</label>
-  <select id="negaraSelect" onchange="handleSelectChange('negara')">
-    <option value="">Tulis Manual</option>
-    <option value="Japanese anime style character">Jepang (gaya karakter anime)</option>
-    <option value="South Korean realistic beauty standard">Korea Selatan (realistis kecantikan)</option>
-    <option value="American photorealistic portrait">Amerika Serikat (fotorealistis potret)</option>
-    <option value="Middle Eastern traditional attire and architecture">Timur Tengah (pakaian dan arsitektur tradisional)</option>
-    <option value="Scandinavian minimalism with cold tones">Skandinavia (minimalis dengan warna dingin)</option>
-    <option value="Indian classical art with vibrant colors">India (seni klasik dengan warna cerah)</option>
-    <option value="Chinese ink painting aesthetic">Tiongkok (estetika lukisan tinta)</option>
-  </select>
-  <input type="text" id="negara" oninput="generatePrompt()" placeholder="Contoh: Japanese anime style character" />
-
-  <!-- Gaya Rambut -->
-  <label>Gaya Rambut</label>
-<select id="hairSelect" multiple size="6" onchange="updateHair()">
-    <option value="">Tulis Manual</option>
-    <option value="long hair">long hair</option>
-    <option value="medium hair">medium hair</option>
-    <option value="short hair">short hair</option>
-    <option value="messy bun">messy bun</option>
-    <optgroup label="Gaya Rambut Pendek">
-        <option value="pixie-cut">Pixie Cut</option>
-        <option value="bob">Bob</option>
-        <option value="lob">Lob (Long Bob)</option>
-        <option value="undercut">Undercut</option>
-        <option value="buzz-cut">Buzz Cut</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Sedang">
-        <option value="shag">Shag</option>
-        <option value="layered cut">Layered Cut</option>
-        <option value="curtain bangs">Curtain Bangs</option>
-        <option value="mid length waves">Mid-length with Waves</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Panjang">
-        <option value="long-layers">Long Layers</option>
-        <option value="rapunzel cut">Rapunzel Cut</option>
-        <option value="long with bangs">Long with Bangs</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Bertekstur dan Keriting">
-        <option value="afro">Afro</option>
-        <option value="braids">Braids (Kepang)</option>
-        <option value="dreadlocks">Dreadlocks</option>
-        <option value="permed hair">Permed Hair</option>
-        <option value="natural curls">Natural Curls</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Pria">
-        <option value="fade">Fade</option>
-        <option value="quiff">Quiff</option>
-        <option value="pompadour">Pompadour</option>
-        <option value="slick back">Slick Back</option>
-        <option value="crew cut">Crew Cut</option>
-        <option value="man bun">Man Bun</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Khusus / Penataan">
-        <option value="ponytail">Ponytail (Kuncir Kuda)</option>
-        <option value="bun">Bun (Sanggul)</option>
-        <option value="half-up-half-down">Half-Up, Half-Down</option>
-        <option value="faux-hawk">Faux Hawk</option>
-        <option value="wet-look">Wet Look</option>
-    </optgroup>
- 
-
-    <option value="curly afro">curly afro</option>
-    <option value="slicked back hair">slicked-back hair</option>
-    <option value="braided crown style">braided crown style</option>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">
+      <span class="material-icons-round">brush</span>
+      PROJECT SEKAI
+    </a>
     
-    <optgroup label="Gaya Rambut Pendek">
-        <option value="pixie-cut">Pixie Cut</option>
-        <option value="bob">Bob</option>
-        <option value="lob">Lob (Long Bob)</option>
-        <option value="undercut">Undercut</option>
-        <option value="buzz cut">Buzz Cut</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Sedang">
-        <option value="shag">Shag</option>
-        <option value="layered cut">Layered Cut</option>
-        <option value="curtain bangs">Curtain Bangs</option>
-        <option value="mid length waves">Mid-length with Waves</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Panjang">
-        <option value="long layers">Long Layers</option>
-        <option value="rapunzel cut">Rapunzel Cut</option>
-        <option value="long with bangs">Long with Bangs</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Bertekstur dan Keriting">
-        <option value="afro">Afro</option>
-        <option value="braids">Braids (Kepang)</option>
-        <option value="dreadlocks">Dreadlocks</option>
-        <option value="permed hair">Permed Hair</option>
-        <option value="natural curls">Natural Curls</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Pria">
-        <option value="fade">Fade</option>
-        <option value="quiff">Quiff</option>
-        <option value="pompadour">Pompadour</option>
-        <option value="slick back">Slick Back</option>
-        <option value="crew cut">Crew Cut</option>
-        <option value="man bun">Man Bun</option>
-    </optgroup>
-
-    <optgroup label="Gaya Rambut Khusus / Penataan">
-        <option value="ponytail">Ponytail (Kuncir Kuda)</option>
-        <option value="bun">Bun (Sanggul)</option>
-        <option value="half up half down">Half-Up, Half-Down</option>
-        <option value="faux hawk">Faux Hawk</option>
-        <option value="wet look">Wet Look</option>
-    </optgroup>
- 
- 
-  </select>
-  <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
-
-  <!-- Warna Rambut -->
-  <label>Warna Rambut</label>
-  <input type="text" id="warnaRambut" oninput="generatePrompt()" placeholder="Contoh: sakura pink" />
-  <!-- Pakaian -->
-  <label for="pakaianSelect">Gaya Pakaian: multipl</label>
-<select id="pakaianSelect" multiple size="6" onchange="updatePakaian()">
-    <option value="">Tulis Manual</option>
-    <option value="wearing school uniform">wearing school uniform</option>
-    <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
-    <option value="summer dress with hat">summer dress with hat</option>
-    <option value="casual hoodie and jeans">casual hoodie and jeans</option>
-    <option value="elegant evening gown">elegant evening gown</option>
-    <option value="battle armor with sword">battle armor with sword</option>
-    <option value="space suit with helmet">space suit with helmet</option>
-      <!-- TOPS -->
-  <optgroup label="Tops">
-    <option value="strapless">Strapless</option>
-<option value="spaghetti strap">spaghetti strap</option>
-<option value="off shoulder">off shoulder</option>
-<option value="bandeau">Bandeau</option>
-    <option value="tshirt">T-Shirt</option>
-    <option value="shirt">Shirt</option>
-    <option value="poloshirt">Polo Shirt</option>
-    <option value="longsleeve">Long Sleeve Shirt</option>
-    <option value="sweater">Sweater</option>
-    <option value="hoodie">Hoodie</option>
-    <option value="jacket">Jacket</option>
-    <option value="blouse">Blouse</option>
-    <option value="tanktop">Tank Top</option>
-    <option value="cardigan">Cardigan</option>
-    <option value="vest">Vest / Waistcoat</option>
-    <option value="tunic">Tunic</option>
-    <option value="crop top">Crop Top</option>
-    <option value="peplum top">Peplum Top</option>
-    <option value="kimono top">Kimono Top</option>
-    <option value="sleeveless-top">Sleeveless Top</option>
-  </optgroup>
-
-  <!-- BOTTOMS -->
-  <optgroup label="Bottoms">
-    <option value="denim">denim</option>
-    <option value="pants">Pants</option>
-    <option value="jeans">Jeans</option>
-    <option value="shorts">Shorts</option>
-    <option value="skirt">Skirt</option>
-    <option value="mini skirt">Mini Skirt</option>
-    <option value="maxi skirt">Maxi Skirt</option>
-    <option value="pleated skirt">Pleated Skirt</option>
-    <option value="pencil skirt">Pencil Skirt</option>
-    <option value="leggings">Leggings</option>
-    <option value="saree">Saree</option>
-    <option value="palazzo-pants">Palazzo Pants</option>
-    <option value="chinos">Chinos</option>
-    <option value="capris">Capris / Cropped Pants</option>
-    <option value="sportspants">Sports Pants</option>
-    <option value="trousers">Trousers</option>
-    <option value="culottes">Culottes</option>
-    <option value="bloomers">Bloomers</option>
-    <option value="hot-pants">Hot Pants</option>
-    <option value="overalls">Overalls / Dungarees</option>
-  </optgroup>
-
-  <!-- FULL SETS -->
-  <optgroup label="Full Sets">
-    <option value="suit">Suit (Jacket + Pants)</option>
-    <option value="tracksuit">Tracksuit</option>
-    <option value="pajamas">Pajamas Set</option>
-    <option value="outfit">Fashion Outfit Set</option>
-    <option value="uniform">Uniform Set</option>
-    <option value="nightgown">Nightgown / Dress</option>
-    <option value="formalwear">Formal Wear Set</option>
-    <option value="casualset">Casual Wear Set</option>
-    <option value="gown">Gown</option>
-    <option value="kimono">Kimono Set</option>
-    <option value="maxi dress">Maxi Dress</option>
-    <option value="midi dress">Midi Dress</option>
-    <option value="mini dress">Mini Dress</option>
-    <option value="cocktail dress">Cocktail Dress</option>
-    <option value="prom dress">Prom Dress</option>
-    <option value="wedding dress">Wedding Dress</option>
-    <option value="bodycon dress">Bodycon Dress</option>
-    <option value="shift dress">Shift Dress</option>
-    <option value="sundress">Sundress</option>
-    <option value="two piece set">Two-Piece Set</option>
-    <option value="jumpsuit">Jumpsuit</option>
-    <option value="romper">Rompers / Playsuits</option>
-    <option value="kaftan">Kaftan</option>
-    <option value="abayas">Abayas</option>
-    <option value="kurta set">Kurta & Salwar Set</option>
-    <option value="hanfu">Hanfu Set</option>
-    <option value="yukata">Yukata</option>
-    <option value="cheongsam">Cheongsam / Qipao</option>
-  </optgroup>
-  </select>
-  <input type="text" id="pakaian" oninput="generatePrompt()"
-  placeholder="Contoh: wearing school uniform" /> 
-  <!-- Ekspresi -->
-  <label>Ekspresi / Suasana</label>
-  <select id="ekspresiSelect" onchange="handleSelectChange('ekspresi')">
-    <option value="">Tulis Manual</option>
-    <option value="gentle smile">gentle smile</option>
-    <option value="teary eyed">teary-eyed</option>
-    <option value="cheerful laugh">cheerful laugh</option>
-    <option value="melancholic gaze">melancholic gaze</option>
-    <option value="determined look">determined look</option>
-    <option value="surprised expression">surprised expression</option>
-    <option value="mysterious smirk">mysterious smirk</option>
-  </select>
-  <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
-
-  <!-- Pose -->
-  <label>Pose / Aksi</label>
-   <select id="poseSelect" multiple size="6" onchange="updatePose()"> 
-    <option value="">Tulis Manual</option>
- <optgroup label="General Photo Styles">
-    <option value="candid">Candid</option>
-    <option value="formal">Formal</option>
-    <option value="casual">Casual / Relaxed</option>
-    <option value="glamorous">Glamorous / Elegant</option>
-    <option value="minimalist">Minimalist</option>
-    <option value="action">Action / Dynamic</option>
-    <option value="vintage">Vintage / Classic</option>
-    <option value="natural">Natural / Authentic</option>
-    <option value="portrait">Portrait (Close-up)</option>
-    <option value="full body">Full Body</option>
-  </optgroup>
-     <optgroup label="Pose Combo">
-    <option value="peace with smile">Peace Sign with Natural Smile</option>
-    <option value="thumbs with laugh">Thumbs Up with Bright Laughter</option>
-    <option value="fingerheart-shy">Finger Heart with Bashful Smile</option>
-    <option value="index with shocked">One Finger Up with Cute Shocked Face</option>
-    <option value="crossed with hoping">Crossed Fingers with Hopeful Eyes</option>
-    <option value="blank with rock">Rock On with Blank Stare</option>
-    <option value="candid side with softlook">Look to Side with Soft Eyes</option>
-    <option value="chin rest with polite">Chin Rest with Gentle Smile</option>
-    <option value="two hearts with gaze">Two Hands Heart with Tender Gaze</option>
-    <option value="finger heart with sweetlook">Finger Heart with Sweet Look</option>
-     </optgroup>
-
-  <optgroup label="Hand Poses">
-    <option value="hands in pockets">Hands in Pockets</option>
-    <option value="crossed-arms">Crossed Arms</option>
-    <option value="one hand on hip">One Hand on Hip</option>
-    <option value="hands clasped">Hands Clasped (Front/Back)</option>
-    <option value="touching face">Touching Face / Chin</option>
-    <option value="holding prop">Holding a Prop</option>
-    <option value="waving">Waving</option>
-    <option value="pointing">Pointing</option>
-    <option value="hands on shoulders">Hands on Shoulders (Self/Other)</option>
-    <option value="reaching out">Reaching Out</option>
-  </optgroup>
-
-  <optgroup label="Sitting Poses">
-    <option value="sitting">sitting</option> 
-    <option value="sitting cross legged">Cross-Legged</option>
-    <option value="sitting on steps">On Steps</option>
-    <option value="sitting on chair straight">On Chair (Straight)</option>
-    <option value="sitting on chair relaxed">On Chair (Relaxed)</option>
-    <option value="sitting on floor knees up">On Floor (Knees Up)</option>
-    <option value="sitting on ground legs out out">On Ground (Legs Stretched Out)</option>
-    <option value="sitting leaning back">Leaning Back</option>
-    <option value="sitting sideways">Sideways Sit</option>
-    <option value="sitting on edge">On the Edge (of something)</option>
-    <option value="Sitting with pet">Sitting with Pet</option>
-  </optgroup>
-
-  <optgroup label="Standing Poses">
-    <option value="standing straight">Standing Straight</option>
-    <option value="standing one leg bent">One Leg Bent</option>
-    <option value="standing-lg leaning against wall">Leaning Against Wall</option>
-    <option value="standing hands on hips">Hands on Hips</option>
-    <option value="standing walking">In Motion (Walking)</option>
-    <option value="standing back to camera">Back to Camera</option>
-    <option value="standing looking away">Looking Away</option>
-    <option value="standing power pose">Power Pose</option>
-    <option value="standing arms out">Arms Outstretched</option>
-    <option value="standing with object">Standing with an Object</option>
-    <option value="standing under cherry tree">standing under cherry tree</option>
-    <option value="sitting in a meadow">sitting in a meadow</option>
-    <option value="walking in the rain">walking in the rain</option>
-    <option value="reading by the window">reading by the window</option>
-    <option value="holding a lantern at night">holding a lantern at night</option>
-    <option value="kneeling in prayer">kneeling in prayer</option>
-    <option value="jumping with joy">jumping with joy</option>
-  </select>
-  <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
-
-  <!-- Sudut Pandang Kamera -->
-  <label>Sudut Pandang Kamera</label>
-  <select id="kameraSelect" onchange="handleSelectChange('kamera')">
-    <option value="">Tulis Manual</option>
-    <option value="close-up shot">Close-up Shot</option>
-    <option value="medium shot">Medium Shot</option>
-    <option value="wide shot">Wide Shot</option>
-    <option value="low angle shot">Low Angle Shot</option>
-    <option value="high angle shot">High Angle Shot</option>
-    <option value="overhead shot">Overhead Shot</option>
-    <option value="bird's eye view">Bird’s Eye View</option>
-    <option value="dutch angle tilt">Dutch Angle</option>
-    <option value="point of view (POV)">Point of View</option>
-  </select>
-  <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up shot" />
-
-  <!-- Gaya Seni -->
-  <label>Gaya Seni</label>
-  <select id="gayaSelect" onchange="handleSelectChange('gaya')">
-    <option value="">Tulis Manual</option>
-    <option value="anime-style">anime-style</option>
-    <option value="Studio Ghibli inspired">Studio Ghibli inspired</option>
-    <option value="realistic digital painting">realistic digital painting</option>
-    <option value="chibi art">chibi art</option>
-    <option value="cyberpunk concept art">cyberpunk concept art</option>
-    <option value="watercolor illustration">watercolor illustration</option>
-    <option value="pixel art style">pixel art style</option>
-    <!-- new -->
-    <option value="Abstract Painting">Abstract Painting</option><option
-    value="Acrylic Painting">Acrylic Painting</option><option value="Action
-    Painting">Action Painting</option><option value="Aestheticism
-    Painting">Aestheticism Painting</option><option value="Anamorphosis
-    Painting">Anamorphosis Painting</option><option value="Art Deco
-    Painting">Art Deco Painting</option><option value="Art nouveau Painting">Art
-    nouveau Painting</option><option value="Ashcan School Painting">Ashcan
-    School Painting</option><option value="Baroque Painting">Baroque
-    Painting</option><option value="Body Painting">Body Painting</option><option
-    value="Canvas Painting">Canvas Painting</option><option value="Cartoon
-    Painting">Cartoon Painting</option><option value="Chalk Painting">Chalk
-    Painting</option><option value="Child's Finger Painting">Child's Finger
-    Painting</option><option value="Chinese Painting">Chinese
-    Painting</option><option value="Classicism Painting">Classicism
-    Painting</option><option value="Collage Painting">Collage
-    Painting</option><option value="Cubism Painting">Cubism
-    Painting</option><option value="Dadaism Painting">Dadaism
-    Painting</option><option value="De Stijl Painting">De Stijl
-    Painting</option><option value="Der Blaue Painting">Der Blaue
-    Painting</option><option value="Digital Painting">Digital
-    Painting</option><option value="Drip Painting">Drip Painting</option><option
-    value="Enamel Painting">Enamel Painting</option><option value="Encaustic
-    Painting">Encaustic Painting</option><option value="Expressionism
-    Painting">Expressionism Painting</option><option value="Figurativism
-    Painting">Figurativism Painting</option><option value="Fingerpainting
-    Painting">Fingerpainting Painting</option><option value="Finger
-    Painting">Finger Painting</option><option value="Fresco Secco
-    Painting">Fresco Secco Painting</option><option value="Futurism
-    Painting">Futurism Painting</option><option value="Genre Painting">Genre
-    Painting</option><option value="Glitter Glue Painting">Glitter Glue
-    Painting</option><option value="Gothic Painting">Gothic
-    Painting</option><option value="Gouache Painting">Gouache
-    Painting</option><option value="History Painting">History
-    Painting</option><option value="Hot Wax Painting">Hot Wax
-    Painting</option><option value="Impressionism Painting">Impressionism
-    Painting</option><option value="Ink Wash Painting">Ink Wash
-    Painting</option><option value="Japanese Painting">Japanese
-    Painting</option><option value="Korean Painting">Korean
-    Painting</option><option value="Landscape Painting">Landscape
-    Painting</option><option value="Leaf Painting">Leaf Painting</option><option
-    value="Marker Painting">Marker Painting</option><option value="Matte
-    Painting">Matte Painting</option><option value="Miniature
-    Painting">Miniature Painting</option><option value="Modernism
-    Painting">Modernism Painting</option><option value="Mughal Painting">Mughal
-    Painting</option><option value="Mural Painting">Mural
-    Painting</option><option value="Oil Painting">Oil Painting</option><option
-    value="Pastel Painting">Pastel Painting</option><option value="Pattachitra
-    Painting">Pattachitra Painting</option><option value="Photorealism
-    Painting">Photorealism Painting</option><option value="Rajasthan
-    Painting">Rajasthan Painting</option><option value="Realism
-    Painting">Realism Painting</option><option value="Reverse Glass
-    Painting">Reverse Glass Painting</option><option value="Sand Painting">Sand
-    Painting</option><option value="Speed Painting">Speed
-    Painting</option><option value="Spray Painting">Spray
-    Painting</option><option value="Still Life Painting">Still Life
-    Painting</option><option value="Surrealism Painting">Surrealism
-    Painting</option><option value="Tanjore Painting">Tanjore
-    Painting</option><option value="Tempera Painting">Tempera
-    Painting</option><option value="Velvet Painting">Velvet
-    Painting</option><option value="Watercolor Painting">Watercolor
-    Painting</option><option value="Anime Art">Anime Art</option><option
-    value="Bedazzled Art Style">Bedazzled Art Style</option><option
-    value="Button Art">Button Art</option><option value="Chalk Art">Chalk
-    Art</option><option value="Comic Book Art">Comic Book Art</option><option
-    value="Conceptual Art">Conceptual Art</option><option value="Leather Art
-    Style">Leather Art Style</option><option value="Line Art">Line
-    Art</option><option value="Marble Art">Marble Art</option><option value="Pop
-    Art painting">Pop Art painting</option><option value="Portrait Art">Portrait
-    Art</option><option value="Sand Art">Sand Art</option><option value="Street
-    Art">Street Art</option><option value="Woven Art">Woven Art</option><option
-    value="Anime Style">Anime Style</option><option value="Atari 2600
-    Style">Atari 2600 Style</option><option value="Bauhaus Style">Bauhaus
-    Style</option><option value="Coloring Book Style">Coloring Book
-    Style</option><option value="Constructivism Style">Constructivism
-    Style</option><option value="Fauvism Style">Fauvism Style</option><option
-    value="Glitter Style">Glitter Style</option><option value="GTAV Style">GTAV
-    Style</option><option value="NES Style">NES Style</option><option
-    value="Retro Comic Book Style">Retro Comic Book Style</option><option
-    value="SNES Style">SNES Style</option><option value="Studio Ghibli
-    Style">Studio Ghibli Style</option><option value="Woodburning
-    Style">Woodburning Style</option><option value="Woodcut Style">Woodcut
-    Style</option><option value="Ballpoint Pen Drawing">Ballpoint Pen
-    Drawing</option><option value="Blue Ballpoint Pen Drawing">Blue Ballpoint
-    Pen Drawing</option><option value="Colored Pencil Drawing">Colored Pencil
-    Drawing</option><option value="Pencil Drawing">Pencil
-    Drawing</option><option value="Red Ballpoint Pen Drawing">Red Ballpoint Pen
-    Drawing</option><option value="Comic Book Cover">Comic Book
-    Cover</option><option value="Comic Book">Comic Book</option><option
-    value="Comic Book Panel">Comic Book Panel</option><option value="Colored
-    Pencil Sketch">Colored Pencil Sketch</option><option value="Pencil
-    Sketch">Pencil Sketch</option><option value="3D Render">3D
-    Render</option><option value="Boxart">Boxart</option><option
-    value="Children's Book">Children's Book</option><option value="Coloring
-    Book">Coloring Book</option><option value="Copper Plate Engraving">Copper
-    Plate Engraving</option><option
-    value="Cross-Stitch">Cross-Stitch</option><option value="Diamond
-    Engraving">Diamond Engraving</option><option
-    value="Icon">Icon</option><option value="Linocut">Linocut</option><option
-    value="Lowpoly">Lowpoly</option><option value="Old Black and White
-    Photograph">Old Black and White Photograph</option><option
-    value="Photograph">Photograph</option><option
-    value="Pixelart">Pixelart</option><option value="Pop Up Book">Pop Up
-    Book</option><option value="Ring Engraving">Ring Engraving</option><option
-    value="Spray Paint">Spray Paint</option><option value="Stained
-    Glass">Stained Glass</option><option value="Sticker">Sticker</option><option
-    value="Stone Cut">Stone Cut</option>
-  </select>
-  <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style" />
-
-  <!-- Detail Estetis -->  
-  <label>Detail Estetis (Pilih Banyak)</label>
-  <select id="detailSelect" multiple size="6" onchange="updateDetail()">
-    <option value="">Tulis Manual</option>
-    <option value="ultra-detailed, glowing light, 4k">ultra-detailed, glowing light, 4k</option>
-    <option value="rim lighting, ambient glow">rim lighting, ambient glow</option>
-    <option value="volumetric fog, warm tone">volumetric fog, warm tone</option>
-    <option value="silky texture, soft shadows">silky texture, soft shadows</option>
-    <option value="sparkling particles, cinematic blur">sparkling particles, cinematic blur</option>
-    <option value="glowing neon signs, rainy reflection">glowing neon signs, rainy reflection</option>
-    <option value="soft bokeh, golden hour lighting">soft bokeh, golden hour lighting</option>
-    <!-- new -->
-    <option value="cinematic">
-        cinematic
-      </option><option value="hd">
-        hd
-      </option><option value="4k">
-        4k
-      </option><option value="8k">
-        8k
-      </option><option value="3d">
-        3d
-      </option><option value="4d">
-        4d
-      </option><option value="highly detailed">
-        highly detailed
-      </option><option value="octane render">
-        octane render
-      </option><option value="trending artstation">
-        trending artstation
-      </option><option value="Pixelate">
-        Pixelate
-      </option><option value="Blur">
-        Blur
-      </option><option value="Beautiful">
-        Beautiful
-      </option><option value="Very Beautiful">
-        Very Beautiful
-      </option><option value="Very Very Beautiful">
-        Very Very Beautiful
-      </option><option value="Symmetrical">
-        Symmetrical
-      </option><option value="Macabre">
-        Macabre
-      </option><option value="at night">
-        at night
-      </option>
-      <option value="daylight">daylight</option><option
-      value="moonlight">moonlight</option><option value="natural light">natural
-      light</option><option value="Front Light">Front Light</option><option
-      value="Backlight">Backlight</option><option value="Soft Light">Soft
-      Light</option><option value="Hard Light">Hard Light</option><option
-      value="Moody Light">Moody Light</option><option value="Dynamic
-      Light">Dynamic Light</option>
-  </select>
-  <input type="text" id="detail" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting"></input>
-
-  <!-- Latar Belakang -->
-  <label>Latar Belakang</label>
-   <select id="latarSelect" multiple size="6" onchange="updateLatar()">
-    <option value="">Tulis Manual</option>
-  <optgroup label="Random">
-     <option value="cherry blossom forest">cherry blossom forest</option>
-    <option value="Indonesian school courtyard">Indonesian school courtyard</option>
-    <option value="sunset rice field">sunset rice field</option>
-    <option value="rainy street at night">rainy street at night</option>
-    <option value="cyberpunk cityscape">cyberpunk cityscape</option>
-    <option value="ancient Japanese temple">ancient Japanese temple</option>
-    <option value="floating islands above clouds">floating islands above clouds</option>
-  </optgroup>
-    <optgroup label="1. Background (General Visual Backgrounds)">
-    <option value="Plain White">Plain White</option>
-    <option value="Solid Black">Solid Black</option>
-    <option value="Soft Color Gradient">Soft Color Gradient</option>
-    <option value="Bokeh Blur">Bokeh (Blur Effect)</option>
-    <option value="Rough Texture">Rough Texture (Concrete/Brick)</option>
-    <option value="Abstract Geometric">Abstract Geometric Pattern</option>
-    <option value="Blurred Galaxy">Blurred Galaxy/Stars</option>
-    <option value="Peeling Wall">Peeling Paint Wall</option>
-    <option value="Rippling Water">Rippling Water or Bubbles</option>
-    <option value="Blue Sky Clouds">Thin Clouds in Blue Sky</option>
-</optgroup>
-
-<optgroup label="2. Settings/Places (Specific Environments)">
-    <option value="Amazon Sunset">Amazon Rainforest at Sunset</option>
-    <option value="Tokyo Night">Bustling Tokyo Street at Night (Neon)</option>
-    <option value="Temple Moon">Ancient Temple Ruins under Full Moon</option>
-    <option value="Space Station">Advanced Space Station Orbiting Earth</option>
-    <option value="Japanese Snow Village">Traditional Japanese Mountain Village (Snowy)</option>
-    <option value="Moroccan Market">Traditional Moroccan Street Market (Day)</option>
-    <option value="Atlantis">Majestic Underwater City of Atlantis</option>
-    <option value="Apocalyptic Warzone">Post-Apocalyptic War Zone</option>
-    <option value="Safari Migration">African Savanna during Wildlife Migration</option>
-    <option value="Ice Palace">Ice Palace atop a Frozen Mountain</option>
-</optgroup>
-
-<optgroup label="3. Interior Rooms (General)">
-    <option value="Grand Library">Grand Old Library</option>
-    <option value="Futuristic Lab">Futuristic Science Laboratory</option>
-    <option value="Minimal Bedroom">Minimalist Bedroom</option>
-    <option value="Abandoned Warehouse">Abandoned Industrial Warehouse</option>
-    <option value="Art Deco Living Room">Luxurious Art Deco Living Room</option>
-    <option value="Rustic Kitchen">Warm Rustic Kitchen</option>
-    <option value="Spaceship Control Room">Spaceship Control Room</option>
-    <option value="Zen Temple">Japanese Zen Temple</option>
-    <option value="Empty Classroom">Empty School Classroom</option>
-    <option value="Spa Bathroom">Modern Spa Bathroom</option>
-</optgroup>
-
-<optgroup label="4. Home Areas (Specific Interior Spaces)">
-    <option value="Home Rustic Kitchen">Rustic-Style Kitchen</option>
-    <option value="Home Modern Living">Modern Minimalist Living Room</option>
-    <option value="Home Master Bedroom">Calm Master Bedroom</option>
-    <option value="Home Spa Bathroom">Spa-Style Bathroom</option>
-    <option value="Home Creative Studio">Creative Home Studio/Workspace</option>
-    <option value="Home Reading Nook">Cozy Reading Nook</option>
-    <option value="Home Playroom">Colorful Children's Playroom</option>
-    <option value="Home Balcony">Terrace/Balcony with a View</option>
-    <option value="Home Dining Room">Traditional Family Dining Room</option>
-    <option value="Home Dramatic Hallway">Dramatic Hallway with Lighting</option>
-</optgroup>
-
-  </select>
-  <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
-
-  <!-- Aspect Ratio -->
-  <label>Aspect Ratio</label>
-  <select id="rasio" onchange="generatePrompt()">
-    <option value="">-- Pilih --</option>
-    <option value="1:1">1:1 (Square)</option>
-    <option value="16:9">16:9 (Landscape)</option>
-    <option value="9:16">9:16 (Portrait)</option>
-    <option value="4:3">4:3</option>
-  </select>
-
-  <div class="buttons">
-    <button onclick="resetForm()">🔄 Reset Form</button>
-    <button onclick="exportToTxt()">📄 Ekspor sebagai .txt</button>
-    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    <!-- Desktop Menu - Horizontal Scroll -->
+    <ul class="navbar-menu">
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/project/Contact-Us.html">Contact Us</a></li>
+      <li><a href="/project/invitation.html">Undangan</a></li>
+      <li><a href="/project/ag.html">Artikel Gen</a></li>
+      <li><a href="/project/kg.html">AI Art Gen</a></li>
+      <li><a href="/project/video.html">Video Gen</a></li>
+      <li><a href="/project/img_edit.html">Img to Text</a></li>
+      <li><a href="/project/pe.html">Nano Banana</a></li>
+      <li><a href="/project/md-editor.html">MD Conv</a></li>
+      <li><a href="/project/JH.html">Jurnalistik</a></li>
+      <li><a href="/project/artikel_creator.html">Artikel Creator</a></li>
+      <li><a href="/project/Doc-editor.html">DOC Editor</a></li>
+      <li><a href="/project/JSON.html">JSON Creator</a></li>
+      <li><a href="https://ahlawisnu.github.io/JSON-Prompt-Generator" target="_blank">Builder Pro</a></li>
+    </ul>
+    
+    <div style="display: flex; align-items: center;">
+      <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span class="material-icons-round" id="menuIcon">menu</span>
+      </button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <span class="material-icons-round" id="themeIcon">dark_mode</span>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <h3>PROJECT SEKAI</h3>
+      <p>AI Tools Collection</p>
+    </div>
+    <ul class="mobile-menu-list">
+      <li><a href="/"><span class="material-icons-round">home</span> Home</a></li>
+      <li><a href="/project/Contact-Us.html"><span class="material-icons-round">contact_mail</span> Contact Us</a></li>
+      <li><a href="/project/invitation.html"><span class="material-icons-round">card_giftcard</span> Undangan Generator</a></li>
+      <li><a href="/project/ag.html"><span class="material-icons-round">article</span> Artikel Generator</a></li>
+      <li><a href="/project/kg.html"><span class="material-icons-round">palette</span> Generator Konten AI Art</a></li>
+      <li><a href="/project/video.html"><span class="material-icons-round">videocam</span> Generator Video</a></li>
+      <li><a href="/project/img_edit.html"><span class="material-icons-round">image</span> Image to Text Generator</a></li>
+      <li><a href="/project/pe.html"><span class="material-icons-round">code</span> Prompt Nano Banana</a></li>
+      <li><a href="/project/md-editor.html"><span class="material-icons-round">edit_note</span> MD Converter</a></li>
+      <li><a href="/project/JH.html"><span class="material-icons-round">newspaper</span> Pembuat Jurnalistik</a></li>
+      <li><a href="/project/artikel_creator.html"><span class="material-icons-round">description</span> Artikel Creator</a></li>
+      <li><a href="/project/Doc-editor.html"><span class="material-icons-round">text_snippet</span> DOC EDITOR</a></li>
+      <li><a href="/project/JSON.html"><span class="material-icons-round">data_object</span> JSON CREATOR</a></li>
+      <li><a href="https://ahlawisnu.github.io/JSON-Prompt-Generator" target="_blank" class="external"><span class="material-icons-round">open_in_new</span> Prompt Builder Pro</a></li>
+    </ul>
   </div>
 
-</form>
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <h1>
+      <span class="material-icons-round">auto_fix_high</span>
+      Pembuat Prompt Gambar AI
+    </h1>
 
-<div id="output"><em>Prompt akan muncul di sini secara otomatis...</em></div>
-<button id="copyBtn" onclick="copyPrompt()" class="small-btn">📋 Salin Prompt</button>
+    <form id="promptForm">
+      <!-- Main Object -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">person</span>
+          Objek Utama
+        </div>
+        <label>Main Object / Subjek</label>
+        <input type="text" id="subjek" oninput="generatePrompt()" placeholder="Contoh: a young woman" />
+        <p class="helper-text">Deskripsikan objek utama yang ingin digambar</p>
+      </div>
 
-<script>
-  function generatePrompt() {
-    const s = id => document.getElementById(id).value;
-    let prompt = s('subjek');
-    if (s('genre')) prompt += `, ${s('genre')} theme`;
-    if (s('negara')) prompt += `, ${s('negara')}`;
-    if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
-    if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
-    if (s('pakaian')) prompt += `, ${s('pakaian')}`;
-    if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
-    if (s('pose')) prompt += `, ${s('pose')}`;
-    if (s('kamera')) prompt += `, ${s('kamera')} camera`;
-    if (s('latar')) prompt += `, background: ${s('latar')}`;
-    if (s('detail')) prompt += `, ${s('detail')}`;
-    if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
-    if (s('rasio')) prompt += `, aspect ratio: ${s('rasio')}`;
-    document.getElementById('output').textContent = "🎨 Prompt:\n" + prompt;
-  }
+      <!-- Genre -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">movie</span>
+          Genre
+        </div>
+        <label>Genre</label>
+        <select id="genreSelect" onchange="handleSelectChange('genre')">
+          <option value="">-- Pilih atau Tulis Manual --</option>
+          <option value="fantasy">Fantasi</option>
+          <option value="sci-fi">Sains Fiksi</option>
+          <option value="horror">Horor</option>
+          <option value="romance">Romantis</option>
+          <option value="cyberpunk">Cyberpunk</option>
+          <option value="historical">Historis</option>
+          <option value="adventure">Petualangan</option>
+          <option value="mystery">Misteri</option>
+          <option value="drama">Drama</option>
+          <option value="Cybernetic">Cybernetic</option>
+          <option value="post-apocalyptic">Post-Apocalyptic</option>
+          <option value="magical girl">Magical Girl</option>
+        </select>
+        <label>Genre Custom</label>
+        <input type="text" id="genre" oninput="generatePrompt()" placeholder="Contoh: fantasy" />
+      </div>
 
-  function copyPrompt() {
-    const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
-    navigator.clipboard.writeText(text).then(() => {
-      document.getElementById('copyBtn').textContent = "✅ Prompt Disalin!";
-      setTimeout(() => {
-        document.getElementById('copyBtn').textContent = "📋 Salin Prompt";
-      }, 2000);
-    });
-  }
+      <!-- Visual Style -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">public</span>
+          Gaya Visual
+        </div>
+        <label>Gaya Visual Berdasarkan Negara</label>
+        <select id="negaraSelect" onchange="handleSelectChange('negara')">
+          <option value="">-- Pilih atau Tulis Manual --</option>
+          <option value="Japanese anime style character">Jepang (gaya karakter anime)</option>
+          <option value="South Korean realistic beauty standard">Korea Selatan (realistis kecantikan)</option>
+          <option value="American photorealistic portrait">Amerika Serikat (fotorealistis potret)</option>
+          <option value="Middle Eastern traditional attire and architecture">Timur Tengah (pakaian dan arsitektur tradisional)</option>
+          <option value="Scandinavian minimalism with cold tones">Skandinavia (minimalis dengan warna dingin)</option>
+          <option value="Indian classical art with vibrant colors">India (seni klasik dengan warna cerah)</option>
+          <option value="Chinese ink painting aesthetic">Tiongkok (estetika lukisan tinta)</option>
+        </select>
+        <label>Gaya Visual Custom</label>
+        <input type="text" id="negara" oninput="generatePrompt()" placeholder="Contoh: Japanese anime style character" />
+      </div>
 
-  function handleSelectChange(fieldId) {
-    const select = document.getElementById(fieldId + "Select");
-    const input = document.getElementById(fieldId);
-    input.value = select.value;
-    generatePrompt();
-  }
+      <!-- Hair -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">face</span>
+          Rambut
+        </div>
+        <label>Gaya Rambut (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
+        <select id="hairSelect" multiple size="6" onchange="updateHair()">
+          <option value="">-- Tulis Manual --</option>
+          <optgroup label="Panjang Rambut">
+            <option value="long hair">Long Hair</option>
+            <option value="medium hair">Medium Hair</option>
+            <option value="short hair">Short Hair</option>
+            <option value="messy bun">Messy Bun</option>
+          </optgroup>
+          <optgroup label="Gaya Rambut Pendek">
+            <option value="pixie-cut">Pixie Cut</option>
+            <option value="bob">Bob</option>
+            <option value="lob">Lob (Long Bob)</option>
+            <option value="undercut">Undercut</option>
+            <option value="buzz-cut">Buzz Cut</option>
+          </optgroup>
+          <optgroup label="Gaya Rambut Sedang">
+            <option value="shag">Shag</option>
+            <option value="layered cut">Layered Cut</option>
+            <option value="curtain bangs">Curtain Bangs</option>
+            <option value="mid length waves">Mid-length with Waves</option>
+          </optgroup>
+          <optgroup label="Gaya Rambut Panjang">
+            <option value="long-layers">Long Layers</option>
+            <option value="rapunzel cut">Rapunzel Cut</option>
+            <option value="long with bangs">Long with Bangs</option>
+          </optgroup>
+          <optgroup label="Gaya Bertekstur">
+            <option value="afro">Afro</option>
+            <option value="braids">Braids (Kepang)</option>
+            <option value="dreadlocks">Dreadlocks</option>
+            <option value="permed hair">Permed Hair</option>
+            <option value="natural curls">Natural Curls</option>
+          </optgroup>
+          <optgroup label="Gaya Pria">
+            <option value="fade">Fade</option>
+            <option value="quiff">Quiff</option>
+            <option value="pompadour">Pompadour</option>
+            <option value="slick back">Slick Back</option>
+            <option value="crew cut">Crew Cut</option>
+            <option value="man bun">Man Bun</option>
+          </optgroup>
+          <optgroup label="Penataan Khusus">
+            <option value="ponytail">Ponytail (Kuncir Kuda)</option>
+            <option value="bun">Bun (Sanggul)</option>
+            <option value="half-up-half-down">Half-Up, Half-Down</option>
+            <option value="faux-hawk">Faux Hawk</option>
+            <option value="wet-look">Wet Look</option>
+          </optgroup>
+          <option value="curly afro">Curly Afro</option>
+          <option value="slicked back hair">Slicked-back Hair</option>
+          <option value="braided crown style">Braided Crown Style</option>
+        </select>
+        <label>Gaya Rambut Custom</label>
+        <input type="text" id="gayaRambut" oninput="generatePrompt()" placeholder="Contoh: long twin-tails" />
+        <label>Warna Rambut</label>
+        <input type="text" id="warnaRambut" oninput="generatePrompt()" placeholder="Contoh: turquoise, sakura pink" />
+      </div>
 
-  function resetForm() {
-    document.querySelectorAll("input[type='text'], textarea").forEach(el => el.value = '');
-    generatePrompt();
-  }
+      <!-- Expression -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">mood</span>
+          Ekspresi & Suasana
+        </div>
+        <label>Ekspresi</label>
+        <select id="ekspresiSelect" onchange="handleSelectChange('ekspresi')">
+          <option value="">-- Pilih atau Tulis Manual --</option>
+          <option value="gentle smile">Gentle Smile</option>
+          <option value="teary eyed">Teary-eyed</option>
+          <option value="cheerful laugh">Cheerful Laugh</option>
+          <option value="melancholic gaze">Melancholic Gaze</option>
+          <option value="determined look">Determined Look</option>
+          <option value="surprised expression">Surprised Expression</option>
+          <option value="mysterious smirk">Mysterious Smirk</option>
+        </select>
+        <label>Ekspresi Custom</label>
+        <input type="text" id="ekspresi" oninput="generatePrompt()" placeholder="Contoh: gentle smile" />
+      </div>
 
-  function exportToTxt() {
-    const text = document.getElementById('output').textContent.replace("🎨 Prompt:\n", "");
-    const blob = new Blob([text], {type: 'text/plain'});
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'prompt_ai.txt';
-    link.click();
-    URL.revokeObjectURL(url);
-  }
-  
- // hair style 
- function updateHair() {
-    const select = document.getElementById("hairSelect");
-    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
-    const input = document.getElementById("gayaRambut");
-    // Masukkan hasil pilihan ke dalam input
-    input.value = selectedOptions.join(", ");
-    generatePrompt();
-  }
+      <!-- Clothing -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">checkroom</span>
+          Pakaian
+        </div>
+        <label>Pakaian (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
+        <select id="pakaianSelect" multiple size="6" onchange="updatePakaian()">
+          <option value="">-- Tulis Manual --</option>
+          <option value="wearing school uniform">School Uniform</option>
+          <option value="traditional Indonesian kebaya">Kebaya Tradisional</option>
+          <option value="summer dress with hat">Summer Dress with Hat</option>
+          <option value="casual hoodie and jeans">Hoodie & Jeans</option>
+          <option value="elegant evening gown">Evening Gown</option>
+          <option value="battle armor with sword">Battle Armor</option>
+          <option value="space suit with helmet">Space Suit</option>
+          <optgroup label="Tops">
+            <option value="strapless">Strapless</option>
+            <option value="spaghetti strap">Spaghetti Strap</option>
+            <option value="off shoulder">Off Shoulder</option>
+            <option value="t-shirt">T-Shirt</option>
+            <option value="shirt">Shirt</option>
+            <option value="sweater">Sweater</option>
+            <option value="hoodie">Hoodie</option>
+            <option value="jacket">Jacket</option>
+            <option value="blouse">Blouse</option>
+            <option value="crop top">Crop Top</option>
+          </optgroup>
+          <optgroup label="Bottoms">
+            <option value="denim">Denim</option>
+            <option value="jeans">Jeans</option>
+            <option value="shorts">Shorts</option>
+            <option value="skirt">Skirt</option>
+            <option value="mini skirt">Mini Skirt</option>
+            <option value="pleated skirt">Pleated Skirt</option>
+            <option value="leggings">Leggings</option>
+          </optgroup>
+          <optgroup label="Full Sets">
+            <option value="suit">Suit</option>
+            <option value="tracksuit">Tracksuit</option>
+            <option value="uniform">Uniform</option>
+            <option value="kimono">Kimono</option>
+            <option value="hanfu">Hanfu</option>
+            <option value="cheongsam">Cheongsam</option>
+            <option value="wedding dress">Wedding Dress</option>
+            <option value="jumpsuit">Jumpsuit</option>
+          </optgroup>
+        </select>
+        <label>Pakaian Custom</label>
+        <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
+      </div>
 
- // pakaian 
-function updatePakaian() {
-    const select = document.getElementById("pakaianSelect");
-    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
-    const input = document.getElementById("pakaian");
-    // Masukkan hasil pilihan ke dalam input
-    input.value = selectedOptions.join(", ");
-    generatePrompt();
-  }
-  
-  // Update pose
-  function updatePose() {
-    const select = document.getElementById("poseSelect");
-    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
-    const input = document.getElementById("pose");
-    // Masukkan hasil pilihan ke dalam input
-    input.value = selectedOptions.join(", ");
-    generatePrompt();
-  }
-  
-function updateDetail() {
-    const select = document.getElementById("detailSelect");
-    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
-    document.getElementById("detail").value = selectedOptions.join(", ");
-    generatePrompt();
-  }
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-  }
- // background multiple
- 
- function updateLatar() {
-    const select = document.getElementById("latarSelect");
-    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
-    const input = document.getElementById("latar");
-    // Masukkan hasil pilihan ke dalam input
-    input.value = selectedOptions.join(", ");
-    generatePrompt();
-  }
-  // Load dark mode from localStorage
-  window.onload = () => {
-    const darkMode = localStorage.getItem('darkMode');
-    if (darkMode === 'enabled') {
-      document.body.classList.add('dark-mode');
+      <!-- Pose -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">accessibility</span>
+          Pose & Aksi
+        </div>
+        <label>Pose (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
+        <select id="poseSelect" multiple size="6" onchange="updatePose()">
+          <option value="">-- Tulis Manual --</option>
+          <optgroup label="Photo Styles">
+            <option value="candid">Candid</option>
+            <option value="formal">Formal</option>
+            <option value="portrait">Portrait (Close-up)</option>
+            <option value="full body">Full Body</option>
+            <option value="action">Action / Dynamic</option>
+            <option value="vintage">Vintage</option>
+          </optgroup>
+          <optgroup label="Pose Combo">
+            <option value="peace with smile">Peace Sign with Smile</option>
+            <option value="thumbs with laugh">Thumbs Up with Laugh</option>
+            <option value="fingerheart-shy">Finger Heart with Bashful Smile</option>
+            <option value="two hearts with gaze">Two Hands Heart with Tender Gaze</option>
+          </optgroup>
+          <optgroup label="Hand Poses">
+            <option value="hands in pockets">Hands in Pockets</option>
+            <option value="crossed-arms">Crossed Arms</option>
+            <option value="one hand on hip">One Hand on Hip</option>
+            <option value="touching face">Touching Face</option>
+            <option value="peace sign">Peace Sign</option>
+            <option value="finger heart">Finger Heart</option>
+          </optgroup>
+          <optgroup label="Sitting">
+            <option value="sitting">Sitting</option>
+            <option value="sitting cross legged">Cross-Legged</option>
+            <option value="sitting on chair relaxed">On Chair (Relaxed)</option>
+            <option value="sitting in a meadow">In a Meadow</option>
+            <option value="reading by the window">Reading by Window</option>
+          </optgroup>
+          <optgroup label="Standing">
+            <option value="standing straight">Standing Straight</option>
+            <option value="standing under cherry tree">Under Cherry Tree</option>
+            <option value="walking in the rain">Walking in Rain</option>
+            <option value="standing back to camera">Back to Camera</option>
+            <option value="jumping with joy">Jumping with Joy</option>
+          </optgroup>
+        </select>
+        <label>Pose Custom</label>
+        <input type="text" id="pose" oninput="generatePrompt()" placeholder="Contoh: standing under cherry tree" />
+      </div>
+
+      <!-- Camera -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">photo_camera</span>
+          Kamera & Lensa
+        </div>
+        <label>Kamera & Sudut Pandang (Bisa pilih multiple)</label>
+        <select id="kameraSelect" multiple size="6" onchange="updateKamera()">
+          <option value="">-- Tulis Manual --</option>
+          <optgroup label="Shot Types">
+            <option value="close-up shot">Close-up Shot</option>
+            <option value="medium shot">Medium Shot</option>
+            <option value="wide shot">Wide Shot</option>
+            <option value="low angle shot">Low Angle Shot</option>
+            <option value="high angle shot">High Angle Shot</option>
+            <option value="overhead shot">Overhead Shot</option>
+            <option value="bird's eye view">Bird's Eye View</option>
+            <option value="dutch angle tilt">Dutch Angle</option>
+            <option value="point of view (POV)">Point of View</option>
+          </optgroup>
+          <optgroup label="Canon">
+            <option value="canon eos r5">Canon EOS R5</option>
+            <option value="canon eos r6 mark ii">Canon EOS R6 Mark II</option>
+            <option value="canon eos 1dx mark iii">Canon EOS-1DX Mark III</option>
+          </optgroup>
+          <optgroup label="Nikon">
+            <option value="nikon z9">Nikon Z9</option>
+            <option value="nikon z8">Nikon Z8</option>
+            <option value="nikon z6 ii">Nikon Z6 II</option>
+          </optgroup>
+          <optgroup label="Sony">
+            <option value="sony a7r v">Sony Alpha a7R V</option>
+            <option value="sony a7 iv">Sony Alpha a7 IV</option>
+            <option value="sony a1">Sony Alpha a1</option>
+          </optgroup>
+          <optgroup label="Fujifilm">
+            <option value="fujifilm gfx100s">Fujifilm GFX100S</option>
+            <option value="fujifilm x h2s">Fujifilm X-H2S</option>
+            <option value="fujifilm x t5">Fujifilm X-T5</option>
+          </optgroup>
+          <optgroup label="Lens Types">
+            <option value="portrait lens">Portrait Lens</option>
+            <option value="macro lens">Macro Lens</option>
+            <option value="wide angle prime">Wide-angle Prime</option>
+            <option value="telephoto zoom">Telephoto Zoom</option>
+            <option value="fisheye lens">Fisheye Lens</option>
+          </optgroup>
+        </select>
+        <label>Kamera Custom</label>
+        <input type="text" id="kamera" oninput="generatePrompt()" placeholder="Contoh: close-up shot" />
+      </div>
+
+      <!-- Art Style -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">palette</span>
+          Gaya Seni
+        </div>
+        <label>Gaya Seni</label>
+        <select id="gayaSelect" onchange="handleSelectChange('gaya')">
+          <option value="">-- Pilih atau Tulis Manual --</option>
+          <option value="anime-style">Anime Style</option>
+          <option value="Studio Ghibli inspired">Studio Ghibli Inspired</option>
+          <option value="realistic digital painting">Realistic Digital Painting</option>
+          <option value="chibi art">Chibi Art</option>
+          <option value="cyberpunk concept art">Cyberpunk Concept Art</option>
+          <option value="watercolor illustration">Watercolor Illustration</option>
+          <option value="pixel art style">Pixel Art Style</option>
+          <option value="3D Anime">3D Anime</option>
+          <option value="Cartoon anime">Cartoon Anime</option>
+          <option value="Abstract Painting">Abstract Painting</option>
+          <option value="Oil Painting">Oil Painting</option>
+          <option value="Acrylic Painting">Acrylic Painting</option>
+          <option value="Digital Painting">Digital Painting</option>
+          <option value="Pencil Sketch">Pencil Sketch</option>
+          <option value="Watercolor Painting">Watercolor Painting</option>
+          <option value="Pop Art painting">Pop Art</option>
+          <option value="3D Render">3D Render</option>
+          <option value="Photograph">Photograph</option>
+          <option value="Line Art">Line Art</option>
+        </select>
+        <label>Gaya Seni Custom</label>
+        <input type="text" id="gaya" oninput="generatePrompt()" placeholder="Contoh: anime-style" />
+      </div>
+
+      <!-- Background -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">landscape</span>
+          Latar Belakang
+        </div>
+        <label>Background (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
+        <select id="latarSelect" multiple size="6" onchange="updateLatar()">
+          <option value="">-- Tulis Manual --</option>
+          <optgroup label="Nature">
+            <option value="cherry blossom forest">Cherry Blossom Forest</option>
+            <option value="sunset rice field">Sunset Rice Field</option>
+            <option value="sitting in a meadow">Meadow</option>
+            <option value="Indonesian school courtyard">School Courtyard</option>
+          </optgroup>
+          <optgroup label="Urban">
+            <option value="rainy street at night">Rainy Street at Night</option>
+            <option value="cyberpunk cityscape">Cyberpunk Cityscape</option>
+            <option value="Tokyo Night">Tokyo Night (Neon)</option>
+            <option value="Moroccan Market">Moroccan Market</option>
+          </optgroup>
+          <optgroup label="Fantasy">
+            <option value="floating islands above clouds">Floating Islands</option>
+            <option value="ancient Japanese temple">Ancient Temple</option>
+            <option value="Ice Palace">Ice Palace</option>
+            <option value="Space Station">Space Station</option>
+            <option value="Atlantis">Atlantis</option>
+          </optgroup>
+          <optgroup label="Interior">
+            <option value="Grand Library">Grand Library</option>
+            <option value="Futuristic Lab">Futuristic Lab</option>
+            <option value="Minimal Bedroom">Minimal Bedroom</option>
+            <option value="Zen Temple">Zen Temple</option>
+          </optgroup>
+          <optgroup label="Simple">
+            <option value="Plain White">Plain White</option>
+            <option value="Solid Black">Solid Black</option>
+            <option value="Soft Color Gradient">Soft Gradient</option>
+            <option value="Bokeh Blur">Bokeh Blur</option>
+          </optgroup>
+        </select>
+        <label>Background Custom</label>
+        <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
+      </div>
+
+      <!-- Aesthetic Details -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">sparkle</span>
+          Detail Estetis
+        </div>
+        <label>Detail Estetis (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
+        <select id="detailSelect" multiple size="6" onchange="updateDetail()">
+          <option value="">-- Tulis Manual --</option>
+          <optgroup label="Quality">
+            <option value="4k">4K</option>
+            <option value="8k">8K</option>
+            <option value="hd">HD</option>
+            <option value="highly detailed">Highly Detailed</option>
+            <option value="ultra-detailed">Ultra-detailed</option>
+            <option value="octane render">Octane Render</option>
+          </optgroup>
+          <optgroup label="Lighting">
+            <option value="cinematic lighting">Cinematic Lighting</option>
+            <option value="golden hour lighting">Golden Hour</option>
+            <option value="soft bokeh">Soft Bokeh</option>
+            <option value="rim lighting">Rim Lighting</option>
+            <option value="volumetric fog">Volumetric Fog</option>
+            <option value="ambient glow">Ambient Glow</option>
+          </optgroup>
+          <optgroup label="Style Tags">
+            <option value="trending on artstation">Trending on ArtStation</option>
+            <option value="trending on pixiv">Trending on Pixiv</option>
+            <option value="beautiful">Beautiful</option>
+            <option value="cinematic">Cinematic</option>
+            <option value="symmetrical">Symmetrical</option>
+          </optgroup>
+          <optgroup label="Time & Light">
+            <option value="daylight">Daylight</option>
+            <option value="moonlight">Moonlight</option>
+            <option value="natural light">Natural Light</option>
+            <option value="at night">At Night</option>
+          </optgroup>
+        </select>
+        <label>Detail Custom</label>
+        <input type="text" id="detail" oninput="generatePrompt()" placeholder="Contoh: glowing particles, warm lighting" />
+      </div>
+
+      <!-- Aspect Ratio -->
+      <div class="form-group">
+        <div class="form-group-title">
+          <span class="material-icons-round">aspect_ratio</span>
+          Aspect Ratio
+        </div>
+        <label>Pilih Rasio</label>
+        <select id="rasio" onchange="generatePrompt()">
+          <option value="">-- Pilih --</option>
+          <option value="1:1">1:1 (Square)</option>
+          <option value="16:9">16:9 (Landscape)</option>
+          <option value="9:16">9:16 (Portrait)</option>
+          <option value="4:3">4:3</option>
+          <option value="3:2">3:2</option>
+        </select>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="btn-group">
+        <button type="button" class="btn btn-outline" onclick="resetForm()">
+          <span class="material-icons-round">refresh</span>
+          Reset
+        </button>
+        <button type="button" class="btn btn-ghost" onclick="exportToTxt()">
+          <span class="material-icons-round">download</span>
+          Export .txt
+        </button>
+        <button type="button" class="btn btn-primary" onclick="saveToFavorites()">
+          <span class="material-icons-round">star</span>
+          Simpan Favorit
+        </button>
+      </div>
+    </form>
+
+    <!-- Output Section -->
+    <div class="output-section">
+      <div class="output-header">
+        <span class="output-title">
+          <span class="material-icons-round">auto_awesome</span>
+          Generated Prompt
+        </span>
+      </div>
+      <pre id="output">Prompt akan muncul di sini...</pre>
+      <div class="output-actions">
+        <button type="button" class="btn btn-primary" onclick="copyPrompt()" id="copyBtn">
+          <span class="material-icons-round">content_copy</span>
+          Salin Prompt
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="openFavoritesModal()">
+          <span class="material-icons-round">bookmarks</span>
+          Lihat Favorit
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Dibuat dengan 💚 oleh</p>
+      <p>
+        <a href="https://misskey.id/@awvr" target="_blank">@awvr@misskey.id</a> - 
+        <a href="https://github.com/ahlawisnu" target="_blank">GitHub</a> - 
+        <a href="https://linktr.ee/ahladigital" target="_blank">Linktree</a>
+      </p>
+    </footer>
+  </main>
+
+  <!-- Favorites Modal -->
+  <div class="modal-overlay" id="favoritesModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span class="material-icons-round">bookmarks</span>
+          Prompt Favorit
+        </h3>
+        <button class="modal-close" onclick="closeFavoritesModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="search-box">
+          <input type="text" id="searchFav" oninput="filterFavorites()" placeholder="Cari prompt favorit...">
+        </div>
+        <ul class="favorites-list" id="favoritesList">
+          <li class="empty-state">
+            <span class="material-icons-round">bookmark_border</span>
+            <p>Belum ada prompt favorit</p>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeFavoritesModal()">Tutup</button>
+        <button class="btn btn-outline" onclick="clearAllFavorites()">
+          <span class="material-icons-round">delete_sweep</span>
+          Hapus Semua
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snackbar -->
+  <div class="snackbar" id="snackbar">
+    <span id="snackbarText">Prompt disalin!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // ============================================
+    // THEME MANAGEMENT
+    // ============================================
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
     }
-  };
-  // APPS
-  if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(registration => {
-      console.log('Service Worker terdaftar:', registration);
-    })
-    .catch(error => {
-      console.log('Gagal mendaftarkan Service Worker:', error);
-    });
-  } 
-  // if
-  let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  
-  const btnInstall = document.getElementById('installBtn');
-  btnInstall.style.display = 'block';
-
-  btnInstall.addEventListener('click', () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
+    
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+      showSnackbar(newTheme === 'dark' ? 'Dark mode aktif' : 'Light mode aktif');
+    }
+    
+    function updateThemeIcon(theme) {
+      document.getElementById('themeIcon').textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+    }
+    
+    // ============================================
+    // MOBILE MENU
+    // ============================================
+    function toggleMobileMenu() {
+      const overlay = document.getElementById('mobileOverlay');
+      const menu = document.getElementById('mobileMenu');
+      const icon = document.getElementById('menuIcon');
+      
+      overlay.classList.toggle('active');
+      menu.classList.toggle('active');
+      icon.textContent = menu.classList.contains('active') ? 'close' : 'menu';
+      
+      document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    // ============================================
+    // SNACKBAR
+    // ============================================
+    function showSnackbar(message) {
+      const snackbar = document.getElementById('snackbar');
+      document.getElementById('snackbarText').textContent = message;
+      snackbar.classList.add('show');
+      setTimeout(() => snackbar.classList.remove('show'), 3000);
+    }
+    
+    // ============================================
+    // PROMPT GENERATION
+    // ============================================
+    function generatePrompt() {
+      const s = id => document.getElementById(id)?.value || '';
+      
+      let prompt = s('subjek');
+      if (!prompt) {
+        document.getElementById('output').textContent = 'Prompt akan muncul di sini...';
+        return;
+      }
+      
+      if (s('genre')) prompt += `, ${s('genre')} theme`;
+      if (s('negara')) prompt += `, ${s('negara')}`;
+      if (s('gayaRambut')) prompt += `, hairstyle: ${s('gayaRambut')}`;
+      if (s('warnaRambut')) prompt += `, hair color: ${s('warnaRambut')}`;
+      if (s('pakaian')) prompt += `, ${s('pakaian')}`;
+      if (s('ekspresi')) prompt += `, expression: ${s('ekspresi')}`;
+      if (s('pose')) prompt += `, ${s('pose')}`;
+      if (s('kamera')) prompt += `, ${s('kamera')}`;
+      if (s('latar')) prompt += `, background: ${s('latar')}`;
+      if (s('detail')) prompt += `, ${s('detail')}`;
+      if (s('gaya')) prompt += `, art style: ${s('gaya')}`;
+      if (s('rasio')) prompt += `, aspect ratio: ${s('rasio')}`;
+      
+      document.getElementById('output').textContent = prompt;
+    }
+    
+    // ============================================
+    // SELECT HANDLERS
+    // ============================================
+    function handleSelectChange(fieldId) {
+      const select = document.getElementById(fieldId + 'Select');
+      const input = document.getElementById(fieldId);
+      if (select && input) {
+        input.value = select.value;
+        generatePrompt();
+      }
+    }
+    
+    function updateMultipleSelect(selectId, inputId) {
+      const select = document.getElementById(selectId);
+      const input = document.getElementById(inputId);
+      if (select && input) {
+        const values = Array.from(select.selectedOptions).map(opt => opt.value).filter(v => v);
+        if (values.length) input.value = values.join(', ');
+        generatePrompt();
+      }
+    }
+    
+    function updateHair() { updateMultipleSelect('hairSelect', 'gayaRambut'); }
+    function updatePakaian() { updateMultipleSelect('pakaianSelect', 'pakaian'); }
+    function updatePose() { updateMultipleSelect('poseSelect', 'pose'); }
+    function updateKamera() { updateMultipleSelect('kameraSelect', 'kamera'); }
+    function updateDetail() { updateMultipleSelect('detailSelect', 'detail'); }
+    function updateLatar() { updateMultipleSelect('latarSelect', 'latar'); }
+    
+    // ============================================
+    // FORM ACTIONS
+    // ============================================
+    function resetForm() {
+      document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+      document.querySelectorAll('select').forEach(el => {
+        el.selectedIndex = 0;
+        if (el.multiple) {
+          Array.from(el.options).forEach(opt => opt.selected = false);
         }
-        deferredPrompt = null;
+      });
+      generatePrompt();
+      showSnackbar('Form direset');
+    }
+    
+    function copyPrompt() {
+      const output = document.getElementById('output').textContent;
+      if (output === 'Prompt akan muncul di sini...' || !output.trim()) {
+        showSnackbar('Prompt kosong!');
+        return;
+      }
+      
+      navigator.clipboard.writeText(output).then(() => {
+        showSnackbar('Prompt disalin ke clipboard!');
+        const btn = document.getElementById('copyBtn');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<span class="material-icons-round">check</span> Tersalin!';
+        setTimeout(() => btn.innerHTML = original, 2000);
       });
     }
-  });
-}); 
-  
-</script>
-<div style="text-align:center">
-  <h3>Contact Person</h3>
-  <p>⭕ fediverse <a href="https://misskey.id/@awvr" target="_blank"
-  style="color: #cc3399; text-decoration: none;">@awvr@misskey.id</a></p>
-</div>
-<footer style="text-align: center; margin-top: 40px; font-size: 14px; color: #777;">
-  Dibuat dengan ❤️ oleh 
-  <a href="https://linktr.ee/ahladigital"  target="_blank" style="color: #cc3399; text-decoration: none;">
-    @AWVR@MISSKEY.ID
-  </a>
-</footer>
-
+    
+    function exportToTxt() {
+      const output = document.getElementById('output').textContent;
+      if (output === 'Prompt akan muncul di sini...') {
+        showSnackbar('Prompt kosong!');
+        return;
+      }
+      
+      const blob = new Blob([output], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'prompt-ai-' + new Date().toISOString().slice(0, 10) + '.txt';
+      link.click();
+      URL.revokeObjectURL(url);
+      showSnackbar('Prompt diexport!');
+    }
+    
+    // ============================================
+    // FAVORITES
+    // ============================================
+    function saveToFavorites() {
+      const output = document.getElementById('output').textContent;
+      if (output === 'Prompt akan muncul di sini...' || !output.trim()) {
+        showSnackbar('Prompt kosong!');
+        return;
+      }
+      
+      let favorites = JSON.parse(localStorage.getItem('aiPrompts')) || [];
+      
+      if (favorites.includes(output)) {
+        showSnackbar('Prompt sudah ada di favorit');
+        return;
+      }
+      
+      favorites.unshift(output);
+      localStorage.setItem('aiPrompts', JSON.stringify(favorites));
+      showSnackbar('Prompt disimpan ke favorit!');
+    }
+    
+    function openFavoritesModal() {
+      document.getElementById('favoritesModal').classList.add('active');
+      showFavorites();
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeFavoritesModal() {
+      document.getElementById('favoritesModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    function showFavorites() {
+      const list = document.getElementById('favoritesList');
+      const favorites = JSON.parse(localStorage.getItem('aiPrompts')) || [];
+      
+      if (favorites.length === 0) {
+        list.innerHTML = `
+          <li class="empty-state">
+            <span class="material-icons-round">bookmark_border</span>
+            <p>Belum ada prompt favorit</p>
+          </li>
+        `;
+        return;
+      }
+      
+      list.innerHTML = favorites.map((prompt, index) => `
+        <li class="favorite-item">
+          <span class="favorite-text">${escapeHtml(prompt)}</span>
+          <div class="favorite-actions">
+            <button class="icon-btn" onclick="copyFavorite(${index})" title="Copy">
+              <span class="material-icons-round">content_copy</span>
+            </button>
+            <button class="icon-btn delete" onclick="deleteFavorite(${index})" title="Hapus">
+              <span class="material-icons-round">delete</span>
+            </button>
+          </div>
+        </li>
+      `).join('');
+    }
+    
+    function filterFavorites() {
+      const search = document.getElementById('searchFav').value.toLowerCase();
+      const favorites = JSON.parse(localStorage.getItem('aiPrompts')) || [];
+      const filtered = favorites.filter(p => p.toLowerCase().includes(search));
+      const list = document.getElementById('favoritesList');
+      
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <li class="empty-state">
+            <span class="material-icons-round">search_off</span>
+            <p>Tidak ada hasil</p>
+          </li>
+        `;
+        return;
+      }
+      
+      list.innerHTML = filtered.map((prompt) => {
+        const originalIndex = favorites.indexOf(prompt);
+        return `
+          <li class="favorite-item">
+            <span class="favorite-text">${escapeHtml(prompt)}</span>
+            <div class="favorite-actions">
+              <button class="icon-btn" onclick="copyFavorite(${originalIndex})" title="Copy">
+                <span class="material-icons-round">content_copy</span>
+              </button>
+              <button class="icon-btn delete" onclick="deleteFavorite(${originalIndex})" title="Hapus">
+                <span class="material-icons-round">delete</span>
+              </button>
+            </div>
+          </li>
+        `;
+      }).join('');
+    }
+    
+    function copyFavorite(index) {
+      const favorites = JSON.parse(localStorage.getItem('aiPrompts')) || [];
+      if (favorites[index]) {
+        navigator.clipboard.writeText(favorites[index]);
+        showSnackbar('Prompt disalin!');
+      }
+    }
+    
+    function deleteFavorite(index) {
+      let favorites = JSON.parse(localStorage.getItem('aiPrompts')) || [];
+      favorites.splice(index, 1);
+      localStorage.setItem('aiPrompts', JSON.stringify(favorites));
+      showFavorites();
+      showSnackbar('Prompt dihapus');
+    }
+    
+    function clearAllFavorites() {
+      if (confirm('Hapus semua prompt favorit?')) {
+        localStorage.removeItem('aiPrompts');
+        showFavorites();
+        showSnackbar('Semua favorit dihapus');
+      }
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      generatePrompt();
+    });
+    
+    // Close modal on overlay click
+    document.getElementById('favoritesModal').addEventListener('click', function(e) {
+      if (e.target === this) closeFavoritesModal();
+    });
+    
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeFavoritesModal();
+        const menu = document.getElementById('mobileMenu');
+        if (menu.classList.contains('active')) toggleMobileMenu();
+      }
+    });
+    
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered:', reg))
+        .catch(err => console.log('SW failed:', err));
+    }
+  </script>
 </body>
 </html>
