@@ -3,193 +3,935 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Kontak WhatsApp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Form Kontak - Sakura Miku Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
     <style>
+        :root {
+            /* Sakura Miku Color Palette - Material Design 3 */
+            --primary: #FF69B4;
+            --on-primary: #FFFFFF;
+            --primary-container: #FFD6E8;
+            --on-primary-container: #5D1137;
+            
+            --secondary: #00CED1;
+            --on-secondary: #003738;
+            --secondary-container: #B0F0F1;
+            --on-secondary-container: #003738;
+            
+            --tertiary: #FFB7C5;
+            --on-tertiary: #5D1137;
+            --tertiary-container: #FFE4E1;
+            --on-tertiary-container: #5D1137;
+            
+            --surface: #FFF0F5;
+            --on-surface: #1C1B1F;
+            --surface-variant: #F8BBD0;
+            --on-surface-variant: #4A4458;
+            
+            --background: #FFF5F7;
+            --on-background: #1C1B1F;
+            
+            --outline: #857373;
+            --outline-variant: #D8C2C2;
+            
+            --error: #B3261E;
+            --on-error: #FFFFFF;
+            
+            --shadow: rgba(255, 105, 180, 0.15);
+            --elevation-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --elevation-2: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+            --elevation-3: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', 'Noto Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #E0F7FA 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--on-surface);
         }
-        .contact-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.6s ease-out;
         }
-        .form-header {
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 28px;
+            box-shadow: var(--elevation-3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .header {
+            padding: 32px 32px 24px;
             text-align: center;
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, rgba(255,105,180,0.1) 0%, rgba(0,206,209,0.1) 100%);
+            border-bottom: 1px solid var(--outline-variant);
         }
-        .form-header h2 {
-            color: #25D366;
-            font-weight: bold;
+
+        .header-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: var(--elevation-2);
+            position: relative;
+            overflow: hidden;
         }
-        .form-header p {
-            color: #6c757d;
+
+        .header-icon::after {
+            content: '🌸';
+            font-size: 40px;
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
         }
-        .form-group {
-            margin-bottom: 20px;
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
-        .form-control:focus {
-            border-color: #25D366;
-            box-shadow: 0 0 0 0.25rem rgba(37, 211, 102, 0.25);
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--on-surface);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
+
+        .header p {
+            color: var(--on-surface-variant);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .form-content {
+            padding: 32px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .header h1 { font-size: 24px; }
+            .form-content { padding: 24px 20px; }
+        }
+
+        .form-field {
+            position: relative;
+        }
+
+        .form-field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .text-field {
+            position: relative;
+            width: 100%;
+        }
+
+        .text-field input,
+        .text-field textarea,
+        .text-field select {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid var(--outline-variant);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            background: var(--surface);
+            color: var(--on-surface);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .text-field textarea {
+            min-height: 120px;
+            resize: vertical;
+            padding-top: 20px;
+        }
+
+        .text-field label {
+            position: absolute;
+            left: 48px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--on-surface-variant);
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--surface);
+            padding: 0 4px;
+        }
+
+        .text-field textarea ~ label {
+            top: 24px;
+            transform: translateY(0);
+        }
+
+        .text-field input:focus,
+        .text-field textarea:focus,
+        .text-field select:focus,
+        .text-field input:not(:placeholder-shown),
+        .text-field textarea:not(:placeholder-shown),
+        .text-field select:not([value=""]) {
+            border-color: var(--primary);
+            border-width: 2px;
+        }
+
+        .text-field input:focus ~ label,
+        .text-field textarea:focus ~ label,
+        .text-field select:focus ~ label,
+        .text-field input:not(:placeholder-shown) ~ label,
+        .text-field textarea:not(:placeholder-shown) ~ label,
+        .text-field select:not([value=""]) ~ label {
+            top: 0;
+            left: 12px;
+            transform: translateY(-50%) scale(0.85);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .text-field .material-symbols-rounded {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--on-surface-variant);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .text-field textarea ~ .material-symbols-rounded {
+            top: 20px;
+            transform: translateY(0);
+        }
+
+        .text-field input:focus ~ .material-symbols-rounded,
+        .text-field textarea:focus ~ .material-symbols-rounded,
+        .text-field select:focus ~ .material-symbols-rounded {
+            color: var(--primary);
+        }
+
+        /* Channel Selection - Material Design 3 Chips */
+        .channel-section {
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--primary-container);
+            border-radius: 20px;
+            border: 2px solid transparent;
             transition: all 0.3s;
         }
-        .btn-whatsapp:hover {
-            background-color: #128C7E;
+
+        .channel-section:hover {
+            border-color: var(--primary);
+            box-shadow: var(--elevation-1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--on-primary-container);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .channel-chip {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            background: var(--surface);
+            border: 2px solid var(--outline-variant);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .channel-chip:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--elevation-2);
+            border-color: var(--primary);
+        }
+
+        .channel-chip input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .channel-chip input[type="radio"]:checked + .chip-content {
+            color: var(--primary);
+        }
+
+        .channel-chip input[type="radio"]:checked ~ .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .channel-chip:has(input[type="radio"]:checked) {
+            background: var(--secondary-container);
+            border-color: var(--secondary);
+            border-width: 2px;
+            box-shadow: var(--elevation-2);
+        }
+
+        .chip-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--on-surface);
+            transition: color 0.3s;
+        }
+
+        .chip-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 4px;
+            transition: transform 0.3s;
+        }
+
+        .channel-chip:hover .chip-icon {
+            transform: scale(1.1);
+        }
+
+        .whatsapp .chip-icon { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; }
+        .sms .chip-icon { background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white; }
+        .email .chip-icon { background: linear-gradient(135deg, #EA4335 0%, #FBBC05 100%); color: white; }
+        .telegram .chip-icon { background: linear-gradient(135deg, #0088cc 0%, #00BFFF 100%); color: white; }
+
+        .chip-label {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .check-icon {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
             color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .whatsapp-info {
-            background-color: #f0f9f0;
-            border-left: 4px solid #25D366;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 0 5px 5px 0;
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            flex-wrap: wrap;
         }
-        .notification {
+
+        .btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        .btn-secondary {
+            background: var(--surface-variant);
+            color: var(--on-surface);
+            border: 2px solid var(--outline);
+        }
+
+        .btn-secondary:hover {
+            background: var(--outline-variant);
+            border-color: var(--primary);
+        }
+
+        /* Info Cards */
+        .info-section {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .info-card {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--outline-variant);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--elevation-2);
+            border-color: var(--primary);
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-container);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--on-surface);
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--on-surface);
+            color: var(--surface);
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: var(--elevation-3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            min-width: 300px;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 8px;
             display: none;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 5px;
         }
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+
+        /* Floating petals decoration */
+        .petal {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            animation: fall linear infinite;
+            opacity: 0.6;
+            z-index: -1;
         }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .petal:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; }
+        .petal:nth-child(2) { left: 30%; animation-duration: 18s; animation-delay: 2s; }
+        .petal:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 4s; }
+        .petal:nth-child(4) { left: 70%; animation-duration: 20s; animation-delay: 1s; }
+        .petal:nth-child(5) { left: 90%; animation-duration: 16s; animation-delay: 3s; }
     </style>
+<base target="_blank">
 </head>
 <body>
+    <!-- Floating Sakura Petals -->
+    <div class="petal">🌸</div>
+    <div class="petal">🌸</div>
+    <div class="petal">🌸</div>
+    <div class="petal">🌸</div>
+    <div class="petal">🌸</div>
+
     <div class="container">
-        <div class="contact-container">
-            <div class="form-header">
-                <h2><i class="fab fa-whatsapp"></i> Hubungi Kami via WhatsApp</h2>
-                <p>Isi formulir di bawah ini dan kami akan segera menghubungi Anda</p>
+        <div class="card">
+            <div class="header">
+                <div class="header-icon"></div>
+                <h1>Hubungi Kami</h1>
+                <p>Pilih cara komunikasi favorit Anda dan kami akan segera merespons</p>
             </div>
-            
-            <form id="whatsappForm">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="name" required>
+
+            <div class="form-content">
+                <form id="contactForm">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <div class="text-field">
+                                <input type="text" id="name" placeholder=" " required>
+                                <span class="material-symbols-rounded">person</span>
+                                <label for="name">Nama Lengkap</label>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <div class="text-field">
+                                <input type="email" id="email" placeholder=" " required>
+                                <span class="material-symbols-rounded">email</span>
+                                <label for="email">Alamat Email</label>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <div class="text-field">
+                                <input type="tel" id="phone" placeholder=" " required>
+                                <span class="material-symbols-rounded">smartphone</span>
+                                <label for="phone">Nomor Telepon</label>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <div class="text-field">
+                                <select id="subject" required>
+                                    <option value="" disabled selected>Pilih Subjek</option>
+                                    <option value="Informasi Produk">Informasi Produk</option>
+                                    <option value="Layanan Pelanggan">Layanan Pelanggan</option>
+                                    <option value="Kerjasama">Kerjasama</option>
+                                    <option value="Keluhan">Keluhan</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                                <span class="material-symbols-rounded">subject</span>
+                                <label for="subject">Subjek</label>
+                            </div>
+                        </div>
+
+                        <div class="form-field full-width">
+                            <div class="text-field">
+                                <textarea id="message" placeholder=" " required></textarea>
+                                <span class="material-symbols-rounded">chat</span>
+                                <label for="message">Pesan Anda</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
+
+                    <!-- Channel Selection -->
+                    <div class="channel-section">
+                        <div class="section-title">
+                            <span class="material-symbols-rounded">send</span>
+                            Pilih Metode Pengiriman
+                        </div>
+                        <div class="channel-grid">
+                            <label class="channel-chip whatsapp">
+                                <input type="radio" name="channel" value="whatsapp" checked>
+                                <div class="chip-content">
+                                    <div class="chip-icon">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="chip-label">WhatsApp</span>
+                                </div>
+                                <div class="check-icon">✓</div>
+                            </label>
+
+                            <label class="channel-chip sms">
+                                <input type="radio" name="channel" value="sms">
+                                <div class="chip-content">
+                                    <div class="chip-icon">
+                                        <span class="material-symbols-rounded" style="color: white; font-size: 28px;">sms</span>
+                                    </div>
+                                    <span class="chip-label">SMS</span>
+                                </div>
+                                <div class="check-icon">✓</div>
+                            </label>
+
+                            <label class="channel-chip email">
+                                <input type="radio" name="channel" value="email">
+                                <div class="chip-content">
+                                    <div class="chip-icon">
+                                        <span class="material-symbols-rounded" style="color: white; font-size: 28px;">mail</span>
+                                    </div>
+                                    <span class="chip-label">Email</span>
+                                </div>
+                                <div class="check-icon">✓</div>
+                            </label>
+
+                            <label class="channel-chip telegram">
+                                <input type="radio" name="channel" value="telegram">
+                                <div class="chip-content">
+                                    <div class="chip-icon">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="chip-label">Telegram</span>
+                                </div>
+                                <div class="check-icon">✓</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="reset" class="btn btn-secondary">
+                            <span class="material-symbols-rounded">refresh</span>
+                            Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <span class="material-symbols-rounded">send</span>
+                            Kirim Pesan
+                            <span class="loading" id="loading"></span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Contact Info Cards -->
+                <div class="info-section">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <span class="material-symbols-rounded">smartphone</span>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">WhatsApp/SMS</div>
+                            <div class="info-value">+62 815-8000-627</div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <span class="material-symbols-rounded">mail</span>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">wisnudiary@outlook.com</div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <span class="material-symbols-rounded">chat</span>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Telegram</div>
+                            <div class="info-value">@awvr_verse</div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Nomor Telepon</label>
-                            <input type="tel" class="form-control" id="phone" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="subject" class="form-label">Subjek</label>
-                            <select class="form-select" id="subject" required>
-                                <option value="" selected disabled>Pilih Subjek</option>
-                                <option value="Informasi Produk">Informasi Produk</option>
-                                <option value="Layanan Pelanggan">Layanan Pelanggan</option>
-                                <option value="Kerjasama">Kerjasama</option>
-                                <option value="Keluhan">Keluhan</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message" class="form-label">Pesan</label>
-                    <textarea class="form-control" id="message" rows="5" required></textarea>
-                </div>
-                
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
-                    <button type="submit" class="btn btn-whatsapp">
-                        <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
-                    </button>
-                </div>
-            </form>
-            
-            <div class="whatsapp-info">
-                <p><i class="fas fa-info-circle"></i> <strong>Informasi:</strong> Setelah Anda mengirim formulir ini, Anda akan diarahkan ke WhatsApp untuk mengirim pesan ke nomor kami.</p>
             </div>
-            
-            <div id="notification" class="notification"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <span class="material-symbols-rounded">check</span>
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="toastTitle">Berhasil!</div>
+            <div class="toast-message" id="toastMessage">Pesan Anda sedang diproses...</div>
         </div>
     </div>
 
     <script>
-        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+        // Contact Configuration
+        const CONTACT_CONFIG = {
+            whatsapp: {
+                number: '628158000627',
+                baseUrl: 'https://wa.me/'
+            },
+            sms: {
+                number: '+628158000627',
+                baseUrl: 'sms:'
+            },
+            email: {
+                address: 'wisnudiary@outlook.com',
+                baseUrl: 'mailto:'
+            },
+            telegram: {
+                username: 'awvr_verse',
+                baseUrl: 'https://t.me/'
+            }
+        };
+
+        // Form Elements
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const toast = document.getElementById('toast');
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // Show Toast Function
+        function showToast(title, message, duration = 3000) {
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // Format Message
+        function formatMessage(data) {
+            return `*Pesan Baru dari Form Kontak*%0A%0A` +
+                   `*Nama:* ${encodeURIComponent(data.name)}%0A` +
+                   `*Email:* ${encodeURIComponent(data.email)}%0A` +
+                   `*Telepon:* ${encodeURIComponent(data.phone)}%0A` +
+                   `*Subjek:* ${encodeURIComponent(data.subject)}%0A%0A` +
+                   `*Pesan:*%0A${encodeURIComponent(data.message)}`;
+        }
+
+        // Format Email Body
+        function formatEmailBody(data) {
+            return `Nama: ${data.name}\n` +
+                   `Email: ${data.email}\n` +
+                   `Telepon: ${data.phone}\n` +
+                   `Subjek: ${data.subject}\n\n` +
+                   `Pesan:\n${data.message}`;
+        }
+
+        // Handle Form Submit
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Ganti dengan nomor WhatsApp Anda (format internasional tanpa +)
-            const phoneNumber = '628158000627';
-            
-            // Ambil nilai dari form
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            // Format pesan
-            const formattedMessage = `*Halo, saya tertarik dengan layanan Anda*\n\n` +
-                                   `*Nama:* ${name}\n` +
-                                   `*Email:* ${email}\n` +
-                                   `*Telepon:* ${phone}\n` +
-                                   `*Subjek:* ${subject}\n\n` +
-                                   `*Pesan:*\n${message}`;
-            
-            // Encode pesan untuk URL
-            const encodedMessage = encodeURIComponent(formattedMessage);
-            
-            // Buat URL WhatsApp
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            // Tampilkan notifikasi
-            showNotification('Mengarahkan ke WhatsApp...', 'success');
-            
-            // Buka WhatsApp setelah delay singkat
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-            }, 1000);
+            // Get Form Data
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value.trim(),
+                channel: document.querySelector('input[name="channel"]:checked').value
+            };
+
+            // Show Loading
+            loading.style.display = 'inline-block';
+            submitBtn.disabled = true;
+
+            // Simulate Processing
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            let url = '';
+            const channel = formData.channel;
+
+            try {
+                switch(channel) {
+                    case 'whatsapp':
+                        const waMessage = formatMessage(formData);
+                        url = `${CONTACT_CONFIG.whatsapp.baseUrl}${CONTACT_CONFIG.whatsapp.number}?text=${waMessage}`;
+                        showToast('Mengarahkan ke WhatsApp', 'Membuka aplikasi WhatsApp...');
+                        break;
+
+                    case 'sms':
+                        const smsBody = `Pesan dari ${formData.name}: ${formData.message}`;
+                        url = `${CONTACT_CONFIG.sms.baseUrl}${CONTACT_CONFIG.sms.number}?body=${encodeURIComponent(smsBody)}`;
+                        showToast('Mengarahkan ke SMS', 'Membuka aplikasi SMS...');
+                        break;
+
+                    case 'email':
+                        const emailBody = formatEmailBody(formData);
+                        const emailSubject = `[Kontak] ${formData.subject} - dari ${formData.name}`;
+                        url = `${CONTACT_CONFIG.email.baseUrl}${CONTACT_CONFIG.email.address}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                        showToast('Mengarahkan ke Email', 'Membuka aplikasi Email...');
+                        break;
+
+                    case 'telegram':
+                        const tgMessage = formatMessage(formData).replace(/%0A/g, '%0A');
+                        url = `${CONTACT_CONFIG.telegram.baseUrl}${CONTACT_CONFIG.telegram.username}?text=${tgMessage}`;
+                        showToast('Mengarahkan ke Telegram', 'Membuka aplikasi Telegram...');
+                        break;
+                }
+
+                // Open URL
+                setTimeout(() => {
+                    window.open(url, '_blank');
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }, 1000);
+
+            } catch (error) {
+                showToast('Error', 'Terjadi kesalahan. Silakan coba lagi.', 4000);
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
         });
-        
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = 'notification ' + type;
-            notification.style.display = 'block';
+
+        // Input Animation Enhancement
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
             
-            // Sembunyikan notifikasi setelah 5 detik
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 5000);
-        }
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Channel Selection Animation
+        const chips = document.querySelectorAll('.channel-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Reset Form Handler
+        form.addEventListener('reset', function() {
+            showToast('Form Direset', 'Semua field telah dikosongkan', 2000);
+        });
     </script>
 </body>
 </html>
