@@ -432,37 +432,357 @@
         <label>Background (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
         <select id="latarSelect" multiple size="6" onchange="updateLatar()">
           <option value="">-- Tulis Manual --</option>
-          <optgroup label="Nature">
-            <option value="cherry blossom forest">Cherry Blossom Forest</option>
-            <option value="sunset rice field">Sunset Rice Field</option>
-            <option value="sitting in a meadow">Meadow</option>
-            <option value="Indonesian school courtyard">School Courtyard</option>
-          </optgroup>
-          <optgroup label="Urban">
-            <option value="rainy street at night">Rainy Street at Night</option>
-            <option value="cyberpunk cityscape">Cyberpunk Cityscape</option>
-            <option value="Tokyo Night">Tokyo Night (Neon)</option>
-            <option value="Moroccan Market">Moroccan Market</option>
-          </optgroup>
-          <optgroup label="Fantasy">
-            <option value="floating islands above clouds">Floating Islands</option>
-            <option value="ancient Japanese temple">Ancient Temple</option>
-            <option value="Ice Palace">Ice Palace</option>
-            <option value="Space Station">Space Station</option>
-            <option value="Atlantis">Atlantis</option>
-          </optgroup>
-          <optgroup label="Interior">
-            <option value="Grand Library">Grand Library</option>
-            <option value="Futuristic Lab">Futuristic Lab</option>
-            <option value="Minimal Bedroom">Minimal Bedroom</option>
-            <option value="Zen Temple">Zen Temple</option>
-          </optgroup>
-          <optgroup label="Simple">
-            <option value="Plain White">Plain White</option>
-            <option value="Solid Black">Solid Black</option>
-            <option value="Soft Color Gradient">Soft Gradient</option>
-            <option value="Bokeh Blur">Bokeh Blur</option>
-          </optgroup>
+        
+  <!-- Kategori: Medis -->
+  <optgroup label="Medis">
+    <option value="hospital operating room">Ruang Operasi Rumah Sakit</option>
+    <option value="general doctor clinic">Klinik Dokter Umum</option>
+    <option value="pharmacy with medicine shelves">Apotek dengan Rak Obat</option>
+    <option value="medical laboratory">Laboratorium Medis</option>
+    <option value="ambulance with emergency equipment">Ambulans dengan Peralatan Darurat</option>
+  </optgroup>
+
+  <!-- Kategori: Pendidikan -->
+  <optgroup label="Pendidikan">
+    <option value="elementary school classroom">Ruang Kelas Sekolah Dasar</option>
+    <option value="university library">Perpustakaan Universitas</option>
+    <option value="private tutoring studio">Studio Les Privat / Bimbingan Belajar</option>
+    <option value="lecture hall">Aula Kuliah Besar</option>
+    <option value="kindergarten playground">Taman Kanak-Kanak</option>
+  </optgroup>
+
+  <!-- Kategori: Teknologi -->
+  <optgroup label="Teknologi">
+    <option value="programmer office with monitors">Kantor Programmer dengan Banyak Monitor</option>
+    <option value="server data center">Server Room / Data Center</option>
+    <option value="digital animation studio">Studio Animasi Digital</option>
+    <option value="gadget repair workshop">Workshop Perbaikan Gadget</option>
+    <option value="tech startup meeting room">Ruang Meeting Startup Teknologi</option>
+  </optgroup>
+
+  <!-- Kategori: Kantor & Admin -->
+  <optgroup label="Kantor & Administrasi">
+    <option value="minimalist office space">Kantor Karyawan Minimalis</option>
+    <option value="office reception desk">Meja Resepsionis Kantor</option>
+    <option value="executive meeting room">Ruang Rapat Eksekutif</option>
+    <option value="document archive cabinet">Arsip Dokumen dan Filing Cabinet</option>
+    <option value="customer service with headset">Customer Service dengan Headset</option>
+  </optgroup>
+
+  <!-- Kategori: Industri -->
+  <optgroup label="Industri & Produksi">
+    <option value="car mechanic workshop">Bengkel Mobil dengan Alat Mekanik</option>
+    <option value="electronics factory line">Lini Produksi Pabrik Elektronik</option>
+    <option value="logistics warehouse with forklift">Gudang Logistik dengan Forklift</option>
+    <option value="welding workshop">Workshop Pengelasan</option>
+    <option value="precision cnc machine area">Mesin CNC dan Alat Ukur Presisi</option>
+  </optgroup>
+
+  <!-- Kategori: Seni & Kreatif -->
+  <optgroup label="Seni & Kreatif">
+    <option value="graphic design studio with tablet">Studio Desain Grafis dengan Wacom Tablet</option>
+    <option value="modern art gallery">Galeri Seni Modern</option>
+    <option value="tattoo studio with designs">Studio Tato dengan Contoh Desain</option>
+    <option value="fashion design workshop">Workshop Mode / Desain Busana</option>
+    <option value="music studio with instruments">Studio Musik dengan Alat Lengkap</option>
+  </optgroup>
+
+  <!-- Kategori: Kuliner -->
+  <optgroup label="Kuliner & Restoran">
+    <option value="professional restaurant kitchen">Dapur Restoran Profesional</option>
+    <option value="coffee shop barista counter">Counter Barista di Kedai Kopi</option>
+    <option value="pastry shop display">Toko Roti/Pastry dengan Display Kue</option>
+    <option value="night market food stall">Food Stall Pasar Malam</option>
+    <option value="hotel buffet table">Meja Prasmanan Hotel</option>
+  </optgroup>
+
+  <!-- Kategori: Keamanan -->
+  <optgroup label="Keamanan & Militer">
+    <option value="police station desk">Pos Polisi dengan Meja Layanan</option>
+    <option value="military base command post">Markas Militer dengan Peta dan Radio</option>
+    <option value="air traffic control center">Pusat Kontrol Lalu Lintas Udara</option>
+    <option value="road patrol police car">Patroli Jalan Raya dengan Mobil Polisi</option>
+    <option value="firefighter at incident site">Petugas Pemadam Saat Insiden Kebakaran</option>
+  </optgroup>
+
+  <!-- Kategori: Pertanian -->
+  <optgroup label="Pertanian & Lingkungan">
+    <option value="organic farm field">Sawah atau Ladang Pertanian Organik</option>
+    <option value="hydroponic vegetable garden">Kebun Sayur Hidroponik Modern</option>
+    <option value="livestock farm">Peternakan Sapi atau Ayam</option>
+    <option value="forestry ranger in forest">Hutan dengan Petugas Kehutanan</option>
+    <option value="weather monitoring station">Stasiun Pemantau Lingkungan / Cuaca</option>
+  </optgroup>
+
+  <!-- Kategori: Transportasi -->
+  <optgroup label="Transportasi & Logistik">
+    <option value="airport check in area">Bandara dengan Area Check-in</option>
+    <option value="railway station schedule board">Stasiun Kereta Api dengan Layar Jadwal</option>
+    <option value="intercity bus terminal">Terminal Bis Antar Kota</option>
+    <option value="package distribution warehouse">Gudang Distribusi Paket</option>
+    <option value="fishing boat at sea">Kapal Nelayan di Laut Lepas</option>
+  </optgroup>
+
+  <!-- Kategori: Konstruksi -->
+  <optgroup label="Konstruksi & Bangunan">
+    <option value="high rise apartment construction site">Proyek Bangunan Apartemen Bertingkat</option>
+    <option value="bricklayer building wall">Tukang Batu Sedang Membangun Tembok</option>
+    <option value="architect studio with building models">Studio Arsitek dengan Model Bangunan</option>
+    <option value="heavy machinery operator">Operator Alat Berat (Crane, Bulldozer)</option>
+    <option value="construction site material storage">Material Bangunan di Gudang Proyek</option>
+  </optgroup>
+
+  <!-- Kategori: E-commerce -->
+  <optgroup label="E-commerce & Pengiriman">
+    <option value="ecommerce package warehouse">Gudang Penyimpanan Paket E-commerce</option>
+    <option value="courier packaging area">Kurir Mengemas Pesanan</option>
+    <option value="delivery motorcycle with logo">Delivery Motor dengan Logo Aplikasi</option>
+    <option value="ecommerce call center">Call Center E-commerce</option>
+    <option value="packing station with bubble wrap">Packing Station dengan Bubble Wrap</option>
+  </optgroup>
+
+  <!-- Kategori: Pariwisata -->
+  <optgroup label="Pariwisata & Perhotelan">
+    <option value="hotel reception with guests">Resepsionis Hotel dengan Tamu</option>
+    <option value="five star hotel restaurant kitchen">Kitchen Set Restoran Bintang Lima</option>
+    <option value="tour guide at attraction site">Tour Guide di Objek Wisata</option>
+    <option value="travel agency with brochures">Travel Agent dengan Brosur Tujuan</option>
+    <option value="hotel swimming pool lounge">Kolam Renang Hotel dengan Kursi Santai</option>
+  </optgroup>
+
+  <!-- Kategori: Bisnis -->
+  <optgroup label="Bisnis & Marketing">
+    <option value="marketing agency meeting team">Kantor Marketing Agency dengan Tim Rapat</option>
+    <option value="trade exhibition booth">Booth Pameran Dagang/Event</option>
+    <option value="business broadcasting studio">Studio Broadcasting Bisnis</option>
+    <option value="presentation room with projector">Ruang Presentasi dengan Proyektor</option>
+    <option value="traditional market umkm stall">Lapak UMKM di Pasar Tradisional</option>
+  </optgroup>
+
+  <!-- Kategori: Jasa Profesional -->
+  <optgroup label="Jasa Profesional">
+    <option value="law firm with legal documents">Kantor Pengacara dengan Dokumen Hukum</option>
+    <option value="accountant office with files">Kantor Akuntan dengan File dan Printer</option>
+    <option value="notary with important papers">Notaris dengan Berkas Penting</option>
+    <option value="business consultant analyzing data">Konsultan Bisnis dengan Analisis Data</option>
+    <option value="property appraiser on site">Penilai Harga Properti di Lapangan</option>
+  </optgroup>
+
+  <!-- Kategori: Media & Komunikasi -->
+  <optgroup label="Media & Komunikasi">
+    <option value="tv broadcast studio">Studio Siaran Televisi</option>
+    <option value="newsroom editorial desk">Redaksi Media Online atau Surat Kabar</option>
+    <option value="field reporter covering news">Jurnalis Meliput Berita di Lapangan</option>
+    <option value="radio studio with microphone">Studio Radio dengan Mikrofon dan Headset</option>
+    <option value="social media management team">Tim Manajemen Media Sosial di Kantor</option>
+  </optgroup>
+
+  <!-- Kategori: Olahraga -->
+  <optgroup label="Olahraga">
+    <option value="fitness gym with equipment">Gym dengan Alat Latihan Lengkap</option>
+    <option value="soccer stadium match">Stadion Sepak Bola saat Pertandingan</option>
+    <option value="sports coach giving instructions">Pelatih Olahraga Memberikan Instruksi</option>
+    <option value="modern fitness center">Pusat Kebugaran Modern</option>
+    <option value="tennis court with players">Lapangan Tenis dengan Atlet</option>
+  </optgroup>
+
+  <!-- Kategori: Lingkungan & Energi -->
+  <optgroup label="Lingkungan & Energi">
+    <option value="solar wind power plant">Pembangkit Listrik Tenaga Surya/Angin</option>
+    <option value="forest conservation officer">Petugas Lingkungan di Hutan Lindung</option>
+    <option value="integrated waste processing center">Tempat Pengelolaan Sampah Terpadu</option>
+    <option value="renewable energy station">Stasiun Energi Terbarukan</option>
+    <option value="weather and climate research center">Pusat Penelitian Cuaca dan Iklim</option>
+  </optgroup>
+
+  <!-- Kategori: Event & Hiburan -->
+  <optgroup label="Event & Hiburan">
+    <option value="live music concert">Konser Musik Live dengan Penonton</option>
+    <option value="theater stage performance">Teater dengan Aktor di Panggung</option>
+    <option value="traditional cultural festival">Festival Budaya Tradisional</option>
+    <option value="circus tent with performers">Sirkus dengan Penampil dan Tenda</option>
+    <option value="formal award ceremony event">Acara Penghargaan Formal di Studio</option>
+  </optgroup>
+
+  <!-- Kategori: Perbankan -->
+  <optgroup label="Perbankan">
+    <option value="bank teller with transaction machine">Kasir Bank dengan Mesin Transaksi</option>
+    <option value="bank customer service desk">Customer Service Bank</option>
+    <option value="financial analyst in office">Analis Keuangan di Ruang Kantor</option>
+    <option value="atm machine with customer">Area Mesin ATM dengan Pelanggan</option>
+    <option value="internal bank meeting">Rapat Internal di Kantor Bank</option>
+  </optgroup>
+
+  <!-- Kategori: Asuransi -->
+  <optgroup label="Asuransi">
+    <option value="insurance office sales team">Kantor Asuransi dengan Tim Sales</option>
+    <option value="insurance claim process">Proses Klaim Asuransi di Meja Layanan</option>
+    <option value="insurance product presentation">Presentasi Produk Asuransi ke Klien</option>
+    <option value="insurance call center">Call Center Asuransi</option>
+    <option value="insurance surveyor in field">Surveyor Asuransi di Lapangan</option>
+  </optgroup>
+
+  <!-- Kategori: Desain & Arsitektur -->
+  <optgroup label="Desain & Arsitektur">
+    <option value="interior design studio with catalogs">Studio Desain Interior dengan Catalog Furnitur</option>
+    <option value="architect drawing manual sketch">Arsitek Membuat Sketsa Manual</option>
+    <option value="3d modeling designer on computer">Desainer 3D Modeling di Komputer</option>
+    <option value="architecture exhibition booth">Pameran Desain Arsitektur</option>
+    <option value="architect at construction site">Arsitek di Lapangan Proyek Pembangunan</option>
+  </optgroup>
+
+  <!-- Kategori: Perikanan -->
+  <optgroup label="Perikanan">
+    <option value="floating fish cage">Keramba Jaring Apung</option>
+    <option value="fishing harbor dock">Dermaga Tempat Nelayan Menambatkan Kapal</option>
+    <option value="fish auction at port">Pelelangan Ikan di Pelabuhan</option>
+    <option value="shrimp farming pond">Budidaya Udang Vaname</option>
+    <option value="traditional fishing gear">Alat Penangkap Ikan Tradisional</option>
+  </optgroup>
+
+  <!-- Kategori: Fashion & Mode -->
+  <optgroup label="Fashion & Mode">
+    <option value="fashion runway show">Fashion Show di Panggung</option>
+    <option value="boutique with mannequins">Butik Busana dengan Manekin</option>
+    <option value="sewing room with machines">Sewing Room dengan Mesin Jahit</option>
+    <option value="makeup artist on shoot">Makeup Artist di Lokasi Fashion Shoot</option>
+    <option value="model photoshoot session">Model Berfoto di Studio Mode</option>
+  </optgroup>
+
+  <!-- Kategori: Penelitian -->
+  <optgroup label="Penelitian">
+    <option value="physics lab with testing tools">Laboratorium Fisika dengan Alat Uji</option>
+    <option value="biology field research">Penelitian Biologi di Lapangan</option>
+    <option value="geological field observation">Observasi Geologi di Gunung/Lapangan</option>
+    <option value="social researcher conducting interview">Peneliti Sosial dengan Wawancara</option>
+    <option value="data scientist big data analysis">Data Scientist di Kantor dengan Big Data</option>
+  </optgroup>
+
+  <!-- Kategori: Pemerintahan -->
+  <optgroup label="Pemerintahan">
+    <option value="regent mayor office">Kantor Bupati/Wali Kota</option>
+    <option value="sub district office staff">Kantor Camat dengan Pegawai</option>
+    <option value="village office with citizens">Kantor Kelurahan dengan Warga</option>
+    <option value="regional parliament meeting room">Ruang Rapat DPRD</option>
+    <option value="community health center">Puskesmas dengan Petugas Kesehatan</option>
+  </optgroup>
+
+  <!-- Kategori: Agama -->
+  <optgroup label="Agama">
+    <option value="mosque with praying congregation">Masjid dengan Jamaah Shalat</option>
+    <option value="church with worshipers">Gereja dengan Jemaat Ibadah</option>
+    <option value="buddhist temple meditation">Wihara dengan Bhikkhu Bermeditasi</option>
+    <option value="hindu temple devotees">Kuil Hindu dengan Peziarah</option>
+    <option value="religious preacher giving sermon">Pendeta Memberikan Ceramah</option>
+  </optgroup>
+
+  <!-- Kategori: Perdagangan -->
+  <optgroup label="Perdagangan">
+    <option value="traditional market stalls">Pasar Tradisional dengan Pedagang</option>
+    <option value="grocery store items">Toko Kelontong dengan Barang Dagangan</option>
+    <option value="shopping mall complex">Pusat Perbelanjaan Mall</option>
+    <option value="mobile street vendor">Pedagang Keliling dengan Gerobak</option>
+    <option value="export import office documents">Kantor Ekspor Impor dengan Dokumen</option>
+  </optgroup>
+
+  <!-- Kategori: Profesi Langka -->
+  <optgroup label="Profesi Langka">
+    <option value="museum curator with artifacts">Penjaga Museum dengan Koleksi Artefak</option>
+    <option value="tree cutter in forest">Penebang Pohon di Hutan</option>
+    <option value="aircraft inspector at airport">Inspektur Pesawat di Bandara</option>
+    <option value="wildfire firefighter">Pemadam Kebakaran Hutan</option>
+    <option value="high rise window cleaner">Pembersih Kaca Gedung Tinggi</option>
+  </optgroup>
+
+  <!-- Kategori: Profesi Masa Depan -->
+  <optgroup label="Profesi Masa Depan">
+    <option value="robotics engineer lab">Robotik Engineer di Laboratorium</option>
+    <option value="astronaut space station">Astronaut di Stasiun Luar Angkasa</option>
+    <option value="cybersecurity analyst">Cyber Security Analyst</option>
+    <option value="vertical urban farmer">Urban Farmer di Vertikal Farming</option>
+    <option value="ai developer simulation">AI Developer dengan Simulasi Digital</option>
+  </optgroup>
+
+  <!-- Kategori: Profesi Tradisional -->
+  <optgroup label="Profesi Tradisional">
+    <option value="batik maker with canting tool">Pembatik dengan Kain dan Canting</option>
+    <option value="cycle rickshaw driver">Tukang Becak di Jalanan Kota</option>
+    <option value="traditional pottery maker">Pembuat Keramik Tradisional</option>
+    <option value="traditional instrument maker">Pembuat Alat Musik Tradisional</option>
+    <option value="traditional weaver artisan">Penenun Kain Tradisional</option>
+  </optgroup>
+
+  <!-- Kategori: Profesi Internasional -->
+  <optgroup label="Profesi Internasional">
+    <option value="embassy with diplomats">Kedutaan Besar dengan Diplomat</option>
+    <option value="un headquarters meeting">PBB dengan Tim Internasional</option>
+    <option value="international ngo fieldwork">Organisasi NGO di Lapangan</option>
+    <option value="global remote freelancer">Freelancer Global dari Rumah</option>
+    <option value="international university professor">Profesor di Universitas Internasional</option>
+  </optgroup>
+     <!-- end background custom -->
+
+     
+  <optgroup label="Random">
+     <option value="cherry blossom forest">cherry blossom forest</option>
+    <option value="Indonesian school courtyard">Indonesian school courtyard</option>
+    <option value="sunset rice field">sunset rice field</option>
+    <option value="rainy street at night">rainy street at night</option>
+    <option value="cyberpunk cityscape">cyberpunk cityscape</option>
+    <option value="ancient Japanese temple">ancient Japanese temple</option>
+    <option value="floating islands above clouds">floating islands above clouds</option>
+  </optgroup>
+    <optgroup label="1. Background (General Visual Backgrounds)">
+    <option value="Plain White">Plain White</option>
+    <option value="Solid Black">Solid Black</option>
+    <option value="Soft Color Gradient">Soft Color Gradient</option>
+    <option value="Bokeh Blur">Bokeh (Blur Effect)</option>
+    <option value="Rough Texture">Rough Texture (Concrete/Brick)</option>
+    <option value="Abstract Geometric">Abstract Geometric Pattern</option>
+    <option value="Blurred Galaxy">Blurred Galaxy/Stars</option>
+    <option value="Peeling Wall">Peeling Paint Wall</option>
+    <option value="Rippling Water">Rippling Water or Bubbles</option>
+    <option value="Blue Sky Clouds">Thin Clouds in Blue Sky</option>
+</optgroup>
+
+<optgroup label="2. Settings/Places (Specific Environments)">
+    <option value="Amazon Sunset">Amazon Rainforest at Sunset</option>
+    <option value="Tokyo Night">Bustling Tokyo Street at Night (Neon)</option>
+    <option value="Temple Moon">Ancient Temple Ruins under Full Moon</option>
+    <option value="Space Station">Advanced Space Station Orbiting Earth</option>
+    <option value="Japanese Snow Village">Traditional Japanese Mountain Village (Snowy)</option>
+    <option value="Moroccan Market">Traditional Moroccan Street Market (Day)</option>
+    <option value="Atlantis">Majestic Underwater City of Atlantis</option>
+    <option value="Apocalyptic Warzone">Post-Apocalyptic War Zone</option>
+    <option value="Safari Migration">African Savanna during Wildlife Migration</option>
+    <option value="Ice Palace">Ice Palace atop a Frozen Mountain</option>
+</optgroup>
+
+<optgroup label="3. Interior Rooms (General)">
+    <option value="Grand Library">Grand Old Library</option>
+    <option value="Futuristic Lab">Futuristic Science Laboratory</option>
+    <option value="Minimal Bedroom">Minimalist Bedroom</option>
+    <option value="Abandoned Warehouse">Abandoned Industrial Warehouse</option>
+    <option value="Art Deco Living Room">Luxurious Art Deco Living Room</option>
+    <option value="Rustic Kitchen">Warm Rustic Kitchen</option>
+    <option value="Spaceship Control Room">Spaceship Control Room</option>
+    <option value="Zen Temple">Japanese Zen Temple</option>
+    <option value="Empty Classroom">Empty School Classroom</option>
+    <option value="Spa Bathroom">Modern Spa Bathroom</option>
+</optgroup>
+
+<optgroup label="4. Home Areas (Specific Interior Spaces)">
+    <option value="Home Rustic Kitchen">Rustic-Style Kitchen</option>
+    <option value="Home Modern Living">Modern Minimalist Living Room</option>
+    <option value="Home Master Bedroom">Calm Master Bedroom</option>
+    <option value="Home Spa Bathroom">Spa-Style Bathroom</option>
+    <option value="Home Creative Studio">Creative Home Studio/Workspace</option>
+    <option value="Home Reading Nook">Cozy Reading Nook</option>
+    <option value="Home Playroom">Colorful Children's Playroom</option>
+    <option value="Home Balcony">Terrace/Balcony with a View</option>
+    <option value="Home Dining Room">Traditional Family Dining Room</option>
+    <option value="Home Dramatic Hallway">Dramatic Hallway with Lighting</option>
+</optgroup>
         </select>
         <label>Background Custom</label>
         <input type="text" id="latar" oninput="generatePrompt()" placeholder="Contoh: cherry blossom forest" />
