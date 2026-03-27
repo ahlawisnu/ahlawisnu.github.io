@@ -245,44 +245,92 @@
         <label>Pakaian (Bisa pilih multiple - tekan Ctrl/Cmd)</label>
         <select id="pakaianSelect" multiple size="6" onchange="updatePakaian()">
           <option value="">-- Tulis Manual --</option>
-          <option value="wearing school uniform">School Uniform</option>
-          <option value="traditional Indonesian kebaya">Kebaya Tradisional</option>
-          <option value="summer dress with hat">Summer Dress with Hat</option>
-          <option value="casual hoodie and jeans">Hoodie & Jeans</option>
-          <option value="elegant evening gown">Evening Gown</option>
-          <option value="battle armor with sword">Battle Armor</option>
-          <option value="space suit with helmet">Space Suit</option>
-          <optgroup label="Tops">
-            <option value="strapless">Strapless</option>
-            <option value="spaghetti strap">Spaghetti Strap</option>
-            <option value="off shoulder">Off Shoulder</option>
-            <option value="t-shirt">T-Shirt</option>
-            <option value="shirt">Shirt</option>
-            <option value="sweater">Sweater</option>
-            <option value="hoodie">Hoodie</option>
-            <option value="jacket">Jacket</option>
-            <option value="blouse">Blouse</option>
-            <option value="crop top">Crop Top</option>
-          </optgroup>
-          <optgroup label="Bottoms">
-            <option value="denim">Denim</option>
-            <option value="jeans">Jeans</option>
-            <option value="shorts">Shorts</option>
-            <option value="skirt">Skirt</option>
-            <option value="mini skirt">Mini Skirt</option>
-            <option value="pleated skirt">Pleated Skirt</option>
-            <option value="leggings">Leggings</option>
-          </optgroup>
-          <optgroup label="Full Sets">
-            <option value="suit">Suit</option>
-            <option value="tracksuit">Tracksuit</option>
-            <option value="uniform">Uniform</option>
-            <option value="kimono">Kimono</option>
-            <option value="hanfu">Hanfu</option>
-            <option value="cheongsam">Cheongsam</option>
-            <option value="wedding dress">Wedding Dress</option>
-            <option value="jumpsuit">Jumpsuit</option>
-          </optgroup>
+        <option value="wearing school uniform">wearing school uniform</option>
+    <option value="traditional Indonesian kebaya">traditional Indonesian kebaya</option>
+    <option value="summer dress with hat">summer dress with hat</option>
+    <option value="casual hoodie and jeans">casual hoodie and jeans</option>
+    <option value="elegant evening gown">elegant evening gown</option>
+    <option value="battle armor with sword">battle armor with sword</option>
+    <option value="space suit with helmet">space suit with helmet</option>
+      <!-- TOPS -->
+  <optgroup label="Tops">
+    <option value="strapless">Strapless</option>
+<option value="spaghetti strap">spaghetti strap</option>
+<option value="off shoulder">off shoulder</option>
+<option value="bandeau">Bandeau</option>
+    <option value="t-shirt">T-Shirt</option>
+    <option value="shirt">Shirt</option>
+    <option value="poloshirt">Polo Shirt</option>
+    <option value="longsleeve">Long Sleeve Shirt</option>
+    <option value="sweater">Sweater</option>
+    <option value="hoodie">Hoodie</option>
+    <option value="jacket">Jacket</option>
+    <option value="blouse">Blouse</option>
+    <option value="tanktop">Tank Top</option>
+    <option value="cardigan">Cardigan</option>
+    <option value="vest">Vest / Waistcoat</option>
+    <option value="tunic">Tunic</option>
+    <option value="crop top">Crop Top</option>
+    <option value="peplum top">Peplum Top</option>
+    <option value="kimono top">Kimono Top</option>
+    <option value="sleeveless-top">Sleeveless Top</option>
+  </optgroup>
+
+  <!-- BOTTOMS -->
+  <optgroup label="Bottoms">
+    <option value="denim">denim</option>
+    <option value="pants">Pants</option>
+    <option value="jeans">Jeans</option>
+    <option value="shorts">Shorts</option>
+    <option value="skirt">Skirt</option>
+    <option value="mini skirt">Mini Skirt</option>
+    <option value="maxi skirt">Maxi Skirt</option>
+    <option value="pleated skirt">Pleated Skirt</option>
+    <option value="pencil skirt">Pencil Skirt</option>
+    <option value="leggings">Leggings</option>
+    <option value="saree">Saree</option>
+    <option value="palazzo-pants">Palazzo Pants</option>
+    <option value="chinos">Chinos</option>
+    <option value="capris">Capris / Cropped Pants</option>
+    <option value="sportspants">Sports Pants</option>
+    <option value="trousers">Trousers</option>
+    <option value="culottes">Culottes</option>
+    <option value="bloomers">Bloomers</option>
+    <option value="hot-pants">Hot Pants</option>
+    <option value="overalls">Overalls / Dungarees</option>
+  </optgroup>
+
+  <!-- FULL SETS -->
+  <optgroup label="Full Sets">
+    <option value="suit">Suit (Jacket + Pants)</option>
+    <option value="tracksuit">Tracksuit</option>
+    <option value="pajamas">Pajamas Set</option>
+    <option value="outfit">Fashion Outfit Set</option>
+    <option value="uniform">Uniform Set</option>
+    <option value="nightgown">Nightgown / Dress</option>
+    <option value="formalwear">Formal Wear Set</option>
+    <option value="casualset">Casual Wear Set</option>
+    <option value="gown">Gown</option>
+    <option value="kimono">Kimono Set</option>
+    <option value="maxi dress">Maxi Dress</option>
+    <option value="midi dress">Midi Dress</option>
+    <option value="mini dress">Mini Dress</option>
+    <option value="cocktail dress">Cocktail Dress</option>
+    <option value="prom dress">Prom Dress</option>
+    <option value="wedding dress">Wedding Dress</option>
+    <option value="bodycon dress">Bodycon Dress</option>
+    <option value="shift dress">Shift Dress</option>
+    <option value="sundress">Sundress</option>
+    <option value="two piece set">Two-Piece Set</option>
+    <option value="jumpsuit">Jumpsuit</option>
+    <option value="romper">Rompers / Playsuits</option>
+    <option value="kaftan">Kaftan</option>
+    <option value="abayas">Abayas</option>
+    <option value="kurta set">Kurta & Salwar Set</option>
+    <option value="hanfu">Hanfu Set</option>
+    <option value="yukata">Yukata</option>
+    <option value="cheongsam">Cheongsam / Qipao</option>
+  </optgroup>  
         </select>
         <label>Pakaian Custom</label>
         <input type="text" id="pakaian" oninput="generatePrompt()" placeholder="Contoh: wearing school uniform" />
