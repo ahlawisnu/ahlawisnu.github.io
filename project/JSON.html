@@ -2,56 +2,68 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miku JSON Builder - Material Design 3</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Miku Sakura JSON Builder - Material Design 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     <style>
         :root {
-            /* Hatsune Miku Color Palette - Material Design 3 */
-            --md-sys-color-primary: #00D4AA;
-            --md-sys-color-on-primary: #00382C;
-            --md-sys-color-primary-container: #B3F0E4;
-            --md-sys-color-on-primary-container: #002019;
+            /* Hatsune Miku Sakura Theme Colors */
+            --miku-teal: #39C5BB;
+            --miku-teal-light: #7EE8E0;
+            --miku-teal-dark: #1A9A91;
+            --miku-teal-container: #D4F5F2;
             
-            --md-sys-color-secondary: #006B8F;
-            --md-sys-color-on-secondary: #FFFFFF;
-            --md-sys-color-secondary-container: #C2E8FF;
-            --md-sys-color-on-secondary-container: #001E2C;
+            --sakura-pink: #FF69B4;
+            --sakura-pink-light: #FFB8DD;
+            --sakura-pink-dark: #D63384;
+            --sakura-pink-container: #FFE4F1;
             
-            --md-sys-color-tertiary: #FF4081;
-            --md-sys-color-on-tertiary: #FFFFFF;
-            --md-sys-color-tertiary-container: #FFD9E3;
-            --md-sys-color-on-tertiary-container: #3E001E;
+            --miku-cyan: #00D4FF;
+            --miku-cyan-light: #7EEAFF;
+            --miku-cyan-dark: #0099CC;
             
-            --md-sys-color-surface: #FAFCFB;
-            --md-sys-color-on-surface: #161C1B;
-            --md-sys-color-surface-variant: #DBE5E1;
-            --md-sys-color-on-surface-variant: #3F4946;
+            --miku-purple: #9B59B6;
+            --miku-purple-light: #C39BD3;
             
-            --md-sys-color-outline: #6F7976;
-            --md-sys-color-outline-variant: #BEC9C5;
+            /* Material Design System Colors - Miku Sakura */
+            --md-sys-color-primary: var(--miku-teal);
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: var(--miku-teal-container);
+            --md-sys-color-on-primary-container: #003D38;
             
-            --md-sys-color-error: #FF1744;
-            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-secondary: var(--sakura-pink);
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: var(--sakura-pink-container);
+            --md-sys-color-on-secondary-container: #5A0030;
             
-            --md-sys-color-surface-tint: #00D4AA;
-            --md-sys-color-surface-1: #F0FAF7;
-            --md-sys-color-surface-2: #E8F7F3;
-            --md-sys-color-surface-3: #E0F4EF;
-            --md-sys-color-surface-4: #D8F1EB;
-            --md-sys-color-surface-5: #D0EEE7;
+            --md-sys-color-tertiary: var(--miku-cyan);
+            --md-sys-color-on-tertiary: #003D4D;
+            --md-sys-color-tertiary-container: #D4F7FF;
+            --md-sys-color-on-tertiary-container: #003D4D;
             
-            /* Miku Accent Colors */
-            --miku-cyan: #39C5BB;
-            --miku-dark: #2D3436;
-            --miku-hair: #86CECB;
-            --miku-tie: #FF4081;
-            --miku-sleeve: #E12885;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1D1B1E;
+            --md-sys-color-surface-variant: #F2EFF1;
+            --md-sys-color-on-surface-variant: #49454F;
+            
+            --md-sys-color-outline: #938F99;
+            --md-sys-color-outline-variant: #E7E0EC;
+            
+            --md-sys-color-error: #E53935;
+            --md-sys-color-error-container: #FFDDDD;
+            
+            --md-sys-color-surface-tint: var(--miku-teal);
+            --md-sys-color-surface-1: #F8FDFC;
+            --md-sys-color-surface-2: #F0FBFA;
+            --md-sys-color-surface-3: #E8F9F7;
+            --md-sys-color-surface-4: #E0F7F5;
+            --md-sys-color-surface-5: #D8F5F3;
             
             --tree-line-color: var(--md-sys-color-outline-variant);
             --tree-hover: var(--md-sys-color-surface-2);
             
+            /* Spacing */
             --md-sys-spacing-1: 4px;
             --md-sys-spacing-2: 8px;
             --md-sys-spacing-3: 12px;
@@ -61,83 +73,109 @@
             --md-sys-spacing-8: 32px;
             --md-sys-spacing-12: 48px;
             
+            /* Shapes */
             --md-sys-shape-corner-none: 0px;
             --md-sys-shape-corner-extra-small: 4px;
             --md-sys-shape-corner-small: 8px;
             --md-sys-shape-corner-medium: 12px;
             --md-sys-shape-corner-large: 16px;
-            --md-sys-shape-corner-extra-large: 28px;
+            --md-sys-shape-corner-extra-large: 24px;
             --md-sys-shape-corner-full: 50%;
             
-            --md-sys-typescale-display-large: 400 3.5rem/4rem 'Roboto Flex';
-            --md-sys-typescale-display-medium: 400 2.8rem/3.2rem 'Roboto Flex';
-            --md-sys-typescale-headline-large: 400 2rem/2.5rem 'Roboto Flex';
-            --md-sys-typescale-headline-medium: 400 1.75rem/2.25rem 'Roboto Flex';
-            --md-sys-typescale-title-large: 400 1.375rem/1.75rem 'Roboto Flex';
-            --md-sys-typescale-title-medium: 500 1rem/1.5rem 'Roboto Flex';
-            --md-sys-typescale-body-large: 400 1rem/1.5rem 'Roboto Flex';
-            --md-sys-typescale-body-medium: 400 0.875rem/1.25rem 'Roboto Flex';
-            --md-sys-typescale-label-large: 500 0.875rem/1.25rem 'Roboto Flex';
-            --md-sys-typescale-label-medium: 500 0.75rem/1rem 'Roboto Flex';
+            /* Typography */
+            --md-sys-typescale-display-large: 600 3rem/3.5rem 'Poppins';
+            --md-sys-typescale-display-medium: 600 2.5rem/3rem 'Poppins';
+            --md-sys-typescale-headline-large: 600 2rem/2.5rem 'Poppins';
+            --md-sys-typescale-headline-medium: 600 1.75rem/2.25rem 'Poppins';
+            --md-sys-typescale-title-large: 600 1.375rem/1.75rem 'Poppins';
+            --md-sys-typescale-title-medium: 500 1rem/1.5rem 'Inter';
+            --md-sys-typescale-body-large: 400 1rem/1.75rem 'Inter';
+            --md-sys-typescale-body-medium: 400 0.9375rem/1.6rem 'Inter';
+            --md-sys-typescale-label-large: 600 0.875rem/1.25rem 'Inter';
+            --md-sys-typescale-label-medium: 500 0.8125rem/1rem 'Inter';
             
+            /* Motion */
             --md-sys-motion-duration-short: 150ms;
             --md-sys-motion-duration-medium: 300ms;
             --md-sys-motion-duration-long: 500ms;
             --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
             --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+            
+            /* Miku Box Border Style */
+            --miku-border: 3px solid var(--miku-teal);
+            --miku-border-pink: 3px solid var(--sakura-pink);
+            --miku-box-shadow: 0 4px 0 var(--miku-teal-dark), 0 8px 20px rgba(57, 197, 187, 0.3);
+            --miku-box-shadow-pink: 0 4px 0 var(--sakura-pink-dark), 0 8px 20px rgba(255, 105, 180, 0.3);
         }
 
         [data-theme="dark"] {
-            --md-sys-color-primary: #00D4AA;
-            --md-sys-color-on-primary: #00382C;
-            --md-sys-color-primary-container: #00513F;
-            --md-sys-color-on-primary-container: #B3F0E4;
+            --md-sys-color-primary: var(--miku-teal-light);
+            --md-sys-color-on-primary: #003D38;
+            --md-sys-color-primary-container: #005751;
+            --md-sys-color-on-primary-container: #D4F5F2;
             
-            --md-sys-color-secondary: #7BD0FF;
-            --md-sys-color-on-secondary: #00344A;
-            --md-sys-color-secondary-container: #004C6A;
-            --md-sys-color-on-secondary-container: #C2E8FF;
+            --md-sys-color-secondary: var(--sakura-pink-light);
+            --md-sys-color-on-secondary: #5A0030;
+            --md-sys-color-secondary-container: #7D1A4F;
+            --md-sys-color-on-secondary-container: #FFE4F1;
             
-            --md-sys-color-tertiary: #FFB3C8;
-            --md-sys-color-on-tertiary: #620030;
-            --md-sys-color-tertiary-container: #8B0047;
-            --md-sys-color-on-tertiary-container: #FFD9E3;
+            --md-sys-color-tertiary: var(--miku-cyan-light);
+            --md-sys-color-on-tertiary: #003D4D;
+            --md-sys-color-tertiary-container: #005A73;
+            --md-sys-color-on-tertiary-container: #D4F7FF;
             
-            --md-sys-color-surface: #0F1413;
-            --md-sys-color-on-surface: #E0E3E2;
-            --md-sys-color-surface-variant: #3F4946;
-            --md-sys-color-on-surface-variant: #BEC9C5;
+            --md-sys-color-surface: #1D1B1E;
+            --md-sys-color-on-surface: #E6E1E5;
+            --md-sys-color-surface-variant: #49454F;
+            --md-sys-color-on-surface-variant: #CAC4D0;
             
-            --md-sys-color-outline: #89938F;
-            --md-sys-color-outline-variant: #3F4946;
+            --md-sys-color-outline: #938F99;
+            --md-sys-color-outline-variant: #49454F;
             
-            --md-sys-color-surface-tint: #00D4AA;
-            --md-sys-color-surface-1: #0F1F1C;
-            --md-sys-color-surface-2: #0F2420;
-            --md-sys-color-surface-3: #0F2924;
-            --md-sys-color-surface-4: #0F2E28;
-            --md-sys-color-surface-5: #0F332C;
+            --md-sys-color-surface-tint: var(--miku-teal-light);
+            --md-sys-color-surface-1: #232124;
+            --md-sys-color-surface-2: #282629;
+            --md-sys-color-surface-3: #2D2B2E;
+            --md-sys-color-surface-4: #323033;
+            --md-sys-color-surface-5: #373538;
             
-            --tree-line-color: #3F4946;
-            --tree-hover: #1A2321;
+            --tree-line-color: #49454F;
+            --tree-hover: #3D3B3E;
+            
+            --miku-box-shadow: 0 4px 0 var(--miku-teal), 0 8px 20px rgba(57, 197, 187, 0.2);
+            --miku-box-shadow-pink: 0 4px 0 var(--sakura-pink), 0 8px 20px rgba(255, 105, 180, 0.2);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
         }
 
         body {
-            font-family: 'Roboto Flex', sans-serif;
-            background-color: var(--md-sys-color-surface);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--md-sys-color-surface) 0%, var(--md-sys-color-surface-2) 50%, var(--sakura-pink-container) 100%);
+            background-attachment: fixed;
             color: var(--md-sys-color-on-surface);
             min-height: 100vh;
             overflow-x: hidden;
             transition: background-color var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated Miku Background */
+        /* Miku Sakura Background Pattern */
         .miku-bg {
             position: fixed;
             top: 0;
@@ -147,53 +185,86 @@
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--md-sys-color-surface) 0%, var(--md-sys-color-surface-1) 100%);
         }
 
-        .miku-bg::before {
-            content: '';
+        .sakura-petal {
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(57, 197, 187, 0.1) 0%, transparent 70%);
-            animation: float 20s ease-in-out infinite;
+            opacity: 0.12;
+            animation: float-petal 15s ease-in-out infinite;
         }
 
-        .miku-bg::after {
-            content: '';
+        .petal-1 {
+            top: 5%;
+            left: 8%;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, var(--sakura-pink), transparent 70%);
+            border-radius: 50% 0 50% 50%;
+            transform: rotate(-30deg);
+            animation-delay: 0s;
+        }
+
+        .petal-2 {
+            top: 40%;
+            right: 12%;
+            width: 45px;
+            height: 45px;
+            background: radial-gradient(circle at 30% 30%, var(--miku-teal), transparent 70%);
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+            animation-delay: -4s;
+        }
+
+        .petal-3 {
+            bottom: 25%;
+            left: 5%;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 40% 40%, var(--miku-cyan), transparent 70%);
+            border-radius: 0 50% 50% 50%;
+            transform: rotate(60deg);
+            animation-delay: -8s;
+        }
+
+        .petal-4 {
+            top: 70%;
+            right: 20%;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, var(--miku-purple), transparent 70%);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            animation-delay: -12s;
+        }
+
+        .miku-note {
             position: absolute;
-            bottom: -20%;
-            left: -5%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 64, 129, 0.08) 0%, transparent 70%);
-            animation: float 25s ease-in-out infinite reverse;
+            font-size: 48px;
+            opacity: 0.06;
+            color: var(--miku-teal);
+            animation: float-note 20s ease-in-out infinite;
         }
 
-        .floating-note {
-            position: absolute;
-            opacity: 0.1;
-            color: var(--miku-cyan);
-            font-size: 24px;
-            animation: float-note 15s ease-in-out infinite;
+        .note-1 {
+            top: 15%;
+            right: 8%;
+            animation-delay: -2s;
         }
 
-        .note-1 { top: 15%; left: 8%; animation-delay: 0s; }
-        .note-2 { top: 40%; right: 12%; animation-delay: -5s; font-size: 32px; }
-        .note-3 { bottom: 25%; left: 15%; animation-delay: -10s; font-size: 20px; }
-        .note-4 { top: 60%; left: 5%; animation-delay: -7s; font-size: 28px; }
+        .note-2 {
+            bottom: 15%;
+            left: 15%;
+            animation-delay: -10s;
+        }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(2deg); }
-            66% { transform: translate(-20px, 20px) rotate(-2deg); }
+        @keyframes float-petal {
+            0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)) scale(1); }
+            50% { transform: translateY(-25px) rotate(calc(var(--rot, 0deg) + 15deg)) scale(1.1); }
         }
 
         @keyframes float-note {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
-            50% { transform: translateY(-20px) rotate(10deg); opacity: 0.15; }
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
 
         .app-container {
@@ -204,67 +275,96 @@
             padding: var(--md-sys-spacing-6);
         }
 
+        @media (max-width: 768px) {
+            .app-container {
+                padding: var(--md-sys-spacing-3);
+            }
+        }
+
+        /* App Bar - Miku Style */
         .app-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
-            background-color: rgba(250, 252, 251, 0.9);
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
-            margin: calc(-1 * var(--md-sys-spacing-6));
+            background: linear-gradient(135deg, var(--md-sys-color-surface) 0%, var(--md-sys-color-surface-1) 100%);
+            border: var(--miku-border);
+            border-radius: var(--md-sys-shape-corner-large);
             margin-bottom: var(--md-sys-spacing-6);
             position: sticky;
-            top: 0;
+            top: var(--md-sys-spacing-4);
             z-index: 100;
             backdrop-filter: blur(20px);
-            border-radius: 0 0 var(--md-sys-shape-corner-large) var(--md-sys-shape-corner-large);
-            box-shadow: 0 4px 20px rgba(0, 212, 170, 0.1);
+            box-shadow: var(--miku-box-shadow);
         }
 
-        [data-theme="dark"] .app-bar {
-            background-color: rgba(15, 20, 19, 0.9);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        @media (max-width: 768px) {
+            .app-bar {
+                padding: var(--md-sys-spacing-3);
+                margin-bottom: var(--md-sys-spacing-4);
+                top: var(--md-sys-spacing-2);
+            }
         }
 
         .app-bar-left {
             display: flex;
             align-items: center;
-            gap: var(--md-sys-spacing-4);
+            gap: var(--md-sys-spacing-3);
+        }
+
+        @media (max-width: 480px) {
+            .app-bar-left {
+                gap: var(--md-sys-spacing-2);
+            }
         }
 
         .logo {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--miku-cyan) 0%, var(--md-sys-color-primary) 100%);
+            background: linear-gradient(135deg, var(--miku-teal), var(--miku-cyan));
             border-radius: var(--md-sys-shape-corner-medium);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-variation-settings: 'FILL' 1, 'wght' 600;
-            box-shadow: 0 4px 15px rgba(57, 197, 187, 0.4);
-            position: relative;
-            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(57, 197, 187, 0.4);
+            border: 3px solid white;
         }
 
-        .logo::after {
-            content: '01';
-            position: absolute;
-            bottom: 2px;
-            right: 4px;
-            font-size: 8px;
-            font-weight: 700;
-            opacity: 0.8;
+        @media (max-width: 480px) {
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
         }
 
         .app-title {
             font: var(--md-sys-typescale-title-large);
             color: var(--md-sys-color-on-surface);
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--md-sys-color-on-surface) 0%, var(--miku-cyan) 100%);
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: linear-gradient(135deg, var(--miku-teal), var(--sakura-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            .app-title {
+                font: var(--md-sys-typescale-title-medium);
+                max-width: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-title {
+                font-size: 1rem;
+                max-width: 120px;
+            }
         }
 
         .app-bar-actions {
@@ -285,13 +385,19 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .main-layout {
+                gap: var(--md-sys-spacing-4);
+            }
+        }
+
+        /* Card - Miku Box Style */
         .card {
-            background-color: var(--md-sys-color-surface-1);
+            background-color: var(--md-sys-color-surface);
             border-radius: var(--md-sys-shape-corner-large);
             padding: var(--md-sys-spacing-6);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 3px solid var(--md-sys-color-outline-variant);
             transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
-            border: 1px solid var(--md-sys-color-outline-variant);
             position: relative;
             overflow: hidden;
         }
@@ -302,19 +408,27 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--miku-cyan), var(--md-sys-color-tertiary));
-            opacity: 0;
-            transition: opacity var(--md-sys-motion-duration-medium);
+            height: 4px;
+            background: linear-gradient(90deg, var(--miku-teal), var(--sakura-pink), var(--miku-cyan));
         }
 
         .card:hover {
-            box-shadow: 0 8px 24px rgba(0, 212, 170, 0.15);
+            border-color: var(--miku-teal);
+            box-shadow: var(--miku-box-shadow);
             transform: translateY(-2px);
         }
 
-        .card:hover::before {
-            opacity: 1;
+        @media (max-width: 768px) {
+            .card {
+                padding: var(--md-sys-spacing-4);
+                border-radius: var(--md-sys-shape-corner-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: var(--md-sys-spacing-3);
+            }
         }
 
         .card-title {
@@ -324,27 +438,46 @@
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
+            flex-wrap: wrap;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .card-title {
+                font: var(--md-sys-typescale-body-large);
+                font-weight: 600;
+                margin-bottom: var(--md-sys-spacing-3);
+            }
         }
 
         .card-subtitle {
             font: var(--md-sys-typescale-body-medium);
             color: var(--md-sys-color-on-surface-variant);
             margin-bottom: var(--md-sys-spacing-4);
+            line-height: 1.7;
         }
 
-        .tree-container {
+        @media (max-width: 480px) {
+            .card-subtitle {
+                margin-bottom: var(--md-sys-spacing-3);
+            }
+        }
+
+        .tree-container, .article-field-container {
             background-color: var(--md-sys-color-surface);
             border-radius: var(--md-sys-shape-corner-medium);
-            border: 1px solid var(--md-sys-color-outline-variant);
+            border: 2px solid var(--md-sys-color-outline-variant);
             overflow: hidden;
-            position: relative;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .tree-node {
+        .tree-node, .article-field-node {
             position: relative;
+            min-width: fit-content;
         }
 
-        .tree-node-content {
+        .tree-node-content, .article-field-content {
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
@@ -352,62 +485,76 @@
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
             transition: all var(--md-sys-motion-duration-short);
             position: relative;
+            min-width: fit-content;
         }
 
-        .tree-node-content:hover {
+        @media (max-width: 768px) {
+            .tree-node-content, .article-field-content {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
+        .tree-node-content:hover, .article-field-content:hover {
             background-color: var(--tree-hover);
         }
 
-        .tree-node-content.dragging {
+        .tree-node-content.dragging, .article-field-content.dragging {
             opacity: 0.5;
             background-color: var(--md-sys-color-primary-container);
         }
 
-        .tree-node-content.drag-over {
-            border-top: 3px solid var(--md-sys-color-primary);
-            background-color: var(--md-sys-color-primary-container);
+        .tree-node-content.drag-over, .article-field-content.drag-over {
+            border-top: 3px solid var(--miku-teal);
         }
 
-        .tree-indent {
+        .tree-indent, .field-indent {
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-1);
             flex-shrink: 0;
         }
 
-        .tree-line {
+        .tree-line, .field-line {
             width: 16px;
             height: 20px;
             position: relative;
             flex-shrink: 0;
         }
 
-        .tree-line::before {
+        @media (max-width: 480px) {
+            .tree-line, .field-line {
+                width: 12px;
+            }
+        }
+
+        .tree-line::before, .field-line::before {
             content: '';
             position: absolute;
             left: 50%;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, var(--tree-line-color), transparent);
+            background: linear-gradient(180deg, var(--miku-teal), var(--sakura-pink));
+            border-radius: 1px;
         }
 
-        .tree-line::after {
+        .tree-line::after, .field-line::after {
             content: '';
             position: absolute;
             left: 50%;
             top: 50%;
             right: 0;
             height: 2px;
-            background: linear-gradient(to right, var(--tree-line-color), transparent);
+            background: linear-gradient(90deg, var(--miku-teal), transparent);
+            border-radius: 1px;
         }
 
-        .tree-line.last::before {
+        .tree-line.last::before, .field-line.last::before {
             bottom: 50%;
-            background: linear-gradient(to bottom, var(--miku-cyan), transparent);
         }
 
-        .tree-toggle {
+        .tree-toggle, .field-toggle {
             width: 24px;
             height: 24px;
             display: flex;
@@ -415,31 +562,32 @@
             justify-content: center;
             cursor: pointer;
             border-radius: var(--md-sys-shape-corner-small);
-            color: var(--md-sys-color-primary);
+            color: var(--miku-teal);
             transition: all var(--md-sys-motion-duration-short);
             z-index: 2;
             background-color: var(--md-sys-color-surface);
-            border: 2px solid var(--md-sys-color-primary);
+            border: 2px solid var(--miku-teal);
             flex-shrink: 0;
         }
 
-        .tree-toggle:hover {
-            background-color: var(--md-sys-color-primary-container);
+        .tree-toggle:hover, .field-toggle:hover {
+            background-color: var(--miku-teal);
+            color: white;
             transform: scale(1.1);
         }
 
-        .tree-toggle.expanded {
+        .tree-toggle.expanded, .field-toggle.expanded {
             transform: rotate(90deg);
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
+            background-color: var(--miku-teal);
+            color: white;
         }
 
-        .tree-toggle.leaf {
+        .tree-toggle.leaf, .field-toggle.leaf {
             visibility: hidden;
             pointer-events: none;
         }
 
-        .drag-handle {
+        .drag-handle, .field-drag-handle {
             color: var(--md-sys-color-outline);
             cursor: grab;
             user-select: none;
@@ -447,32 +595,50 @@
             border-radius: var(--md-sys-shape-corner-small);
             transition: all var(--md-sys-motion-duration-short);
             flex-shrink: 0;
+            touch-action: none;
         }
 
-        .drag-handle:hover {
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-primary);
+        @media (max-width: 768px) {
+            .drag-handle, .field-drag-handle {
+                padding: var(--md-sys-spacing-1);
+            }
+            
+            .drag-handle .material-symbols-rounded,
+            .field-drag-handle .material-symbols-rounded {
+                font-size: 18px !important;
+            }
         }
 
-        .drag-handle:active {
+        .drag-handle:hover, .field-drag-handle:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--miku-teal);
+        }
+
+        .drag-handle:active, .field-drag-handle:active {
             cursor: grabbing;
         }
 
-        .tree-icon {
-            color: var(--md-sys-color-primary);
+        .tree-icon, .field-icon {
+            color: var(--miku-teal);
             font-variation-settings: 'FILL' 1;
             flex-shrink: 0;
         }
 
-        .tree-icon.object {
-            color: var(--md-sys-color-tertiary);
+        @media (max-width: 768px) {
+            .tree-icon, .field-icon {
+                font-size: 20px !important;
+            }
         }
 
-        .tree-icon.array {
-            color: var(--md-sys-color-secondary);
+        .tree-icon.object, .field-icon.object {
+            color: var(--sakura-pink);
         }
 
-        .tree-inputs {
+        .tree-icon.array, .field-icon.array {
+            color: var(--miku-cyan);
+        }
+
+        .tree-inputs, .field-inputs {
             flex: 1;
             display: flex;
             gap: var(--md-sys-spacing-2);
@@ -480,30 +646,53 @@
             min-width: 0;
         }
 
-        .tree-key-input {
+        @media (max-width: 768px) {
+            .tree-inputs, .field-inputs {
+                flex-wrap: wrap;
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
+        .tree-key-input, .field-key-input {
             flex: 1;
             min-width: 100px;
             max-width: 200px;
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
-            border: 2px solid var(--md-sys-color-outline);
+            border: 2px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-sys-shape-corner-small);
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
             font: var(--md-sys-typescale-body-medium);
+            font-weight: 500;
             outline: none;
             transition: all var(--md-sys-motion-duration-short);
         }
 
-        .tree-key-input:focus {
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2);
+        @media (max-width: 768px) {
+            .tree-key-input, .field-key-input {
+                min-width: 80px;
+                max-width: 150px;
+            }
         }
 
-        .tree-value-input {
+        @media (max-width: 480px) {
+            .tree-key-input, .field-key-input {
+                min-width: 60px;
+                max-width: 120px;
+                font-size: 0.875rem;
+            }
+        }
+
+        .tree-key-input:focus, .field-key-input:focus {
+            border-color: var(--miku-teal);
+            box-shadow: 0 0 0 3px rgba(57, 197, 187, 0.2);
+        }
+
+        .tree-value-input, .field-value-input {
             flex: 2;
             min-width: 150px;
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
-            border: 2px solid var(--md-sys-color-outline);
+            border: 2px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-sys-shape-corner-small);
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
@@ -512,43 +701,76 @@
             transition: all var(--md-sys-motion-duration-short);
         }
 
-        .tree-value-input:focus {
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2);
+        @media (max-width: 768px) {
+            .tree-value-input, .field-value-input {
+                min-width: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tree-value-input, .field-value-input {
+                min-width: 80px;
+                font-size: 0.875rem;
+            }
+        }
+
+        .tree-value-input:focus, .field-value-input:focus {
+            border-color: var(--sakura-pink);
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
         }
 
         .tree-value-input:disabled,
-        .tree-value-input.object-mode {
+        .tree-value-input.object-mode,
+        .field-value-input:disabled,
+        .field-value-input.object-mode {
             background-color: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-surface-variant);
             font-style: italic;
             cursor: not-allowed;
-            border-style: dashed;
         }
 
-        .tree-type-select {
+        .tree-type-select, .field-type-select {
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
-            border: 2px solid var(--md-sys-color-outline);
+            border: 2px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-sys-shape-corner-small);
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
             font: var(--md-sys-typescale-body-medium);
+            font-weight: 500;
             cursor: pointer;
             outline: none;
             min-width: 90px;
             flex-shrink: 0;
-            transition: all var(--md-sys-motion-duration-short);
         }
 
-        .tree-type-select:focus {
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2);
+        @media (max-width: 768px) {
+            .tree-type-select, .field-type-select {
+                min-width: 80px;
+            }
         }
 
-        .tree-actions {
+        @media (max-width: 480px) {
+            .tree-type-select, .field-type-select {
+                min-width: 70px;
+                font-size: 0.875rem;
+            }
+        }
+
+        .tree-type-select:focus, .field-type-select:focus {
+            border-color: var(--miku-cyan);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+        }
+
+        .tree-actions, .field-actions {
             display: flex;
             gap: var(--md-sys-spacing-1);
             flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tree-actions, .field-actions {
+                gap: 2px;
+            }
         }
 
         .icon-btn {
@@ -565,27 +787,17 @@
             transition: all var(--md-sys-motion-duration-short);
             font-variation-settings: 'FILL' 0, 'wght' 400;
             flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
         }
 
-        .icon-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: currentColor;
-            opacity: 0.2;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
-        }
-
-        .icon-btn:hover::after {
-            width: 100%;
-            height: 100%;
+        @media (max-width: 768px) {
+            .icon-btn {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .icon-btn .material-symbols-rounded {
+                font-size: 18px !important;
+            }
         }
 
         .icon-btn:hover {
@@ -601,23 +813,24 @@
 
         .icon-btn.add-child:hover {
             background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-primary);
+            color: var(--miku-teal);
         }
 
         .icon-btn.copy:hover {
             background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
+            color: var(--sakura-pink);
         }
 
-        .tree-children {
+        .tree-children, .field-children {
             position: relative;
             background-color: var(--md-sys-color-surface-1);
         }
 
-        .tree-children.collapsed {
+        .tree-children.collapsed, .field-children.collapsed {
             display: none;
         }
 
+        /* Random Styled Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -627,80 +840,219 @@
             border: none;
             border-radius: var(--md-sys-shape-corner-full);
             font: var(--md-sys-typescale-label-large);
+            font-weight: 600;
             cursor: pointer;
             transition: all var(--md-sys-motion-duration-short);
             text-transform: none;
             letter-spacing: 0.025em;
             position: relative;
             overflow: hidden;
-            font-weight: 600;
+            white-space: nowrap;
         }
 
-        .btn::before {
+        @media (max-width: 768px) {
+            .btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
+            
+            .btn .material-symbols-rounded {
+                font-size: 18px !important;
+            }
+        }
+
+        .btn::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        .btn:hover::before {
-            left: 100%;
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
         }
 
+        /* Button Style 1: Filled Teal */
         .btn-filled {
-            background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, var(--miku-cyan) 100%);
-            color: var(--md-sys-color-on-primary);
-            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+            background: linear-gradient(135deg, var(--miku-teal), var(--miku-teal-dark));
+            color: white;
+            box-shadow: 0 4px 0 var(--miku-teal-dark), 0 8px 20px rgba(57, 197, 187, 0.4);
+            border: 2px solid var(--miku-teal);
         }
 
         .btn-filled:hover {
+            background: linear-gradient(135deg, var(--miku-teal-light), var(--miku-teal));
+            box-shadow: 0 6px 0 var(--miku-teal-dark), 0 12px 25px rgba(57, 197, 187, 0.5);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 212, 170, 0.4);
         }
 
+        .btn-filled:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--miku-teal-dark), 0 4px 10px rgba(57, 197, 187, 0.4);
+        }
+
+        /* Button Style 2: Pink Gradient */
+        .btn-pink {
+            background: linear-gradient(135deg, var(--sakura-pink), var(--sakura-pink-dark));
+            color: white;
+            box-shadow: 0 4px 0 var(--sakura-pink-dark), 0 8px 20px rgba(255, 105, 180, 0.4);
+            border: 2px solid var(--sakura-pink);
+        }
+
+        .btn-pink:hover {
+            background: linear-gradient(135deg, var(--sakura-pink-light), var(--sakura-pink));
+            box-shadow: 0 6px 0 var(--sakura-pink-dark), 0 12px 25px rgba(255, 105, 180, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-pink:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--sakura-pink-dark), 0 4px 10px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Button Style 3: Cyan Neon */
+        .btn-cyan {
+            background: linear-gradient(135deg, var(--miku-cyan), var(--miku-cyan-dark));
+            color: white;
+            box-shadow: 0 4px 0 var(--miku-cyan-dark), 0 8px 20px rgba(0, 212, 255, 0.4), 0 0 20px rgba(0, 212, 255, 0.3);
+            border: 2px solid var(--miku-cyan);
+        }
+
+        .btn-cyan:hover {
+            background: linear-gradient(135deg, var(--miku-cyan-light), var(--miku-cyan));
+            box-shadow: 0 6px 0 var(--miku-cyan-dark), 0 12px 25px rgba(0, 212, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-cyan:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--miku-cyan-dark), 0 4px 10px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Button Style 4: Tonal */
         .btn-tonal {
             background-color: var(--md-sys-color-secondary-container);
             color: var(--md-sys-color-on-secondary-container);
+            box-shadow: 0 3px 0 var(--sakura-pink-dark);
+            border: 2px solid var(--sakura-pink);
         }
 
         .btn-tonal:hover {
-            background-color: color-mix(in srgb, var(--md-sys-color-secondary-container) 90%, white);
-            transform: translateY(-1px);
+            background-color: color-mix(in srgb, var(--md-sys-color-secondary-container) 90%, black);
+            box-shadow: 0 5px 0 var(--sakura-pink-dark);
+            transform: translateY(-2px);
         }
 
+        .btn-tonal:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 var(--sakura-pink-dark);
+        }
+
+        /* Button Style 5: Outlined */
         .btn-outlined {
             background-color: transparent;
-            color: var(--md-sys-color-primary);
-            border: 2px solid var(--md-sys-color-primary);
+            color: var(--miku-teal);
+            border: 2px solid var(--miku-teal);
+            box-shadow: 0 3px 0 var(--miku-teal);
         }
 
         .btn-outlined:hover {
             background-color: var(--md-sys-color-primary-container);
-            transform: translateY(-1px);
+            border-color: var(--miku-teal);
+            box-shadow: 0 5px 0 var(--miku-teal);
+            transform: translateY(-2px);
         }
 
+        .btn-outlined:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 var(--miku-teal);
+        }
+
+        /* Button Style 6: Text */
         .btn-text {
             background-color: transparent;
-            color: var(--md-sys-color-primary);
+            color: var(--sakura-pink);
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            font-weight: 600;
         }
 
         .btn-text:hover {
-            background-color: var(--md-sys-color-primary-container);
+            background-color: var(--md-sys-color-secondary-container);
+            border-radius: var(--md-sys-shape-corner-small);
+        }
+
+        /* Button Style 7: Purple Magic */
+        .btn-purple {
+            background: linear-gradient(135deg, var(--miku-purple), #7B3FA0);
+            color: white;
+            box-shadow: 0 4px 0 #5A2D75, 0 8px 20px rgba(155, 89, 182, 0.4);
+            border: 2px solid var(--miku-purple);
+        }
+
+        .btn-purple:hover {
+            background: linear-gradient(135deg, var(--miku-purple-light), var(--miku-purple));
+            box-shadow: 0 6px 0 #5A2D75, 0 12px 25px rgba(155, 89, 182, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-purple:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #5A2D75, 0 4px 10px rgba(155, 89, 182, 0.4);
+        }
+
+        /* Button Style 8: Rainbow */
+        .btn-rainbow {
+            background: linear-gradient(135deg, var(--miku-teal), var(--sakura-pink), var(--miku-cyan));
+            background-size: 200% 200%;
+            color: white;
+            box-shadow: 0 4px 0 var(--miku-teal-dark), 0 8px 20px rgba(57, 197, 187, 0.4);
+            border: 2px solid white;
+            animation: rainbow-shift 3s ease infinite;
+        }
+
+        @keyframes rainbow-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-rainbow:hover {
+            box-shadow: 0 6px 0 var(--miku-teal-dark), 0 12px 25px rgba(57, 197, 187, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-rainbow:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--miku-teal-dark), 0 4px 10px rgba(57, 197, 187, 0.4);
         }
 
         .output-section {
             position: sticky;
-            top: 100px;
+            top: 120px;
+        }
+
+        @media (max-width: 1200px) {
+            .output-section {
+                position: relative;
+                top: 0;
+            }
         }
 
         .output-card {
-            background: linear-gradient(135deg, var(--md-sys-color-surface-2) 0%, var(--md-sys-color-surface-1) 100%);
-            border: 2px solid var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-surface-2);
         }
 
         .json-preview {
@@ -708,9 +1060,9 @@
             border: 2px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-sys-shape-corner-medium);
             padding: var(--md-sys-spacing-4);
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 0.875rem;
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--md-sys-color-on-surface);
             overflow-x: auto;
             white-space: pre-wrap;
@@ -718,24 +1070,41 @@
             max-height: 600px;
             overflow-y: auto;
             position: relative;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .json-preview {
+                padding: var(--md-sys-spacing-3);
+                font-size: 0.8rem;
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .json-preview {
+                padding: var(--md-sys-spacing-2);
+                font-size: 0.75rem;
+            }
         }
 
         .json-key {
-            color: var(--md-sys-color-primary);
+            color: var(--miku-teal);
             font-weight: 600;
         }
 
         .json-string {
-            color: var(--md-sys-color-tertiary);
+            color: var(--sakura-pink);
         }
 
         .json-number {
-            color: var(--md-sys-color-secondary);
+            color: var(--miku-cyan);
+            font-weight: 600;
         }
 
         .json-boolean {
-            color: var(--md-sys-color-error);
+            color: var(--miku-purple);
+            font-weight: 600;
         }
 
         .copy-btn {
@@ -747,11 +1116,38 @@
             z-index: 10;
         }
 
+        @media (max-width: 768px) {
+            .copy-btn {
+                top: var(--md-sys-spacing-2);
+                right: var(--md-sys-spacing-2);
+                width: 32px;
+                height: 32px;
+            }
+        }
+
         .action-bar {
             display: flex;
             gap: var(--md-sys-spacing-2);
             margin-top: var(--md-sys-spacing-4);
             flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .action-bar {
+                gap: var(--md-sys-spacing-2);
+                margin-top: var(--md-sys-spacing-3);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .action-bar {
+                justify-content: stretch;
+            }
+            
+            .action-bar .btn {
+                flex: 1;
+                min-width: calc(50% - var(--md-sys-spacing-1));
+            }
         }
 
         .chip-group {
@@ -761,32 +1157,47 @@
             margin-bottom: var(--md-sys-spacing-4);
         }
 
+        @media (max-width: 768px) {
+            .chip-group {
+                margin-bottom: var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
         .chip {
             display: inline-flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
-            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
             background-color: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-surface-variant);
             border-radius: var(--md-sys-shape-corner-small);
-            font: var(--md-sys-typescale-label-large);
+            font: var(--md-sys-typescale-label-medium);
+            font-weight: 500;
             cursor: pointer;
             transition: all var(--md-sys-motion-duration-short);
             border: 2px solid transparent;
-            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .chip {
+                padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+                font-size: 0.75rem;
+            }
         }
 
         .chip:hover {
             background-color: var(--md-sys-color-secondary-container);
             color: var(--md-sys-color-on-secondary-container);
-            transform: translateY(-2px);
+            border-color: var(--sakura-pink);
         }
 
         .chip.active {
-            background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-secondary-container) 100%);
+            background: linear-gradient(135deg, var(--miku-teal-container), var(--sakura-pink-container));
             color: var(--md-sys-color-on-primary-container);
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2);
+            border-color: var(--miku-teal);
+            font-weight: 600;
         }
 
         .snackbar {
@@ -794,18 +1205,28 @@
             bottom: var(--md-sys-spacing-6);
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, var(--md-sys-color-inverse-surface, #2d322b) 0%, #1a1c18 100%);
-            color: var(--md-sys-color-inverse-on-surface, #f0f2eb);
+            background: linear-gradient(135deg, var(--miku-teal), var(--miku-teal-dark));
+            color: white;
             padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
-            border-radius: var(--md-sys-shape-corner-small);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-radius: var(--md-sys-shape-corner-full);
+            box-shadow: 0 8px 24px rgba(57, 197, 187, 0.4);
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-4);
             z-index: 1000;
             opacity: 0;
             transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-emphasized);
-            border-left: 4px solid var(--md-sys-color-primary);
+            max-width: 90vw;
+            width: auto;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .snackbar {
+                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+                font-size: 0.875rem;
+                gap: var(--md-sys-spacing-2);
+            }
         }
 
         .snackbar.show {
@@ -819,7 +1240,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0,0,0,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -828,6 +1249,7 @@
             visibility: hidden;
             transition: all var(--md-sys-motion-duration-medium);
             backdrop-filter: blur(8px);
+            padding: var(--md-sys-spacing-4);
         }
 
         .dialog-overlay.active {
@@ -836,47 +1258,67 @@
         }
 
         .dialog {
-            background: linear-gradient(135deg, var(--md-sys-color-surface) 0%, var(--md-sys-color-surface-1) 100%);
+            background-color: var(--md-sys-color-surface);
             border-radius: var(--md-sys-shape-corner-extra-large);
             padding: var(--md-sys-spacing-6);
             min-width: 320px;
             max-width: 90vw;
             max-height: 90vh;
             overflow-y: auto;
-            transform: scale(0.9) translateY(20px);
+            transform: scale(0.9);
             transition: transform var(--md-sys-motion-duration-medium);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--md-sys-color-outline-variant);
-            position: relative;
+            box-shadow: var(--miku-box-shadow);
+            border: 3px solid var(--miku-teal);
+            width: 100%;
         }
 
-        .dialog::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--miku-cyan), var(--md-sys-color-tertiary));
-            border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 0 0;
+        @media (max-width: 768px) {
+            .dialog {
+                padding: var(--md-sys-spacing-4);
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dialog {
+                padding: var(--md-sys-spacing-3);
+                border-radius: var(--md-sys-shape-corner-large);
+            }
         }
 
         .dialog-overlay.active .dialog {
-            transform: scale(1) translateY(0);
+            transform: scale(1);
         }
 
         .dialog-title {
-            font: var(--md-sys-typescale-headline-small, 400 1.5rem/2rem 'Roboto Flex');
+            font: var(--md-sys-typescale-headline-small);
+            font-weight: 700;
             color: var(--md-sys-color-on-surface);
             margin-bottom: var(--md-sys-spacing-4);
-            font-weight: 600;
+            background: linear-gradient(135deg, var(--miku-teal), var(--sakura-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            .dialog-title {
+                font: var(--md-sys-typescale-title-large);
+                margin-bottom: var(--md-sys-spacing-3);
+            }
         }
 
         .dialog-content {
             font: var(--md-sys-typescale-body-medium);
             color: var(--md-sys-color-on-surface-variant);
             margin-bottom: var(--md-sys-spacing-6);
-            line-height: 1.6;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .dialog-content {
+                margin-bottom: var(--md-sys-spacing-4);
+            }
         }
 
         .dialog-actions {
@@ -885,77 +1327,50 @@
             gap: var(--md-sys-spacing-2);
         }
 
+        @media (max-width: 480px) {
+            .dialog-actions {
+                flex-direction: column-reverse;
+            }
+            
+            .dialog-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .empty-state {
             text-align: center;
             padding: var(--md-sys-spacing-12) var(--md-sys-spacing-6);
             color: var(--md-sys-color-on-surface-variant);
         }
 
+        @media (max-width: 768px) {
+            .empty-state {
+                padding: var(--md-sys-spacing-8) var(--md-sys-spacing-4);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-state {
+                padding: var(--md-sys-spacing-6) var(--md-sys-spacing-3);
+            }
+        }
+
         .empty-state-icon {
-            font-size: 64px;
+            font-size: 56px;
             margin-bottom: var(--md-sys-spacing-4);
-            opacity: 0.3;
-            background: linear-gradient(135deg, var(--miku-cyan), var(--md-sys-color-tertiary));
+            opacity: 0.5;
+            background: linear-gradient(135deg, var(--miku-teal), var(--sakura-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         @media (max-width: 768px) {
-            .app-container {
-                padding: var(--md-sys-spacing-4);
+            .empty-state-icon {
+                font-size: 42px;
+                margin-bottom: var(--md-sys-spacing-3);
             }
-
-            .app-bar {
-                margin: calc(-1 * var(--md-sys-spacing-4));
-                margin-bottom: var(--md-sys-spacing-4);
-                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-            }
-
-            .tree-inputs {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .tree-key-input, .tree-value-input, .tree-type-select {
-                width: 100%;
-                max-width: none;
-            }
-
-            .action-bar {
-                justify-content: center;
-            }
-
-            .json-preview {
-                font-size: 0.75rem;
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .tree-node {
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .texture-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300D4AA' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         .badge {
@@ -965,32 +1380,37 @@
             min-width: 24px;
             height: 24px;
             padding: 0 8px;
-            background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, var(--miku-cyan) 100%);
-            color: var(--md-sys-color-on-primary);
+            background: linear-gradient(135deg, var(--sakura-pink), var(--sakura-pink-dark));
+            color: white;
             border-radius: var(--md-sys-shape-corner-full);
-            font: var(--md-sys-typescale-label-small, 500 0.7rem/1 'Roboto Flex');
-            margin-left: var(--md-sys-spacing-2);
+            font: var(--md-sys-typescale-label-small);
             font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0, 212, 170, 0.3);
+            margin-left: var(--md-sys-spacing-2);
         }
 
         .live-indicator {
             display: inline-flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
-            font: var(--md-sys-typescale-label-large);
-            color: var(--md-sys-color-primary);
-            margin-left: auto;
+            font: var(--md-sys-typescale-label-medium);
             font-weight: 600;
+            color: var(--miku-teal);
+            margin-left: auto;
+        }
+
+        @media (max-width: 480px) {
+            .live-indicator {
+                display: none;
+            }
         }
 
         .live-dot {
             width: 10px;
             height: 10px;
-            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--miku-cyan));
+            background: linear-gradient(135deg, var(--miku-teal), var(--miku-cyan));
             border-radius: 50%;
             animation: pulse 2s infinite;
-            box-shadow: 0 0 10px var(--md-sys-color-primary);
+            box-shadow: 0 0 10px var(--miku-teal);
         }
 
         @keyframes pulse {
@@ -1003,8 +1423,20 @@
             margin-top: var(--md-sys-spacing-6);
         }
 
+        @media (max-width: 768px) {
+            .article-generator {
+                margin-top: var(--md-sys-spacing-4);
+            }
+        }
+
         .article-section {
             margin-bottom: var(--md-sys-spacing-6);
+        }
+
+        @media (max-width: 768px) {
+            .article-section {
+                margin-bottom: var(--md-sys-spacing-4);
+            }
         }
 
         .article-section-title {
@@ -1014,10 +1446,24 @@
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .article-section-title {
+                font: var(--md-sys-typescale-body-large);
+                font-weight: 600;
+            }
         }
 
         .form-group {
             margin-bottom: var(--md-sys-spacing-4);
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                margin-bottom: var(--md-sys-spacing-3);
+            }
         }
 
         .form-label {
@@ -1028,12 +1474,18 @@
             font-weight: 600;
         }
 
+        @media (max-width: 480px) {
+            .form-label {
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
         .form-input,
         .form-select,
         .form-textarea {
             width: 100%;
             padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-            border: 2px solid var(--md-sys-color-outline);
+            border: 2px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-sys-shape-corner-small);
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
@@ -1042,24 +1494,38 @@
             transition: all var(--md-sys-motion-duration-short);
         }
 
+        @media (max-width: 768px) {
+            .form-input,
+            .form-select,
+            .form-textarea {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            }
+        }
+
         .form-input:focus,
         .form-select:focus,
         .form-textarea:focus {
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2);
+            border-color: var(--miku-teal);
+            box-shadow: 0 0 0 3px rgba(57, 197, 187, 0.2);
         }
 
         .form-textarea {
             min-height: 120px;
             resize: vertical;
-            font-family: 'Roboto Flex', sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .form-textarea {
+                min-height: 100px;
+            }
         }
 
         .form-select {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300D4AA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2339C5BB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 12px center;
             background-size: 16px;
@@ -1070,6 +1536,12 @@
             display: flex;
             flex-wrap: wrap;
             gap: var(--md-sys-spacing-2);
+        }
+
+        @media (max-width: 480px) {
+            .radio-group {
+                gap: var(--md-sys-spacing-1);
+            }
         }
 
         .radio-item {
@@ -1091,22 +1563,41 @@
             color: var(--md-sys-color-on-surface-variant);
             border-radius: var(--md-sys-shape-corner-small);
             font: var(--md-sys-typescale-label-large);
+            font-weight: 500;
             cursor: pointer;
             transition: all var(--md-sys-motion-duration-short);
             border: 2px solid transparent;
-            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .radio-label {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .radio-label {
+                padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+                font-size: 0.75rem;
+                gap: var(--md-sys-spacing-1);
+            }
+            
+            .radio-label .material-symbols-rounded {
+                font-size: 16px !important;
+            }
         }
 
         .radio-item input[type="radio"]:checked + .radio-label {
-            background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-secondary-container) 100%);
+            background: linear-gradient(135deg, var(--miku-teal-container), var(--sakura-pink-container));
             color: var(--md-sys-color-on-primary-container);
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2);
+            border-color: var(--miku-teal);
+            font-weight: 600;
         }
 
         .radio-label:hover {
             background-color: var(--md-sys-color-secondary-container);
-            transform: translateY(-2px);
         }
 
         .output-area {
@@ -1122,7 +1613,15 @@
             color: var(--md-sys-color-on-surface);
             white-space: pre-wrap;
             position: relative;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .output-area {
+                padding: var(--md-sys-spacing-3);
+                min-height: 150px;
+                max-height: 300px;
+            }
         }
 
         .output-area:empty::before {
@@ -1132,27 +1631,36 @@
         }
 
         .btn-generate {
-            background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, var(--miku-cyan) 50%, var(--md-sys-color-tertiary) 100%);
-            background-size: 200% 200%;
-            color: var(--md-sys-color-on-primary);
+            background: linear-gradient(135deg, var(--miku-teal), var(--sakura-pink));
+            color: white;
             font-size: 1rem;
             padding: var(--md-sys-spacing-4) var(--md-sys-spacing-8);
-            box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4);
-            animation: gradient-shift 3s ease infinite;
+            box-shadow: 0 4px 0 var(--sakura-pink-dark), 0 8px 20px rgba(57, 197, 187, 0.4);
+            border: 2px solid white;
         }
 
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @media (max-width: 768px) {
+            .btn-generate {
+                padding: var(--md-sys-spacing-3) var(--md-sys-spacing-6);
+                font-size: 0.9375rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-generate {
+                width: 100%;
+                padding: var(--md-sys-spacing-3);
+            }
         }
 
         .btn-generate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 var(--sakura-pink-dark), 0 12px 25px rgba(57, 197, 187, 0.5);
         }
 
         .btn-generate:active {
-            transform: translateY(-1px);
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--sakura-pink-dark), 0 4px 10px rgba(57, 197, 187, 0.4);
         }
 
         .btn-copy {
@@ -1172,6 +1680,7 @@
         @media (max-width: 768px) {
             .two-column {
                 grid-template-columns: 1fr;
+                gap: var(--md-sys-spacing-3);
             }
         }
 
@@ -1181,10 +1690,23 @@
             margin-top: var(--md-sys-spacing-1);
         }
 
+        @media (max-width: 480px) {
+            .hint-text {
+                font-size: 0.75rem;
+            }
+        }
+
         .divider {
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--md-sys-color-outline-variant), transparent);
+            background: linear-gradient(90deg, var(--miku-teal), var(--sakura-pink), var(--miku-cyan));
             margin: var(--md-sys-spacing-6) 0;
+            border-radius: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .divider {
+                margin: var(--md-sys-spacing-4) 0;
+            }
         }
 
         .article-tools-grid {
@@ -1193,15 +1715,29 @@
             gap: var(--md-sys-spacing-6);
         }
 
+        @media (max-width: 768px) {
+            .article-tools-grid {
+                grid-template-columns: 1fr;
+                gap: var(--md-sys-spacing-4);
+            }
+        }
+
         .tool-nav {
             display: flex;
             gap: var(--md-sys-spacing-2);
             margin-bottom: var(--md-sys-spacing-4);
             border-bottom: 2px solid var(--md-sys-color-outline-variant);
             padding-bottom: var(--md-sys-spacing-4);
-            background: var(--md-sys-color-surface-1);
-            padding: var(--md-sys-spacing-3);
-            border-radius: var(--md-sys-shape-corner-large);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .tool-nav {
+                margin-bottom: var(--md-sys-spacing-3);
+                padding-bottom: var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
         }
 
         .tool-nav-btn {
@@ -1210,37 +1746,59 @@
             border: none;
             color: var(--md-sys-color-on-surface-variant);
             font: var(--md-sys-typescale-label-large);
+            font-weight: 600;
             cursor: pointer;
-            border-radius: var(--md-sys-shape-corner-medium);
+            border-radius: var(--md-sys-shape-corner-small);
             transition: all var(--md-sys-motion-duration-short);
             position: relative;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: var(--md-sys-spacing-2);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tool-nav-btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-nav-btn {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font-size: 0.875rem;
+            }
+            
+            .tool-nav-btn .material-symbols-rounded {
+                margin-right: 4px !important;
+                font-size: 18px !important;
+            }
         }
 
         .tool-nav-btn:hover {
             background-color: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-surface);
-            transform: translateY(-2px);
         }
 
         .tool-nav-btn.active {
-            color: var(--md-sys-color-primary);
-            background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-secondary-container) 100%);
-            box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2);
+            color: var(--miku-teal);
+            background: linear-gradient(135deg, var(--miku-teal-container), var(--sakura-pink-container));
         }
 
         .tool-nav-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 20%;
-            right: 20%;
+            bottom: -18px;
+            left: 0;
+            right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--miku-cyan), var(--md-sys-color-primary));
-            border-radius: 3px;
+            background: linear-gradient(90deg, var(--miku-teal), var(--sakura-pink));
+            border-radius: 3px 3px 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .tool-nav-btn.active::after {
+                bottom: -14px;
+            }
         }
 
         .tool-content {
@@ -1249,11 +1807,11 @@
 
         .tool-content.active {
             display: block;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -1262,58 +1820,71 @@
             font: var(--md-sys-typescale-label-medium);
             color: var(--md-sys-color-on-surface-variant);
             margin-top: var(--md-sys-spacing-1);
-            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .char-counter {
+                font-size: 0.75rem;
+            }
         }
 
         .char-counter.warning {
             color: var(--md-sys-color-error);
-            animation: shake 0.5s;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            font-weight: 600;
         }
 
         /* Example Box Styles */
         .example-box {
-            background: linear-gradient(135deg, var(--md-sys-color-secondary-container) 0%, var(--md-sys-color-primary-container) 100%);
-            border-left: 4px solid var(--md-sys-color-primary);
+            background: linear-gradient(135deg, var(--md-sys-color-secondary-container), var(--sakura-pink-container));
+            border-left: 4px solid var(--sakura-pink);
             padding: var(--md-sys-spacing-4);
             margin-top: var(--md-sys-spacing-3);
-            border-radius: 0 var(--md-sys-shape-corner-medium) var(--md-sys-shape-corner-medium) 0;
+            border-radius: 0 var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0;
             font: var(--md-sys-typescale-body-medium);
             color: var(--md-sys-color-on-secondary-container);
-            position: relative;
-            overflow: hidden;
+            line-height: 1.7;
         }
 
-        .example-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(0, 212, 170, 0.1) 0%, transparent 70%);
+        @media (max-width: 768px) {
+            .example-box {
+                padding: var(--md-sys-spacing-3);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .example-box {
+                padding: var(--md-sys-spacing-2);
+                font-size: 0.875rem;
+            }
         }
 
         .example-box-title {
             font: var(--md-sys-typescale-label-large);
             font-weight: 700;
-            margin-bottom: var(--md-sys-spacing-3);
+            margin-bottom: var(--md-sys-spacing-2);
             display: flex;
             align-items: center;
             gap: var(--md-sys-spacing-2);
-            color: var(--md-sys-color-primary);
+            color: var(--sakura-pink-dark);
+        }
+
+        @media (max-width: 480px) {
+            .example-box-title {
+                font: var(--md-sys-typescale-label-medium);
+            }
         }
 
         .example-item {
             margin-bottom: var(--md-sys-spacing-2);
             padding-left: var(--md-sys-spacing-3);
-            border-left: 3px solid var(--md-sys-color-primary);
-            position: relative;
+            border-left: 2px solid var(--md-sys-color-outline-variant);
+        }
+
+        @media (max-width: 480px) {
+            .example-item {
+                margin-bottom: var(--md-sys-spacing-1);
+                padding-left: var(--md-sys-spacing-2);
+            }
         }
 
         .example-item:last-child {
@@ -1322,7 +1893,7 @@
 
         .example-label {
             font-weight: 700;
-            color: var(--md-sys-color-secondary);
+            color: var(--sakura-pink);
         }
 
         .load-example-btn {
@@ -1331,53 +1902,224 @@
             padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
         }
 
-        /* Miku Decorative Elements */
-        .miku-decoration {
+        @media (max-width: 480px) {
+            .load-example-btn {
+                width: 100%;
+                margin-top: var(--md-sys-spacing-2);
+            }
+        }
+
+        /* Field Editor Tabs */
+        .field-editor-tabs {
+            display: flex;
+            gap: var(--md-sys-spacing-2);
+            margin-bottom: var(--md-sys-spacing-4);
+            border-bottom: 2px solid var(--md-sys-color-outline-variant);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .field-editor-tabs {
+                margin-bottom: var(--md-sys-spacing-3);
+                gap: var(--md-sys-spacing-1);
+            }
+        }
+
+        .field-editor-tab {
+            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+            background: transparent;
+            border: none;
+            color: var(--md-sys-color-on-surface-variant);
+            font: var(--md-sys-typescale-label-large);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0 0;
+            transition: all var(--md-sys-motion-duration-short);
+            position: relative;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .field-editor-tab {
+                padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+                font: var(--md-sys-typescale-label-medium);
+            }
+        }
+
+        .field-editor-tab:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .field-editor-tab.active {
+            color: var(--miku-teal);
+            background: linear-gradient(135deg, var(--miku-teal-container), var(--sakura-pink-container));
+        }
+
+        .field-editor-tab.active::after {
+            content: '';
             position: absolute;
-            pointer-events: none;
-            opacity: 0.1;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--miku-teal), var(--sakura-pink));
         }
 
-        .miku-decoration.tie {
-            width: 40px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--miku-tie), var(--miku-sleeve));
-            clip-path: polygon(50% 0%, 100% 30%, 80% 100%, 20% 100%, 0% 30%);
-            top: 20px;
-            right: 40px;
-            transform: rotate(-15deg);
+        .field-editor-content {
+            display: none;
         }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+        .field-editor-content.active {
+            display: block;
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--md-sys-color-surface-variant);
-            border-radius: 5px;
+        .preset-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--md-sys-spacing-2);
+            margin-bottom: var(--md-sys-spacing-4);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--miku-cyan), var(--md-sys-color-primary));
-            border-radius: 5px;
-            border: 2px solid var(--md-sys-color-surface-variant);
+        @media (max-width: 768px) {
+            .preset-fields {
+                gap: var(--md-sys-spacing-1);
+                margin-bottom: var(--md-sys-spacing-3);
+            }
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--miku-cyan));
+        .preset-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-1);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            background: linear-gradient(135deg, var(--miku-cyan-container), var(--md-sys-color-tertiary-container));
+            color: var(--md-sys-color-on-tertiary-container);
+            border-radius: var(--md-sys-shape-corner-small);
+            font: var(--md-sys-typescale-label-medium);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--md-sys-motion-duration-short);
+            border: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .preset-chip {
+                padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+                font-size: 0.75rem;
+            }
+            
+            .preset-chip .material-symbols-rounded {
+                font-size: 16px !important;
+            }
+        }
+
+        .preset-chip:hover {
+            background: linear-gradient(135deg, var(--miku-cyan), var(--miku-cyan-dark));
+            color: white;
+            border-color: var(--miku-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .drag-handle, .field-drag-handle {
+                opacity: 1;
+                padding: var(--md-sys-spacing-2);
+            }
+            
+            .icon-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .tree-toggle, .field-toggle {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* Prevent text selection during drag */
+        .dragging, .dragging * {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus visible for accessibility */
+        *:focus-visible {
+            outline: 3px solid var(--miku-teal);
+            outline-offset: 2px;
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Import JSON Textarea */
+        .import-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: var(--md-sys-spacing-3);
+            border: 2px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-sys-shape-corner-medium);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            resize: vertical;
+            outline: none;
+            transition: all var(--md-sys-motion-duration-short);
+        }
+
+        .import-textarea:focus {
+            border-color: var(--miku-teal);
+            box-shadow: 0 0 0 3px rgba(57, 197, 187, 0.2);
+        }
+
+        /* Status indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--md-sys-spacing-2);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+            border-radius: var(--md-sys-shape-corner-full);
+            font: var(--md-sys-typescale-label-medium);
+            font-weight: 600;
+        }
+
+        .status-success {
+            background-color: var(--miku-teal-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .status-error {
+            background-color: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-error);
         }
     </style>
 </head>
 <body>
     <div class="miku-bg">
-        <div class="floating-note note-1 material-symbols-rounded">music_note</div>
-        <div class="floating-note note-2 material-symbols-rounded">music_note</div>
-        <div class="floating-note note-3 material-symbols-rounded">music_note</div>
-        <div class="floating-note note-4 material-symbols-rounded">music_note</div>
+        <div class="sakura-petal petal-1"></div>
+        <div class="sakura-petal petal-2"></div>
+        <div class="sakura-petal petal-3"></div>
+        <div class="sakura-petal petal-4"></div>
+        <div class="miku-note note-1">♪</div>
+        <div class="miku-note note-2">♫</div>
     </div>
-    <div class="texture-overlay"></div>
 
     <div class="app-container">
         <header class="app-bar">
@@ -1385,13 +2127,13 @@
                 <div class="logo">
                     <span class="material-symbols-rounded">account_tree</span>
                 </div>
-                <h1 class="app-title">Miku JSON Builder</h1>
+                <h1 class="app-title">Miku Sakura JSON Builder</h1>
             </div>
             <div class="app-bar-actions">
-                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme" aria-label="Toggle theme">
                     <span class="material-symbols-rounded">dark_mode</span>
                 </button>
-                <button class="icon-btn" onclick="showHelp()" title="Help">
+                <button class="icon-btn" onclick="showHelp()" title="Help" aria-label="Show help">
                     <span class="material-symbols-rounded">help</span>
                 </button>
             </div>
@@ -1399,12 +2141,12 @@
 
         <div class="tool-nav">
             <button class="tool-nav-btn active" onclick="switchTool('json')">
-                <span class="material-symbols-rounded">account_tree</span>
-                JSON Builder
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px;">account_tree</span>
+                <span class="nav-text">JSON Builder</span>
             </button>
             <button class="tool-nav-btn" onclick="switchTool('article')">
-                <span class="material-symbols-rounded">article</span>
-                Prompt Generator
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px;">article</span>
+                <span class="nav-text">Article Generator</span>
             </button>
         </div>
 
@@ -1413,12 +2155,11 @@
             <div class="main-layout">
                 <div class="builder-section">
                     <div class="card">
-                        <div class="miku-decoration tie"></div>
                         <div class="card-title">
                             <span class="material-symbols-rounded">tune</span>
                             Tree Structure Editor
                         </div>
-                        <div class="card-subtitle">Edit struktur JSON hierarkis - Live Preview otomatis</div>
+                        <div class="card-subtitle">Edit struktur JSON hierarkis - Live Preview otomatis dengan tema Miku Sakura yang fresh!</div>
                         
                         <div class="chip-group">
                             <span class="chip active" onclick="loadTemplate('empty')">Empty</span>
@@ -1432,33 +2173,61 @@
                         <div class="action-bar" style="margin-top: var(--md-sys-spacing-4);">
                             <button class="btn btn-filled" onclick="addRootNode()">
                                 <span class="material-symbols-rounded">add</span>
-                                Tambah Root Field
+                                <span>Tambah Root</span>
                             </button>
                             <button class="btn btn-outlined" onclick="expandAll()">
                                 <span class="material-symbols-rounded">unfold_more</span>
-                                Expand All
+                                <span class="btn-text">Expand</span>
                             </button>
                             <button class="btn btn-outlined" onclick="collapseAll()">
                                 <span class="material-symbols-rounded">unfold_less</span>
-                                Collapse All
+                                <span class="btn-text">Collapse</span>
                             </button>
                             <button class="btn btn-text" onclick="clearAll()">
                                 <span class="material-symbols-rounded">delete_sweep</span>
-                                Clear
+                                <span class="btn-text">Clear</span>
                             </button>
                         </div>
                     </div>
 
-                    <div class="card">
+                    <!-- Import JSON from Clipboard Section -->
+                    <div class="card" style="margin-top: var(--md-sys-spacing-4);">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">content_paste</span>
+                            Import JSON dari Clipboard
+                        </div>
+                        <div class="card-subtitle">Paste JSON dari clipboard atau ketik manual untuk di-edit dalam editor</div>
+                        
+                        <textarea class="import-textarea" id="importJsonTextarea" placeholder="Paste JSON di sini...&#10;Contoh:&#10;{&#10;  &#34;nama&#34;: &#34;Hatsune Miku&#34;,&#10;  &#34;umur&#34;: 16,&#10;  &#34;warna_favorit&#34;: &#34;Turquoise&#34;&#10;}"></textarea>
+                        
+                        <div class="action-bar" style="margin-top: var(--md-sys-spacing-3);">
+                            <button class="btn btn-rainbow" onclick="importFromClipboard()">
+                                <span class="material-symbols-rounded">content_paste_go</span>
+                                <span>Paste dari Clipboard</span>
+                            </button>
+                            <button class="btn btn-cyan" onclick="importFromTextarea()">
+                                <span class="material-symbols-rounded">play_arrow</span>
+                                <span>Import JSON</span>
+                            </button>
+                            <button class="btn btn-purple" onclick="clearImportTextarea()">
+                                <span class="material-symbols-rounded">clear</span>
+                                <span>Clear</span>
+                            </button>
+                        </div>
+                        
+                        <div id="importStatus" style="margin-top: var(--md-sys-spacing-3);"></div>
+                    </div>
+
+                    <div class="card" style="margin-top: var(--md-sys-spacing-4);">
                         <div class="card-title">
                             <span class="material-symbols-rounded">tips_and_updates</span>
                             Perbedaan Template
                         </div>
-                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8;">
-                            <li><strong>Image to Text (Lite):</strong> Struktur sederhana dengan override dan output basic</li>
-                            <li><strong>Image Prompt (Pro):</strong> Struktur lengkap 8 kategori untuk AI image generation</li>
-                            <li><strong>Main Subject:</strong> Deskripsi karakter (Gender, Age, Ethnicity, Body Type, Skin Color)</li>
-                            <li><strong>Facial Features:</strong> Detail wajah dan rambut</li>
+                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.9;">
+                            <li><strong style="color: var(--miku-teal);">Image to Text (Lite):</strong> Struktur sederhana dengan override dan output basic</li>
+                            <li><strong style="color: var(--sakura-pink);">Image Prompt (Pro):</strong> Struktur lengkap 8 kategori untuk AI image generation</li>
+                            <li><strong style="color: var(--miku-cyan);">Main Subject:</strong> Deskripsi karakter (Gender, Age, Ethnicity, Body Type, Skin Color)</li>
+                            <li><strong style="color: var(--miku-purple);">Facial Features:</strong> Detail wajah dan rambut</li>
                             <li><strong>Clothing:</strong> Pakaian lengkap dengan aksesoris</li>
                             <li><strong>Pose:</strong> Gaya pose dan arah pandangan</li>
                             <li><strong>Environment:</strong> Setting dan background</li>
@@ -1482,7 +2251,7 @@
                         </div>
                         
                         <div class="json-preview" id="jsonPreview">
-                            <button class="icon-btn copy-btn" onclick="copyOutput()" title="Copy to Clipboard">
+                            <button class="icon-btn copy-btn" onclick="copyOutput()" title="Copy to Clipboard" aria-label="Copy to clipboard">
                                 <span class="material-symbols-rounded">content_copy</span>
                             </button>
                             <code id="jsonCode"></code>
@@ -1493,9 +2262,13 @@
                                 <span class="material-symbols-rounded">content_copy</span>
                                 Salin JSON
                             </button>
-                            <button class="btn btn-tonal" onclick="downloadJSON()">
+                            <button class="btn btn-pink" onclick="downloadJSON()">
                                 <span class="material-symbols-rounded">download</span>
                                 Unduh
+                            </button>
+                            <button class="btn btn-cyan" onclick="copyToClipboardForImport()">
+                                <span class="material-symbols-rounded">sync</span>
+                                Copy untuk Edit
                             </button>
                         </div>
                     </div>
@@ -1506,7 +2279,7 @@
                             Status
                         </div>
                         <div id="validationStatus" style="color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-body-medium);">
-                            <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-primary);">check_circle</span>
+                            <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--miku-teal);">check_circle</span>
                             Struktur valid
                         </div>
                     </div>
@@ -1521,125 +2294,124 @@
                     <div class="card">
                         <div class="card-title">
                             <span class="material-symbols-rounded">edit_note</span>
-                            Konfigurasi Prompt Artikel
+                            Article Generator - Field Editor
                         </div>
-                        <div class="card-subtitle">Pilih topik dan lihat contoh konfigurasi untuk setiap kategori</div>
+                        <div class="card-subtitle">Buat struktur field dinamis untuk konfigurasi artikel</div>
                         
-                        <div class="article-section">
-                            <div class="form-group">
-                                <label class="form-label">Topik Utama</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-general" name="topic" value="general" checked onchange="updateTopicExample()">
-                                        <label for="topic-general" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">article</span>
-                                            Umum
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-blog" name="topic" value="blog" onchange="updateTopicExample()">
-                                        <label for="topic-blog" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">rss_feed</span>
-                                            Blog Post
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-coding" name="topic" value="coding" onchange="updateTopicExample()">
-                                        <label for="topic-coding" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
-                                            Coding
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-story" name="topic" value="storytelling" onchange="updateTopicExample()">
-                                        <label for="topic-story" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">auto_stories</span>
-                                            Storytelling
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="topic-email" name="topic" value="email" onchange="updateTopicExample()">
-                                        <label for="topic-email" class="radio-label">
-                                            <span class="material-symbols-rounded" style="font-size: 18px;">email</span>
-                                            Email Marketing
-                                        </label>
-                                    </div>
-                                </div>
+                        <!-- Field Editor Tabs -->
+                        <div class="field-editor-tabs">
+                            <button class="field-editor-tab active" onclick="switchFieldTab('fields')">
+                                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 6px; font-size: 18px;">account_tree</span>
+                                Edit Fields
+                            </button>
+                            <button class="field-editor-tab" onclick="switchFieldTab('presets')">
+                                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 6px; font-size: 18px;">bookmark</span>
+                                Presets
+                            </button>
+                        </div>
+
+                        <!-- Fields Tab -->
+                        <div id="fields-tab" class="field-editor-content active">
+                            <div class="preset-fields">
+                                <span class="preset-chip" onclick="addPresetField('topic')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Topik
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('role')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Peran AI
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('style')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Gaya
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('audience')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Audiens
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('task')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Tugas
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('word_count')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Kata
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('format')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Format
+                                </span>
+                                <span class="preset-chip" onclick="addPresetField('custom')">
+                                    <span class="material-symbols-rounded" style="font-size: 16px;">add</span>
+                                    Custom
+                                </span>
                             </div>
 
-                            <!-- Dynamic Example Box -->
-                            <div id="topic-example" class="example-box">
-                                <div class="example-box-title">
-                                    <span class="material-symbols-rounded">lightbulb</span>
-                                    Contoh Konfigurasi: Umum
-                                </div>
-                                <div id="example-content">
-                                    <!-- Content will be populated by JavaScript -->
-                                </div>
-                                <button class="btn btn-filled load-example-btn" onclick="loadExample()">
-                                    <span class="material-symbols-rounded">upload</span>
-                                    Gunakan Contoh Ini
+                            <div class="article-field-container" id="articleFieldContainer">
+                                <!-- Fields will be rendered here -->
+                            </div>
+
+                            <div class="action-bar">
+                                <button class="btn btn-filled" onclick="addArticleRootField()">
+                                    <span class="material-symbols-rounded">add</span>
+                                    <span>Tambah Field</span>
+                                </button>
+                                <button class="btn btn-outlined" onclick="expandAllArticleFields()">
+                                    <span class="material-symbols-rounded">unfold_more</span>
+                                    <span class="btn-text">Expand</span>
+                                </button>
+                                <button class="btn btn-outlined" onclick="collapseAllArticleFields()">
+                                    <span class="material-symbols-rounded">unfold_less</span>
+                                    <span class="btn-text">Collapse</span>
+                                </button>
+                                <button class="btn btn-text" onclick="clearAllArticleFields()">
+                                    <span class="material-symbols-rounded">delete_sweep</span>
+                                    <span class="btn-text">Clear</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="divider"></div>
-
-                        <div class="article-section">
-                            <div class="two-column">
-                                <div class="form-group">
-                                    <label class="form-label" for="ai-role">Peran AI</label>
-                                    <input type="text" class="form-input" id="ai-role" placeholder="Contoh: Jurnalis senior...">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="language-style">Gaya Bahasa</label>
-                                    <select class="form-select" id="language-style">
-                                        <option value="formal">Formal</option>
-                                        <option value="casual">Casual/Santai</option>
-                                        <option value="professional">Profesional</option>
-                                        <option value="creative">Kreatif/Imajinatif</option>
-                                        <option value="academic">Akademis</option>
-                                        <option value="persuasive">Persuasif</option>
-                                        <option value="humorous">Humoris</option>
-                                    </select>
-                                </div>
+                        <!-- Presets Tab -->
+                        <div id="presets-tab" class="field-editor-content">
+                            <div class="chip-group">
+                                <span class="chip active" onclick="loadArticlePreset('empty')">Empty</span>
+                                <span class="chip" onclick="loadArticlePreset('general')">Umum</span>
+                                <span class="chip" onclick="loadArticlePreset('blog')">Blog Post</span>
+                                <span class="chip" onclick="loadArticlePreset('coding')">Coding</span>
+                                <span class="chip" onclick="loadArticlePreset('storytelling')">Storytelling</span>
+                                <span class="chip" onclick="loadArticlePreset('email')">Email Marketing</span>
                             </div>
 
-                            <div class="two-column">
-                                <div class="form-group">
-                                    <label class="form-label" for="target-audience">Target Audiens</label>
-                                    <input type="text" class="form-input" id="target-audience" placeholder="Contoh: Pemula, Profesional...">
+                            <div class="example-box" style="margin-top: var(--md-sys-spacing-4);">
+                                <div class="example-box-title">
+                                    <span class="material-symbols-rounded">info</span>
+                                    Tentang Preset
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="word-limit">Batas Kata</label>
-                                    <input type="number" class="form-input" id="word-limit" placeholder="Contoh: 500, 1000...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="main-task">Tugas/Instruksi Utama</label>
-                                <textarea class="form-textarea" id="main-task" placeholder="Jelaskan tugas yang ingin dilakukan AI..." oninput="updateCharCounter()"></textarea>
-                                <div class="char-counter" id="task-counter">0 karakter</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="technical-specs">Spesifikasi Teknis/Konteks Tambahan (opsional)</label>
-                                <textarea class="form-textarea" id="technical-specs" placeholder="Instruksi teknis tambahan..."></textarea>
+                                <p style="margin-bottom: var(--md-sys-spacing-2);">Preset akan mengisi field editor dengan struktur yang sudah dioptimalkan untuk setiap jenis konten.</p>
+                                <ul style="padding-left: 20px; line-height: 1.9;">
+                                    <li><strong style="color: var(--miku-teal);">Umum:</strong> Struktur dasar untuk artikel berita umum</li>
+                                    <li><strong style="color: var(--sakura-pink);">Blog Post:</strong> Optimasi untuk konten blog dengan SEO</li>
+                                    <li><strong style="color: var(--miku-cyan);">Coding:</strong> Struktur untuk tutorial teknis</li>
+                                    <li><strong style="color: var(--miku-purple);">Storytelling:</strong> Setup untuk cerita fiksi</li>
+                                    <li><strong>Email Marketing:</strong> Konfigurasi untuk email konversi</li>
+                                </ul>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="action-bar" style="justify-content: center; margin-top: var(--md-sys-spacing-6);">
-                            <button class="btn btn-generate" onclick="generateArticlePrompt()">
-                                <span class="material-symbols-rounded">auto_fix_high</span>
-                                Generate JSON Prompt
-                            </button>
-                            <button class="btn btn-outlined" onclick="resetArticleForm()">
-                                <span class="material-symbols-rounded">refresh</span>
-                                Reset
-                            </button>
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">tips_and_updates</span>
+                            Panduan Field Editor
                         </div>
+                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.9;">
+                            <li><strong style="color: var(--miku-teal);">Tambah Field:</strong> Gunakan tombol preset cepat atau "Tambah Field"</li>
+                            <li><strong style="color: var(--sakura-pink);">Drag & Drop:</strong> Seret handle (garis-garis) untuk mengurutkan ulang field</li>
+                            <li><strong style="color: var(--miku-cyan);">Tipe Data:</strong> Pilih String, Number, Boolean, Object, atau Array</li>
+                            <li><strong style="color: var(--miku-purple);">Object/Array:</strong> Field bertipe Object/Array bisa memiliki child fields</li>
+                            <li><strong>Custom Field:</strong> Buat field dengan nama dan struktur bebas</li>
+                            <li><strong>Live Preview:</strong> JSON di panel kanan update otomatis</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -1648,6 +2420,7 @@
                         <div class="card-title">
                             <span class="material-symbols-rounded">code</span>
                             JSON Output
+                            <span class="badge" id="articleFieldCount">0</span>
                             <div class="live-indicator">
                                 <div class="live-dot"></div>
                                 LIVE
@@ -1655,7 +2428,7 @@
                         </div>
                         
                         <div class="json-preview" id="article-json-preview">
-                            <button class="icon-btn copy-btn" onclick="copyArticleOutput()" title="Copy to Clipboard">
+                            <button class="icon-btn copy-btn" onclick="copyArticleOutput()" title="Copy to Clipboard" aria-label="Copy to clipboard">
                                 <span class="material-symbols-rounded">content_copy</span>
                             </button>
                             <code id="article-json-code">{}</code>
@@ -1666,24 +2439,42 @@
                                 <span class="material-symbols-rounded">content_copy</span>
                                 Salin JSON
                             </button>
-                            <button class="btn btn-tonal" onclick="downloadArticleJSON()">
+                            <button class="btn btn-pink" onclick="downloadArticleJSON()">
                                 <span class="material-symbols-rounded">download</span>
                                 Unduh JSON
+                            </button>
+                            <button class="btn btn-cyan" onclick="generateFromFields()">
+                                <span class="material-symbols-rounded">auto_fix_high</span>
+                                Generate
                             </button>
                         </div>
                     </div>
 
                     <div class="card" style="margin-top: var(--md-sys-spacing-4);">
                         <div class="card-title">
-                            <span class="material-symbols-rounded">info</span>
-                            Petunjuk Penggunaan
+                            <span class="material-symbols-rounded">auto_stories</span>
+                            Generated Prompt
                         </div>
-                        <ul style="color: var(--md-sys-color-on-surface-variant); padding-left: 20px; line-height: 1.8; font: var(--md-sys-typescale-body-medium);">
-                            <li>Pilih topik untuk melihat contoh konfigurasi yang sesuai</li>
-                            <li>Klik "Gunakan Contoh Ini" untuk mengisi form otomatis</li>
-                            <li>Output berupa JSON yang bisa diparse oleh aplikasi lain</li>
-                            <li>Field "generated_prompt" berisi teks prompt siap pakai</li>
-                        </ul>
+                        <div class="output-area" id="generated-prompt-area" style="min-height: 150px; font-size: 0.875rem;">
+                            Prompt akan muncul di sini setelah klik "Generate"
+                        </div>
+                        <div class="action-bar" style="margin-top: var(--md-sys-spacing-3);">
+                            <button class="btn btn-tonal" onclick="copyGeneratedPrompt()">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Salin Prompt
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: var(--md-sys-spacing-4);">
+                        <div class="card-title">
+                            <span class="material-symbols-rounded">fact_check</span>
+                            Status
+                        </div>
+                        <div id="article-validation-status" style="color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-body-medium);">
+                            <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--miku-teal);">check_circle</span>
+                            Struktur valid - Siap generate prompt
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1707,56 +2498,91 @@
     </div>
 
     <script>
-        // [ALL ORIGINAL JAVASCRIPT CODE REMAINS EXACTLY THE SAME]
+
+        // Global variables for JSON Builder
         let treeData = [];
         let draggedNode = null;
         let draggedPath = null;
 
-        // Article Generator Examples
-        const articleExamples = {
-            general: {
-                role: "Jurnalis senior dengan pengalaman 10 tahun di media nasional",
-                style: "formal",
-                audience: "Masyarakat umum, pembaca berusia 25-50 tahun",
-                wordLimit: "800",
-                task: "Tulis artikel berita tentang peluncuran teknologi renewable energy terbaru di Indonesia. Sertakan dampak ekonomi dan lingkungan, serta wawancara singkat dengan ahli energi.",
-                specs: "Gunakan fakta terkini dari tahun 2024, sertakan data statistik, hindari opini pribadi, gunakan struktur piramida terbalik."
-            },
-            blog: {
-                role: "Content writer profesional spesialis lifestyle dan wellness",
-                style: "casual",
-                audience: "Millennial dan Gen Z, pengguna aktif media sosial",
-                wordLimit: "1200",
-                task: "Buat blog post tentang '5 Morning Routine yang Bikin Hari Lebih Produktif'. Sertakan tips praktis, personal anecdote, dan rekomendasi tools/apps yang berguna.",
-                specs: "Gunakan tone friendly dan conversational, tambahkan emoji strategis, sertakan CTA di akhir, optimize untuk SEO dengan keyword 'morning routine' dan 'produktivitas'."
-            },
-            coding: {
-                role: "Senior Software Engineer dan technical writer",
-                style: "professional",
-                audience: "Developer pemula hingga menengah, programmer self-taught",
-                wordLimit: "1500",
-                task: "Buat tutorial lengkap tentang 'Membangun REST API dengan Node.js dan Express'. Jelaskan dari setup environment, routing, middleware, error handling, hingga deployment.",
-                specs: "Sertakan code snippet yang syntax-highlighted, penjelasan step-by-step, best practices, common pitfalls, dan contoh repository GitHub. Gunakan bahasa Indonesia dengan terminologi teknis dalam bahasa Inggris."
-            },
-            storytelling: {
-                role: "Penulis fiksi kreatif yang telah menerbitkan 3 novel thriller",
-                style: "creative",
-                audience: "Pecinta genre thriller psikologis, pembaca aktif Wattpad dan novel online",
-                wordLimit: "2000",
-                task: "Tulis cerita pendek thriller dengan setting di stasiun kereta api tua yang angker pada tengah malam. Karakter utama adalah seorang arsitek yang terjebak di sana karena kecelakaan tak terduga. Akhiri dengan plot twist yang tak terduga.",
-                specs: "Gunakan teknik show don't tell, bangun atmosfer tension secara gradual, deskripsikan setting dengan detail sensorial, dialog harus natural dan mengungkapkan karakter."
-            },
-            email: {
-                role: "Email marketing specialist dengan conversion rate tinggi",
-                style: "persuasive",
-                audience: "Customer existing dan potential leads, usia 25-45 tahun",
-                wordLimit: "300",
-                task: "Buat email marketing untuk launching produk skincare baru 'Glow Serum'. Fokus pada benefit anti-aging dan natural ingredients. Tujuan utama adalah mendrive traffic ke landing page dan meningkatkan pre-order.",
-                specs: "Gunakan subject line yang catchy (max 50 karakter), personalisasi dengan nama recipient, struktur: hook -> problem -> solution -> CTA, tambahkan urgency (limited time offer), A/B test ready."
-            }
+        // Global variables for Article Generator Field Editor
+        let articleFields = [];
+        let draggedArticleField = null;
+        let draggedArticlePath = null;
+
+        // Article Presets
+        const articlePresets = {
+            empty: [],
+            
+            general: [
+                { id: 'af_1', key: 'topic', value: 'general', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Jurnalis senior dengan pengalaman 10 tahun', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'formal', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Masyarakat umum, pembaca 25-50 tahun', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 800, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Tulis artikel berita tentang peluncuran teknologi renewable energy terbaru di Indonesia', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'technical_specs', value: 'Gunakan fakta terkini, sertakan data statistik, hindari opini pribadi', type: 'string', expanded: true, children: [] }
+            ],
+            
+            blog: [
+                { id: 'af_1', key: 'topic', value: 'blog', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Content writer profesional spesialis lifestyle', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'casual', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Millennial dan Gen Z, pengguna aktif media sosial', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 1200, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Buat blog post tentang 5 Morning Routine yang Bikin Hari Lebih Produktif', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'seo_keywords', value: 'morning routine, produktivitas, habits', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'technical_specs', value: 'Gunakan tone friendly, tambahkan emoji strategis, sertakan CTA di akhir', type: 'string', expanded: true, children: [] }
+            ],
+            
+            coding: [
+                { id: 'af_1', key: 'topic', value: 'coding', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Senior Software Engineer dan technical writer', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'professional', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Developer pemula hingga menengah', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 1500, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Buat tutorial lengkap Membangun REST API dengan Node.js dan Express', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'code_requirements', value: 'Sertakan code snippet, penjelasan step-by-step, best practices', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'technical_specs', value: 'Gunakan bahasa Indonesia dengan terminologi teknis dalam bahasa Inggris', type: 'string', expanded: true, children: [] }
+            ],
+            
+            storytelling: [
+                { id: 'af_1', key: 'topic', value: 'storytelling', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Penulis fiksi kreatif yang telah menerbitkan 3 novel thriller', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'creative', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Pecinta genre thriller psikologis', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 2000, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Tulis cerita pendek thriller dengan setting di stasiun kereta api tua yang angker', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'character', value: 'Alex Mercer, mantan detektif yang kehilangan ingatan', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'plot_twist', value: 'Ending dengan twist yang tak terduga', type: 'string', expanded: true, children: [] },
+                { id: 'af_9', key: 'technical_specs', value: 'Gunakan teknik show dont tell, deskripsikan setting dengan detail sensorial', type: 'string', expanded: true, children: [] }
+            ],
+            
+            email: [
+                { id: 'af_1', key: 'topic', value: 'email', type: 'string', expanded: true, children: [] },
+                { id: 'af_2', key: 'ai_role', value: 'Email marketing specialist dengan conversion rate tinggi', type: 'string', expanded: true, children: [] },
+                { id: 'af_3', key: 'language_style', value: 'persuasive', type: 'string', expanded: true, children: [] },
+                { id: 'af_4', key: 'target_audience', value: 'Customer existing dan potential leads, usia 25-45 tahun', type: 'string', expanded: true, children: [] },
+                { id: 'af_5', key: 'word_limit', value: 300, type: 'number', expanded: true, children: [] },
+                { id: 'af_6', key: 'main_task', value: 'Buat email marketing untuk launching produk skincare baru Glow Serum', type: 'string', expanded: true, children: [] },
+                { id: 'af_7', key: 'cta_goal', value: 'Drive traffic ke landing page dan tingkatkan pre-order', type: 'string', expanded: true, children: [] },
+                { id: 'af_8', key: 'urgency', value: 'Limited time offer - 48 jam', type: 'string', expanded: true, children: [] },
+                { id: 'af_9', key: 'technical_specs', value: 'Subject line catchy max 50 karakter, personalisasi dengan nama recipient', type: 'string', expanded: true, children: [] }
+            ]
         };
 
-        // TEMPLATE Lite - Image to Text (struktur sederhana)
+        // Preset field definitions
+        const presetFieldDefinitions = {
+            topic: { key: 'topic', value: 'general', type: 'string' },
+            role: { key: 'ai_role', value: '', type: 'string' },
+            style: { key: 'language_style', value: 'formal', type: 'string' },
+            audience: { key: 'target_audience', value: '', type: 'string' },
+            task: { key: 'main_task', value: '', type: 'string' },
+            word_count: { key: 'word_limit', value: 1000, type: 'number' },
+            format: { key: 'output_format', value: 'narrative', type: 'string' },
+            custom: { key: 'custom_field', value: '', type: 'string' }
+        };
+
+        // TEMPLATE definitions
         const templates = {
             empty: [],
             
@@ -1771,7 +2597,7 @@
                 },
                 {
                     id: 'root_2',
-                    key: 'taks',
+                    key: 'task',
                     value: 'membuat prompt lengkap berdasarkan referensi gambar dengan lengkap',
                     type: 'string',
                     expanded: true,
@@ -1792,8 +2618,8 @@
                             expanded: true,
                             children: [
                                 { id: 'child_1_1_1', key: 'Rasio', value: '9:16', type: 'string', expanded: true, children: [] },
-                                { id: 'child_1_1_2', key: 'Art Style', value: 'Photo Realistic', type: 'string', expanded: true, children: [] },
-                                { id: 'child_1_1_3', key: 'Photo Shot', value: 'Full Body', type: 'string', expanded: true, children: [] }
+                                { id: 'child_1_1_2', key: 'Art_Style', value: 'Photo Realistic', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_1_3', key: 'Photo_Shot', value: 'Full Body', type: 'string', expanded: true, children: [] }
                             ]
                         },
                         {
@@ -1803,16 +2629,15 @@
                             type: 'object',
                             expanded: true,
                             children: [
-                                { id: 'child_1_2_1', key: 'Teks', value: 'maks 80 kata', type: 'string', expanded: true, children: [] },
-                                { id: 'child_1_2_2', key: 'bahasa', value: 'inggris', type: 'string', expanded: true, children: [] },
-                                { id: 'child_1_2_3', key: 'NB', value: 'hindari prompt ambigu', type: 'string', expanded: true, children: [] }
+                                { id: 'child_1_2_1', key: 'word_limit', value: 'maks 80 kata', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_2_2', key: 'language', value: 'inggris', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_2_3', key: 'Note', value: 'hindari prompt ambigu', type: 'string', expanded: true, children: [] }
                             ]
                         }
                     ]
                 }
             ],
 
-            // TEMPLATE Pro - Image Prompt (struktur lengkap 8 kategori)
             image_prompt: [
                 {
                     id: 'root_1',
@@ -1824,7 +2649,7 @@
                 },
                 {
                     id: 'root_2',
-                    key: 'taks',
+                    key: 'task',
                     value: 'membuat prompt lengkap berdasarkan referensi gambar dengan lengkap',
                     type: 'string',
                     expanded: true,
@@ -1839,7 +2664,7 @@
                     children: [
                         {
                             id: 'child_1',
-                            key: 'Main Subject',
+                            key: 'Main_Subject',
                             value: '',
                             type: 'object',
                             expanded: true,
@@ -1848,23 +2673,23 @@
                                 { id: 'child_1_2', key: 'Gender', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_1_3', key: 'Age', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_1_4', key: 'Ethnicity', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_1_5', key: 'Body Type', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_1_6', key: 'Skin Color', value: '', type: 'string', expanded: true, children: [] }
+                                { id: 'child_1_5', key: 'Body_Type', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_1_6', key: 'Skin_Color', value: '', type: 'string', expanded: true, children: [] }
                             ]
                         },
                         {
                             id: 'child_2',
-                            key: 'Facial Features',
+                            key: 'Facial_Features',
                             value: '',
                             type: 'object',
                             expanded: true,
                             children: [
-                                { id: 'child_2_1', key: 'Face Shape', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_2_2', key: 'Eye Color', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_2_3', key: 'Hair Color', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_2_4', key: 'Hair Length', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_1', key: 'Face_Shape', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_2', key: 'Eye_Color', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_3', key: 'Hair_Color', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_2_4', key: 'Hair_Length', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_2_5', key: 'Hairstyle', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_2_6', key: 'Facial Expression', value: '', type: 'string', expanded: true, children: [] }
+                                { id: 'child_2_6', key: 'Facial_Expression', value: '', type: 'string', expanded: true, children: [] }
                             ]
                         },
                         {
@@ -1874,9 +2699,9 @@
                             type: 'object',
                             expanded: true,
                             children: [
-                                { id: 'child_3_1', key: 'Main Clothing Type', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_3_2', key: 'Top and bottom clothes', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_3_3', key: 'Clothing Details', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_1', key: 'Main_Clothing_Type', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_2', key: 'Top_and_bottom_clothes', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_3_3', key: 'Clothing_Details', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_3_4', key: 'Accessories', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_3_5', key: 'Footwear', value: '', type: 'string', expanded: true, children: [] }
                             ]
@@ -1888,8 +2713,8 @@
                             type: 'object',
                             expanded: true,
                             children: [
-                                { id: 'child_4_1', key: 'Pose Style', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_4_2', key: 'Movement Details', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_4_1', key: 'Pose_Style', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_4_2', key: 'Movement_Details', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_4_3', key: 'Eye Gaze Direction', value: '', type: 'string', expanded: true, children: [] }
                             ]
                         },
@@ -1900,21 +2725,21 @@
                             type: 'object',
                             expanded: true,
                             children: [
-                                { id: 'child_5_1', key: 'Location Setting', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_5_2', key: 'Background Description', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_5_3', key: 'Supporting Objects', value: '', type: 'string', expanded: true, children: [] }
+                                { id: 'child_5_1', key: 'Location_Setting', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_5_2', key: 'Background_Description', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_5_3', key: 'Supporting_Objects', value: '', type: 'string', expanded: true, children: [] }
                             ]
                         },
                         {
                             id: 'child_6',
-                            key: 'Visual Technique',
+                            key: 'Visual_Technique',
                             value: '',
                             type: 'object',
                             expanded: true,
                             children: [
-                                { id: 'child_6_1', key: 'Art/Photo Style', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_1', key: 'Art_Style', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_6_2', key: 'Lighting', value: '', type: 'string', expanded: true, children: [] },
-                                { id: 'child_6_3', key: 'Visual Technique', value: '', type: 'string', expanded: true, children: [] },
+                                { id: 'child_6_3', key: 'Visual_Technique', value: '', type: 'string', expanded: true, children: [] },
                                 { id: 'child_6_4', key: 'Mood', value: '', type: 'string', expanded: true, children: [] }
                             ]
                         },
@@ -1932,7 +2757,7 @@
                         },
                         {
                             id: 'child_8',
-                            key: 'Negative Prompt',
+                            key: 'Negative_Prompt',
                             value: '',
                             type: 'string',
                             expanded: true,
@@ -1946,13 +2771,171 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderTree();
             updateOutput();
-            updateTopicExample();
+            renderArticleFields();
+            updateArticleOutput();
         });
 
         function generateId() {
             return 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
+        function generateArticleFieldId() {
+            return 'af_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // ==================== IMPORT JSON FROM CLIPBOARD FUNCTIONS ====================
+        
+        // Import JSON from clipboard
+        async function importFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('importJsonTextarea').value = text;
+                processImportJSON(text);
+            } catch (err) {
+                showImportStatus('Tidak dapat mengakses clipboard. Silakan paste manual.', 'error');
+                showSnackbar('Clipboard access denied');
+            }
+        }
+
+        // Import from textarea
+        function importFromTextarea() {
+            const text = document.getElementById('importJsonTextarea').value.trim();
+            if (!text) {
+                showImportStatus('Textarea kosong! Silakan paste JSON terlebih dahulu.', 'error');
+                return;
+            }
+            processImportJSON(text);
+        }
+
+        // Clear import textarea
+        function clearImportTextarea() {
+            document.getElementById('importJsonTextarea').value = '';
+            document.getElementById('importStatus').innerHTML = '';
+            showSnackbar('Textarea dibersihkan');
+        }
+
+        // Show import status
+        function showImportStatus(message, type) {
+            const statusDiv = document.getElementById('importStatus');
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            const statusClass = type === 'success' ? 'status-success' : 'status-error';
+            
+            statusDiv.innerHTML = `
+                <span class="status-indicator ${statusClass}">
+                    <span class="material-symbols-rounded" style="font-size: 18px;">${icon}</span>
+                    ${message}
+                </span>
+            `;
+            
+            // Clear status after 5 seconds
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Process and convert JSON to tree structure
+        function processImportJSON(jsonString) {
+            try {
+                const parsed = JSON.parse(jsonString);
+                
+                // Convert parsed JSON to tree structure
+                treeData = convertObjectToTree(parsed);
+                
+                renderTree();
+                updateOutput();
+                
+                showImportStatus(`Berhasil import ${countAllNodes(treeData)} node!`, 'success');
+                showSnackbar('JSON berhasil diimport!');
+            } catch (e) {
+                showImportStatus('Error: ' + e.message, 'error');
+                showSnackbar('JSON tidak valid!');
+            }
+        }
+
+        // Convert object/array to tree nodes
+        function convertObjectToTree(obj, key = '') {
+            const nodes = [];
+            
+            if (Array.isArray(obj)) {
+                obj.forEach((item, index) => {
+                    const node = createNodeFromValue(item, String(index));
+                    nodes.push(node);
+                });
+            } else if (obj !== null && typeof obj === 'object') {
+                Object.keys(obj).forEach(k => {
+                    const node = createNodeFromValue(obj[k], k);
+                    nodes.push(node);
+                });
+            } else {
+                // Primitive value at root level
+                nodes.push({
+                    id: generateId(),
+                    key: key || 'value',
+                    value: String(obj),
+                    type: getValueType(obj),
+                    expanded: true,
+                    children: []
+                });
+            }
+            
+            return nodes;
+        }
+
+        // Create a node from a value
+        function createNodeFromValue(value, key) {
+            const type = getValueType(value);
+            const node = {
+                id: generateId(),
+                key: key,
+                value: '',
+                type: type,
+                expanded: true,
+                children: []
+            };
+            
+            if (type === 'object' && value !== null) {
+                Object.keys(value).forEach(k => {
+                    node.children.push(createNodeFromValue(value[k], k));
+                });
+            } else if (type === 'array') {
+                value.forEach((item, index) => {
+                    node.children.push(createNodeFromValue(item, String(index)));
+                });
+            } else {
+                node.value = value === null ? 'null' : String(value);
+            }
+            
+            return node;
+        }
+
+        // Get value type
+        function getValueType(value) {
+            if (value === null) return 'null';
+            if (Array.isArray(value)) return 'array';
+            if (typeof value === 'object') return 'object';
+            if (typeof value === 'number') return 'number';
+            if (typeof value === 'boolean') return 'boolean';
+            return 'string';
+        }
+
+        // Copy current JSON to clipboard for re-import
+        function copyToClipboardForImport() {
+            const json = JSON.stringify(generateJSON(), null, 2);
+            navigator.clipboard.writeText(json).then(() => {
+                showSnackbar('JSON disalin! Paste di textarea import untuk edit');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = json;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('JSON disalin! Paste di textarea import untuk edit');
+            });
+        }
+
+        // ==================== JSON BUILDER FUNCTIONS ====================
+        
         function getNodeByPath(pathArray) {
             let current = treeData;
             let parent = null;
@@ -1976,7 +2959,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon material-symbols-rounded">account_tree</div>
-                        <p>Belum ada data. Klik "Tambah Root Field" untuk memulai.</p>
+                        <p>Belum ada data. Klik "Tambah Root" untuk memulai<br>atau Import JSON dari clipboard!</p>
                     </div>
                 `;
                 updateNodeCount();
@@ -2400,7 +3383,7 @@
             }
             treeData.forEach(updateIds);
             
-            document.querySelectorAll('.chip').forEach(chip => {
+            document.querySelectorAll('#json-tool .chip').forEach(chip => {
                 chip.classList.remove('active');
             });
             event.target.classList.add('active');
@@ -2408,7 +3391,6 @@
             renderTree();
             updateOutput();
             
-            // Show notification about loaded template
             const templateNames = {
                 'empty': 'Empty',
                 'image_to_text': 'Image to Text (Lite)',
@@ -2491,7 +3473,7 @@
                 const json = generateJSON();
                 JSON.stringify(json);
                 document.getElementById('validationStatus').innerHTML = `
-                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-primary);">check_circle</span>
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--miku-teal);">check_circle</span>
                     Struktur valid
                 `;
                 return true;
@@ -2525,7 +3507,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'config.json';
+            a.download = 'miku-config.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -2537,6 +3519,725 @@
             document.getElementById('nodeCount').textContent = countAllNodes(treeData);
         }
 
+        // ==================== ARTICLE GENERATOR FUNCTIONS ====================
+        
+        function getArticleFieldByPath(pathArray) {
+            let current = articleFields;
+            let parent = null;
+            
+            for (let i = 0; i < pathArray.length; i++) {
+                parent = current;
+                current = current[pathArray[i]];
+                if (!current) return null;
+                if (i < pathArray.length - 1 && current.children) {
+                    current = current.children;
+                }
+            }
+            
+            return { node: current, parent: parent, isRoot: pathArray.length === 1 };
+        }
+
+        function renderArticleFields() {
+            const container = document.getElementById('articleFieldContainer');
+            
+            if (articleFields.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon material-symbols-rounded">edit_note</div>
+                        <p>Belum ada field. Klik "Tambah Field" atau pilih preset untuk memulai.</p>
+                    </div>
+                `;
+                updateArticleFieldCount();
+                return;
+            }
+
+            container.innerHTML = renderArticleFieldNodes(articleFields, 0, []);
+            attachArticleFieldDragHandlers();
+            updateArticleFieldCount();
+        }
+
+        function renderArticleFieldNodes(nodes, depth, parentPath) {
+            if (!nodes || nodes.length === 0) return '';
+
+            return nodes.map((node, index) => {
+                const hasChildren = node.children && node.children.length > 0;
+                const isExpandable = node.type === 'object' || node.type === 'array';
+                const currentPath = [...parentPath, index];
+                const pathString = currentPath.join('-');
+                
+                let indentHtml = '';
+                for (let i = 0; i < depth; i++) {
+                    const isLast = i === depth - 1;
+                    indentHtml += `<div class="field-line ${isLast ? 'last' : ''}"></div>`;
+                }
+
+                const icon = node.type === 'object' ? 'data_object' : 
+                           node.type === 'array' ? 'data_array' : 'text_fields';
+                
+                const iconClass = node.type === 'object' ? 'field-icon object' : 
+                                node.type === 'array' ? 'field-icon array' : 'field-icon';
+
+                const showToggle = isExpandable;
+                const toggleClass = node.expanded ? 'expanded' : '';
+                const childrenClass = node.expanded ? '' : 'collapsed';
+
+                return `
+                    <div class="article-field-node" data-path="${pathString}" data-id="${node.id}">
+                        <div class="article-field-content" draggable="true" data-path="${pathString}">
+                            <div class="field-indent">
+                                ${indentHtml}
+                                ${showToggle ? `
+                                    <div class="field-toggle ${toggleClass} ${hasChildren ? '' : 'leaf'}" onclick="toggleArticleField('${pathString}')">
+                                        <span class="material-symbols-rounded" style="font-size: 16px;">chevron_right</span>
+                                    </div>
+                                ` : '<div class="field-toggle leaf"></div>'}
+                            </div>
+                            
+                            <div class="field-drag-handle" title="Drag untuk mengurutkan">
+                                <span class="material-symbols-rounded" style="font-size: 18px;">drag_indicator</span>
+                            </div>
+
+                            <span class="material-symbols-rounded ${iconClass}">${icon}</span>
+
+                            <div class="field-inputs">
+                                <input type="text" class="field-key-input" placeholder="Key" value="${escapeHtml(node.key)}" 
+                                    oninput="updateArticleField('${pathString}', 'key', this.value)"
+                                    onkeydown="handleArticleFieldInputKey(event, '${pathString}', 'key')">
+                                
+                                <input type="text" class="field-value-input ${isExpandable ? 'object-mode' : ''}" 
+                                    placeholder="Value" value="${escapeHtml(node.value)}" 
+                                    oninput="updateArticleField('${pathString}', 'value', this.value)"
+                                    onkeydown="handleArticleFieldInputKey(event, '${pathString}', 'value')"
+                                    ${isExpandable ? 'disabled title="Object/Array memiliki children"' : ''}>
+                                
+                                <select class="field-type-select" onchange="updateArticleField('${pathString}', 'type', this.value)">
+                                    <option value="string" ${node.type === 'string' ? 'selected' : ''}>String</option>
+                                    <option value="number" ${node.type === 'number' ? 'selected' : ''}>Number</option>
+                                    <option value="boolean" ${node.type === 'boolean' ? 'selected' : ''}>Boolean</option>
+                                    <option value="object" ${node.type === 'object' ? 'selected' : ''}>Object</option>
+                                    <option value="array" ${node.type === 'array' ? 'selected' : ''}>Array</option>
+                                    <option value="null" ${node.type === 'null' ? 'selected' : ''}>Null</option>
+                                </select>
+                            </div>
+
+                            <div class="field-actions">
+                                ${isExpandable ? `
+                                    <button class="icon-btn add-child" onclick="addArticleChildField('${pathString}')" title="Tambah child">
+                                        <span class="material-symbols-rounded">add</span>
+                                    </button>
+                                ` : ''}
+                                <button class="icon-btn copy" onclick="duplicateArticleField('${pathString}')" title="Duplikat">
+                                    <span class="material-symbols-rounded">content_copy</span>
+                                </button>
+                                <button class="icon-btn delete" onclick="deleteArticleField('${pathString}')" title="Hapus">
+                                    <span class="material-symbols-rounded">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        ${hasChildren ? `
+                            <div class="field-children ${childrenClass}">
+                                ${renderArticleFieldNodes(node.children, depth + 1, currentPath)}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleArticleFieldInputKey(event, path, field) {
+            if (event.key === 'Enter') {
+                event.target.blur();
+            }
+        }
+
+        function attachArticleFieldDragHandlers() {
+            const items = document.querySelectorAll('.article-field-content');
+            items.forEach(item => {
+                item.addEventListener('dragstart', handleArticleFieldDragStart);
+                item.addEventListener('dragend', handleArticleFieldDragEnd);
+                item.addEventListener('dragover', handleArticleFieldDragOver);
+                item.addEventListener('drop', handleArticleFieldDrop);
+                item.addEventListener('dragenter', handleArticleFieldDragEnter);
+                item.addEventListener('dragleave', handleArticleFieldDragLeave);
+            });
+        }
+
+        function handleArticleFieldDragStart(e) {
+            draggedArticleField = this;
+            draggedArticlePath = this.dataset.path;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedArticlePath);
+        }
+
+        function handleArticleFieldDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.article-field-content').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+            draggedArticleField = null;
+            draggedArticlePath = null;
+        }
+
+        function handleArticleFieldDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleArticleFieldDragEnter(e) {
+            if (this !== draggedArticleField) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleArticleFieldDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleArticleFieldDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (draggedArticleField !== this) {
+                const sourcePath = draggedArticlePath.split('-').map(Number);
+                const targetPath = this.dataset.path.split('-').map(Number);
+                
+                const sourceResult = getArticleFieldByPath(sourcePath);
+                if (!sourceResult) return;
+                
+                const sourceNode = sourceResult.node;
+                
+                if (sourceResult.isRoot) {
+                    articleFields.splice(sourcePath[0], 1);
+                } else {
+                    const parentPath = sourcePath.slice(0, -1);
+                    const parentResult = getArticleFieldByPath(parentPath);
+                    if (parentResult && parentResult.node.children) {
+                        parentResult.node.children.splice(sourcePath[sourcePath.length - 1], 1);
+                    }
+                }
+                
+                if (targetPath.length === 1) {
+                    articleFields.splice(targetPath[0], 0, sourceNode);
+                } else {
+                    const targetParentPath = targetPath.slice(0, -1);
+                    const targetParentResult = getArticleFieldByPath(targetParentPath);
+                    if (targetParentResult && targetParentResult.node.children) {
+                        targetParentResult.node.children.splice(targetPath[targetPath.length - 1], 0, sourceNode);
+                    }
+                }
+                
+                renderArticleFields();
+                updateArticleOutput();
+                showSnackbar('Field dipindahkan');
+            }
+            
+            return false;
+        }
+
+        function toggleArticleField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            if (result && result.node) {
+                result.node.expanded = !result.node.expanded;
+                renderArticleFields();
+            }
+        }
+
+        function updateArticleField(pathString, property, value) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) {
+                console.error('Field not found at path:', path);
+                return;
+            }
+            
+            const node = result.node;
+            
+            if (property === 'type') {
+                const oldType = node.type;
+                node.type = value;
+                
+                if ((value === 'object' || value === 'array') && !node.children) {
+                    node.children = [];
+                    node.expanded = true;
+                }
+                
+                if ((oldType === 'object' || oldType === 'array') && 
+                    (value !== 'object' && value !== 'array')) {
+                    node.children = [];
+                    node.value = '';
+                }
+                
+                renderArticleFields();
+            } else {
+                node[property] = value;
+            }
+            
+            updateArticleOutput();
+        }
+
+        function addArticleRootField() {
+            const newNode = {
+                id: generateArticleFieldId(),
+                key: '',
+                value: '',
+                type: 'string',
+                expanded: true,
+                children: []
+            };
+            articleFields.push(newNode);
+            renderArticleFields();
+            updateArticleOutput();
+            
+            setTimeout(() => {
+                const inputs = document.querySelectorAll('.field-key-input');
+                if (inputs.length > 0) {
+                    inputs[inputs.length - 1].focus();
+                }
+            }, 100);
+        }
+
+        function addArticleChildField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            const node = result.node;
+            
+            if (!node.children) {
+                node.children = [];
+            }
+            
+            const newChild = {
+                id: generateArticleFieldId(),
+                key: '',
+                value: '',
+                type: 'string',
+                expanded: true,
+                children: []
+            };
+            
+            node.children.push(newChild);
+            node.expanded = true;
+            renderArticleFields();
+            updateArticleOutput();
+        }
+
+        function duplicateArticleField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            const node = result.node;
+            const clonedNode = JSON.parse(JSON.stringify(node));
+            
+            function updateIds(n) {
+                n.id = generateArticleFieldId();
+                if (n.children) {
+                    n.children.forEach(updateIds);
+                }
+            }
+            updateIds(clonedNode);
+            
+            if (result.isRoot) {
+                articleFields.splice(path[0] + 1, 0, clonedNode);
+            } else {
+                const parentPath = path.slice(0, -1);
+                const parentResult = getArticleFieldByPath(parentPath);
+                if (parentResult && parentResult.node.children) {
+                    parentResult.node.children.splice(path[path.length - 1] + 1, 0, clonedNode);
+                }
+            }
+            
+            renderArticleFields();
+            updateArticleOutput();
+        }
+
+        function deleteArticleField(pathString) {
+            const path = pathString.split('-').map(Number);
+            const result = getArticleFieldByPath(path);
+            
+            if (!result || !result.node) return;
+            
+            showDialog(
+                'Hapus Field?',
+                'Anda yakin ingin menghapus field ini dan semua children-nya?',
+                () => {
+                    if (result.isRoot) {
+                        articleFields.splice(path[0], 1);
+                    } else {
+                        const parentPath = path.slice(0, -1);
+                        const parentResult = getArticleFieldByPath(parentPath);
+                        if (parentResult && parentResult.node.children) {
+                            parentResult.node.children.splice(path[path.length - 1], 1);
+                        }
+                    }
+                    renderArticleFields();
+                    updateArticleOutput();
+                }
+            );
+        }
+
+        function expandAllArticleFields() {
+            function expand(node) {
+                node.expanded = true;
+                if (node.children) {
+                    node.children.forEach(expand);
+                }
+            }
+            articleFields.forEach(expand);
+            renderArticleFields();
+        }
+
+        function collapseAllArticleFields() {
+            function collapse(node) {
+                node.expanded = false;
+                if (node.children) {
+                    node.children.forEach(collapse);
+                }
+            }
+            articleFields.forEach(collapse);
+            renderArticleFields();
+        }
+
+        function clearAllArticleFields() {
+            if (articleFields.length === 0) return;
+            
+            showDialog(
+                'Hapus Semua Field?',
+                `Anda yakin ingin menghapus ${countAllArticleFields(articleFields)} field?`,
+                () => {
+                    articleFields = [];
+                    renderArticleFields();
+                    updateArticleOutput();
+                    document.getElementById('generated-prompt-area').textContent = 'Prompt akan muncul di sini setelah klik "Generate"';
+                }
+            );
+        }
+
+        function countAllArticleFields(nodes) {
+            let count = nodes.length;
+            nodes.forEach(node => {
+                if (node.children) {
+                    count += countAllArticleFields(node.children);
+                }
+            });
+            return count;
+        }
+
+        function updateArticleFieldCount() {
+            document.getElementById('articleFieldCount').textContent = countAllArticleFields(articleFields);
+        }
+
+        function addPresetField(presetType) {
+            const preset = presetFieldDefinitions[presetType];
+            const newNode = {
+                id: generateArticleFieldId(),
+                key: preset.key,
+                value: preset.value,
+                type: preset.type,
+                expanded: true,
+                children: []
+            };
+            articleFields.push(newNode);
+            renderArticleFields();
+            updateArticleOutput();
+            showSnackbar(`Field "${preset.key}" ditambahkan`);
+        }
+
+        function switchFieldTab(tab) {
+            document.querySelectorAll('.field-editor-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.field-editor-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        function loadArticlePreset(presetName) {
+            if (articleFields.length > 0) {
+                showDialog(
+                    'Load Preset',
+                    'Field yang ada akan digantikan. Lanjutkan?',
+                    () => {
+                        applyArticlePreset(presetName);
+                    }
+                );
+            } else {
+                applyArticlePreset(presetName);
+            }
+        }
+
+        function applyArticlePreset(presetName) {
+            articleFields = JSON.parse(JSON.stringify(articlePresets[presetName]));
+            
+            function updateIds(node) {
+                node.id = generateArticleFieldId();
+                if (node.children) {
+                    node.children.forEach(updateIds);
+                }
+            }
+            articleFields.forEach(updateIds);
+            
+            document.querySelectorAll('#presets-tab .chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderArticleFields();
+            updateArticleOutput();
+            
+            const presetNames = {
+                'empty': 'Empty',
+                'general': 'Umum',
+                'blog': 'Blog Post',
+                'coding': 'Coding',
+                'storytelling': 'Storytelling',
+                'email': 'Email Marketing'
+            };
+            showSnackbar(`Preset "${presetNames[presetName]}" dimuat`);
+            
+            // Switch back to fields tab
+            document.querySelectorAll('.field-editor-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.field-editor-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('.field-editor-tab:first-child').classList.add('active');
+            document.getElementById('fields-tab').classList.add('active');
+        }
+
+        function generateArticleJSON() {
+            function convertNode(node) {
+                let value;
+                
+                switch(node.type) {
+                    case 'number':
+                        value = parseFloat(node.value) || 0;
+                        break;
+                    case 'boolean':
+                        value = node.value.toLowerCase() === 'true' || node.value === true || node.value === '1';
+                        break;
+                    case 'null':
+                        value = null;
+                        break;
+                    case 'object':
+                        value = {};
+                        if (node.children) {
+                            node.children.forEach(child => {
+                                value[child.key] = convertNode(child);
+                            });
+                        }
+                        break;
+                    case 'array':
+                        value = [];
+                        if (node.children) {
+                            node.children.forEach(child => {
+                                value.push(convertNode(child));
+                            });
+                        }
+                        break;
+                    default:
+                        value = node.value;
+                }
+                
+                return value;
+            }
+
+            const result = {};
+            articleFields.forEach(node => {
+                result[node.key] = convertNode(node);
+            });
+            
+            return result;
+        }
+
+        function updateArticleOutput() {
+            const json = generateArticleJSON();
+            const jsonString = JSON.stringify(json, null, 2);
+            
+            const highlighted = jsonString
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, (match) => {
+                    let cls = 'json-string';
+                    if (/:\s*$/.test(match)) {
+                        cls = 'json-key';
+                        return `<span class="${cls}">${match}</span>`;
+                    }
+                    return `<span class="${cls}">${match}</span>`;
+                })
+                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
+            
+            document.getElementById('article-json-code').innerHTML = highlighted;
+            validateArticleJSON();
+        }
+
+        function validateArticleJSON() {
+            try {
+                const json = generateArticleJSON();
+                JSON.stringify(json);
+                document.getElementById('article-validation-status').innerHTML = `
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--miku-teal);">check_circle</span>
+                    Struktur valid - Siap generate prompt
+                `;
+                return true;
+            } catch(e) {
+                document.getElementById('article-validation-status').innerHTML = `
+                    <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 8px; color: var(--md-sys-color-error);">error</span>
+                    Error: ${e.message}
+                `;
+                return false;
+            }
+        }
+
+        function generateFromFields() {
+            const json = generateArticleJSON();
+            
+            if (Object.keys(json).length === 0) {
+                showSnackbar('Tidak ada field untuk digenerate!');
+                return;
+            }
+
+            const styleLabels = {
+                'formal': 'formal dan profesional',
+                'casual': 'santai dan mudah dipahami',
+                'professional': 'profesional dengan data akurat',
+                'creative': 'kreatif dan imajinatif',
+                'academic': 'akademis dengan referensi',
+                'persuasive': 'persuasif dan konversi',
+                'humorous': 'humoris dan menghibur'
+            };
+
+            const topicLabels = {
+                'general': 'Artikel/Berita Umum',
+                'blog': 'Blog Post',
+                'coding': 'Tutorial/Kode',
+                'storytelling': 'Cerita/Naratif',
+                'email': 'Email Marketing'
+            };
+
+            let prompt = `Anda adalah ${json.ai_role || 'seorang penulis profesional'}. `;
+            
+            if (json.topic && topicLabels[json.topic]) {
+                prompt += `Buatlah ${topicLabels[json.topic]} `;
+            }
+            
+            if (json.language_style && styleLabels[json.language_style]) {
+                prompt += `dengan gaya bahasa ${styleLabels[json.language_style]}. `;
+            }
+            
+            if (json.target_audience) {
+                prompt += `Target audiens Anda adalah ${json.target_audience}. `;
+            }
+
+            prompt += `\n\nTUGAS UTAMA:\n${json.main_task || 'Buat konten sesuai spesifikasi.'}\n\n`;
+
+            if (json.word_limit) {
+                prompt += `PANJANG TEKS: Maksimal ${json.word_limit} kata.\n\n`;
+            }
+
+            if (json.output_format) {
+                prompt += `FORMAT OUTPUT: ${json.output_format}.\n\n`;
+            }
+
+            // Add any additional fields
+            const skipFields = ['topic', 'ai_role', 'language_style', 'target_audience', 'main_task', 'word_limit', 'output_format'];
+            const extraFields = Object.keys(json).filter(key => !skipFields.includes(key));
+            
+            if (extraFields.length > 0) {
+                prompt += `SPESIFIKASI TAMBAHAN:\n`;
+                extraFields.forEach(key => {
+                    prompt += `- ${key}: ${json[key]}\n`;
+                });
+                prompt += `\n`;
+            }
+
+            prompt += `INSTRUKSI PENTING:
+- Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan
+- Hindari pengulangan informasi yang tidak perlu
+- Pastikan konten original dan berkualitas tinggi
+- Gunakan paragraf yang terstruktur dengan baik`;
+
+            document.getElementById('generated-prompt-area').textContent = prompt;
+            showSnackbar('Prompt berhasil digenerate!');
+        }
+
+        function copyArticleOutput() {
+            const codeElement = document.getElementById('article-json-code');
+            const text = codeElement.textContent;
+            
+            if (!text || text === '{}') {
+                showSnackbar('Belum ada hasil untuk disalin!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showSnackbar('JSON disalin ke clipboard!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('JSON disalin ke clipboard!');
+            });
+        }
+
+        function downloadArticleJSON() {
+            const codeElement = document.getElementById('article-json-code');
+            const text = codeElement.textContent;
+            
+            if (!text || text === '{}') {
+                showSnackbar('Belum ada hasil untuk diunduh!');
+                return;
+            }
+            
+            const blob = new Blob([text], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'miku-article-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showSnackbar('File JSON diunduh!');
+        }
+
+        function copyGeneratedPrompt() {
+            const promptArea = document.getElementById('generated-prompt-area');
+            const text = promptArea.textContent;
+            
+            if (!text || text.includes('Prompt akan muncul di sini')) {
+                showSnackbar('Belum ada prompt untuk disalin!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showSnackbar('Prompt disalin ke clipboard!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSnackbar('Prompt disalin ke clipboard!');
+            });
+        }
+
+        // ==================== COMMON FUNCTIONS ====================
+        
         function showSnackbar(message) {
             const snackbar = document.getElementById('snackbar');
             document.getElementById('snackbarText').textContent = message;
@@ -2589,17 +4290,28 @@
 
         function showHelp() {
             showDialog(
-                'Bantuan',
+                'Bantuan - Miku Sakura JSON Builder',
                 `
-                <div style="line-height: 1.8;">
-                    <p><strong>Dua Tools Tersedia:</strong></p>
-                    <p><strong>1. JSON Builder:</strong> Buat dan edit struktur JSON hierarkis dengan drag-drop. Tersedia template Image to Text dan Image Prompt.</p>
-                    <p><strong>2. Article Generator:</strong> Buat prompt optimal untuk AI writer dengan konfigurasi lengkap (topik, peran AI, gaya bahasa, dll).</p>
+                <div style="line-height: 1.9;">
+                    <p><strong style="color: var(--miku-teal);">Dua Tools Tersedia:</strong></p>
+                    <p><strong>1. JSON Builder:</strong> Buat dan edit struktur JSON hierarkis dengan drag-drop.</p>
+                    <p><strong>2. Article Generator:</strong> Buat konfigurasi artikel dengan field editor yang fleksibel.</p>
                     <br>
-                    <p><strong>Shortcut Keyboard:</strong></p>
+                    <p><strong style="color: var(--sakura-pink);">Fitur Baru - Import JSON:</strong></p>
                     <ul style="margin-left: 20px;">
-                        <li>Ctrl+Enter: Tambah root node (JSON Builder)</li>
-                        <li>Ctrl+S: Download JSON (JSON Builder)</li>
+                        <li>Paste JSON dari clipboard ke textarea import</li>
+                        <li>Klik "Import JSON" untuk mengkonversi ke tree editor</li>
+                        <li>Edit struktur dengan mudah dalam visual editor</li>
+                        <li>Copy hasil edit dan paste kembali untuk edit ulang</li>
+                    </ul>
+                    <br>
+                    <p><strong style="color: var(--miku-cyan);">Gaya Tombol Random:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Teal - Gaya Miku klasik</li>
+                        <li>Pink - Gaya Sakura feminin</li>
+                        <li>Cyan - Neon glow effect</li>
+                        <li>Purple - Magic gradient</li>
+                        <li>Rainbow - Animasi shifting warna</li>
                     </ul>
                 </div>
                 `,
@@ -2608,7 +4320,6 @@
             );
         }
 
-        // Tool Switching
         function switchTool(tool) {
             document.querySelectorAll('.tool-nav-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tool-content').forEach(content => content.classList.remove('active'));
@@ -2619,236 +4330,15 @@
             showSnackbar(`Beralih ke ${tool === 'json' ? 'JSON Builder' : 'Article Generator'}`);
         }
 
-        // Article Generator Functions
-        const topicLabels = {
-            'general': 'Umum',
-            'blog': 'Blog Post',
-            'coding': 'Coding',
-            'storytelling': 'Storytelling',
-            'email': 'Email Marketing'
-        };
-
-        function updateTopicExample() {
-            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
-            const example = articleExamples[topic];
-            const container = document.getElementById('topic-example');
-            const contentDiv = document.getElementById('example-content');
-            
-            // Update title
-            container.querySelector('.example-box-title').innerHTML = `
-                <span class="material-symbols-rounded">lightbulb</span>
-                Contoh Konfigurasi: ${topicLabels[topic]}
-            `;
-            
-            // Update content
-            contentDiv.innerHTML = `
-                <div class="example-item">
-                    <span class="example-label">Peran AI:</span> ${example.role}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Gaya Bahasa:</span> ${example.style}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Target Audiens:</span> ${example.audience}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Batas Kata:</span> ${example.wordLimit}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Tugas:</span> ${example.task}
-                </div>
-                <div class="example-item">
-                    <span class="example-label">Spesifikasi:</span> ${example.specs}
-                </div>
-            `;
-        }
-
-        function loadExample() {
-            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
-            const example = articleExamples[topic];
-            
-            document.getElementById('ai-role').value = example.role;
-            document.getElementById('language-style').value = example.style;
-            document.getElementById('target-audience').value = example.audience;
-            document.getElementById('word-limit').value = example.wordLimit;
-            document.getElementById('main-task').value = example.task;
-            document.getElementById('technical-specs').value = example.specs;
-            
-            updateCharCounter();
-            showSnackbar(`Contoh ${topicLabels[topic]} dimuat!`);
-        }
-
-        function updateCharCounter() {
-            const textarea = document.getElementById('main-task');
-            const counter = document.getElementById('task-counter');
-            const length = textarea.value.length;
-            counter.textContent = `${length} karakter`;
-            
-            if (length > 1000) {
-                counter.classList.add('warning');
-            } else {
-                counter.classList.remove('warning');
-            }
-        }
-
-        function generateArticlePrompt() {
-            const topic = document.querySelector('input[name="topic"]:checked')?.value || 'general';
-            const role = document.getElementById('ai-role').value;
-            const style = document.getElementById('language-style').value;
-            const audience = document.getElementById('target-audience').value;
-            const wordLimit = document.getElementById('word-limit').value;
-            const task = document.getElementById('main-task').value;
-            const specs = document.getElementById('technical-specs').value;
-
-            if (!task.trim()) {
-                showSnackbar('Tugas/Instruksi utama wajib diisi!');
-                document.getElementById('main-task').focus();
-                return;
-            }
-
-            const styleLabels = {
-                'formal': 'formal dan profesional',
-                'casual': 'santai dan mudah dipahami',
-                'professional': 'profesional dengan data akurat',
-                'creative': 'kreatif dan imajinatif',
-                'academic': 'akademis dengan referensi',
-                'persuasive': 'persuasif dan konversi',
-                'humorous': 'humoris dan menghibur'
-            };
-
-            // Generate the text prompt
-            let generatedPrompt = `Anda adalah ${role || 'seorang penulis profesional'}. `;
-            generatedPrompt += `Buatlah konten ${topicLabels[topic]} dengan gaya bahasa ${styleLabels[style]}. `;
-            
-            if (audience) {
-                generatedPrompt += `Target audiens Anda adalah ${audience}. `;
-            }
-
-            generatedPrompt += `TUGAS UTAMA:${task}`;
-
-            if (wordLimit) {
-                generatedPrompt += `PANJANG TEKS: Maksimal ${wordLimit} kata.`;
-            }
-
-            generatedPrompt += `SPESIFIKASI TAMBAHAN:${specs || 'Output harus akurat, rapi, dan langsung ke inti tanpa pengantar berlebihan.'}`;
-
-            generatedPrompt += `INSTRUKSI PENTING:
-- Hindari pengulangan informasi yang tidak perlu
-- Pastikan konten original dan berkualitas tinggi
-- Gunakan paragraf yang terstruktur dengan baik`;
-
-            // Create JSON output
-            const jsonOutput = {
-                metadata: {
-                    tool: "article_generator",
-                    version: "1.0",
-                    generated_at: new Date().toISOString()
-                },
-                configuration: {
-                    topic: topic,
-                    topic_label: topicLabels[topic],
-                    ai_role: role,
-                    language_style: style,
-                    language_style_label: styleLabels[style],
-                    target_audience: audience,
-                    word_limit: wordLimit ? parseInt(wordLimit) : null,
-                    main_task: task,
-                    technical_specs: specs
-                },
-                generated_prompt: generatedPrompt,
-                instructions: {
-                    note: "Copy generated_prompt dan gunakan di AI chatbot favorit Anda (ChatGPT, Claude, Gemini, dll)",
-                    usage: "Prompt ini dioptimalkan untuk menghasilkan output sesuai konfigurasi yang ditentukan"
-                }
-            };
-
-            // Display JSON
-            const jsonString = JSON.stringify(jsonOutput, null, 2);
-            const highlighted = jsonString
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, (match) => {
-                    let cls = 'json-string';
-                    if (/:\s*$/.test(match)) {
-                        cls = 'json-key';
-                        return `<span class="${cls}">${match}</span>`;
-                    }
-                    return `<span class="${cls}">${match}</span>`;
-                })
-                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
-                .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
-                .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
-
-            document.getElementById('article-json-code').innerHTML = highlighted;
-            showSnackbar('JSON Prompt berhasil dibuat!');
-        }
-
-        function copyArticleOutput() {
-            const codeElement = document.getElementById('article-json-code');
-            const text = codeElement.textContent;
-            
-            if (!text || text === '{}') {
-                showSnackbar('Belum ada hasil untuk disalin!');
-                return;
-            }
-            
-            navigator.clipboard.writeText(text).then(() => {
-                showSnackbar('JSON disalin ke clipboard!');
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showSnackbar('JSON disalin ke clipboard!');
-            });
-        }
-
-        function downloadArticleJSON() {
-            const codeElement = document.getElementById('article-json-code');
-            const text = codeElement.textContent;
-            
-            if (!text || text === '{}') {
-                showSnackbar('Belum ada hasil untuk diunduh!');
-                return;
-            }
-            
-            const blob = new Blob([text], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'article-prompt.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showSnackbar('File JSON diunduh!');
-        }
-
-        function resetArticleForm() {
-            document.querySelector('input[name="topic"][value="general"]').checked = true;
-            document.getElementById('ai-role').value = '';
-            document.getElementById('language-style').value = 'formal';
-            document.getElementById('target-audience').value = '';
-            document.getElementById('word-limit').value = '';
-            document.getElementById('main-task').value = '';
-            document.getElementById('technical-specs').value = '';
-            document.getElementById('article-json-code').textContent = '{}';
-            document.getElementById('task-counter').textContent = '0 karakter';
-            document.getElementById('task-counter').classList.remove('warning');
-            
-            updateTopicExample();
-            showSnackbar('Form direset!');
-        }
-
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     if (document.getElementById('json-tool').classList.contains('active')) {
                         addRootNode();
+                    } else {
+                        addArticleRootField();
                     }
                 } else if (e.key === 's') {
                     e.preventDefault();
@@ -2857,9 +4347,35 @@
                     } else {
                         downloadArticleJSON();
                     }
+                } else if (e.key === 'v') {
+                    e.preventDefault();
+                    if (document.getElementById('json-tool').classList.contains('active')) {
+                        importFromClipboard();
+                    }
                 }
             }
         });
+
+        // Touch event improvements for mobile drag and drop
+        let touchStartY = 0;
+        let touchStartX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!draggedNode && !draggedArticleField) return;
+            
+            const touchY = e.touches[0].clientY;
+            const touchX = e.touches[0].clientX;
+            
+            // Prevent scrolling while dragging
+            if (Math.abs(touchY - touchStartY) > 10 || Math.abs(touchX - touchStartX) > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
