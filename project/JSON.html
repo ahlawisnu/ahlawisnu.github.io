@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Material JSON Builder - Responsive</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
     <style>
@@ -25,13 +25,10 @@
             --md-sys-color-on-tertiary-container: #31111D;
             
             --md-sys-color-surface: #FFFBFE;
-            --md-sys-color-surface-dim: #DED8E1;
-            --md-sys-color-surface-bright: #FFFBFE;
             --md-sys-color-surface-container-lowest: #FFFFFF;
             --md-sys-color-surface-container-low: #F7F2FA;
             --md-sys-color-surface-container: #F3EDF7;
             --md-sys-color-surface-container-high: #ECE6F0;
-            --md-sys-color-surface-container-highest: #E6E0E9;
             --md-sys-color-on-surface: #1C1B1F;
             --md-sys-color-on-surface-variant: #49454F;
             
@@ -39,7 +36,6 @@
             --md-sys-color-outline-variant: #CAC4D0;
             
             --md-sys-color-error: #B3261E;
-            --md-sys-color-on-error: #FFFFFF;
             --md-sys-color-error-container: #F9DEDC;
             --md-sys-color-on-error-container: #410E0B;
             
@@ -47,40 +43,12 @@
             --md-sys-color-inverse-on-surface: #F4EFF4;
             --md-sys-color-inverse-primary: #D0BCFF;
             
-            /* Elevation */
-            --md-sys-elevation-level0: 0px 0px 0px 0px rgba(0,0,0,0);
-            --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
-            --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15);
-            --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0,0,0,0.3), 0px 4px 8px 3px rgba(0,0,0,0.15);
-            
-            /* Shape */
-            --md-sys-shape-corner-none: 0px;
-            --md-sys-shape-corner-extra-small: 4px;
-            --md-sys-shape-corner-small: 8px;
-            --md-sys-shape-corner-medium: 12px;
-            --md-sys-shape-corner-large: 16px;
-            --md-sys-shape-corner-extra-large: 28px;
-            --md-sys-shape-corner-full: 50%;
-            
-            /* Typography */
-            --md-sys-typescale-display-large: 400 3.5rem/4rem 'Roboto';
-            --md-sys-typescale-headline-large: 400 2rem/2.5rem 'Roboto';
-            --md-sys-typescale-title-large: 400 1.375rem/1.75rem 'Roboto';
-            --md-sys-typescale-body-large: 400 1rem/1.5rem 'Roboto';
-            --md-sys-typescale-body-medium: 400 0.875rem/1.25rem 'Roboto';
-            --md-sys-typescale-label-large: 500 0.875rem/1.25rem 'Roboto';
-            --md-sys-typescale-label-medium: 500 0.75rem/1rem 'Roboto';
-            
-            /* Motion */
-            --md-sys-motion-duration-short1: 50ms;
             --md-sys-motion-duration-short2: 100ms;
-            --md-sys-motion-duration-medium1: 200ms;
             --md-sys-motion-duration-medium2: 300ms;
             --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
         }
 
         [data-theme="dark"] {
-            /* Material Design 3 - Dark Theme */
             --md-sys-color-primary: #D0BCFF;
             --md-sys-color-on-primary: #381E72;
             --md-sys-color-primary-container: #4F378B;
@@ -97,13 +65,10 @@
             --md-sys-color-on-tertiary-container: #FFD8E4;
             
             --md-sys-color-surface: #141218;
-            --md-sys-color-surface-dim: #141218;
-            --md-sys-color-surface-bright: #3B383E;
             --md-sys-color-surface-container-lowest: #0F0D13;
             --md-sys-color-surface-container-low: #1D1B20;
             --md-sys-color-surface-container: #211F26;
             --md-sys-color-surface-container-high: #2B2930;
-            --md-sys-color-surface-container-highest: #36343B;
             --md-sys-color-on-surface: #E6E0E9;
             --md-sys-color-on-surface-variant: #CAC4D0;
             
@@ -111,7 +76,6 @@
             --md-sys-color-outline-variant: #49454F;
             
             --md-sys-color-error: #F2B8B5;
-            --md-sys-color-on-error: #601410;
             --md-sys-color-error-container: #8C1D18;
             --md-sys-color-on-error-container: #F9DEDC;
             
@@ -129,6 +93,7 @@
         html {
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
+            overflow-x: hidden;
         }
 
         body {
@@ -136,6 +101,7 @@
             color: var(--md-sys-color-on-surface);
             line-height: 1.5;
             min-height: 100vh;
+            overflow-x: hidden;
             transition: background-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
                         color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
         }
@@ -151,120 +117,140 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--md-sys-elevation-level2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 100%;
         }
 
         .app-bar-title {
-            font: var(--md-sys-typescale-title-large);
+            font-size: 1.125rem;
+            font-weight: 500;
             color: var(--md-sys-color-on-surface);
             display: flex;
             align-items: center;
             gap: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .app-bar-actions {
             display: flex;
             gap: 8px;
+            flex-shrink: 0;
         }
 
-        /* Material Icon Button */
         .icon-btn {
             width: 40px;
             height: 40px;
             border: none;
             background: transparent;
             color: var(--md-sys-color-on-surface-variant);
-            border-radius: var(--md-sys-shape-corner-full);
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+            transition: all var(--md-sys-motion-duration-short2);
+            flex-shrink: 0;
         }
 
         .icon-btn:hover {
             background-color: var(--md-sys-color-on-surface-variant);
-            color: var(--md-sys-color-on-surface);
             opacity: 0.08;
         }
 
-        .icon-btn:active {
-            opacity: 0.12;
-        }
-
-        /* Main Layout */
+        /* Main Layout - Responsive Grid */
         .container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 24px;
+            padding: 16px;
         }
 
+        @media (min-width: 768px) {
+            .container {
+                padding: 24px;
+                max-width: 1400px;
+            }
+        }
+
+        /* Grid: Single column mobile, 2 column desktop */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
         }
 
-        @media (max-width: 1024px) {
+        @media (min-width: 1024px) {
             .main-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 24px;
             }
         }
 
         /* Material Card */
         .card {
             background-color: var(--md-sys-color-surface-container-low);
-            border-radius: var(--md-sys-shape-corner-large);
-            padding: 24px;
-            box-shadow: var(--md-sys-elevation-level1);
-            transition: all var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: all var(--md-sys-motion-duration-medium2);
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
         }
 
-        .card:hover {
-            box-shadow: var(--md-sys-elevation-level2);
+        @media (min-width: 768px) {
+            .card {
+                padding: 24px;
+            }
         }
 
         .card-title {
-            font: var(--md-sys-typescale-title-large);
+            font-size: 1.125rem;
+            font-weight: 500;
             color: var(--md-sys-color-on-surface);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .card-subtitle {
-            font: var(--md-sys-typescale-body-medium);
+            font-size: 0.875rem;
             color: var(--md-sys-color-on-surface-variant);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            line-height: 1.5;
         }
 
-        /* Material Chips */
+        /* Chip Group - Wrap on all screens */
         .chip-group {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .chip {
             height: 32px;
             padding: 0 16px;
-            border-radius: var(--md-sys-shape-corner-small);
+            border-radius: 8px;
             background-color: var(--md-sys-color-surface-container-highest);
             color: var(--md-sys-color-on-surface-variant);
-            font: var(--md-sys-typescale-label-large);
+            font-size: 0.875rem;
+            font-weight: 500;
             border: 1px solid var(--md-sys-color-outline);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+            transition: all var(--md-sys-motion-duration-short2);
+            white-space: nowrap;
         }
 
         .chip:hover {
             background-color: var(--md-sys-color-on-surface-variant);
-            color: var(--md-sys-color-on-surface);
             opacity: 0.08;
         }
 
@@ -274,12 +260,19 @@
             border-color: transparent;
         }
 
-        /* Material Buttons */
+        /* Toolbar - Wrap on mobile */
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
         .btn {
             height: 40px;
-            padding: 0 24px;
-            border-radius: var(--md-sys-shape-corner-full);
-            font: var(--md-sys-typescale-label-large);
+            padding: 0 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
             display: inline-flex;
@@ -287,26 +280,8 @@
             justify-content: center;
             gap: 8px;
             border: none;
-            transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: currentColor;
-            opacity: 0;
-            transition: opacity var(--md-sys-motion-duration-short2);
-        }
-
-        .btn:hover::after {
-            opacity: 0.08;
-        }
-
-        .btn:active::after {
-            opacity: 0.12;
+            transition: all var(--md-sys-motion-duration-short2);
+            white-space: nowrap;
         }
 
         .btn-filled {
@@ -336,40 +311,52 @@
             color: var(--md-sys-color-on-error-container);
         }
 
-        /* Toolbar */
-        .toolbar {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* Tree Container */
+        /* Tree Container - NO HORIZONTAL SCROLL */
         .tree-container {
             background-color: var(--md-sys-color-surface-container);
-            border-radius: var(--md-sys-shape-corner-medium);
-            padding: 16px;
-            min-height: 400px;
-            max-height: 600px;
+            border-radius: 8px;
+            padding: 12px;
+            min-height: 300px;
+            max-height: 500px;
             overflow-y: auto;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             border: 1px solid var(--md-sys-color-outline-variant);
+            width: 100%;
         }
 
-        /* Tree Node - Material Style */
+        @media (min-width: 768px) {
+            .tree-container {
+                padding: 16px;
+                min-height: 400px;
+                max-height: 600px;
+            }
+        }
+
+        /* Tree Node - Responsive Flex Layout */
         .tree-node {
             margin: 4px 0;
+            width: 100%;
         }
 
         .node-content {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
-            padding: 8px 12px;
+            gap: 6px;
+            padding: 8px;
             background-color: var(--md-sys-color-surface-container-lowest);
-            border-radius: var(--md-sys-shape-corner-small);
+            border-radius: 8px;
             border: 1px solid transparent;
             transition: all var(--md-sys-motion-duration-short2);
-            min-height: 56px;
+            width: 100%;
+            /* Allow wrapping but prevent overflow */
+            flex-wrap: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            .node-content {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
         }
 
         .node-content:hover {
@@ -381,21 +368,27 @@
             display: flex;
             gap: 4px;
             padding-top: 8px;
+            flex-shrink: 0;
         }
 
         .indent-line {
-            width: 20px;
+            width: 12px;
             border-left: 2px solid var(--md-sys-color-outline-variant);
         }
 
-        /* Material Icon Button for Toggle */
+        @media (min-width: 768px) {
+            .indent-line {
+                width: 16px;
+            }
+        }
+
         .node-toggle {
             width: 24px;
             height: 24px;
             border: none;
             background: transparent;
             color: var(--md-sys-color-on-surface-variant);
-            border-radius: var(--md-sys-shape-corner-full);
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -403,6 +396,7 @@
             font-size: 18px;
             transition: transform var(--md-sys-motion-duration-short2);
             margin-top: 4px;
+            flex-shrink: 0;
         }
 
         .node-toggle:hover {
@@ -418,26 +412,27 @@
             visibility: hidden;
         }
 
-        /* Order Buttons - Material Style */
+        /* Order Buttons */
         .order-buttons {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
             padding-top: 4px;
+            flex-shrink: 0;
         }
 
         .btn-order {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border: none;
             background-color: var(--md-sys-color-surface-container-highest);
             color: var(--md-sys-color-on-surface-variant);
-            border-radius: var(--md-sys-shape-corner-small);
+            border-radius: 4px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             transition: all var(--md-sys-motion-duration-short2);
         }
 
@@ -453,42 +448,59 @@
 
         /* Type Icon */
         .type-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: var(--md-sys-color-tertiary-container);
             color: var(--md-sys-color-on-tertiary-container);
-            border-radius: var(--md-sys-shape-corner-small);
-            font: var(--md-sys-typescale-label-medium);
+            border-radius: 4px;
+            font-size: 0.75rem;
             font-family: 'Roboto Mono', monospace;
             margin-top: 4px;
+            flex-shrink: 0;
         }
 
-        /* Expandable Inputs - Material Style */
+        /* Node Inputs - Responsive Grid */
         .node-inputs {
             flex: 1;
-            display: flex;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr auto;
+            gap: 8px;
             align-items: flex-start;
             min-width: 0;
         }
 
+        @media (max-width: 600px) {
+            .node-inputs {
+                grid-template-columns: 1fr;
+                width: 100%;
+                order: 3;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 768px) {
+            .node-inputs {
+                grid-template-columns: 1fr 2fr auto;
+            }
+        }
+
+        /* Expandable Inputs */
         .expandable-input {
-            flex: 1;
-            min-width: 80px;
-            padding: 8px 16px;
+            width: 100%;
+            min-width: 0;
+            padding: 8px 12px;
             border: 1px solid var(--md-sys-color-outline);
-            border-radius: var(--md-sys-shape-corner-extra-small);
+            border-radius: 4px;
             background-color: var(--md-sys-color-surface-container-lowest);
             color: var(--md-sys-color-on-surface);
-            font: var(--md-sys-typescale-body-medium);
+            font-size: 0.875rem;
             resize: none;
             overflow: hidden;
             line-height: 1.5;
             height: 40px;
-            transition: all var(--md-sys-motion-duration-medium1);
+            transition: all var(--md-sys-motion-duration-medium2);
             font-family: 'Roboto', sans-serif;
         }
 
@@ -496,13 +508,18 @@
             outline: none;
             border-color: var(--md-sys-color-primary);
             border-width: 2px;
-            padding: 7px 15px;
-            min-height: 120px;
+            padding: 7px 11px;
+            min-height: 100px;
             box-shadow: 0 0 0 4px var(--md-sys-color-primary-container);
+            z-index: 10;
+            position: relative;
         }
 
-        .expandable-input.key-input {
-            max-width: 160px;
+        @media (min-width: 768px) {
+            .expandable-input:focus {
+                padding: 7px 15px;
+                min-height: 120px;
+            }
         }
 
         .expandable-input:disabled {
@@ -511,22 +528,23 @@
             border-color: var(--md-sys-color-outline-variant);
         }
 
-        /* Material Select */
+        /* Type Select */
         .type-select {
-            width: 100px;
+            width: 100%;
+            min-width: 80px;
             height: 40px;
-            padding: 0 12px;
+            padding: 0 8px;
             border: 1px solid var(--md-sys-color-outline);
-            border-radius: var(--md-sys-shape-corner-extra-small);
+            border-radius: 4px;
             background-color: var(--md-sys-color-surface-container-lowest);
             color: var(--md-sys-color-on-surface);
-            font: var(--md-sys-typescale-body-medium);
+            font-size: 0.875rem;
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236750A4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 8px center;
-            background-size: 18px;
+            background-size: 16px;
             padding-right: 32px;
         }
 
@@ -543,27 +561,35 @@
         /* Node Actions */
         .node-actions {
             display: flex;
-            gap: 4px;
+            gap: 2px;
             padding-top: 4px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .node-actions {
+                order: 2;
+                margin-left: auto;
+            }
         }
 
         .btn-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border: none;
             background: transparent;
             color: var(--md-sys-color-on-surface-variant);
-            border-radius: var(--md-sys-shape-corner-full);
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all var(--md-sys-motion-duration-short2);
+            flex-shrink: 0;
         }
 
         .btn-icon:hover {
             background-color: var(--md-sys-color-on-surface-variant);
-            color: var(--md-sys-color-on-surface);
             opacity: 0.08;
         }
 
@@ -573,33 +599,52 @@
             opacity: 1;
         }
 
-        /* Children Container */
+        /* Children Container - Responsive Indent */
         .node-children {
-            margin-left: 28px;
+            margin-left: 16px;
             border-left: 1px solid var(--md-sys-color-outline-variant);
-            padding-left: 12px;
+            padding-left: 8px;
+            width: calc(100% - 16px);
+        }
+
+        @media (min-width: 768px) {
+            .node-children {
+                margin-left: 24px;
+                padding-left: 12px;
+                width: calc(100% - 24px);
+            }
         }
 
         .node-children.collapsed {
             display: none;
         }
 
-        /* JSON Preview - Material Code Block */
+        /* JSON Preview - NO HORIZONTAL SCROLL */
         .json-preview {
             background-color: var(--md-sys-color-surface-container-high);
-            border-radius: var(--md-sys-shape-corner-medium);
-            padding: 20px;
+            border-radius: 8px;
+            padding: 16px;
             font-family: 'Roboto Mono', monospace;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.6;
             color: var(--md-sys-color-on-surface);
-            overflow-x: auto;
             white-space: pre-wrap;
             word-break: break-word;
-            min-height: 400px;
-            max-height: 600px;
+            min-height: 300px;
+            max-height: 500px;
             overflow-y: auto;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             position: relative;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .json-preview {
+                padding: 20px;
+                font-size: 14px;
+                min-height: 400px;
+                max-height: 600px;
+            }
         }
 
         .json-key {
@@ -619,7 +664,7 @@
             color: var(--md-sys-color-error);
         }
 
-        /* Copy Button in Preview */
+        /* Copy Button */
         .btn-copy {
             position: absolute;
             top: 12px;
@@ -630,15 +675,15 @@
 
         /* Status Bar */
         .status-bar {
-            margin-top: 20px;
-            padding: 16px;
+            margin-top: 16px;
+            padding: 12px;
             background-color: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-on-primary-container);
-            border-radius: var(--md-sys-shape-corner-small);
-            font: var(--md-sys-typescale-body-medium);
+            border-radius: 8px;
+            font-size: 0.875rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .status-bar.error {
@@ -648,21 +693,21 @@
 
         /* Import Section */
         .import-section {
-            margin-top: 24px;
-            padding-top: 24px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid var(--md-sys-color-outline-variant);
         }
 
         .import-textarea {
             width: 100%;
-            min-height: 120px;
-            padding: 16px;
+            min-height: 100px;
+            padding: 12px;
             border: 1px solid var(--md-sys-color-outline);
-            border-radius: var(--md-sys-shape-corner-medium);
+            border-radius: 8px;
             background-color: var(--md-sys-color-surface-container-lowest);
             color: var(--md-sys-color-on-surface);
             font-family: 'Roboto Mono', monospace;
-            font-size: 14px;
+            font-size: 13px;
             resize: vertical;
             transition: all var(--md-sys-motion-duration-short2);
         }
@@ -671,23 +716,23 @@
             outline: none;
             border-color: var(--md-sys-color-primary);
             border-width: 2px;
-            padding: 15px;
+            padding: 11px;
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 48px 24px;
+            padding: 40px 20px;
             color: var(--md-sys-color-on-surface-variant);
         }
 
         .empty-state .material-symbols-rounded {
-            font-size: 64px;
-            margin-bottom: 16px;
+            font-size: 48px;
+            margin-bottom: 12px;
             opacity: 0.6;
         }
 
-        /* Material Modal */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -697,6 +742,7 @@
             justify-content: center;
             z-index: 1000;
             backdrop-filter: blur(4px);
+            padding: 16px;
         }
 
         .modal-overlay.active {
@@ -705,11 +751,11 @@
 
         .modal {
             background-color: var(--md-sys-color-surface-container-high);
-            border-radius: var(--md-sys-shape-corner-extra-large);
+            border-radius: 28px;
             padding: 24px;
             max-width: 560px;
-            width: calc(100% - 48px);
-            box-shadow: var(--md-sys-elevation-level3);
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             animation: modal-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
         }
 
@@ -725,16 +771,18 @@
         }
 
         .modal-title {
-            font: var(--md-sys-typescale-headline-large);
+            font-size: 1.5rem;
+            font-weight: 400;
             color: var(--md-sys-color-on-surface);
             margin-bottom: 16px;
         }
 
         .modal-content {
-            font: var(--md-sys-typescale-body-large);
+            font-size: 1rem;
             color: var(--md-sys-color-on-surface-variant);
             margin-bottom: 24px;
             line-height: 1.6;
+            white-space: pre-wrap;
         }
 
         .modal-actions {
@@ -743,24 +791,26 @@
             justify-content: flex-end;
         }
 
-        /* Material Snackbar */
+        /* Snackbar */
         .snackbar {
             position: fixed;
-            bottom: 24px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background-color: var(--md-sys-color-inverse-surface);
             color: var(--md-sys-color-inverse-on-surface);
-            padding: 14px 24px;
-            border-radius: var(--md-sys-shape-corner-small);
-            font: var(--md-sys-typescale-body-medium);
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 0.875rem;
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: var(--md-sys-elevation-level3);
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
             opacity: 0;
             transition: all var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
             z-index: 1001;
+            max-width: calc(100% - 32px);
+            width: max-content;
         }
 
         .snackbar.show {
@@ -770,8 +820,13 @@
 
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+        }
+
+        @media (min-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
         }
 
         ::-webkit-scrollbar-track {
@@ -780,7 +835,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--md-sys-color-outline-variant);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -837,7 +892,7 @@
                     </button>
                     <button class="chip" onclick="loadTemplate('api')">
                         <span class="material-symbols-rounded" style="font-size: 16px;">api</span>
-                        API Response
+                        API
                     </button>
                 </div>
 
@@ -849,11 +904,11 @@
                     </button>
                     <button class="btn btn-tonal" onclick="expandAll()">
                         <span class="material-symbols-rounded">unfold_more</span>
-                        Buka Semua
+                        Buka
                     </button>
                     <button class="btn btn-tonal" onclick="collapseAll()">
                         <span class="material-symbols-rounded">unfold_less</span>
-                        Tutup Semua
+                        Tutup
                     </button>
                     <button class="btn btn-error" onclick="clearAll()">
                         <span class="material-symbols-rounded">delete_sweep</span>
@@ -861,7 +916,7 @@
                     </button>
                 </div>
 
-                <!-- Tree Container -->
+                <!-- Tree Container - NO HORIZONTAL SCROLL -->
                 <div class="tree-container" id="treeContainer">
                     <div class="empty-state">
                         <span class="material-symbols-rounded">account_tree</span>
@@ -871,7 +926,7 @@
 
                 <!-- Import Section -->
                 <div class="import-section">
-                    <div class="card-title" style="font-size: 1rem; margin-bottom: 12px;">
+                    <div class="card-title" style="font-size: 1rem; margin-bottom: 8px;">
                         <span class="material-symbols-rounded">content_paste</span>
                         Import JSON
                     </div>
@@ -897,8 +952,9 @@
                 <div class="card-title">
                     <span class="material-symbols-rounded">code</span>
                     Live Preview
-                    <span style="margin-left: auto; font-size: 0.875rem; color: var(--md-sys-color-on-surface-variant);">
-                        Nodes: <span id="nodeCount">0</span>
+                    <span style="margin-left: auto; font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); display: flex; align-items: center; gap: 4px;">
+                        <span class="material-symbols-rounded" style="font-size: 16px;">account_tree</span>
+                        <span id="nodeCount">0</span>
                     </span>
                 </div>
                 
@@ -921,7 +977,7 @@
                 </div>
 
                 <div class="status-bar" id="statusBar">
-                    <span class="material-symbols-rounded">check_circle</span>
+                    <span class="material-symbols-rounded" style="font-size: 18px;">check_circle</span>
                     Struktur JSON valid
                 </div>
             </div>
@@ -1119,10 +1175,10 @@
                             
                             <div class="order-buttons">
                                 <button class="btn-order" onclick="moveNodeUp('${pathStr}')" ${index === 0 ? 'disabled' : ''}>
-                                    <span class="material-symbols-rounded" style="font-size: 16px;">arrow_upward</span>
+                                    <span class="material-symbols-rounded" style="font-size: 14px;">arrow_upward</span>
                                 </button>
                                 <button class="btn-order" onclick="moveNodeDown('${pathStr}')" ${index === nodes.length - 1 ? 'disabled' : ''}>
-                                    <span class="material-symbols-rounded" style="font-size: 16px;">arrow_downward</span>
+                                    <span class="material-symbols-rounded" style="font-size: 14px;">arrow_downward</span>
                                 </button>
                             </div>
 
@@ -1453,13 +1509,13 @@
                 document.getElementById('jsonCode').innerHTML = highlighted;
                 document.getElementById('statusBar').className = 'status-bar';
                 document.getElementById('statusBar').innerHTML = `
-                    <span class="material-symbols-rounded">check_circle</span>
+                    <span class="material-symbols-rounded" style="font-size: 18px;">check_circle</span>
                     Struktur JSON valid
                 `;
             } catch(e) {
                 document.getElementById('statusBar').className = 'status-bar error';
                 document.getElementById('statusBar').innerHTML = `
-                    <span class="material-symbols-rounded">error</span>
+                    <span class="material-symbols-rounded" style="font-size: 18px;">error</span>
                     Error: ${e.message}
                 `;
             }
@@ -1572,7 +1628,7 @@
                 '5. Pilih tipe data: string, number, boolean, object, array, null\n' +
                 '6. Gunakan template untuk memulai cepat\n' +
                 '7. Import JSON dari clipboard untuk mengedit\n' +
-                '8. Toggle tema gelap/terang di pojok kanan atas', 
+                '8. Pada mobile, layout akan menyesuaikan secara otomatis tanpa scroll horizontal', 
                 null
             );
         }
