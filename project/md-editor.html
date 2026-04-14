@@ -7,6 +7,8 @@
 
   <!-- Marked.js untuk render Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- DOMPurify untuk sanitasi HTML (keamanan XSS) -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 
   <style>
     :root {
@@ -756,6 +758,90 @@
       border-top: 2px solid rgba(0, 188, 212, 0.3);
       margin: 16px 0;
     }
+
+    /* Character Counter Styles - NEW FEATURE */
+    .char-counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      background: rgba(0, 188, 212, 0.1);
+      border: 1px solid rgba(0, 188, 212, 0.2);
+      margin-top: 8px;
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    body[data-theme="light"] .char-counter {
+      background: rgba(0, 188, 212, 0.08);
+      border: 1px solid rgba(0, 188, 212, 0.25);
+    }
+
+    .counter-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #b2ebf2;
+    }
+
+    body[data-theme="light"] .counter-item {
+      color: #006064;
+    }
+
+    .counter-value {
+      font-weight: 700;
+      color: #00e5ff;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    body[data-theme="light"] .counter-value {
+      color: #00acc1;
+    }
+
+    .counter-divider {
+      width: 1px;
+      height: 12px;
+      background: rgba(0, 188, 212, 0.3);
+    }
+
+    body[data-theme="light"] .counter-divider {
+      background: rgba(0, 188, 212, 0.4);
+    }
+
+    .char-limit-warning {
+      color: #ff5252 !important;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .char-progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 188, 212, 0.2);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .char-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--miku-teal), var(--miku-cyan));
+      border-radius: 2px;
+      transition: width 0.3s ease-out;
+    }
+
+    .char-progress-bar.warning {
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+    }
+
+    .char-progress-bar.danger {
+      background: linear-gradient(90deg, #f44336, #d32f2f);
+    }
   </style>
 </head>
 <body data-theme="dark">
@@ -819,6 +905,36 @@
           </div>
 
           <textarea id="markdownInput" placeholder="# Halo Miku! 🎶&#10;Tulis Markdown di sini..."></textarea>
+
+          <!-- CHARACTER COUNTER - NEW FEATURE -->
+          <div class="char-counter" id="charCounter">
+            <div class="counter-item">
+              <span>📝</span>
+              <span>Karakter:</span>
+              <span class="counter-value" id="charCount">0</span>
+            </div>
+            <div class="counter-divider"></div>
+            <div class="counter-item">
+              <span>📄</span>
+              <span>Kata:</span>
+              <span class="counter-value" id="wordCount">0</span>
+            </div>
+            <div class="counter-divider"></div>
+            <div class="counter-item">
+              <span>📏</span>
+              <span>Baris:</span>
+              <span class="counter-value" id="lineCount">0</span>
+            </div>
+            <div class="counter-divider"></div>
+            <div class="counter-item">
+              <span>📊</span>
+              <span>Bytes:</span>
+              <span class="counter-value" id="byteCount">0</span>
+            </div>
+          </div>
+          <div class="char-progress" id="charProgressContainer" style="display: none;">
+            <div class="char-progress-bar" id="charProgressBar" style="width: 0%"></div>
+          </div>
 
           <!-- TABLE GENERATOR -->
           <div class="section">
@@ -944,6 +1060,7 @@
   </div>
 
   <script>
+    // --- ELEMENT REFERENCES ---
     const body = document.body;
     const themeToggle = document.getElementById("themeToggle");
     const themeIcon = document.getElementById("themeIcon");
@@ -960,13 +1077,37 @@
     const alignSelect = document.getElementById("align");
     const clearEditorBtn = document.getElementById("clearEditor");
     const insertSampleBtn = document.getElementById("insertSample");
-
     const codeLang = document.getElementById("codeLang");
     const codeInput = document.getElementById("codeInput");
     const generateCodeBlockBtn = document.getElementById("generateCodeBlock");
+    
+    // Character counter elements - NEW FEATURE
+    const charCountEl = document.getElementById("charCount");
+    const wordCountEl = document.getElementById("wordCount");
+    const lineCountEl = document.getElementById("lineCount");
+    const byteCountEl = document.getElementById("byteCount");
+    const charProgressBar = document.getElementById("charProgressBar");
+    const charProgressContainer = document.getElementById("charProgressContainer");
+
+    // --- UTILITY: Safe localStorage access ---
+    function safeStorage(action, key, value) {
+      try {
+        if (action === 'get') {
+          return localStorage.getItem(key);
+        } else if (action === 'set') {
+          localStorage.setItem(key, value);
+          return true;
+        }
+      } catch (e) {
+        console.warn('localStorage not available:', e);
+        return action === 'get' ? null : false;
+      }
+    }
 
     // --- THEME ---
     function setTheme(theme) {
+      if (!body || !themeIcon || !themeLabel) return;
+      
       body.setAttribute("data-theme", theme);
       if (theme === "dark") {
         themeIcon.textContent = "🌙";
@@ -975,72 +1116,176 @@
         themeIcon.textContent = "☀️";
         themeLabel.textContent = "Light mode";
       }
-      localStorage.setItem("markdown-theme", theme);
+      safeStorage('set', "markdown-theme", theme);
     }
 
-    const savedTheme = localStorage.getItem("markdown-theme");
-    if (savedTheme === "light" || savedTheme === "dark") {
-      setTheme(savedTheme);
-    } else {
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
+    // Initialize theme
+    try {
+      const savedTheme = safeStorage('get', "markdown-theme");
+      if (savedTheme === "light" || savedTheme === "dark") {
+        setTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        setTheme(prefersDark ? "dark" : "light");
+      }
+    } catch (e) {
+      console.warn('Theme initialization error:', e);
+      setTheme("dark");
     }
 
-    themeToggle.addEventListener("click", (e) => {
-      const current = body.getAttribute("data-theme") === "dark" ? "dark" : "light";
-      const next = current === "dark" ? "light" : "dark";
-      const rect = themeToggle.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      themeToggle.style.setProperty("--x", x + "%");
-      themeToggle.style.setProperty("--y", y + "%");
-      themeToggle.classList.add("ripple");
-      setTimeout(() => themeToggle.classList.remove("ripple"), 350);
-      setTheme(next);
-    });
+    if (themeToggle) {
+      themeToggle.addEventListener("click", (e) => {
+        const current = body.getAttribute("data-theme") === "dark" ? "dark" : "light";
+        const next = current === "dark" ? "light" : "dark";
+        const rect = themeToggle.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        themeToggle.style.setProperty("--x", x + "%");
+        themeToggle.style.setProperty("--y", y + "%");
+        themeToggle.classList.add("ripple");
+        setTimeout(() => themeToggle.classList.remove("ripple"), 350);
+        setTheme(next);
+      });
+    }
+
+    // --- CHARACTER COUNTER - NEW FEATURE ---
+    function updateCharCounter() {
+      if (!markdownInput || !charCountEl || !wordCountEl || !lineCountEl || !byteCountEl) return;
+      
+      const text = markdownInput.value || "";
+      const chars = text.length;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const lines = text ? text.split(/\n/).length : 0;
+      const bytes = new Blob([text]).size;
+      
+      charCountEl.textContent = chars.toLocaleString();
+      wordCountEl.textContent = words.toLocaleString();
+      lineCountEl.textContent = lines.toLocaleString();
+      byteCountEl.textContent = bytes.toLocaleString();
+      
+      // Optional: Show warning for character limit (e.g., 10000 chars)
+      const limit = 10000;
+      if (chars > limit * 0.8) {
+        charCountEl.classList.add('char-limit-warning');
+        if (charProgressContainer && charProgressBar) {
+          charProgressContainer.style.display = 'block';
+          const percentage = Math.min((chars / limit) * 100, 100);
+          charProgressBar.style.width = percentage + '%';
+          
+          if (percentage > 90) {
+            charProgressBar.className = 'char-progress-bar danger';
+          } else if (percentage > 80) {
+            charProgressBar.className = 'char-progress-bar warning';
+          } else {
+            charProgressBar.className = 'char-progress-bar';
+          }
+        }
+      } else {
+        charCountEl.classList.remove('char-limit-warning');
+        if (charProgressContainer) {
+          charProgressContainer.style.display = 'none';
+        }
+      }
+    }
 
     // --- MARKDOWN RENDER ---
     function renderMarkdown() {
+      if (!markdownInput || !preview || !htmlOutput) return;
+      
       const md = markdownInput.value || "";
-      const html = marked.parse(md, { breaks: true });
+      
+      // BUG FIX: Use DOMPurify to sanitize HTML output and prevent XSS
+      // marked.parse() alone does NOT sanitize HTML by default [^5^][^7^]
+      let html;
+      try {
+        const rawHtml = marked.parse(md, { breaks: true });
+        
+        // Sanitize HTML to prevent XSS attacks
+        if (typeof DOMPurify !== 'undefined') {
+          html = DOMPurify.sanitize(rawHtml);
+        } else {
+          // Fallback if DOMPurify fails to load
+          console.warn('DOMPurify not loaded, using raw HTML (security risk)');
+          html = rawHtml;
+        }
+      } catch (e) {
+        console.error('Markdown parsing error:', e);
+        html = '<p style="color: #ff5252;">⚠️ Error parsing Markdown</p>';
+      }
+      
       preview.innerHTML = html;
       htmlOutput.textContent = html;
+      
+      // Update character counter
+      updateCharCounter();
     }
 
-    markdownInput.addEventListener("input", renderMarkdown);
-
-    markdownInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        preview.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    });
+    if (markdownInput) {
+      markdownInput.addEventListener("input", renderMarkdown);
+      
+      markdownInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          if (preview) {
+            preview.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      });
+    }
 
     // --- COPY HELPERS ---
     async function copyToClipboard(text, label) {
+      if (!copyStatus) return;
+      
       try {
-        await navigator.clipboard.writeText(text);
-        copyStatus.textContent = label + " copied!";
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          copyStatus.textContent = label + " copied!";
+        } else {
+          // Fallback for older browsers
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-9999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          
+          const successful = document.execCommand('copy');
+          document.body.removeChild(textArea);
+          
+          copyStatus.textContent = successful ? label + " copied!" : "Copy gagal";
+        }
       } catch (err) {
+        console.error('Copy error:', err);
         copyStatus.textContent = "Copy gagal";
       }
+      
       setTimeout(() => {
         copyStatus.textContent = "Ready";
       }, 1500);
     }
 
-    copyMarkdownBtn.addEventListener("click", () => {
-      copyToClipboard(markdownInput.value || "", "Markdown");
-    });
+    if (copyMarkdownBtn) {
+      copyMarkdownBtn.addEventListener("click", () => {
+        if (markdownInput) {
+          copyToClipboard(markdownInput.value || "", "Markdown");
+        }
+      });
+    }
 
-    copyHTMLBtn.addEventListener("click", () => {
-      copyToClipboard(htmlOutput.textContent || "", "HTML");
-    });
+    if (copyHTMLBtn) {
+      copyHTMLBtn.addEventListener("click", () => {
+        if (htmlOutput) {
+          copyToClipboard(htmlOutput.textContent || "", "HTML");
+        }
+      });
+    }
 
     // --- TABLE GENERATOR ---
     function generateMarkdownTable(rows, cols, align) {
-      rows = Math.max(1, rows | 0);
-      cols = Math.max(1, cols | 0);
+      rows = Math.max(1, parseInt(rows) || 1);
+      cols = Math.max(1, parseInt(cols) || 1);
 
       const headers = [];
       for (let c = 1; c <= cols; c++) {
@@ -1071,44 +1316,56 @@
       return tableLines.join("\n");
     }
 
-    generateTableBtn.addEventListener("click", () => {
-      const rows = parseInt(rowsInput.value, 10) || 1;
-      const cols = parseInt(colsInput.value, 10) || 1;
-      const align = alignSelect.value || "left";
+    if (generateTableBtn) {
+      generateTableBtn.addEventListener("click", () => {
+        if (!markdownInput || !rowsInput || !colsInput || !alignSelect) return;
+        
+        const rows = parseInt(rowsInput.value, 10) || 1;
+        const cols = parseInt(colsInput.value, 10) || 1;
+        const align = alignSelect.value || "left";
 
-      const tableMD = generateMarkdownTable(rows, cols, align);
+        const tableMD = generateMarkdownTable(rows, cols, align);
 
-      const current = markdownInput.value;
-      const prefix = current && !current.endsWith("\n") ? "\n\n" : "\n";
-      markdownInput.value = (current || "") + prefix + tableMD + "\n";
-      renderMarkdown();
-    });
+        const current = markdownInput.value || "";
+        const prefix = current && !current.endsWith("\n") ? "\n\n" : "\n";
+        markdownInput.value = current + prefix + tableMD + "\n";
+        renderMarkdown();
+      });
+    }
 
     // --- CODE BLOCK GENERATOR ---
-    generateCodeBlockBtn.addEventListener("click", () => {
-      const lang = codeLang.value || "plaintext";
-      const code = codeInput.value || "";
+    if (generateCodeBlockBtn) {
+      generateCodeBlockBtn.addEventListener("click", () => {
+        if (!markdownInput || !codeLang || !codeInput) return;
+        
+        const lang = codeLang.value || "plaintext";
+        const code = codeInput.value || "";
 
-      const block =
-        "```" + lang + "\n" +
-        code + "\n" +
-        "```\n\n";
+        const block = "```" + lang + "\n" + code + "\n```\n\n";
 
-      const current = markdownInput.value;
-      const prefix = current && !current.endsWith("\n") ? "\n\n" : "\n";
+        const current = markdownInput.value || "";
+        const prefix = current && !current.endsWith("\n") ? "\n\n" : "\n";
 
-      markdownInput.value = current + prefix + block;
-      renderMarkdown();
-    });
+        markdownInput.value = current + prefix + block;
+        renderMarkdown();
+      });
+    }
 
     // --- EDITOR UTIL ---
-    clearEditorBtn.addEventListener("click", () => {
-      markdownInput.value = "";
-      renderMarkdown();
-    });
+    if (clearEditorBtn) {
+      clearEditorBtn.addEventListener("click", () => {
+        if (markdownInput) {
+          markdownInput.value = "";
+          renderMarkdown();
+        }
+      });
+    }
 
-    insertSampleBtn.addEventListener("click", () => {
-      const sample = `# 🎶 Hatsune Miku Markdown Studio
+    if (insertSampleBtn) {
+      insertSampleBtn.addEventListener("click", () => {
+        if (!markdownInput) return;
+        
+        const sample = `# 🎶 Hatsune Miku Markdown Studio
 
 Selamat datang di *Markdown Studio* dengan gaya **Hatsune Miku**!
 
@@ -1119,6 +1376,7 @@ Selamat datang di *Markdown Studio* dengan gaya **Hatsune Miku**!
 - Generator tabel Markdown
 - Generator code block
 - Toolbar helper untuk semua atribut Markdown umum
+- **Penghitung karakter real-time** 🆕
 
 ## Contoh link & gambar
 
@@ -1136,17 +1394,22 @@ function helloMiku() {
 
 > "Sekarang giliranmu menulis sesuatu yang keren!"
 
+---
+**Statistik:** ${charCountEl ? charCountEl.textContent : '0'} karakter · ${wordCountEl ? wordCountEl.textContent : '0'} kata
 `;
-      markdownInput.value = sample;
-      renderMarkdown();
-    });
+        markdownInput.value = sample;
+        renderMarkdown();
+      });
+    }
 
     // --- MARKDOWN TOOLBAR HELPERS ---
     function surroundSelection(before, after, placeholder) {
+      if (!markdownInput) return;
+      
       const el = markdownInput;
       const start = el.selectionStart;
       const end = el.selectionEnd;
-      const value = el.value;
+      const value = el.value || "";
       const selected = value.slice(start, end) || placeholder;
 
       const newText = value.slice(0, start) + before + selected + after + value.slice(end);
@@ -1161,9 +1424,11 @@ function helloMiku() {
     }
 
     function insertAtLineStart(prefix) {
+      if (!markdownInput) return;
+      
       const el = markdownInput;
       const start = el.selectionStart;
-      const value = el.value;
+      const value = el.value || "";
 
       const lineStart = value.lastIndexOf("\n", start - 1) + 1;
       const newText = value.slice(0, lineStart) + prefix + value.slice(lineStart);
@@ -1175,9 +1440,11 @@ function helloMiku() {
     }
 
     function insertBlock(text) {
+      if (!markdownInput) return;
+      
       const el = markdownInput;
       const start = el.selectionStart;
-      const value = el.value;
+      const value = el.value || "";
 
       const prefix = value && !value.endsWith("\n") ? "\n\n" : "\n";
       const newText = value.slice(0, start) + prefix + text + value.slice(start);
@@ -1188,7 +1455,10 @@ function helloMiku() {
       renderMarkdown();
     }
 
+    // Attach toolbar button listeners
     document.querySelectorAll(".md-toolbar-buttons .btn-ghost").forEach(btn => {
+      if (!btn) return;
+      
       btn.addEventListener("click", () => {
         const type = btn.getAttribute("data-md");
         switch (type) {
@@ -1232,8 +1502,13 @@ function helloMiku() {
       });
     });
 
+    // --- INITIALIZATION ---
     // Render awal
     renderMarkdown();
+    
+    // Log debug info
+    console.log('Markdown Studio initialized');
+    console.log('Security: DOMPurify ' + (typeof DOMPurify !== 'undefined' ? 'loaded ✓' : 'NOT loaded ✗'));
   </script>
 </body>
 </html>
