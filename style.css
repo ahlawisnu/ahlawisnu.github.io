@@ -216,7 +216,7 @@
     
     /* Mobile Menu Overlay */
     .mobile-menu-overlay {
-		max-height: 100dvh; /* dynamic viewport height, hindari cutoff di iOS */
+		max-height: 480px; /* dynamic viewport height, hindari cutoff di iOS */
   overflow-y: auto;
         width: 100%;
       position: fixed;
