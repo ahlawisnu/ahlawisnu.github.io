@@ -1,35 +1,16 @@
-// === Theme Toggle (Refactored + Giscus Sync) ===
+// === Theme Toggle ===
 const themeToggle = document.getElementById('themeToggle');
 const root = document.documentElement;
 const iconSun = document.querySelector('.icon-sun');
 const iconMoon = document.querySelector('.icon-moon');
 
-function getGiscusTheme(appTheme) {
-  return appTheme === 'dark' ? 'dark_dimmed' : 'light';
-}
-
-function updateGiscusTheme(appTheme) {
-  const iframe = document.querySelector('iframe.giscus-frame');
-  if (iframe) {
-    iframe.contentWindow.postMessage(
-      { giscus: { setConfig: { theme: getGiscusTheme(appTheme) } } },
-      'https://giscus.app'
-    );
-  }
-}
-
 function setTheme(theme) {
   root.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
-
-  // Update icon
   if (iconSun && iconMoon) {
     iconSun.style.display = theme === 'dark' ? 'none' : 'block';
     iconMoon.style.display = theme === 'dark' ? 'block' : 'none';
   }
-
-  // âœ… Sync Giscus theme
-  updateGiscusTheme(theme);
 }
 
 if (themeToggle) {
@@ -38,13 +19,6 @@ if (themeToggle) {
     setTheme(current === 'dark' ? 'light' : 'dark');
   });
 }
-
-// Listen system preference change
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem('theme')) {
-    setTheme(e.matches ? 'dark' : 'light');
-  }
-});
 
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
@@ -62,7 +36,7 @@ if (menuToggle) {
   });
 }
 
-// === Skeleton â†’ Gallery Swap ===
+// === Skeleton → Gallery Swap ===
 const skeletonGrid = document.getElementById('skeletonGrid');
 const galleryGrid = document.getElementById('galleryGrid');
 if (skeletonGrid && galleryGrid) {
@@ -135,7 +109,7 @@ document.addEventListener('keydown', (e) => {
 function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     const original = btn.innerHTML;
-    btn.innerHTML = 'âœ“ Tersalin!';
+    btn.innerHTML = '✓ Tersalin!';
     setTimeout(() => btn.innerHTML = original, 2000);
   }).catch(() => {
     // Fallback
@@ -198,63 +172,5 @@ if ('IntersectionObserver' in window) {
     card.style.transform = 'translateY(20px)';
     card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     io.observe(card);
-  });
-}
-
-// === Giscus Theme Sync ===
-function updateGiscusTheme(newTheme) {
-  const giscusTheme = newTheme === 'dark' ? 'dark_dimmed' : 'light';
-  const iframe = document.querySelector('iframe.giscus-frame');
-
-  if (iframe) {
-    iframe.contentWindow.postMessage(
-      { giscus: { setConfig: { theme: giscusTheme } } },
-      'https://giscus.app'
-    );
-  }
-}
-
-// Hook ke fungsi setTheme yang sudah ada
-const originalSetTheme = typeof setTheme === 'function' ? setTheme : null;
-
-// Override: setiap kali tema berubah, update Giscus juga
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    // Baca tema BARU setelah toggle
-    setTimeout(() => {
-      const newTheme = document.documentElement.getAttribute('data-theme');
-      updateGiscusTheme(newTheme);
-    }, 50); // Delay kecil agar data-theme sudah ter-update
-  });
-}
-
-// Listen perubahan system preference (jika user belum set manual)
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  const saved = localStorage.getItem('theme');
-  if (!saved) {
-    const newTheme = e.matches ? 'dark' : 'light';
-    updateGiscusTheme(newTheme);
-  }
-});
-
-
-// === More Dropdown Toggle ===
-const navMoreBtn = document.querySelector('.nav-more-btn');
-const navMore = document.querySelector('.nav-more');
-
-if (navMoreBtn && navMore) {
-  navMoreBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    navMore.classList.toggle('open');
-    navMoreBtn.setAttribute('aria-expanded',
-      navMore.classList.contains('open'));
-  });
-
-  // Tutup saat klik di luar
-  document.addEventListener('click', (e) => {
-    if (!navMore.contains(e.target)) {
-      navMore.classList.remove('open');
-      navMoreBtn.setAttribute('aria-expanded', 'false');
-    }
   });
 }
