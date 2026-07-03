@@ -45,6 +45,7 @@ footer:
       - title: PROMPT GENERATOR
         url: https://ahlawisnu.github.io/Prompt-Generator
   - group: "Konten Creator"
+    links:
       - title: Artikel prompt Generator
         url: /project/ag.html
       - title: Arrikel creator (prompt)
