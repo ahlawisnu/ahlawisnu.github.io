@@ -358,3 +358,19 @@
   padding-top: 32px;
   border-top: 1px solid var(--md-outline-variant);
 }
+
+// === Giscus Skeleton ===
+.giscus-skeleton {
+  padding: 20px 0;
+}
+
+// Style override untuk Giscus iframe agar blend dengan desain kita
+.giscus-frame {
+  border-radius: var(--md-radius-md);
+  transition: opacity 0.3s var(--md-motion);
+}
+
+// Pastikan Giscus container responsif
+.comments-section .giscus {
+  width: 100%;
+}
