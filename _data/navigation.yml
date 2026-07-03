@@ -1,3 +1,4 @@
+‎# === Menu Utama (Navbar) ===Z
 main:
   - title: "Beranda"
     url: /
@@ -7,6 +8,24 @@ main:
     url: /about/
   - title: "Contact"
     url: /contact/
+
+‎# === Kategori Karya ===
+categories:
+  - title: "Portrait"
+    slug: "portrait"
+  - title: "Landscape"
+    slug: "landscape"
+  - title: "Abstract"
+    slug: "abstract"
+  - title: "Random"
+    slug: "random"
+  - title: "Fantasy"
+    slug: "fantasy"
+
+
+‎# === Footer Links ===
+- group: "Ai Tools Colection"
+‎  links:
   - title: Request Anything
     url: /project/Contact-Us.html
   - title: Pembuat Undangan
@@ -38,23 +57,6 @@ main:
   - title: PROMPT GENERATOR
     url: https://ahlawisnu.github.io/Prompt-Generator/
   
-
-categories:
-  - title: "Portrait"
-    slug: "portrait"
-  - title: "Landscape"
-    slug: "landscape"
-  - title: "Abstract"
-    slug: "abstract"
-  - title: "Random"
-    slug: "random"
-  - title: "Fantasy"
-    slug: "fantasy"
-
-
-
-
-
 
 
 
