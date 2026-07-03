@@ -276,15 +276,192 @@
   box-shadow: var(--md-elevation-2);
 }
 
+
 // === Footer ===
 .site-footer {
   background: var(--md-surface);
   border-top: 1px solid var(--md-outline-variant);
-  padding: 32px 0;
+  padding: 48px 0 24px;
   margin-top: 64px;
-  text-align: center;
   color: var(--md-on-surface-variant);
-  font-size: 0.875rem;
 }
 
-.site-footer a { color: var(--md-primary); }
+// === Footer Grid (Responsive Columns) ===
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 32px 24px;
+  margin-bottom: 32px;
+  text-align: center; // ✅ Align center
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0; // Prevent grid blowout
+}
+
+.footer-group-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--md-on-surface);
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-group-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 2px;
+  background: var(--md-gradient);
+  border-radius: 2px;
+}
+
+// === Footer Links ===
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center; // ✅ Center align
+  width: 100%;
+}
+
+.footer-links li {
+  width: 100%;
+  max-width: 200px;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--md-radius-sm);
+  color: var(--md-on-surface-variant);
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition: all 0.2s var(--md-motion);
+  text-decoration: none;
+  word-break: break-word;
+  justify-content: center;
+}
+
+.footer-links a:hover {
+  background: var(--md-surface-variant);
+  color: var(--md-primary);
+  transform: translateY(-1px);
+}
+
+.external-icon {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.footer-links a:hover .external-icon {
+  opacity: 1;
+}
+
+// === Divider ===
+.footer-divider {
+  height: 1px;
+  background: var(--md-outline-variant);
+  margin: 24px 0;
+}
+
+// === Bottom Section ===
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.footer-copyright {
+  font-size: 0.875rem;
+  color: var(--md-on-surface-variant);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.8125rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-meta a {
+  color: var(--md-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--md-tertiary);
+  text-decoration: underline;
+}
+
+.footer-separator {
+  color: var(--md-outline);
+}
+
+// === Responsive Adjustments ===
+
+// 📱 Mobile: 2 kolom
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+
+  .footer-group-title {
+    font-size: 0.75rem;
+  }
+
+  .footer-links a {
+    font-size: 0.8125rem;
+    padding: 5px 10px;
+  }
+}
+
+// 📲 Tablet: 2-3 kolom
+@media (min-width: 481px) and (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// 💻 Desktop: auto-fit (4+ kolom)
+@media (min-width: 769px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+  }
+}
+
+// 🖥️ Desktop Lebar
+@media (min-width: 1200px) {
+  .footer-grid {
+    gap: 48px;
+  }
+}
