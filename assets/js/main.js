@@ -98,11 +98,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Tutup drawer saat resize ke ukuran yang lebih besar (opsional)
-window.addEventListener('resize', () => {
-  // Kalau mau tetap drawer di semua ukuran, hapus blok ini
-  // Kalau mau auto-close saat resize, biarkan
-});
 
 // === Skeleton → Gallery Swap ===
 const skeletonGrid = document.getElementById('skeletonGrid');
