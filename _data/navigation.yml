@@ -19,9 +19,9 @@ main:
     url: /project/kg.html
   - title: Prompt Video Generator
     url: /project/video.html
-  - title: Prompt khusus Edit foto
+  - title: Prompt generator otomatis
     url: /project/img_edit.html
-  - title: untitled
+  - title: Prompt untuk esit foto
     url: /project/pe.html
   - title: Markdown Studio
     url: /project/md-editor.html
