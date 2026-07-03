@@ -25,16 +25,37 @@
       </button>
     </div>
 
-    <ul class="nav-links" id="navLinks">
-      {% for item in site.data.navigation.main %}
-        <li>
-          <a href="{{ item.url | relative_url }}"
-             {% if page.url == item.url %}class="active" aria-current="page"{% endif %}>
-            {{ item.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+<ul class="nav-links" id="navLinks">
+  <!-- Menu utama (selalu tampil) -->
+  {% for item in site.data.navigation.main limit:4 %}
+    <li>
+      <a href="{{ item.url | relative_url }}"
+         {% if page.url == item.url %}class="active"{% endif %}>
+        {{ item.title }}
+      </a>
+    </li>
+  {% endfor %}
+
+  <!-- Menu tambahan (dalam dropdown "More") -->
+  {% assign extraItems = site.data.navigation.main | slice: 4 %}
+  {% if extraItems.size > 0 %}
+    <li class="nav-more">
+      <button class="nav-more-btn" aria-expanded="false" aria-haspopup="true">
+        More
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <ul class="nav-more-dropdown">
+        {% for item in extraItems %}
+          <li>
+            <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+  {% endif %}
+</ul>
   </nav>
 </header>
 
