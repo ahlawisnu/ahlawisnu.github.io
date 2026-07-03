@@ -24,7 +24,7 @@ categories:
   - title: "Fantasy"
     slug: "fantasy"
   - title: "Image2Image"
-    url: "image2image"
+    slug: "image2image"
 
 # === Footer Links ===
 footer:
