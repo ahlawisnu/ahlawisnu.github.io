@@ -488,3 +488,32 @@
     gap: 48px;
   }
 }
+
+// === Global Overflow Protection ===
+main, .site-header, .site-footer {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+// Gallery grid tidak boleh overflow
+.gallery-grid {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+// Post content tidak boleh overflow
+.post-content {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+// Fix untuk elemen absolute/fixed yang bisa trigger scroll
+.lightbox {
+  overflow: hidden;
+}
+
+.fab-container {
+  right: clamp(16px, 4vw, 24px);
+  max-width: calc(100vw - 32px);
+}
