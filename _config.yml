@@ -1,0 +1,55 @@
+# === Site Identity ===  
+title: "AI Art Gallery"
+description: "Koleksi prompt & karya AI Art — Eksplorasi visual tanpa batas."
+url: "https://cxllme-ahla.github.io"       # Ganti dengan URL GitHub Pages kamu
+baseurl: "/blog"            # Ganti dengan nama repo kamu
+author: "AWVR VERSE"
+email: "email@example.com"
+lang: id-ID
+timezone: Asia/Jakarta
+
+# === Build Settings ===  
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+permalink: /:categories/:title/
+
+# === Sass ===  
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# === Plugins (GitHub Pages compatible) ===  
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-gist
+
+# === Pagination ===  
+paginate: 12
+paginate_path: "/page/:num/"
+
+# === SEO ===  
+twitter:
+  username: yourtwitterhandle
+  card: summary_large_image
+
+social:
+  name: AWVR VERSE
+  links:
+    - https://twitter.com/yourtwitterhandle
+    - https://github.com/yourusername
+    - https://instagram.com/yourhandle
+
+# === Exclude ===  
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache/
+  - .jekyll-cache/
