@@ -1,0 +1,77 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="container">
+    <h1>AI Art Gallery</h1>
+    <p>{{ site.description }}</p>
+  </div>
+</section>
+
+<section class="container">
+  <!-- Filter chips -->
+  <div class="filter-chips" role="tablist">
+    <button class="chip active" data-category="all">Semua</button>
+    {% for cat in site.data.navigation.categories %}
+      <button class="chip" data-category="{{ cat.slug }}">{{ cat.title }}</button>
+    {% endfor %}
+  </div>
+
+  <!-- Skeleton loader (shown first, then replaced) -->
+  {% include skeleton.html %}
+
+  <!-- Real gallery (hidden until loaded) -->
+  <div class="gallery-grid" id="galleryGrid" style="display: none;">
+    {% for post in paginator.posts %}
+      {% assign category = post.categories[0] | default: 'uncategorized' %}
+      <article class="art-card" data-category="{{ category }}">
+        <a href="{{ post.url | relative_url }}" style="display: block; text-decoration: none; color: inherit;">
+          <div class="art-card-image">
+            <span class="art-card-category">{{ category }}</span>
+            {% if post.image %}
+              <img src="{{ post.image | relative_url }}"
+                   alt="{{ post.title }}"
+                   loading="lazy"
+                   decoding="async"
+                   width="600" height="600">
+            {% else %}
+              <img src="{{ '/assets/images/placeholder.svg' | relative_url }}"
+                   alt="{{ post.title }}"
+                   loading="lazy"
+                   width="600" height="600">
+            {% endif %}
+          </div>
+          <div class="art-card-body">
+            <h3 class="art-card-title">{{ post.title }}</h3>
+            <div class="art-card-meta">
+              <span>{{ post.date | date: "%d %b %Y" }}</span>
+              {% if post.model %}· <span>{{ post.model }}</span>{% endif %}
+            </div>
+          </div>
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+
+  {% if paginator.total_pages > 1 %}
+    <nav class="pagination" aria-label="Pagination">
+      {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | relative_url }}" aria-label="Previous">← Prev</a>
+      {% endif %}
+
+      {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+          <span class="current">{{ page }}</span>
+        {% elsif page == 1 %}
+          <a href="{{ '/' | relative_url }}">{{ page }}</a>
+        {% else %}
+          <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}">{{ page }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | relative_url }}" aria-label="Next">Next →</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+</section>
