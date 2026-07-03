@@ -2,6 +2,7 @@
 layout: post
 title: prompt untuk wanita berhijab
 date: 2026-07-03
+categories: [Portrait]
 image: "https://file.garden/aGUfgZGhfBC3mQSW/1783077715737.png"
 description: Cara edit foto dengan benar
 model: Seedream
