@@ -28,7 +28,7 @@ function setTheme(theme) {
     iconMoon.style.display = theme === 'dark' ? 'block' : 'none';
   }
 
-  // ✅ Sync Giscus theme
+  // âœ… Sync Giscus theme
   updateGiscusTheme(theme);
 }
 
@@ -46,60 +46,23 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
   }
 });
 
-// === Mobile Menu (Drawer untuk semua ukuran layar) ===
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
-const navOverlay = document.getElementById('navOverlay');
-
-function openMenu() {
-  navLinks.classList.add('open');
-  navOverlay.classList.add('active');
-  menuToggle.classList.add('active');
-  menuToggle.setAttribute('aria-expanded', 'true');
-  document.body.classList.add('menu-open');
-}
-
-function closeMenu() {
-  navLinks.classList.remove('open');
-  navOverlay.classList.remove('active');
-  menuToggle.classList.remove('active');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  document.body.classList.remove('menu-open');
-}
-
-function toggleMenu() {
-  if (navLinks.classList.contains('open')) {
-    closeMenu();
-  } else {
-    openMenu();
-  }
-}
-
+// === Mobile Menu ===
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
 if (menuToggle) {
-  menuToggle.addEventListener('click', toggleMenu);
-}
-
-// Tutup drawer saat klik overlay
-if (navOverlay) {
-  navOverlay.addEventListener('click', closeMenu);
-}
-
-// Tutup drawer saat klik link di dalamnya
-if (navLinks) {
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
   });
 }
 
-// Tutup drawer saat tekan ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-    closeMenu();
-  }
-});
-
-
-// === Skeleton → Gallery Swap ===
+// === Skeleton â†’ Gallery Swap ===
 const skeletonGrid = document.getElementById('skeletonGrid');
 const galleryGrid = document.getElementById('galleryGrid');
 if (skeletonGrid && galleryGrid) {
@@ -172,7 +135,7 @@ document.addEventListener('keydown', (e) => {
 function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     const original = btn.innerHTML;
-    btn.innerHTML = '✓ Tersalin!';
+    btn.innerHTML = 'âœ“ Tersalin!';
     setTimeout(() => btn.innerHTML = original, 2000);
   }).catch(() => {
     // Fallback
