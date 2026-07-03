@@ -1,8 +1,8 @@
 # === Site Identity ===  
 title: "AI Art Gallery"
 description: "Koleksi prompt & karya AI Art — Eksplorasi visual tanpa batas."
-url: "https://cxllme-ahla.github.io"       # Ganti dengan URL GitHub Pages kamu
-baseurl: "/blog"            # Ganti dengan nama repo kamu
+url: "https://ahlawisnu.github.io"       # Ganti dengan URL GitHub Pages kamu
+baseurl: ""            # Ganti dengan nama repo kamu
 author: "AWVR VERSE"
 email: "email@example.com"
 lang: id-ID
