@@ -21,6 +21,8 @@ categories:
     slug: "random"
   - title: "Fantasy"
     slug: "fantasy"
+  - title: Image2Image
+    url: "image2image"
 
 # === Footer Links ===
 footer:
