@@ -2,7 +2,7 @@
 layout: post
 title: "Neon Dreams — Kota Cyberpunk di Tengah Hujan"
 date: 2026-07-03
-categories: [random]
+categories: [random, image2image]
 image: https://upload.wikimedia.org/wikipedia/id/a/a1/Cyberpunk_Edgerunners_poster.jpg
 description: "Eksplorasi visual kota cyberpunk futuristik dengan atmosfer hujan dan neon yang dramatis."
 model: "Midjourney v6.1"
