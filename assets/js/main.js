@@ -1,16 +1,35 @@
-// === Theme Toggle ===
+// === Theme Toggle (Refactored + Giscus Sync) ===
 const themeToggle = document.getElementById('themeToggle');
 const root = document.documentElement;
 const iconSun = document.querySelector('.icon-sun');
 const iconMoon = document.querySelector('.icon-moon');
 
+function getGiscusTheme(appTheme) {
+  return appTheme === 'dark' ? 'dark_dimmed' : 'light';
+}
+
+function updateGiscusTheme(appTheme) {
+  const iframe = document.querySelector('iframe.giscus-frame');
+  if (iframe) {
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: getGiscusTheme(appTheme) } } },
+      'https://giscus.app'
+    );
+  }
+}
+
 function setTheme(theme) {
   root.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
+
+  // Update icon
   if (iconSun && iconMoon) {
     iconSun.style.display = theme === 'dark' ? 'none' : 'block';
     iconMoon.style.display = theme === 'dark' ? 'block' : 'none';
   }
+
+  // ✅ Sync Giscus theme
+  updateGiscusTheme(theme);
 }
 
 if (themeToggle) {
@@ -19,6 +38,13 @@ if (themeToggle) {
     setTheme(current === 'dark' ? 'light' : 'dark');
   });
 }
+
+// Listen system preference change
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (!localStorage.getItem('theme')) {
+    setTheme(e.matches ? 'dark' : 'light');
+  }
+});
 
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
