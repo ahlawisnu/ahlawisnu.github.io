@@ -8,7 +8,7 @@ main:
     url: /about/
   - title: "Contact"
     url: /contact/
-  - title: Post Editor
+  - title: "Post Editor"
     url: https://ahlawisnu.github.io/Post-editor/
 
 # === Kategori Karya ===
@@ -23,7 +23,7 @@ categories:
     slug: "random"
   - title: "Fantasy"
     slug: "fantasy"
-  - title: Image2Image
+  - title: "Image2Image"
     url: "image2image"
 
 # === Footer Links ===
