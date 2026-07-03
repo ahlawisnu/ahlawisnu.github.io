@@ -51,7 +51,7 @@
   box-shadow: var(--md-elevation-2);
 }
 
-// ✅ Wrapper tombol aksi (toggle + hamburger)
+// âœ… Wrapper tombol aksi (toggle + hamburger)
 .header-actions {
   display: flex;
   align-items: center;
@@ -59,38 +59,15 @@
   order: 3; // Di desktop, tetap di kanan
 }
 
-// === Nav Links (Drawer) — FIXED VERSION ===
+// === Nav Links ===
 .nav-links {
-  position: fixed;
-  top: 64px;
-  right: 0;
-  flex-direction: column;
-  background: var(--md-surface);
-  width: 320px;
-  max-width: 85vw;
-  height: calc(100vh - 64px);
-  padding: 16px;
-  list-style: none;
   display: flex;
   gap: 8px;
-  align-items: stretch;
-  overflow-y: auto;
-  z-index: 99;
-
-  // ✅ KUNCI FIX: Benar-benar tersembunyi saat tertutup
-  transform: translateX(100%);
-  visibility: hidden;           // ← TAMBAHKAN
-  pointer-events: none;         // ← TAMBAHKAN
-  transition: transform 0.3s var(--md-motion),
-              visibility 0.3s var(--md-motion); // ← UPDATE
+  list-style: none;
+  align-items: center;
+  order: 2;
 }
 
-.nav-links.open {
-  transform: translateX(0);
-  visibility: visible;          // ← TAMBAHKAN
-  pointer-events: auto;         // ← TAMBAHKAN
-}
-  
 .nav-links a {
   padding: 8px 16px;
   border-radius: var(--md-radius-xl);
@@ -125,7 +102,7 @@
   transform: scale(1.05);
 }
 
-// ✅ Di desktop, hamburger disembunyikan
+// âœ… Di desktop, hamburger disembunyikan
 .menu-toggle {
   display: none;
 }
@@ -315,7 +292,7 @@
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 32px 24px;
   margin-bottom: 32px;
-  text-align: center; // ✅ Align center
+  text-align: center; // âœ… Align center
 }
 
 .footer-column {
@@ -356,7 +333,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  align-items: center; // ✅ Center align
+  align-items: center; // âœ… Center align
   width: 100%;
 }
 
@@ -445,7 +422,7 @@
 
 // === Responsive Adjustments ===
 
-// 📱 Mobile: 2 kolom
+// ðŸ“± Mobile: 2 kolom
 @media (max-width: 480px) {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -462,14 +439,14 @@
   }
 }
 
-// 📲 Tablet: 2-3 kolom
+// ðŸ“² Tablet: 2-3 kolom
 @media (min-width: 481px) and (max-width: 768px) {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-// 💻 Desktop: auto-fit (4+ kolom)
+// ðŸ’» Desktop: auto-fit (4+ kolom)
 @media (min-width: 769px) {
   .footer-bottom {
     flex-direction: row;
@@ -482,38 +459,9 @@
   }
 }
 
-// 🖥️ Desktop Lebar
+// ðŸ–¥ï¸ Desktop Lebar
 @media (min-width: 1200px) {
   .footer-grid {
     gap: 48px;
   }
-}
-
-// === Global Overflow Protection ===
-main, .site-header, .site-footer {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
-// Gallery grid tidak boleh overflow
-.gallery-grid {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-// Post content tidak boleh overflow
-.post-content {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
-// Fix untuk elemen absolute/fixed yang bisa trigger scroll
-.lightbox {
-  overflow: hidden;
-}
-
-.fab-container {
-  right: clamp(16px, 4vw, 24px);
-  max-width: calc(100vw - 32px);
 }
