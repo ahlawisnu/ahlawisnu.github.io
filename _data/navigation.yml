@@ -8,6 +8,8 @@ main:
     url: /about/
   - title: "Contact"
     url: /contact/
+  - title: Post Editor
+    url: https://ahlawisnu.github.io/Post-editor/
 
 # === Kategori Karya ===
 categories:
