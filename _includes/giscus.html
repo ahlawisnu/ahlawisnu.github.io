@@ -1,11 +1,5 @@
-<!--
-  Cara setup Giscus:
-  1. Buka https://giscus.app
-  2. Login dengan GitHub, pilih repo kamu
-  3. Copy konfigurasi dan ganti blok di atas
--->
 <div class="comments-section">
-  <h3 style="margin-bottom: 24px;">💬 Diskusi #GitHub │ ahlawisnu.github.io</h3>
+  <h3 style="margin-bottom: 24px;">💬 Diskusi</h3>
 
   <!-- Loading skeleton untuk Giscus -->
   <div id="giscus-loading" class="giscus-skeleton">
@@ -13,21 +7,8 @@
     <div class="skeleton" style="height: 80px; width: 100%; border-radius: 12px; margin-bottom: 12px;"></div>
     <div class="skeleton" style="height: 40px; width: 100%; border-radius: 12px;"></div>
   </div>
-<script src="https://giscus.app/client.js"
-          data-repo="ahlawisnu/ahlawisnu.github.io"
-          data-repo-id="R_kgDOTMGZRg"
-          data-category="General"
-          data-category-id="DIC_kwDOTMGZRs4DAZY5"
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="top"
-          data-theme="preferred_color_scheme"
-          data-lang="id"
-          crossorigin="anonymous"
-          async>
-  </script>
+
+  <div id="giscus-container"></div>
 </div>
 
 <script>
@@ -53,10 +34,10 @@
     // 3. Buat script Giscus secara dinamis
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'USERNAME/REPO');        // ← Ganti!
-    script.setAttribute('data-repo-id', 'REPO_ID');            // ← Ganti!
+    script.setAttribute('data-repo', 'ahlawisnu/ahlawisnu.github.io');        // ← Ganti!
+    script.setAttribute('data-repo-id', 'R_kgDOTMGZRg');            // ← Ganti!
     script.setAttribute('data-category', 'Announcements');     // ← Ganti!
-    script.setAttribute('data-category-id', 'CATEGORY_ID');    // ← Ganti!
+    script.setAttribute('data-category-id', 'DIC_kwDOTMGZRs4DAZY5');    // ← Ganti!
     script.setAttribute('data-mapping', 'pathname');
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
