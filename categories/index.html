@@ -1,0 +1,42 @@
+---
+layout: default
+title: "Kategori"
+permalink: /categories/
+---
+<section class="container" style="padding-top: 32px;">
+  <h1 style="text-align: center; margin-bottom: 32px;">🎨 Jelajahi Kategori</h1>
+
+  <div class="filter-chips">
+    {% for cat in site.data.navigation.categories %}
+      {% assign count = 0 %}
+      {% for post in site.posts %}
+        {% if post.categories contains cat.slug %}{% assign count = count | plus: 1 %}{% endif %}
+      {% endfor %}
+      <a href="#{{ cat.slug }}" class="chip">{{ cat.title }} ({{ count }})</a>
+    {% endfor %}
+  </div>
+
+  {% for cat in site.data.navigation.categories %}
+    {% assign posts = site.posts | where_exp: "post", "post.categories contains cat.slug" %}
+    {% if posts.size > 0 %}
+      <h2 id="{{ cat.slug }}" style="margin: 32px 0 16px;">{{ cat.title }}</h2>
+      <div class="gallery-grid">
+        {% for post in posts %}
+          <article class="art-card">
+            <a href="{{ post.url | relative_url }}" style="display: block; text-decoration: none; color: inherit;">
+              <div class="art-card-image">
+                {% if post.image %}
+                  <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy" width="600" height="600">
+                {% endif %}
+              </div>
+              <div class="art-card-body">
+                <h3 class="art-card-title">{{ post.title }}</h3>
+                <div class="art-card-meta"><span>{{ post.date | date: "%d %b %Y" }}</span></div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</section>
