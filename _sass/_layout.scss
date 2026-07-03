@@ -59,15 +59,38 @@
   order: 3; // Di desktop, tetap di kanan
 }
 
-// === Nav Links ===
+// === Nav Links (Drawer) — FIXED VERSION ===
 .nav-links {
+  position: fixed;
+  top: 64px;
+  right: 0;
+  flex-direction: column;
+  background: var(--md-surface);
+  width: 320px;
+  max-width: 85vw;
+  height: calc(100vh - 64px);
+  padding: 16px;
+  list-style: none;
   display: flex;
   gap: 8px;
-  list-style: none;
-  align-items: center;
-  order: 2;
+  align-items: stretch;
+  overflow-y: auto;
+  z-index: 99;
+
+  // ✅ KUNCI FIX: Benar-benar tersembunyi saat tertutup
+  transform: translateX(100%);
+  visibility: hidden;           // ← TAMBAHKAN
+  pointer-events: none;         // ← TAMBAHKAN
+  transition: transform 0.3s var(--md-motion),
+              visibility 0.3s var(--md-motion); // ← UPDATE
 }
 
+.nav-links.open {
+  transform: translateX(0);
+  visibility: visible;          // ← TAMBAHKAN
+  pointer-events: auto;         // ← TAMBAHKAN
+}
+  
 .nav-links a {
   padding: 8px 16px;
   border-radius: var(--md-radius-xl);
