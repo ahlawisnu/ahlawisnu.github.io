@@ -5,6 +5,7 @@
       <span>{{ site.title }}</span>
     </a>
 
+    <!-- ✅ Wrapper untuk tombol aksi (selalu terlihat) -->
     <div class="header-actions">
       <button class="theme-toggle" aria-label="Toggle theme" id="themeToggle">
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -16,7 +17,7 @@
         </svg>
       </button>
 
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" id="menuToggle">
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -25,39 +26,16 @@
       </button>
     </div>
 
-<ul class="nav-links" id="navLinks">
-  <!-- Menu utama (selalu tampil) -->
-  {% for item in site.data.navigation.main limit:4 %}
-    <li>
-      <a href="{{ item.url | relative_url }}"
-         {% if page.url == item.url %}class="active"{% endif %}>
-        {{ item.title }}
-      </a>
-    </li>
-  {% endfor %}
-
-  <!-- Menu tambahan (dalam dropdown "More") -->
-  {% assign extraItems = site.data.navigation.main | slice: 4 %}
-  {% if extraItems.size > 0 %}
-    <li class="nav-more">
-      <button class="nav-more-btn" aria-expanded="false" aria-haspopup="true">
-        More
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </button>
-      <ul class="nav-more-dropdown">
-        {% for item in extraItems %}
-          <li>
-            <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </li>
-  {% endif %}
-</ul>
+    <!-- Nav links (drawer di mobile) -->
+    <ul class="nav-links">
+      {% for item in site.data.navigation.main %}
+        <li>
+          <a href="{{ item.url | relative_url }}"
+             {% if page.url == item.url %}class="active" aria-current="page"{% endif %}>
+            {{ item.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
   </nav>
 </header>
-
-<!-- Overlay untuk menutup drawer saat klik di luar -->
-<div class="nav-overlay" id="navOverlay"></div>
