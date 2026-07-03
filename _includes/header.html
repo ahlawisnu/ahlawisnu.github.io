@@ -5,7 +5,6 @@
       <span>{{ site.title }}</span>
     </a>
 
-    <!-- ✅ Wrapper untuk tombol aksi (selalu terlihat) -->
     <div class="header-actions">
       <button class="theme-toggle" aria-label="Toggle theme" id="themeToggle">
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -17,7 +16,7 @@
         </svg>
       </button>
 
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" id="menuToggle">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -26,8 +25,7 @@
       </button>
     </div>
 
-    <!-- Nav links (drawer di mobile) -->
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       {% for item in site.data.navigation.main %}
         <li>
           <a href="{{ item.url | relative_url }}"
@@ -39,3 +37,6 @@
     </ul>
   </nav>
 </header>
+
+<!-- Overlay untuk menutup drawer saat klik di luar -->
+<div class="nav-overlay" id="navOverlay"></div>
