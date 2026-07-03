@@ -30,35 +30,35 @@ categories:
 footer:
   - group: "Ai Tools Colection"
     links:
-      - title: Request Anything
+      - title: "Request Anything"
         url: /project/Contact-Us.html
-      - title: Pembuat Undangan
+      - title: "Pembuat Undangan"
         url: https://ahlawisnu.github.io/undangan-generator
-      - title: Pembuat Undangan v2
+      - title: "Pembuat Undangan v2"
         url: https://ahlawisnu.github.io/undangan-generator2
-      - title: Konten Generator
+      - title: "Konten Generator"
         url: /project/kg.html
-      - title: Prompt untuk esit foto
+      - title: "Prompt untuk esit foto"
         url: /project/pe.html
-      - title: Json editor
+      - title: "Json editor"
         url: /project/JSON.html
-      - title: JSON Editor Pro
+      - title: "JSON Editor Pro"
         url: https://ahlawisnu.github.io/JSON-Prompt-Generator
-      - title: Docs editor
+      - title: "Docs editor"
         url: /project/Doc-editor.html
-      - title: PROMPT GENERATOR
+      - title: "PROMPT GENERATOR"
         url: https://ahlawisnu.github.io/Prompt-Generator
   - group: "Konten Creator"
     links:
-      - title: Artikel prompt Generator
+      - title: "Artikel prompt Generator"
         url: /project/ag.html
-      - title: Arrikel creator (prompt)
+      - title: "Arrikel creator (prompt)"
         url: /project/artikel_creator.html
-      - title: Jurnalistic Prompt
+      - title: "Jurnalistic Prompt"
         url: /project/JH.html
-      - title: Markdown Studio
+      - title: "Markdown Studio"
         url: /project/md-editor.html
-      - title: Prompt Video Generator
+      - title: "Prompt Video Generator"
         url: /project/video.html
-      - title: Prompt generator otomatis
+      - title: "Prompt generator otomatis"
         url: /project/img_edit.html
