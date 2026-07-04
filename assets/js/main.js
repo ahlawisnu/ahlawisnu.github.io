@@ -254,67 +254,6 @@ if (fabTop) {
     setTimeout(checkScroll, 300);
   });
 }
-  // Function untuk cek scroll position
-  function checkScroll() {
-    const scrollY = window.scrollY || window.pageYOffset;
-    const viewportHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-
-    // Tampilkan FAB jika sudah scroll > 400px DAN halaman cukup panjang
-    if (scrollY > 400 && documentHeight > viewportHeight * 1.5) {
-      fabTop.classList.add('visible');
-    } else {
-      fabTop.classList.remove('visible');
-    }
-  }
-
-  // Scroll listener dengan throttle
-  window.addEventListener('scroll', () => {
-    if (!isScrolling) {
-      window.requestAnimationFrame(() => {
-        checkScroll();
-        isScrolling = false;
-      });
-      isScrolling = true;
-    }
-
-    // Debounce untuk performa
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(checkScroll, 100);
-  }, { passive: true });
-
-  // Click handler
-  fabTop.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-
-    // Focus management untuk accessibility
-    document.body.focus();
-  });
-
-  // Keyboard support
-  fabTop.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      fabTop.click();
-    }
-  });
-
-  // Initial check
-  checkScroll();
-
-  // Re-check saat resize (misal: rotate device)
-  window.addEventListener('resize', () => {
-    setTimeout(checkScroll, 100);
-  }, { passive: true });
-
-  // Re-check saat orientation change
-  window.addEventListener('orientationchange', () => {
-    setTimeout(checkScroll, 300);
-  });
-}
 
 // === Lazy load enhancement (native loading="lazy" sudah cukup, ini untuk bonus fade-in) ===
 if ('IntersectionObserver' in window) {
