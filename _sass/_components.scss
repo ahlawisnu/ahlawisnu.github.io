@@ -257,17 +257,22 @@
 .params-table tr:last-child td { border-bottom: none; }
 .params-table tr:nth-child(even) td { background: var(--md-surface-variant); }
 
-// === FAB ===
+// === FAB Container ===
 .fab-container {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom)); // ✅ Safe area untuk notch
+  right: calc(24px + env(safe-area-inset-right));    // ✅ Safe area untuk home indicator
+  left: auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
   z-index: 90;
+  max-width: calc(100vw - 48px);  // ✅ Tidak keluar dari viewport
+  max-height: calc(100vh - 120px); // ✅ Tidak keluar dari viewport
+  pointer-events: none; // Container tidak menerima klik
 }
 
+// === FAB Button ===
 .fab {
   width: 56px;
   height: 56px;
@@ -279,15 +284,23 @@
   display: grid;
   place-items: center;
   box-shadow: var(--md-elevation-3);
-  transition: transform 0.2s var(--md-motion), box-shadow 0.2s;
+  transition: transform 0.2s var(--md-motion), 
+              box-shadow 0.2s,
+              opacity 0.3s var(--md-motion);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(20px) scale(0.9);
   pointer-events: none;
+  flex-shrink: 0;
+  touch-action: manipulation; // ✅ Optimasi untuk mobile
+  -webkit-tap-highlight-color: transparent; // ✅ Hilangkan highlight di iOS
+  user-select: none;
+  position: relative;
+  z-index: 91;
 }
 
 .fab.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
@@ -296,7 +309,101 @@
   box-shadow: 0 12px 24px rgba(103, 80, 164, 0.4);
 }
 
-.fab svg { width: 24px; height: 24px; }
+.fab:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: var(--md-elevation-1);
+}
+
+.fab:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+.fab svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+// === Mobile: FAB lebih kecil & posisi lebih aman ===
+@media (max-width: 768px) {
+  .fab-container {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    right: calc(16px + env(safe-area-inset-right));
+    gap: 10px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .fab {
+    width: 48px;  // ✅ Lebih kecil di mobile
+    height: 48px;
+    border-radius: var(--md-radius-md);
+  }
+
+  .fab svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// === Very Small Mobile: FAB lebih kecil lagi ===
+@media (max-width: 375px) {
+  .fab-container {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    right: calc(12px + env(safe-area-inset-right));
+  }
+
+  .fab {
+    width: 44px;
+    height: 44px;
+  }
+
+  .fab svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// === Landscape Mode: FAB di kanan bawah tapi tidak menutupi konten ===
+@media (max-height: 500px) and (orientation: landscape) {
+  .fab-container {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    right: calc(12px + env(safe-area-inset-right));
+  }
+
+  .fab {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+// === Keyboard Open: Sembunyikan FAB saat keyboard muncul ===
+@media (max-height: 400px) {
+  .fab-container {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+}
+
+// === Print: Sembunyikan FAB ===
+@media print {
+  .fab-container {
+    display: none !important;
+  }
+}
+
+// === Reduced Motion: Hilangkan animasi ===
+@media (prefers-reduced-motion: reduce) {
+  .fab {
+    transition: opacity 0.2s;
+  }
+
+  .fab:hover,
+  .fab:active {
+    transform: none;
+  }
+}
 
 // === Lightbox ===
 .lightbox {
