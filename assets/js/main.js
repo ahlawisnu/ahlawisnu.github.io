@@ -207,53 +207,6 @@ if (fabTop) {
     setTimeout(checkScroll, 300);
   });
 }
-  // Scroll listener dengan throttle
-  window.addEventListener('scroll', () => {
-    if (!isScrolling) {
-      window.requestAnimationFrame(() => {
-        checkScroll();
-        isScrolling = false;
-      });
-      isScrolling = true;
-    }
-
-    // Debounce untuk performa
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(checkScroll, 100);
-  }, { passive: true });
-
-  // Click handler
-  fabTop.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-
-    // Focus management untuk accessibility
-    document.body.focus();
-  });
-
-  // Keyboard support
-  fabTop.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      fabTop.click();
-    }
-  });
-
-  // Initial check
-  checkScroll();
-
-  // Re-check saat resize (misal: rotate device)
-  window.addEventListener('resize', () => {
-    setTimeout(checkScroll, 100);
-  }, { passive: true });
-
-  // Re-check saat orientation change
-  window.addEventListener('orientationchange', () => {
-    setTimeout(checkScroll, 300);
-  });
-}
 
 // === Lazy load enhancement (native loading="lazy" sudah cukup, ini untuk bonus fade-in) ===
 if ('IntersectionObserver' in window) {
