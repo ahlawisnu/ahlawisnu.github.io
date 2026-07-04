@@ -30,36 +30,36 @@ layout: default
     {{ content }}
 
     {% if page.prompt %}
-      <div class="prompt-block" id="promptBlock">
-        <div class="prompt-block-header">
-          <span>✨ Prompt</span>
-          <button class="prompt-copy-btn" data-copy="prompt">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span>Salin</span>
-          </button>
-        </div>
-        <pre><code id="prompt">{{ page.prompt }}</code></pre>
-      </div>
-    {% endif %}
+  <div class="prompt-block">
+    <div class="prompt-block-header">
+      <span>✨ Prompt</span>
+      <button class="copy-btn" aria-label="Copy prompt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Salin
+      </button>
+    </div>
+    <pre><code id="prompt">{{ page.prompt }}</code></pre>
+  </div>
+{% endif %}
 
-    {% if page.negative_prompt %}
-      <div class="prompt-block">
-        <div class="prompt-block-header">
-          <span>🚫 Negative Prompt</span>
-          <button class="prompt-copy-btn" data-copy="negative">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span>Salin</span>
-          </button>
-        </div>
-        <pre><code id="negative">{{ page.negative_prompt }}</code></pre>
-      </div>
-    {% endif %}
+{% if page.negative_prompt %}
+  <div class="prompt-block negative-prompt-block">
+    <div class="prompt-block-header">
+      <span>🚫 Negative Prompt</span>
+      <button class="copy-btn" aria-label="Copy negative prompt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Salin
+      </button>
+    </div>
+    <pre><code id="negative">{{ page.negative_prompt }}</code></pre>
+  </div>
+{% endif %}
 
     {% if page.parameters %}
       <h3>⚙️ Parameter</h3>
