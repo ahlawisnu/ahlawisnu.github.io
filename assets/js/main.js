@@ -414,3 +414,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initCodeBlocks();
   initPromptBlocks();
 });
+
+// === Landscape Overflow Detection ===
+function checkLandscapeOverflow() {
+  if (window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches) {
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks && navLinks.scrollWidth > navLinks.clientWidth) {
+      navLinks.classList.add('overflow-auto');
+    } else if (navLinks) {
+      navLinks.classList.remove('overflow-auto');
+    }
+  }
+}
+
+window.addEventListener('resize', checkLandscapeOverflow);
+window.addEventListener('orientationchange', () => {
+  setTimeout(checkLandscapeOverflow, 300);
+});
+document.addEventListener('DOMContentLoaded', checkLandscapeOverflow);
