@@ -541,3 +541,84 @@ html, body {
     gap: 48px;
   }
 }
+
+// ============================================================
+// 📱 LANDSCAPE MODE — Menu Horizontal (Tanpa Hamburger)
+// ============================================================
+@media (orientation: landscape) and (max-height: 500px) {
+  // ✅ Sembunyikan hamburger
+  .menu-toggle {
+    display: none !important;
+  }
+
+  // ✅ Nav links jadi horizontal inline
+  .nav-links {
+    position: static;
+    flex-direction: row;
+    background: transparent;
+    width: auto;
+    max-width: none;
+    height: auto;
+    padding: 0;
+    transform: none;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: none;
+    overflow: visible;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  // Link lebih compact di landscape
+  .nav-links a {
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+    border-radius: var(--md-radius-xl);
+    white-space: nowrap;
+  }
+
+  // Reset animasi stagger (tidak perlu di landscape)
+  .nav-links li {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  // Overlay tidak muncul
+  .nav-links.open::before {
+    display: none !important;
+  }
+
+  // Body tidak perlu scroll lock
+  body.menu-open {
+    overflow: auto;
+  }
+}
+
+// ============================================================
+// 📱 LANDSCAPE + LAYAR LEBIH LEBAR (> 700px)
+// ============================================================
+@media (orientation: landscape) and (max-height: 500px) and (min-width: 700px) {
+  .nav-links a {
+    padding: 8px 14px;
+    font-size: 0.875rem;
+  }
+}
+
+// ============================================================
+// 🚨 SAFETY: Kalau menu overflow di landscape
+// ============================================================
+@media (orientation: landscape) and (max-height: 500px) {
+  .nav-links.overflow-auto {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: calc(100vw - 200px);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
