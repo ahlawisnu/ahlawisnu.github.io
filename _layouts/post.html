@@ -30,12 +30,6 @@ layout: default
     {{ content }}
 
     {% if page.prompt %}
-tml‎
-Original file line number	Diff line number	Diff line change
-@@ -30,36 +30,36 @@ <h1 class="post-title" itemprop="headline">{{ page.title }}</h1>
-    {{ content }}
-
-    {% if page.prompt %}
       <div class="prompt-block" id="promptBlock">
         <div class="prompt-block-header">
           <span>✨ Prompt</span>
@@ -49,9 +43,9 @@ Original file line number	Diff line number	Diff line change
         </div>
         <pre><code id="prompt">{{ page.prompt }}</code></pre>
       </div>
-{% endif %}
+    {% endif %}
 
-  {% if page.negative_prompt %}
+    {% if page.negative_prompt %}
       <div class="prompt-block">
         <div class="prompt-block-header">
           <span>🚫 Negative Prompt</span>
