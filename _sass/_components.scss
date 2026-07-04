@@ -172,6 +172,99 @@
   box-shadow: var(--md-elevation-1);
 }
 
+// === List Styling (Numbering & Bulleting) ===
+.post-content {
+  ul, ol {
+    padding-left: 2.5rem;        // ✅ Indent utama
+    margin: 1em 0 1.5em;
+    list-style-position: outside; // Marker di luar, text tetap lurus
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: 0.5em;
+    line-height: 1.7;
+    padding-left: 0.25rem;       // Spasi kecil antara marker & text
+  }
+
+  li::marker {
+    color: var(--md-primary);    // ✅ Warna marker sesuai tema
+    font-weight: 500;
+  }
+
+  // === Nested List (Level 2) ===
+  ul ul, ol ol, ul ol, ol ul {
+    margin: 0.5em 0 0.5em;
+    padding-left: 1.75rem;       // ✅ Indent level 2
+  }
+
+  // === Nested List (Level 3) ===
+  ul ul ul, ol ol ol,
+  ul ul ol, ol ol ul,
+  ul ol ul, ol ul ol,
+  ul ol ol, ol ul ul {
+    padding-left: 1.5rem;        // ✅ Indent level 3
+  }
+
+  // === Ganti style marker per level ===
+  ul ul {
+    list-style-type: circle;
+  }
+
+  ul ul ul {
+    list-style-type: square;
+  }
+
+  // === List di dalam paragraf (inline) ===
+  p + ul, p + ol {
+    margin-top: 0.75em;
+  }
+
+  ul + p, ol + p {
+    margin-top: 1em;
+  }
+
+  // === Task List (Checkbox) ===
+  ul.task-list {
+    list-style-type: none;
+    padding-left: 1.5rem;
+  }
+
+  ul.task-list li {
+    position: relative;
+    padding-left: 0.5rem;
+  }
+
+  ul.task-list li input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: var(--md-primary);
+  }
+}
+
+// === Responsive ===
+@media (max-width: 480px) {
+  .post-content {
+    ul, ol {
+      padding-left: 1.75rem;     // ✅ Lebih compact di mobile
+    }
+
+    ul ul, ol ol, ul ol, ol ul {
+      padding-left: 1.25rem;
+    }
+
+    ul ul ul, ol ol ol {
+      padding-left: 1rem;
+    }
+  }
+}
+
 // === Prompt Code Block ===
 .prompt-block {
   position: relative;
