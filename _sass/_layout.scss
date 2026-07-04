@@ -9,17 +9,6 @@
   border-bottom: 1px solid var(--md-outline-variant);
 }
 
-// === Header / Navbar ===
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: color-mix(in srgb, var(--md-surface) 85%, transparent);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--md-outline-variant);
-}
-
 .navbar {
   display: flex;
   align-items: center;
@@ -51,35 +40,122 @@
   box-shadow: var(--md-elevation-2);
 }
 
-// Ã¢Å“â€¦ Wrapper tombol aksi (toggle + hamburger)
+// === Header Actions ===
 .header-actions {
   display: flex;
   align-items: center;
   gap: 4px;
-  order: 3; // Di desktop, tetap di kanan
+  order: 3;
 }
 
-// === Nav Links ===
+// === Nav Links (Drawer) ===
 .nav-links {
+  position: fixed;
+  top: 64px;
+  right: 0;
+  flex-direction: column;
+  background: var(--md-surface);
+  width: 320px;
+  max-width: 85vw;
+  height: calc(100vh - 64px);
+  padding: 16px;
+  list-style: none;
   display: flex;
   gap: 8px;
-  list-style: none;
-  align-items: center;
-  order: 2;
+  align-items: stretch;
+  overflow-y: auto;
+  order: 4;
+  z-index: 99;
+
+  // ✅ FIX: Benar-benar tersembunyi
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.3s var(--md-motion),
+              visibility 0.3s var(--md-motion);
+  box-shadow: none;
+}
+
+.nav-links.open {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  box-shadow: var(--md-elevation-3);
 }
 
 .nav-links a {
-  padding: 8px 16px;
-  border-radius: var(--md-radius-xl);
+  padding: 14px 20px;
+  border-radius: var(--md-radius-md);
   color: var(--md-on-surface-variant);
   font-weight: 500;
   transition: all 0.2s var(--md-motion);
-  position: relative;
+  display: block;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover,
+.nav-links a.active {
   background: var(--md-primary-container);
   color: var(--md-on-primary-container);
+}
+
+// === Tombol Toggle & Menu ===
+.theme-toggle,
+.menu-toggle {
+  background: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--md-on-surface-variant);
+  transition: background 0.2s, transform 0.2s var(--md-motion);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover,
+.menu-toggle:hover {
+  background: var(--md-surface-variant);
+  transform: scale(1.05);
+}
+
+// ✅ Hamburger SELALU terlihat
+.menu-toggle {
+  display: grid;
+}
+
+.menu-toggle svg {
+  transition: transform 0.3s var(--md-motion);
+}
+
+.menu-toggle.active svg {
+  transform: rotate(90deg);
+}
+
+// Body scroll lock
+body.menu-open {
+  overflow: hidden;
+}
+
+// === Overlay dengan ::before (FIXED) ===
+.nav-links.open::before {
+  content: '';
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+  pointer-events: auto;
+}
+
+// === Global Overflow Protection ===
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 // === Tombol Toggle & Menu ===
