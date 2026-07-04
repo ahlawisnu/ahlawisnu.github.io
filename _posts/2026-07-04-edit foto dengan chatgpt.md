@@ -6,9 +6,7 @@ categories: [image2image]
 image: "https://file.garden/aGUfgZGhfBC3mQSW/file_00000000ae6071fa893118a5c106f2a1.png"
 description: Cara edit foto dengan chatGPT
 model: ChatGPT
-prompt: "English tag collection:
-
-fix original face, young East Asian woman, fair smooth skin, soft oval face, delicate V-shaped jawline, straight black hair with wispy curtain bangs, dark almond-shaped eyes, closed-eye wink, gentle smile, natural pink lips, navy ribbon hair bow, seated cross-legged, right hand shading forehead, left hand on lap, light lavender short-sleeve school uniform shirt, black pleated skirt with wide belt, white socks, outdoor campus walkway, lush green trees, covered pavilion, soft natural daylight, eye-level, centered composition, medium-full body portrait, shallow depth of field, high-fidelity digital portrait, photorealistic"
+prompt: "fix original face, young East Asian woman, fair smooth skin, soft oval face, delicate V-shaped jawline, straight black hair with wispy curtain bangs, dark almond-shaped eyes, closed-eye wink, gentle smile, natural pink lips, navy ribbon hair bow, seated cross-legged, right hand shading forehead, left hand on lap, light lavender short-sleeve school uniform shirt, black pleated skirt with wide belt, white socks, outdoor campus walkway, lush green trees, covered pavilion, soft natural daylight, eye-level, centered composition, medium-full body portrait, shallow depth of field, high-fidelity digital portrait, photorealistic"
 parameters:
   Plugin: "@Buat Gambar / @Create Image"
   Rasio: "9:16 (is better)"
