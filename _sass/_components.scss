@@ -374,3 +374,265 @@
 .comments-section .giscus {
   width: 100%;
 }
+
+// === Code Block dengan Tombol Copy ===
+.code-block {
+  position: relative;
+  margin: 24px 0;
+  border-radius: var(--md-radius-md);
+  overflow: hidden;
+  background: var(--md-surface-variant);
+  border: 1px solid var(--md-outline-variant);
+  transition: border-color 0.2s;
+}
+
+.code-block:hover {
+  border-color: var(--md-primary);
+}
+
+// Header bar (judul + tombol copy)
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  gap: 12px;
+  min-height: 42px;
+}
+
+.code-block-lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.code-block-lang svg {
+  opacity: 0.7;
+}
+
+// Tombol Copy
+.copy-btn {
+  background: color-mix(in srgb, var(--md-on-primary-container) 10%, transparent);
+  border: none;
+  color: var(--md-on-primary-container);
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: var(--md-radius-xl);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s var(--md-motion);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: color-mix(in srgb, var(--md-on-primary-container) 20%, transparent);
+  transform: scale(1.02);
+}
+
+.copy-btn:active {
+  transform: scale(0.96);
+}
+
+// State: sukses copy
+.copy-btn.copied {
+  background: #4CAF50;
+  color: white;
+}
+
+.copy-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+// Area kode
+.code-block pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--md-on-surface);
+  tab-size: 2;
+}
+
+.code-block code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+
+// Scrollbar dalam code block
+.code-block pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.code-block pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.code-block pre::-webkit-scrollbar-thumb {
+  background: var(--md-outline);
+  border-radius: 3px;
+}
+
+.code-block pre::-webkit-scrollbar-thumb:hover {
+  background: var(--md-primary);
+}
+
+// === Inline Code ===
+:not(pre) > code {
+  background: var(--md-surface-variant);
+  color: var(--md-primary);
+  padding: 2px 8px;
+  border-radius: var(--md-radius-sm);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  font-weight: 500;
+  border: 1px solid var(--md-outline-variant);
+  white-space: nowrap;
+}
+
+// === Prompt Block (khusus untuk AI prompt) ===
+.prompt-block {
+  position: relative;
+  margin: 24px 0;
+  border-radius: var(--md-radius-md);
+  overflow: hidden;
+  background: var(--md-surface-variant);
+  border: 1px solid var(--md-outline-variant);
+  transition: border-color 0.2s;
+}
+
+.prompt-block:hover {
+  border-color: var(--md-tertiary);
+}
+
+.prompt-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--md-tertiary-container);
+  color: var(--md-on-tertiary-container);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  gap: 12px;
+}
+
+.prompt-block .copy-btn {
+  color: var(--md-on-tertiary-container);
+  background: color-mix(in srgb, var(--md-on-tertiary-container) 10%, transparent);
+}
+
+.prompt-block .copy-btn:hover {
+  background: color-mix(in srgb, var(--md-on-tertiary-container) 20%, transparent);
+}
+
+.prompt-block pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--md-on-surface);
+}
+
+.prompt-block code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+// === Negative Prompt Block ===
+.negative-prompt-block .prompt-block-header {
+  background: color-mix(in srgb, #EF5350 15%, var(--md-surface-variant));
+  color: var(--md-on-surface);
+}
+
+// === Toast Notification (saat copy berhasil) ===
+.copy-toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--md-on-surface);
+  color: var(--md-surface);
+  padding: 12px 24px;
+  border-radius: var(--md-radius-xl);
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--md-elevation-3);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s var(--md-motion);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.copy-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.copy-toast svg {
+  width: 18px;
+  height: 18px;
+  color: #4CAF50;
+}
+
+// === Code block nomor baris (opsional) ===
+.code-block.show-numbers pre {
+  counter-reset: line;
+  padding-left: 48px;
+}
+
+.code-block.show-numbers pre code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  position: absolute;
+  left: 0;
+  width: 32px;
+  text-align: right;
+  color: var(--md-outline);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+// === Responsive ===
+@media (max-width: 480px) {
+  .code-block pre,
+  .prompt-block pre {
+    font-size: 0.8125rem;
+    padding: 12px;
+  }
+
+  .code-block-header,
+  .prompt-block-header {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+
+  .copy-btn {
+    padding: 5px 10px;
+    font-size: 0.6875rem;
+  }
+}
