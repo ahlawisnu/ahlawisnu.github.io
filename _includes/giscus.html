@@ -1,61 +1,24 @@
 <div class="comments-section">
   <h3 style="margin-bottom: 24px;">💬 Diskusi</h3>
-
-  <!-- Loading skeleton untuk Giscus -->
-  <div id="giscus-loading" class="giscus-skeleton">
-    <div class="skeleton" style="height: 20px; width: 40%; border-radius: 4px; margin-bottom: 16px;"></div>
-    <div class="skeleton" style="height: 80px; width: 100%; border-radius: 12px; margin-bottom: 12px;"></div>
-    <div class="skeleton" style="height: 40px; width: 100%; border-radius: 12px;"></div>
-  </div>
-
-  <div id="giscus-container"></div>
+  <script src="https://giscus.app/client.js"
+          data-repo="ahlawisnu/ahlawisnu.github.io"
+          data-repo-id="R_kgDOTMGZRg"
+          data-category="General"
+          data-category-id="DIC_kwDOTMGZRs4DAZY5"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="giscusTheme"
+          data-lang="id"
+          crossorigin="anonymous"
+          async>
+  </script>
 </div>
-
-<script>
-  // === Giscus Dynamic Theme ===
-  (function() {
-    // 1. Baca tema saat ini dari data-theme attribute (bukan system preference)
-    function getCurrentTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved) return saved;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-    // 2. Map tema app → tema Giscus
-    function getGiscusTheme(appTheme) {
-      return appTheme === 'dark' ? 'dark_dimmed' : 'light';
-      // Opsi lain untuk dark: 'dark', 'dark_dimmed', 'dark_high_contrast'
-      // Opsi lain untuk light: 'light', 'light_high_contrast'
-    }
-
-    const currentTheme = getCurrentTheme();
-    const giscusTheme = getGiscusTheme(currentTheme);
-
-    // 3. Buat script Giscus secara dinamis
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'ahlawisnu/ahlawisnu.github.io');        // ← Ganti!
-    script.setAttribute('data-repo-id', 'R_kgDOTMGZRg');            // ← Ganti!
-    script.setAttribute('data-category', 'General');     // ← Ganti!
-    script.setAttribute('data-category-id', 'DIC_kwDOTMGZRs4DAZY5');    // ← Ganti!
-    script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-strict', '1');
-    script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-emit-metadata', '0');
-    script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', giscusTheme);            // ← Dinamis!
-    script.setAttribute('data-lang', 'id');
-    script.setAttribute('crossorigin', 'anonymous');
-    script.async = true;
-
-    // 4. Hapus loading skeleton setelah Giscus loaded
-    script.addEventListener('load', function() {
-      setTimeout(function() {
-        const loader = document.getElementById('giscus-loading');
-        if (loader) loader.style.display = 'none';
-      }, 500);
-    });
-
-    document.getElementById('giscus-container').appendChild(script);
-  })();
-</script>
+<!--
+  Cara setup Giscus:
+  1. Buka https://giscus.app
+  2. Login dengan GitHub, pilih repo kamu
+  3. Copy konfigurasi dan ganti blok di atas
+-->
