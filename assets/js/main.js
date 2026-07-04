@@ -20,6 +20,42 @@ if (themeToggle) {
   });
 }
 
+// === Giscus Theme Sync ===
+function updateGiscusTheme(newTheme) {
+  const giscusTheme = newTheme === 'dark' ? 'dark_dimmed' : 'light';
+  const iframe = document.querySelector('iframe.giscus-frame');
+
+  if (iframe) {
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: giscusTheme } } },
+      'https://giscus.app'
+    );
+  }
+}
+
+// Hook ke fungsi setTheme yang sudah ada
+const originalSetTheme = typeof setTheme === 'function' ? setTheme : null;
+
+// Override: setiap kali tema berubah, update Giscus juga
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    // Baca tema BARU setelah toggle
+    setTimeout(() => {
+      const newTheme = document.documentElement.getAttribute('data-theme');
+      updateGiscusTheme(newTheme);
+    }, 50); // Delay kecil agar data-theme sudah ter-update
+  });
+}
+
+// Listen perubahan system preference (jika user belum set manual)
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  const saved = localStorage.getItem('theme');
+  if (!saved) {
+    const newTheme = e.matches ? 'dark' : 'light';
+    updateGiscusTheme(newTheme);
+  }
+});
+
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
