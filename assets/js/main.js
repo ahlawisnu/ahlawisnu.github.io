@@ -20,21 +20,62 @@ if (themeToggle) {
   });
 }
 
-// === Mobile Menu ===
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
+// === Menu Drawer (Selalu Aktif di Semua Ukuran) ===
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
+
+function openMenu() {
+  navLinks.classList.add('open');
+  navOverlay.classList.add('active');
+  menuToggle.classList.add('active');
+  menuToggle.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('menu-open');
+}
+
+function closeMenu() {
+  navLinks.classList.remove('open');
+  navOverlay.classList.remove('active');
+  menuToggle.classList.remove('active');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+}
+
+function toggleMenu() {
+  if (navLinks.classList.contains('open')) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
+}
+
 if (menuToggle) {
-  menuToggle.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', isOpen);
-  });
-  document.addEventListener('click', (e) => {
-    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-      navLinks.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
+  menuToggle.addEventListener('click', toggleMenu);
+}
+
+// Tutup drawer saat klik overlay
+if (navOverlay) {
+  navOverlay.addEventListener('click', closeMenu);
+}
+
+// Tutup drawer saat klik link di dalamnya
+if (navLinks) {
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
   });
 }
+
+// Tutup drawer saat tekan ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+    closeMenu();
+  }
+});
+
+// Tutup drawer saat resize (safety)
+window.addEventListener('resize', () => {
+  // Optional: auto close saat resize
+});
 
 // === Skeleton → Gallery Swap ===
 const skeletonGrid = document.getElementById('skeletonGrid');
