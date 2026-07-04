@@ -15,6 +15,7 @@
   justify-content: space-between;
   height: 64px;
   gap: 16px;
+  position: relative;
 }
 
 .brand {
@@ -26,6 +27,7 @@
   color: var(--md-on-surface);
   text-decoration: none;
   flex-shrink: 0;
+  z-index: 101;
 }
 
 .brand-logo {
@@ -38,17 +40,18 @@
   color: white;
   font-weight: 700;
   box-shadow: var(--md-elevation-2);
+  flex-shrink: 0;
 }
 
-// === Header Actions ===
 .header-actions {
   display: flex;
   align-items: center;
   gap: 4px;
-  order: 3;
+  z-index: 101;
+  flex-shrink: 0;
 }
 
-// === Nav Links (Drawer) ===
+// === Default: Drawer (untuk mobile/tablet) ===
 .nav-links {
   position: fixed;
   top: 64px;
@@ -64,10 +67,7 @@
   gap: 8px;
   align-items: stretch;
   overflow-y: auto;
-  order: 4;
   z-index: 99;
-
-  // ✅ FIX: Benar-benar tersembunyi
   transform: translateX(100%);
   visibility: hidden;
   pointer-events: none;
@@ -98,7 +98,7 @@
   color: var(--md-on-primary-container);
 }
 
-// === Tombol Toggle & Menu ===
+// === Tombol ===
 .theme-toggle,
 .menu-toggle {
   background: transparent;
@@ -120,7 +120,7 @@
   transform: scale(1.05);
 }
 
-// ✅ Hamburger SELALU terlihat
+// Hamburger SELALU muncul
 .menu-toggle {
   display: grid;
 }
@@ -131,6 +131,129 @@
 
 .menu-toggle.active svg {
   transform: rotate(90deg);
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+// Overlay
+.nav-links.open::before {
+  content: '';
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+// ============================================================
+// 💻 DESKTOP — Menu Horizontal + Hamburger Tetap Ada
+// ============================================================
+@media (min-width: 1025px) {
+  .nav-links {
+    position: static;
+    flex-direction: row;
+    background: transparent;
+    width: auto;
+    max-width: none;
+    height: auto;
+    padding: 0;
+    transform: none;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: none;
+    overflow: visible;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+    margin: 0 16px;
+  }
+
+  .nav-links a {
+    padding: 8px 16px;
+    font-size: 0.9375rem;
+    border-radius: var(--md-radius-xl);
+    white-space: nowrap;
+  }
+
+  .nav-links li {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .nav-links.open::before {
+    display: none !important;
+  }
+
+  body.menu-open {
+    overflow: auto;
+  }
+}
+
+// ============================================================
+// 📱 LANDSCAPE MOBILE — Menu Horizontal Tanpa Hamburger
+// ============================================================
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 500px) {
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .nav-links {
+    position: static;
+    flex-direction: row;
+    background: transparent;
+    width: auto;
+    max-width: none;
+    height: auto;
+    padding: 0;
+    transform: none;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: none;
+    overflow: visible;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin: 0 auto;
+  }
+
+  .nav-links a {
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+    border-radius: var(--md-radius-xl);
+    white-space: nowrap;
+  }
+
+  .nav-links li {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .nav-links.open::before {
+    display: none !important;
+  }
+
+  body.menu-open {
+    overflow: auto;
+  }
+}
+
+// ============================================================
+// 🛡️ Global Protection
+// ============================================================
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 // Body scroll lock
