@@ -174,3 +174,190 @@ if ('IntersectionObserver' in window) {
     io.observe(card);
   });
 }
+
+// === Copy to Clipboard System ===
+
+// Toast notification
+function showToast(message) {
+  // Hapus toast yang sudah ada
+  const existing = document.querySelector('.copy-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'copy-toast';
+  toast.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span>${message}</span>
+  `;
+  document.body.appendChild(toast);
+
+  // Trigger animation
+  requestAnimationFrame(() => {
+    toast.classList.add('show');
+  });
+
+  // Auto remove
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 2000);
+}
+
+// Fungsi copy utama
+async function copyToClipboard(text, btn) {
+  try {
+    await navigator.clipboard.writeText(text);
+    // Sukses
+    btn.classList.add('copied');
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      Tersalin!
+    `;
+    showToast('Berhasil disalin ke clipboard');
+
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = originalHTML;
+    }, 2000);
+  } catch (err) {
+    // Fallback untuk browser lama
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      document.execCommand('copy');
+      showToast('Berhasil disalin ke clipboard');
+    } catch (e) {
+      showToast('Gagal menyalin. Coba manual.');
+    }
+
+    document.body.removeChild(textarea);
+  }
+}
+
+// === Auto-wrap semua <pre><code> dengan tombol copy ===
+function initCodeBlocks() {
+  const preElements = document.querySelectorAll('pre');
+
+  preElements.forEach(pre => {
+    // Skip jika sudah di-wrap
+    if (pre.closest('.code-block') || pre.closest('.prompt-block')) return;
+
+    const code = pre.querySelector('code');
+    if (!code) return;
+
+    // Deteksi bahasa dari class (Jekyll/Rouge output: class="language-python")
+    const langClass = Array.from(code.classList)
+      .find(c => c.startsWith('language-'));
+    const language = langClass ? langClass.replace('language-', '') : 'code';
+
+    // Language label yang user-friendly
+    const langLabels = {
+      'plaintext': 'Text',
+      'text': 'Text',
+      'code': 'Code',
+      'javascript': 'JavaScript',
+      'js': 'JavaScript',
+      'typescript': 'TypeScript',
+      'ts': 'TypeScript',
+      'python': 'Python',
+      'py': 'Python',
+      'html': 'HTML',
+      'css': 'CSS',
+      'scss': 'SCSS',
+      'yaml': 'YAML',
+      'yml': 'YAML',
+      'json': 'JSON',
+      'bash': 'Bash',
+      'sh': 'Shell',
+      'shell': 'Shell',
+      'markdown': 'Markdown',
+      'md': 'Markdown',
+      'ruby': 'Ruby',
+      'rb': 'Ruby',
+      'sql': 'SQL',
+      'xml': 'XML',
+      'jsx': 'JSX',
+      'tsx': 'TSX',
+      'prompt': 'Prompt',
+    };
+
+    const displayLang = langLabels[language.toLowerCase()] || language;
+
+    // Buat wrapper
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'code-block-header';
+    header.innerHTML = `
+      <span class="code-block-lang">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        ${displayLang}
+      </span>
+      <button class="copy-btn" aria-label="Copy code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Salin
+      </button>
+    `;
+
+    // Insert wrapper
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(header);
+    wrapper.appendChild(pre);
+
+    // Event listener untuk tombol copy
+    const copyBtn = header.querySelector('.copy-btn');
+    copyBtn.addEventListener('click', () => {
+      const text = code.textContent.trim();
+      copyToClipboard(text, copyBtn);
+    });
+  });
+}
+
+// === Init Prompt Blocks (dari front matter) ===
+function initPromptBlocks() {
+  document.querySelectorAll('.prompt-block .copy-btn, .prompt-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const block = btn.closest('.prompt-block') || btn.closest('.code-block');
+      const code = block ? block.querySelector('code') : null;
+      if (code) {
+        copyToClipboard(code.textContent.trim(), btn);
+      }
+    });
+  });
+
+  // FAB Copy (jika ada di halaman post)
+  const fabCopy = document.getElementById('fabCopy');
+  if (fabCopy) {
+    fabCopy.addEventListener('click', () => {
+      const promptEl = document.getElementById('prompt');
+      if (promptEl) {
+        copyToClipboard(promptEl.textContent.trim(), fabCopy);
+      }
+    });
+  }
+}
+
+// Jalankan saat DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  initCodeBlocks();
+  initPromptBlocks();
+});
