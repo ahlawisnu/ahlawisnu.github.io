@@ -109,7 +109,7 @@ document.addEventListener('keydown', (e) => {
 function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     const original = btn.innerHTML;
-    btn.innerHTML = 'âœ“ Tersalin!';
+    btn.innerHTML = ' ✅ Tersalin!';
     setTimeout(() => btn.innerHTML = original, 2000);
   }).catch(() => {
     // Fallback
