@@ -504,3 +504,57 @@ window.addEventListener('orientationchange', () => {
   setTimeout(checkLandscapeOverflow, 300);
 });
 document.addEventListener('DOMContentLoaded', checkLandscapeOverflow);
+
+// === PWA Service Worker Registration ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW registration failed:', err));
+  });
+}
+
+// === PWA Install Banner ===
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.className = 'pwa-install-banner';
+installBanner.innerHTML = `
+  <div class="pwa-banner-content">
+    <img src="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}" alt="App icon" class="pwa-banner-icon">
+    <div class="pwa-banner-text">
+      <strong>Install {{ site.title }}</strong>
+      <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
+    </div>
+  </div>
+  <div class="pwa-banner-actions">
+    <button class="pwa-btn-install">Install</button>
+    <button class="pwa-btn-close">✕</button>
+  </div>
+`;
+document.body.appendChild(installBanner);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBanner.classList.add('show');
+  console.log('[PWA] Install prompt available');
+});
+
+document.querySelector('.pwa-btn-install').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  installBanner.classList.remove('show');
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log(`[PWA] User choice: ${outcome}`);
+  deferredPrompt = null;
+});
+
+document.querySelector('.pwa-btn-close').addEventListener('click', () => {
+  installBanner.classList.remove('show');
+});
+
+// Hide banner if already installed
+window.addEventListener('appinstalled', () => {
+  installBanner.classList.remove('show');
+  console.log('[PWA] App installed');
+});
