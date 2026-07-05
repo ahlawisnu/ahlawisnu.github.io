@@ -565,7 +565,7 @@ if ('serviceWorker' in navigator) {
   box-shadow: var(--md-elevation-1);
   flex-shrink: 0;
   object-fit: cover;
-  display: block !important; // ✅ Pastikan visible
+  display: block !important; // ✅ Pastikan visible ok
   background: var(--md-surface-variant); // ✅ Fallback background
 }
 
