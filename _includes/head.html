@@ -56,6 +56,16 @@
 <!-- Feeds & Sitemap -->
 {% feed_meta %}
 
+<!-- === PWA Meta Tags === -->
+<link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+<meta name="theme-color" content="#6750A4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141218" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="512x512" href="{{ '/assets/images/icons/icon-512x512.png' | relative_url }}">
+
 <!-- Inline critical: prevent FOUC on theme -->
 <script>
   (function() {
