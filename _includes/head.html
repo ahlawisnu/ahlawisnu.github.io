@@ -2,7 +2,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }} — {{ site.description }}{% endif %}</title>
+<!-- === Dynamic Title === -->
+{% if page.layout == 'home' or page.url == '/' %}
+  <!-- Homepage: hanya nama blog -->
+  <title>{{ site.title }}</title>
+{% elsif page.title %}
+  <!-- Post/Page/Kategori: Judul | Nama Blog -->
+  <title>{{ page.title }} | {{ site.title }}</title>
+{% else %}
+  <!-- Fallback -->
+  <title>{{ site.title }} — {{ site.description }}</title>
+{% endif %}
+
 <meta name="description" content="{{ page.description | default: site.description | strip_html | truncate: 160 }}">
 <meta name="author" content="{{ site.author }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
