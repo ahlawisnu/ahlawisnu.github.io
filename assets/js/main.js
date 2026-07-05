@@ -53,7 +53,7 @@ function updateGiscusTheme(appTheme) {
   }
 }
 
-// === Hook ke setTheme yang sudah ada ===
+// === Hook ke setTheme yang sudah ada b ===
 // Kita override fungsi setTheme dengan menambahkan Giscus sync
 
 // Cari tombol toggle
