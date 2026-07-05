@@ -24,7 +24,7 @@ Disallow: /Gemfile.lock
 Disallow: /README.md
 
 # Sitemap
-Sitemap: {{ site.url }}{{ site.baseurl }}/sitemap.xml
+Sitemap: https://ahlawisnu.github.io/sitemap.xml
 
 # Crawl delay (opsional, untuk mengurangi load server)
 # Crawl-delay: 1
