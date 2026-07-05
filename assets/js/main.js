@@ -533,7 +533,7 @@ if ('serviceWorker' in navigator) {
     <div class="pwa-banner-content">
       <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.style.display='none'">
       <div class="pwa-banner-text">
-        <strong>Install ${siteTitle}</strong>
+        <strong>📳 Install ${siteTitle}</strong>
         <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
       </div>
     </div>
