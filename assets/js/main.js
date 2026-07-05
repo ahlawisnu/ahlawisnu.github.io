@@ -514,133 +514,53 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// === PWA Install Banner (iOS + Android + Desktop) ===
-(function() {
-  'use strict';
-
-  console.log('[PWA] Initializing banner...');
-
-  // ✅ Baca data dari meta tags
-  const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
-  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || '/assets/images/icons/icon-192x192.png';
-
-  // ✅ Deteksi device & browser
-  const ua = navigator.userAgent;
-  const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-  const isTablet = /iPad/.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
-  const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-
-  console.log('[PWA] Device detection:', { isIOS, isTablet, isSafari, isStandalone });
-
-  // ✅ Jangan tampilkan banner jika sudah di-install
-  if (isStandalone) {
-    console.log('[PWA] App already installed, skip banner');
-    return;
-  }
-
-  let deferredPrompt;
-  const installBanner = document.createElement('div');
-  installBanner.className = 'pwa-install-banner';
-  installBanner.id = 'pwa-install-banner';
-
-  // ✅ Fallback icon
-  const fallbackIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%236750A4'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white' font-family='Arial'%3EAI%3C/text%3E%3C/svg%3E`;
-
-  // ✅ Pesan berbeda untuk iOS vs Android
-  let bannerContent;
-  
-  if (isIOS || isTablet) {
-    // iOS/Tablet: Instruksi manual
-    bannerContent = `
-      <div class="pwa-banner-content">
-        <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.src='${fallbackIcon}'">
-        <div class="pwa-banner-text">
-          <strong>Install ${siteTitle}</strong>
-          <span>Ketuk <strong>Share</strong> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 2v6M12 22v-6M2 12h6M22 12h-6"/></svg> lalu <strong>"Add to Home Screen"</strong></span>
-        </div>
-      </div>
-      <div class="pwa-banner-actions">
-        <button class="pwa-btn-close" type="button" aria-label="Close">✕</button>
-      </div>
-    `;
-  } else {
-    // Android/Desktop: Install button
-    bannerContent = `
-      <div class="pwa-banner-content">
-        <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.src='${fallbackIcon}'">
-        <div class="pwa-banner-text">
-          <strong>Install ${siteTitle}</strong>
-          <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
-        </div>
-      </div>
-      <div class="pwa-banner-actions">
-        <button class="pwa-btn-install" type="button">Install</button>
-        <button class="pwa-btn-close" type="button" aria-label="Close">✕</button>
-      </div>
-    `;
-  }
-
-  installBanner.innerHTML = bannerContent;
-
-  // ✅ Append banner ke body
-  function appendBanner() {
-    if (document.body) {
-      document.body.appendChild(installBanner);
-      console.log('[PWA] Banner appended to body');
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', appendBanner);
-  } else {
-    appendBanner();
-  }
-
-  // ✅ Event: beforeinstallprompt (Android/Desktop)
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBanner.classList.add('show');
-    console.log('[PWA] ✅ Install prompt available (Android/Desktop)');
+// === PWA Service Worker Registration ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW registration failed:', err));
   });
+}
 
-  // ✅ iOS/Tablet: Force show banner setelah 3 detik
-  if (isIOS || isTablet) {
-    setTimeout(() => {
-      installBanner.classList.add('show');
-      console.log('[PWA] ✅ Banner shown manually (iOS/Tablet)');
-    }, 3000);
-  }
+// === PWA Install Banner ===
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.className = 'pwa-install-banner';
+installBanner.innerHTML = `
+  <div class="pwa-banner-content">
+    <img src="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}" alt="App icon" class="pwa-banner-icon">
+    <div class="pwa-banner-text">
+      <strong>Install {{ site.title }}</strong>
+      <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
+    </div>
+  </div>
+  <div class="pwa-banner-actions">
+    <button class="pwa-btn-install">Install</button>
+    <button class="pwa-btn-close">✕</button>
+  </div>
+`;
+document.body.appendChild(installBanner);
 
-  // ✅ Event: klik Install (Android/Desktop)
-  installBanner.addEventListener('click', async (e) => {
-    if (e.target.classList.contains('pwa-btn-install')) {
-      if (!deferredPrompt) {
-        console.warn('[PWA] ❌ No install prompt available');
-        return;
-      }
-      installBanner.classList.remove('show');
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`[PWA] User choice: ${outcome}`);
-      deferredPrompt = null;
-    }
-    
-    if (e.target.classList.contains('pwa-btn-close')) {
-      installBanner.classList.remove('show');
-      console.log('[PWA] Banner closed');
-    }
-  });
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBanner.classList.add('show');
+  console.log('[PWA] Install prompt available');
+});
 
-  // ✅ Event: app installed
-  window.addEventListener('appinstalled', () => {
-    installBanner.classList.remove('show');
-    console.log('[PWA] ✅ App installed');
-  });
+document.querySelector('.pwa-btn-install').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  installBanner.classList.remove('show');
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log(`[PWA] User choice: ${outcome}`);
+  deferredPrompt = null;
+});
 
-})();
-
+document.querySelector('.pwa-btn-close').addEventListener('click', () => {
+  installBanner.classList.remove('show');
+});
 
 // Hide banner if already installed
 window.addEventListener('appinstalled', () => {
