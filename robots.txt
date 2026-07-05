@@ -8,8 +8,6 @@ permalink: /robots.txt
 User-agent: *
 Allow: /
 Allow: /assets/images/
-Allow: /assets/css/
-Allow: /assets/js/
 
 # Block folder internal
 Disallow: /_drafts/
@@ -17,6 +15,8 @@ Disallow: /_includes/
 Disallow: /_layouts/
 Disallow: /_sass/
 Disallow: /_data/
+Disallow: /assets/css/
+Disallow: /assets/js/
 
 # Block file sensitif
 Disallow: /Gemfile
@@ -24,7 +24,7 @@ Disallow: /Gemfile.lock
 Disallow: /README.md
 
 # Sitemap
-Sitemap: https://ahlawisnu.github.io/sitemap.xml
+Sitemap: {{ site.url }}{{ site.baseurl }}/sitemap.xml
 
 # Crawl delay (opsional, untuk mengurangi load server)
 # Crawl-delay: 1
