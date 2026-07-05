@@ -525,13 +525,19 @@ if ('serviceWorker' in navigator) {
 
 // === PWA Install Banner ===
 let deferredPrompt;
+
+// ✅ Baca data dari HTML attributes
+const siteTitle = document.body.dataset.siteTitle || 'AI Art Gallery';
+const siteUrl = document.body.dataset.siteUrl || '';
+const iconUrl = '/assets/images/icons/icon-192x192.png';
+
 const installBanner = document.createElement('div');
 installBanner.className = 'pwa-install-banner';
 installBanner.innerHTML = `
   <div class="pwa-banner-content">
-    <img src="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}" alt="App icon" class="pwa-banner-icon">
+    <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon">
     <div class="pwa-banner-text">
-      <strong>Install {{ site.title }}</strong>
+      <strong>📲 Install ${siteTitle}</strong>
       <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
     </div>
   </div>
@@ -560,6 +566,11 @@ document.querySelector('.pwa-btn-install').addEventListener('click', async () =>
 
 document.querySelector('.pwa-btn-close').addEventListener('click', () => {
   installBanner.classList.remove('show');
+});
+
+window.addEventListener('appinstalled', () => {
+  installBanner.classList.remove('show');
+  console.log('[PWA] App installed');
 });
 
 // Hide banner if already installed
