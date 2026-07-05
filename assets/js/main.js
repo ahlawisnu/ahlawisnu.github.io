@@ -514,55 +514,85 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// === PWA Install Banner ===
-let deferredPrompt;
 
-// ✅ Baca data dari HTML attributes
-const siteTitle = document.body.dataset.siteTitle || 'AI Art Gallery';
-const siteUrl = document.body.dataset.siteUrl || '';
-const iconUrl = '/assets/images/icons/icon-192x192.png';
+// === PWA Install Banner (Fixed Version) ===
+(function() {
+  'use strict';
 
-const installBanner = document.createElement('div');
-installBanner.className = 'pwa-install-banner';
-installBanner.innerHTML = `
-  <div class="pwa-banner-content">
-    <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon">
-    <div class="pwa-banner-text">
-      <strong>Install ${siteTitle}</strong>
-      <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
+  // ✅ Baca data dari meta tags (lebih reliable)
+  const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
+  const siteDescription = document.querySelector('meta[name="pwa-description"]')?.content || '';
+  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || '/assets/images/icons/icon-192x192.png';
+  const baseurl = document.querySelector('meta[name="pwa-baseurl"]')?.content || '';
+
+  console.log('[PWA] Config:', { siteTitle, iconUrl, baseurl });
+
+  let deferredPrompt;
+  const installBanner = document.createElement('div');
+  installBanner.className = 'pwa-install-banner';
+  installBanner.innerHTML = `
+    <div class="pwa-banner-content">
+      <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.style.display='none'">
+      <div class="pwa-banner-text">
+        <strong>Install ${siteTitle}</strong>
+        <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
+      </div>
     </div>
-  </div>
-  <div class="pwa-banner-actions">
-    <button class="pwa-btn-install">Install</button>
-    <button class="pwa-btn-close">✕</button>
-  </div>
-`;
-document.body.appendChild(installBanner);
+    <div class="pwa-banner-actions">
+      <button class="pwa-btn-install">Install</button>
+      <button class="pwa-btn-close">✕</button>
+    </div>
+  `;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBanner.classList.add('show');
-  console.log('[PWA] Install prompt available');
-});
+  // ✅ Tunggu DOM ready baru append banner
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.appendChild(installBanner);
+    });
+  } else {
+    document.body.appendChild(installBanner);
+  }
 
-document.querySelector('.pwa-btn-install').addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  installBanner.classList.remove('show');
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  console.log(`[PWA] User choice: ${outcome}`);
-  deferredPrompt = null;
-});
+  // ✅ Event: beforeinstallprompt
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBanner.classList.add('show');
+    console.log('[PWA] Install prompt available');
+  });
 
-document.querySelector('.pwa-btn-close').addEventListener('click', () => {
-  installBanner.classList.remove('show');
-});
+  // ✅ Event: klik Install
+  const installBtn = installBanner.querySelector('.pwa-btn-install');
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        console.warn('[PWA] No install prompt available');
+        return;
+      }
+      installBanner.classList.remove('show');
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`[PWA] User choice: ${outcome}`);
+      deferredPrompt = null;
+    });
+  }
 
-window.addEventListener('appinstalled', () => {
-  installBanner.classList.remove('show');
-  console.log('[PWA] App installed');
-});
+  // ✅ Event: klik Close
+  const closeBtn = installBanner.querySelector('.pwa-btn-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      installBanner.classList.remove('show');
+    });
+  }
+
+  // ✅ Event: app installed
+  window.addEventListener('appinstalled', () => {
+    installBanner.classList.remove('show');
+    console.log('[PWA] App installed');
+  });
+})();
+
+
 // Hide banner if already installed
 window.addEventListener('appinstalled', () => {
   installBanner.classList.remove('show');
