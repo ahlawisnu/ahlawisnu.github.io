@@ -20,115 +20,41 @@ if (themeToggle) {
   });
 }
 
-// === Giscus Theme Sync (Robust Version) ===
-
-// Fungsi untuk kirim pesan ke Giscus iframe
-function updateGiscusTheme(appTheme) {
-  const giscusTheme = appTheme === 'dark' ? 'dark_dimmed' : 'light';
+// === Giscus Theme Sync ===
+function updateGiscusTheme(newTheme) {
+  const giscusTheme = newTheme === 'dark' ? 'dark_dimmed' : 'light';
   const iframe = document.querySelector('iframe.giscus-frame');
 
-  // Simpan tema terbaru
-  window.__giscusTheme = giscusTheme;
-
-  if (!iframe) {
-    console.log('[Giscus] Iframe belum ada, skip update');
-    return;
-  }
-
-  // Kirim pesan ke Giscus
-  const message = {
-    setConfig: {
-      theme: giscusTheme
-    }
-  };
-
-  try {
+  if (iframe) {
     iframe.contentWindow.postMessage(
-      { giscus: message },
+      { giscus: { setConfig: { theme: giscusTheme } } },
       'https://giscus.app'
     );
-    console.log('[Giscus] Theme updated to:', giscusTheme);
-  } catch (err) {
-    console.warn('[Giscus] Gagal update theme:', err);
   }
 }
 
-// === Hook ke setTheme yang sudah ada ===
-// Kita override fungsi setTheme dengan menambahkan Giscus sync
+// Hook ke fungsi setTheme yang sudah ada
+const originalSetTheme = typeof setTheme === 'function' ? setTheme : null;
 
-// Cari tombol toggle
-const themeToggleBtn = document.getElementById('themeToggle');
-const root = document.documentElement;
-
-if (themeToggleBtn) {
-  // Hapus listener lama (kalau ada) untuk mencegah duplikasi
-  const newToggle = themeToggleBtn.cloneNode(true);
-  themeToggleBtn.parentNode.replaceChild(newToggle, themeToggleBtn);
-
-  // Pasang listener baru
-  newToggle.addEventListener('click', () => {
-    const current = root.getAttribute('data-theme');
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-
-    // Update tema app
-    root.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-
-    // Update icon
-    const iconSun = document.querySelector('.icon-sun');
-    const iconMoon = document.querySelector('.icon-moon');
-    if (iconSun && iconMoon) {
-      iconSun.style.display = newTheme === 'dark' ? 'none' : 'block';
-      iconMoon.style.display = newTheme === 'dark' ? 'block' : 'none';
-    }
-
-    // ✅ Update Giscus (dengan delay untuk pastikan DOM updated)
+// Override: setiap kali tema berubah, update Giscus juga
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    // Baca tema BARU setelah toggle
     setTimeout(() => {
+      const newTheme = document.documentElement.getAttribute('data-theme');
       updateGiscusTheme(newTheme);
-    }, 50);
+    }, 50); // Delay kecil agar data-theme sudah ter-update
   });
 }
 
-// === Listen system preference change ===
+// Listen perubahan system preference (jika user belum set manual)
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem('theme')) {
+  const saved = localStorage.getItem('theme');
+  if (!saved) {
     const newTheme = e.matches ? 'dark' : 'light';
-    root.setAttribute('data-theme', newTheme);
     updateGiscusTheme(newTheme);
   }
 });
-
-// === Listen pesan dari Giscus (untuk konfirmasi iframe ready) ===
-window.addEventListener('message', (event) => {
-  // Hanya terima pesan dari giscus.app
-  if (event.origin !== 'https://giscus.app') return;
-
-  const data = event.data;
-  if (!data || typeof data !== 'object') return;
-
-  // Giscus kirim message saat iframe ready
-  if (data.giscus) {
-    window.__giscusReady = true;
-    console.log('[Giscus] Received ready signal from iframe');
-
-    // Kirim tema saat ini ke iframe yang baru ready
-    const currentTheme = root.getAttribute('data-theme') || 'light';
-    setTimeout(() => {
-      updateGiscusTheme(currentTheme);
-    }, 100);
-  }
-});
-
-// === Fallback: Cek berkala apakah iframe sudah ada ===
-// (Untuk browser yang tidak support message event dengan baik)
-setInterval(() => {
-  const iframe = document.querySelector('iframe.giscus-frame');
-  if (iframe && !window.__giscusReady) {
-    window.__giscusReady = true;
-    const currentTheme = root.getAttribute('data-theme') || 'light';
-    updateGiscusTheme(currentTheme);
-  }
-}, 500);
 
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
@@ -542,7 +468,6 @@ window.addEventListener('orientationchange', () => {
   setTimeout(checkLandscapeOverflow, 300);
 });
 document.addEventListener('DOMContentLoaded', checkLandscapeOverflow);
-
 
 // === PWA Service Worker Registration ===
 if ('serviceWorker' in navigator) {
