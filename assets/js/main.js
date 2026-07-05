@@ -514,82 +514,130 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// === PWA Install Banner (Fixed Version) ===
-(function() {
-  'use strict';
-
-  // ✅ Baca data dari meta tags (lebih reliable)
-  const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
-  const siteDescription = document.querySelector('meta[name="pwa-description"]')?.content || '';
-  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || '/assets/images/icons/icon-192x192.png';
-  const baseurl = document.querySelector('meta[name="pwa-baseurl"]')?.content || '';
-
-  console.log('[PWA] Config:', { siteTitle, iconUrl, baseurl });
-
-  let deferredPrompt;
-  const installBanner = document.createElement('div');
-  installBanner.className = 'pwa-install-banner';
-  installBanner.innerHTML = `
-    <div class="pwa-banner-content">
-      <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.style.display='none'">
-      <div class="pwa-banner-text">
-        <strong>Install ${siteTitle}</strong>
-        <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
-      </div>
-    </div>
-    <div class="pwa-banner-actions">
-      <button class="pwa-btn-install">Install</button>
-      <button class="pwa-btn-close">✕</button>
-    </div>
-  `;
-
-  // ✅ Tunggu DOM ready baru append banner
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      document.body.appendChild(installBanner);
-    });
-  } else {
-    document.body.appendChild(installBanner);
-  }
-
-  // ✅ Event: beforeinstallprompt
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBanner.classList.add('show');
-    console.log('[PWA] Install prompt available');
+// === PWA Service Worker Registration ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW registration failed:', err));
   });
+}
 
-  // ✅ Event: klik Install
-  const installBtn = installBanner.querySelector('.pwa-btn-install');
-  if (installBtn) {
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) {
-        console.warn('[PWA] No install prompt available');
-        return;
-      }
-      installBanner.classList.remove('show');
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`[PWA] User choice: ${outcome}`);
-      deferredPrompt = null;
-    });
+// === PWA Install Banner (Fixed) ===
+.pwa-install-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(150%);
+  background: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-radius-lg);
+  box-shadow: var(--md-elevation-3);
+  padding: 16px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.4s var(--md-motion), opacity 0.3s, visibility 0.3s;
+  max-width: 90vw;
+  width: 420px;
+  display: block; // ✅ Pastikan display block
+}
+
+.pwa-install-banner.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.pwa-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pwa-banner-icon {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: var(--md-radius-md);
+  box-shadow: var(--md-elevation-1);
+  flex-shrink: 0;
+  object-fit: cover;
+  display: block !important; // ✅ Pastikan visible
+  background: var(--md-surface-variant); // ✅ Fallback background
+}
+
+.pwa-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pwa-banner-text strong {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+  line-height: 1.3;
+  display: block; // ✅ Pastikan visible
+}
+
+.pwa-banner-text span {
+  font-size: 0.75rem;
+  color: var(--md-on-surface-variant);
+  line-height: 1.4;
+  display: block; // ✅ Pastikan visible
+}
+
+.pwa-banner-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.pwa-btn-install, .pwa-btn-close {
+  padding: 8px 16px;
+  border-radius: var(--md-radius-xl);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+}
+
+.pwa-btn-install {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.pwa-btn-install:hover {
+  background: color-mix(in srgb, var(--md-primary) 90%, black);
+}
+
+.pwa-btn-close {
+  background: transparent;
+  border: 1px solid var(--md-outline);
+  color: var(--md-on-surface-variant);
+}
+
+.pwa-btn-close:hover {
+  background: var(--md-surface-variant);
+}
+
+@media (max-width: 480px) {
+  .pwa-install-banner {
+    width: calc(100vw - 32px);
+    left: 16px;
+    right: 16px;
+    transform: translateY(150%);
   }
-
-  // ✅ Event: klik Close
-  const closeBtn = installBanner.querySelector('.pwa-btn-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      installBanner.classList.remove('show');
-    });
+  .pwa-install-banner.show {
+    transform: translateY(0);
   }
-
-  // ✅ Event: app installed
-  window.addEventListener('appinstalled', () => {
-    installBanner.classList.remove('show');
-    console.log('[PWA] App installed');
-  });
-})();
+}
 
 // Hide banner if already installed
 window.addEventListener('appinstalled', () => {
