@@ -514,7 +514,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
 // === PWA Install Banner (Fixed Version) ===
 (function() {
   'use strict';
@@ -591,7 +590,6 @@ if ('serviceWorker' in navigator) {
     console.log('[PWA] App installed');
   });
 })();
-
 
 // Hide banner if already installed
 window.addEventListener('appinstalled', () => {
