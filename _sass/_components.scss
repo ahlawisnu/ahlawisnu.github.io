@@ -806,7 +806,7 @@
     });
   }
 
-  // ✅ Event: klik Close
+  // ✅ Event: klik Close ok
   const closeBtn = installBanner.querySelector('.pwa-btn-close');
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
