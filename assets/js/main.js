@@ -514,15 +514,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// === PWA Service Worker Registration ===
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
-      .catch(err => console.warn('[PWA] SW registration failed:', err));
-  });
-}
-
 // === PWA Install Banner (Fixed Version) ===
 (function() {
   'use strict';
@@ -530,7 +521,7 @@ if ('serviceWorker' in navigator) {
   // ✅ Baca data dari meta tags (lebih reliable)
   const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
   const siteDescription = document.querySelector('meta[name="pwa-description"]')?.content || '';
-  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || 'https://ahlawisnu.github.io/assets/images/icons/icon-192x192.png';
+  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || '/assets/images/icons/icon-192x192.png';
   const baseurl = document.querySelector('meta[name="pwa-baseurl"]')?.content || '';
 
   console.log('[PWA] Config:', { siteTitle, iconUrl, baseurl });
@@ -542,7 +533,7 @@ if ('serviceWorker' in navigator) {
     <div class="pwa-banner-content">
       <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.style.display='none'">
       <div class="pwa-banner-text">
-        <strong>📲 Install ${siteTitle}</strong>
+        <strong>Install ${siteTitle}</strong>
         <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
       </div>
     </div>
