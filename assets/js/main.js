@@ -530,7 +530,7 @@ if ('serviceWorker' in navigator) {
   // ✅ Baca data dari meta tags (lebih reliable)
   const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
   const siteDescription = document.querySelector('meta[name="pwa-description"]')?.content || '';
-  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || '/assets/images/icons/icon-192x192.png';
+  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || 'https://ahlawisnu.github.io/assets/images/icons/icon-192x192.png';
   const baseurl = document.querySelector('meta[name="pwa-baseurl"]')?.content || '';
 
   console.log('[PWA] Config:', { siteTitle, iconUrl, baseurl });
