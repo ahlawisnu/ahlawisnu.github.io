@@ -2,6 +2,13 @@
 <html lang="{{ site.lang }}">
 <head>
   {% include head.html %}
+
+    <!-- ✅ PWA Data (untuk JavaScript) -->
+‎  <meta name="pwa-title" content="{{ site.title }}">
+‎  <meta name="pwa-description" content="{{ site.description }}">
+‎  <meta name="pwa-icon" content="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}">
+‎  <meta name="pwa-baseurl" content="{{ site.baseurl }}">
+
 </head>
   
 <body data-site-title="{{ site.title }}" data-site-url="{{ site.url }}">
