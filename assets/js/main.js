@@ -19,7 +19,6 @@ if (themeToggle) {
     setTheme(current === 'dark' ? 'light' : 'dark');
   });
 }
-
 // === Giscus Theme Sync ===
 function updateGiscusTheme(newTheme) {
   const giscusTheme = newTheme === 'dark' ? 'dark_dimmed' : 'light';
@@ -33,17 +32,25 @@ function updateGiscusTheme(newTheme) {
   }
 }
 
+// Helper: ambil tema yang sedang aktif
+function getCurrentTheme() {
+  return (
+    document.documentElement.getAttribute('data-theme') ||
+    localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  );
+}
+
 // Hook ke fungsi setTheme yang sudah ada
 const originalSetTheme = typeof setTheme === 'function' ? setTheme : null;
 
 // Override: setiap kali tema berubah, update Giscus juga
-if (themeToggle) {
+if (typeof themeToggle !== 'undefined' && themeToggle) {
   themeToggle.addEventListener('click', () => {
-    // Baca tema BARU setelah toggle
     setTimeout(() => {
       const newTheme = document.documentElement.getAttribute('data-theme');
       updateGiscusTheme(newTheme);
-    }, 50); // Delay kecil agar data-theme sudah ter-update
+    }, 50);
   });
 }
 
@@ -55,6 +62,35 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     updateGiscusTheme(newTheme);
   }
 });
+
+// === PERBAIKAN: Sync tema saat Giscus iframe sudah siap ===
+// Giscus mengirim postMessage saat iframe loaded & ready
+window.addEventListener('message', (event) => {
+  if (event.origin === 'https://giscus.app' && event.data?.giscus) {
+    updateGiscusTheme(getCurrentTheme());
+  }
+});
+
+// Fallback: polling kalau event message tidak terdeteksi
+(function waitForGiscusFrame() {
+  let attempts = 0;
+  const maxAttempts = 60; // max 6 detik
+
+  const interval = setInterval(() => {
+    attempts++;
+    const iframe = document.querySelector('iframe.giscus-frame');
+
+    if (iframe) {
+      clearInterval(interval);
+      // Beri jeda kecil biar iframe benar-benar siap menerima postMessage
+      setTimeout(() => updateGiscusTheme(getCurrentTheme()), 300);
+    }
+
+    if (attempts >= maxAttempts) {
+      clearInterval(interval);
+    }
+  }, 100);
+})();
 
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
