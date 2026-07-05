@@ -4,7 +4,7 @@ description: "Koleksi prompt & karya AI Art — Eksplorasi visual tanpa batas."
 url: "https://ahlawisnu.github.io"       # Ganti dengan URL GitHub Pages kamu
 baseurl: ""            # Ganti dengan nama repo kamu
 author: "AWVR VERSE"
-email: "email@example.com"
+email: "wisnudiary@outlook.com"
 lang: id-ID
 timezone: Asia/Jakarta
 
@@ -34,15 +34,15 @@ paginate_path: "/page/:num/"
 
 # === SEO ===  
 twitter:
-  username: yourtwitterhandle
+  username: 
   card: summary_large_image
 
 social:
   name: AWVR VERSE
   links:
-    - https://twitter.com/yourtwitterhandle
-    - https://github.com/yourusername
-    - https://instagram.com/yourhandle
+    - https://twitter.com/
+    - https://github.com/ahlawisnu
+    - https://instagram.com/awvr.verse
 
 # === Exclude ===  
 exclude:
