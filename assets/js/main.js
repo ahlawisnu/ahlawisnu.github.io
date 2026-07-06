@@ -21,11 +21,13 @@ if (themeToggle) {
 }
 
 // === Giscus Theme Sync ===
-function updateGiscusTheme(newTheme) {
-  const giscusTheme = newTheme === 'dark' ? 'dark_dimmed' : 'light';
+function updateGiscusTheme() {
+  // Ambil tema saat ini dari atribut HTML
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const giscusTheme = currentTheme === 'dark' ? 'dark_dimmed' : 'light';
+  
   const iframe = document.querySelector('iframe.giscus-frame');
-
-  if (iframe) {
+  if (iframe && iframe.contentWindow) {
     iframe.contentWindow.postMessage(
       { giscus: { setConfig: { theme: giscusTheme } } },
       'https://giscus.app'
@@ -33,19 +35,23 @@ function updateGiscusTheme(newTheme) {
   }
 }
 
-// Hook ke fungsi setTheme yang sudah ada
-const originalSetTheme = typeof setTheme === 'function' ? setTheme : null;
-
-// Override: setiap kali tema berubah, update Giscus juga
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    // Baca tema BARU setelah toggle
-    setTimeout(() => {
-      const newTheme = document.documentElement.getAttribute('data-theme');
-      updateGiscusTheme(newTheme);
-    }, 50); // Delay kecil agar data-theme sudah ter-update
+// 1. Gunakan MutationObserver agar sinkron secara real-time
+// Ini akan mendeteksi setiap perubahan atribut pada tag <html>
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === 'data-theme') {
+      updateGiscusTheme();
+    }
   });
-}
+});
+
+observer.observe(document.documentElement, { attributes: true });
+
+// 2. Initial trigger: Pastikan Giscus sesuai saat halaman pertama kali dimuat
+window.addEventListener('load', () => {
+  // Beri jeda sedikit agar iframe giscus selesai di-load
+  setTimeout(updateGiscusTheme, 1000);
+});
 
 // Listen perubahan system preference (jika user belum set manual)
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
