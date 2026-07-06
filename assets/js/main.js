@@ -474,3 +474,95 @@ window.addEventListener('orientationchange', () => {
   setTimeout(checkLandscapeOverflow, 300);
 });
 document.addEventListener('DOMContentLoaded', checkLandscapeOverflow);
+
+// === PWA Service Worker Registration ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW registration failed:', err));
+  });
+}
+
+// === PWA Install Banner (Fixed Version) ===
+(function() {
+  'use strict';
+
+  // ✅ Baca data dari meta tags (lebih reliable)
+  const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
+  const siteDescription = document.querySelector('meta[name="pwa-description"]')?.content || '';
+  const iconUrl = document.querySelector('meta[name="pwa-icon"]')?.content || '/assets/images/icons/icon-192x192.png';
+  const baseurl = document.querySelector('meta[name="pwa-baseurl"]')?.content || '';
+
+  console.log('[PWA] Config:', { siteTitle, iconUrl, baseurl });
+
+  let deferredPrompt;
+  const installBanner = document.createElement('div');
+  installBanner.className = 'pwa-install-banner';
+  installBanner.innerHTML = `
+    <div class="pwa-banner-content">
+      <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.style.display='none'">
+      <div class="pwa-banner-text">
+        <strong>Install ${siteTitle}</strong>
+        <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
+      </div>
+    </div>
+    <div class="pwa-banner-actions">
+      <button class="pwa-btn-install">Install</button>
+      <button class="pwa-btn-close">✕</button>
+    </div>
+  `;
+
+  // ✅ Tunggu DOM ready baru append banner
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.appendChild(installBanner);
+    });
+  } else {
+    document.body.appendChild(installBanner);
+  }
+
+  // ✅ Event: beforeinstallprompt
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBanner.classList.add('show');
+    console.log('[PWA] Install prompt available');
+  });
+
+  // ✅ Event: klik Install
+  const installBtn = installBanner.querySelector('.pwa-btn-install');
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        console.warn('[PWA] No install prompt available');
+        return;
+      }
+      installBanner.classList.remove('show');
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`[PWA] User choice: ${outcome}`);
+      deferredPrompt = null;
+    });
+  }
+
+  // ✅ Event: klik Close
+  const closeBtn = installBanner.querySelector('.pwa-btn-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      installBanner.classList.remove('show');
+    });
+  }
+
+  // ✅ Event: app installed
+  window.addEventListener('appinstalled', () => {
+    installBanner.classList.remove('show');
+    console.log('[PWA] App installed');
+  });
+})();
+
+// Hide banner if already installed
+window.addEventListener('appinstalled', () => {
+  installBanner.classList.remove('show');
+  console.log('[PWA] App installed');
+});
