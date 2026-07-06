@@ -20,45 +20,74 @@ if (themeToggle) {
   });
 }
 
-// === Giscus Theme Sync ===
-function sendMessage(message) {
+
+// === Giscus Theme Sync (Anti-Flash) ===
+function updateGiscusTheme(appTheme) {
+  const giscusTheme = appTheme === 'dark' ? 'dark_dimmed' : 'light';
   const iframe = document.querySelector('iframe.giscus-frame');
-  if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+
+  window.__giscusTheme = giscusTheme;
+
+  if (!iframe) return;
+
+  try {
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: giscusTheme } } },
+      'https://giscus.app'
+    );
+  } catch (err) {
+    console.warn('[Giscus] Gagal update theme:', err);
   }
 }
 
-function updateGiscusTheme() {
-  // Ubah selector ini jika tema Anda pakai class di body (misal: 'dark' atau 'light')
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
-                 document.body.classList.contains('dark');
-                 
-  const theme = isDark ? 'dark_dimmed' : 'light';
-  
-  sendMessage({ setConfig: { theme: theme } });
-}
+// ✅ ANTI-FLASH: Hide iframe sampai theme sync selesai
+(function() {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.tagName === 'IFRAME' && node.classList.contains('giscus-frame')) {
+          // ✅ Hide iframe dulu
+          node.style.opacity = '0';
+          node.style.transition = 'opacity 0.3s ease';
 
-// 1. MutationObserver untuk memantau perubahan secara real-time
-const observer = new MutationObserver(() => {
-  updateGiscusTheme();
+          // ✅ Sync theme
+          setTimeout(() => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            updateGiscusTheme(currentTheme);
+
+            // ✅ Fade in setelah sync
+            setTimeout(() => {
+              node.style.opacity = '1';
+            }, 100);
+          }, 50);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+
+// Listen system preference change
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (!localStorage.getItem('theme')) {
+    updateGiscusTheme(e.matches ? 'dark' : 'light');
+  }
 });
 
-// Pantau <html> untuk atribut, atau <body> untuk class
-observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+// Listen pesan dari Giscus
+window.addEventListener('message', (event) => {
+  if (event.origin !== 'https://giscus.app') return;
 
-// 2. Initial trigger dengan "Retry" agar pesan pasti terkirim
-function initGiscus() {
-  let count = 0;
-  const interval = setInterval(() => {
-    updateGiscusTheme();
-    count++;
-    if (count > 10) clearInterval(interval); // Berhenti setelah 5 detik
-  }, 500); // Coba kirim tiap 0.5 detik selama 5 detik pertama
-}
-
-window.addEventListener('load', initGiscus);
-
+  const data = event.data;
+  if (data && data.giscus) {
+    window.__giscusReady = true;
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    setTimeout(() => {
+      updateGiscusTheme(currentTheme);
+    }, 100);
+  }
+});
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
