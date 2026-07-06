@@ -20,17 +20,20 @@ if (themeToggle) {
   });
 }
 
-
-// === Giscus Theme Sync (Anti-Flash) ===
+// === Giscus Theme Sync (Fixed) ===
 function updateGiscusTheme(appTheme) {
   const giscusTheme = appTheme === 'dark' ? 'dark_dimmed' : 'light';
   const iframe = document.querySelector('iframe.giscus-frame');
 
   window.__giscusTheme = giscusTheme;
 
-  if (!iframe) return;
+  if (!iframe) {
+    console.log('[Giscus] Iframe belum ada, skip');
+    return;
+  }
 
   try {
+    console.log('[Giscus] Mengirim theme:', giscusTheme);
     iframe.contentWindow.postMessage(
       { giscus: { setConfig: { theme: giscusTheme } } },
       'https://giscus.app'
@@ -40,26 +43,29 @@ function updateGiscusTheme(appTheme) {
   }
 }
 
-// ✅ ANTI-FLASH: Hide iframe sampai theme sync selesai
+// ✅ ANTI-FLASH: Hide iframe saat pertama kali muncul
 (function() {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
         if (node.tagName === 'IFRAME' && node.classList.contains('giscus-frame')) {
-          // ✅ Hide iframe dulu
+          console.log('[Giscus] Iframe detected, hiding...');
+          
+          // Hide iframe
           node.style.opacity = '0';
           node.style.transition = 'opacity 0.3s ease';
 
-          // ✅ Sync theme
+          // Sync theme setelah iframe ready
           setTimeout(() => {
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             updateGiscusTheme(currentTheme);
 
-            // ✅ Fade in setelah sync
+            // Fade in
             setTimeout(() => {
               node.style.opacity = '1';
+              console.log('[Giscus] Iframe visible dengan theme:', currentTheme);
             }, 100);
-          }, 50);
+          }, 100);
         }
       });
     });
@@ -68,10 +74,47 @@ function updateGiscusTheme(appTheme) {
   observer.observe(document.body, { childList: true, subtree: true });
 })();
 
+// ✅ Event listener untuk toggle theme
+// Cari tombol toggle dan pastikan memanggil updateGiscusTheme
+const themeToggleBtn = document.getElementById('themeToggle');
+if (themeToggleBtn) {
+  // Clone node untuk hapus semua listener lama
+  const newToggle = themeToggleBtn.cloneNode(true);
+  themeToggleBtn.parentNode.replaceChild(newToggle, themeToggleBtn);
+
+  // Pasang listener baru
+  newToggle.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+
+    // Update tema app
+    root.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Update icon
+    const iconSun = document.querySelector('.icon-sun');
+    const iconMoon = document.querySelector('.icon-moon');
+    if (iconSun && iconMoon) {
+      iconSun.style.display = newTheme === 'dark' ? 'none' : 'block';
+      iconMoon.style.display = newTheme === 'dark' ? 'block' : 'none';
+    }
+
+    // ✅ Update Giscus dengan delay
+    setTimeout(() => {
+      updateGiscusTheme(newTheme);
+    }, 50);
+
+    console.log('[Theme] Changed to:', newTheme);
+  });
+}
+
 // Listen system preference change
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   if (!localStorage.getItem('theme')) {
-    updateGiscusTheme(e.matches ? 'dark' : 'light');
+    const newTheme = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    updateGiscusTheme(newTheme);
   }
 });
 
@@ -82,12 +125,15 @@ window.addEventListener('message', (event) => {
   const data = event.data;
   if (data && data.giscus) {
     window.__giscusReady = true;
+    console.log('[Giscus] Ready signal received');
+    
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     setTimeout(() => {
       updateGiscusTheme(currentTheme);
     }, 100);
   }
 });
+
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
@@ -529,7 +575,7 @@ if ('serviceWorker' in navigator) {
     <div class="pwa-banner-content">
       <img src="${iconUrl}" alt="App icon" class="pwa-banner-icon" onerror="this.style.display='none'">
       <div class="pwa-banner-text">
-        <strong>Install ${siteTitle}</strong>
+        <strong>📲 Install ${siteTitle}</strong>
         <span>Tambahkan ke Home Screen untuk akses cepat & mode offline</span>
       </div>
     </div>
