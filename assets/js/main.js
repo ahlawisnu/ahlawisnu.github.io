@@ -20,115 +20,32 @@ if (themeToggle) {
   });
 }
 
-// === Giscus Theme Sync (Robust Version) ===
-
-// Fungsi untuk kirim pesan ke Giscus iframe
-function updateGiscusTheme(appTheme) {
-  const giscusTheme = appTheme === 'dark' ? 'dark_dimmed' : 'light';
+// === Giscus Theme Sync ===
+function updateGiscusTheme(newTheme) {
+  const giscusTheme = newTheme === 'dark' ? 'dark_dimmed' : 'light';
   const iframe = document.querySelector('iframe.giscus-frame');
 
-  // Simpan tema terbaru
-  window.__giscusTheme = giscusTheme;
-
-  if (!iframe) {
-    console.log('[Giscus] Iframe belum ada, skip update');
-    return;
-  }
-
-  // Kirim pesan ke Giscus
-  const message = {
-    setConfig: {
-      theme: giscusTheme
-    }
-  };
-
-  try {
+  if (iframe) {
     iframe.contentWindow.postMessage(
-      { giscus: message },
+      { giscus: { setConfig: { theme: giscusTheme } } },
       'https://giscus.app'
     );
-    console.log('[Giscus] Theme updated to:', giscusTheme);
-  } catch (err) {
-    console.warn('[Giscus] Gagal update theme:', err);
   }
 }
 
-// === Hook ke setTheme yang sudah ada b ===
-// Kita override fungsi setTheme dengan menambahkan Giscus sync
+// Hook ke fungsi setTheme yang sudah ada
+const originalSetTheme = typeof setTheme === 'function' ? setTheme : null;
 
-// Cari tombol toggle
-const themeToggleBtn = document.getElementById('themeToggle');
-const root = document.documentElement;
-
-if (themeToggleBtn) {
-  // Hapus listener lama (kalau ada) untuk mencegah duplikasi
-  const newToggle = themeToggleBtn.cloneNode(true);
-  themeToggleBtn.parentNode.replaceChild(newToggle, themeToggleBtn);
-
-  // Pasang listener baru
-  newToggle.addEventListener('click', () => {
-    const current = root.getAttribute('data-theme');
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-
-    // Update tema app
-    root.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-
-    // Update icon
-    const iconSun = document.querySelector('.icon-sun');
-    const iconMoon = document.querySelector('.icon-moon');
-    if (iconSun && iconMoon) {
-      iconSun.style.display = newTheme === 'dark' ? 'none' : 'block';
-      iconMoon.style.display = newTheme === 'dark' ? 'block' : 'none';
-    }
-
-    // ✅ Update Giscus (dengan delay untuk pastikan DOM updated)
+// Override: setiap kali tema berubah, update Giscus juga
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    // Baca tema BARU setelah toggle
     setTimeout(() => {
+      const newTheme = document.documentElement.getAttribute('data-theme');
       updateGiscusTheme(newTheme);
-    }, 50);
+    }, 50); // Delay kecil agar data-theme sudah ter-update
   });
 }
-
-// === Listen system preference change ===
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem('theme')) {
-    const newTheme = e.matches ? 'dark' : 'light';
-    root.setAttribute('data-theme', newTheme);
-    updateGiscusTheme(newTheme);
-  }
-});
-
-// === Listen pesan dari Giscus (untuk konfirmasi iframe ready) ===
-window.addEventListener('message', (event) => {
-  // Hanya terima pesan dari giscus.app
-  if (event.origin !== 'https://giscus.app') return;
-
-  const data = event.data;
-  if (!data || typeof data !== 'object') return;
-
-  // Giscus kirim message saat iframe ready
-  if (data.giscus) {
-    window.__giscusReady = true;
-    console.log('[Giscus] Received ready signal from iframe');
-
-    // Kirim tema saat ini ke iframe yang baru ready
-    const currentTheme = root.getAttribute('data-theme') || 'light';
-    setTimeout(() => {
-      updateGiscusTheme(currentTheme);
-    }, 100);
-  }
-});
-
-// === Fallback: Cek berkala apakah iframe sudah ada ===
-// (Untuk browser yang tidak support message event dengan baik)
-setInterval(() => {
-  const iframe = document.querySelector('iframe.giscus-frame');
-  if (iframe && !window.__giscusReady) {
-    window.__giscusReady = true;
-    const currentTheme = root.getAttribute('data-theme') || 'light';
-    updateGiscusTheme(currentTheme);
-  }
-}, 500);
 
 // Listen perubahan system preference (jika user belum set manual)
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
@@ -551,134 +468,3 @@ window.addEventListener('orientationchange', () => {
   setTimeout(checkLandscapeOverflow, 300);
 });
 document.addEventListener('DOMContentLoaded', checkLandscapeOverflow);
-
-// === PWA Service Worker Registration ===
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
-      .catch(err => console.warn('[PWA] SW registration failed:', err));
-  });
-}
-
-// === PWA Install Banner (Fixed) ===
-.pwa-install-banner {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(150%);
-  background: var(--md-surface);
-  border: 1px solid var(--md-outline-variant);
-  border-radius: var(--md-radius-lg);
-  box-shadow: var(--md-elevation-3);
-  padding: 16px;
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: transform 0.4s var(--md-motion), opacity 0.3s, visibility 0.3s;
-  max-width: 90vw;
-  width: 420px;
-  display: block; // ✅ Pastikan display block
-}
-
-.pwa-install-banner.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-  visibility: visible;
-}
-
-.pwa-banner-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.pwa-banner-icon {
-  width: 48px !important;
-  height: 48px !important;
-  min-width: 48px;
-  min-height: 48px;
-  border-radius: var(--md-radius-md);
-  box-shadow: var(--md-elevation-1);
-  flex-shrink: 0;
-  object-fit: cover;
-  display: block !important; // ✅ Pastikan visible
-  background: var(--md-surface-variant); // ✅ Fallback background
-}
-
-.pwa-banner-text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
-}
-
-.pwa-banner-text strong {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--md-on-surface);
-  line-height: 1.3;
-  display: block; // ✅ Pastikan visible
-}
-
-.pwa-banner-text span {
-  font-size: 0.75rem;
-  color: var(--md-on-surface-variant);
-  line-height: 1.4;
-  display: block; // ✅ Pastikan visible
-}
-
-.pwa-banner-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.pwa-btn-install, .pwa-btn-close {
-  padding: 8px 16px;
-  border-radius: var(--md-radius-xl);
-  font-weight: 500;
-  font-size: 0.8125rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  border: none;
-}
-
-.pwa-btn-install {
-  background: var(--md-primary);
-  color: var(--md-on-primary);
-}
-
-.pwa-btn-install:hover {
-  background: color-mix(in srgb, var(--md-primary) 90%, black);
-}
-
-.pwa-btn-close {
-  background: transparent;
-  border: 1px solid var(--md-outline);
-  color: var(--md-on-surface-variant);
-}
-
-.pwa-btn-close:hover {
-  background: var(--md-surface-variant);
-}
-
-@media (max-width: 480px) {
-  .pwa-install-banner {
-    width: calc(100vw - 32px);
-    left: 16px;
-    right: 16px;
-    transform: translateY(150%);
-  }
-  .pwa-install-banner.show {
-    transform: translateY(0);
-  }
-}
-
-// Hide banner if already installed
-window.addEventListener('appinstalled', () => {
-  installBanner.classList.remove('show');
-  console.log('[PWA] App installed');
-});
