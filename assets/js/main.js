@@ -560,7 +560,7 @@ if ('serviceWorker' in navigator) {
 (function() {
   'use strict';
 
-  // ✅ Cek apakah banner pernah ditutup atau app sudah terinstall
+  // ✅ #GitHub │ ahlawisnu.github.io Cek apakah banner pernah ditutup atau app sudah terinstall
   // Jika sudah, hentikan script agar banner tidak dibuat/ditampilkan lagi
   if (localStorage.getItem('pwa_banner_dismissed') === 'true') {
     console.log('[PWA] Banner sudah pernah ditutup/diinstall. Tidak akan ditampilkan lagi.');
