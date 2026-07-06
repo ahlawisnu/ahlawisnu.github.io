@@ -20,7 +20,7 @@ if (themeToggle) {
   });
 }
 
-// === Giscus Theme Sync ===
+// === Giscus Theme Sync final ===
 function updateGiscusTheme() {
   // Ambil tema saat ini dari atribut HTML
   const currentTheme = document.documentElement.getAttribute('data-theme');
