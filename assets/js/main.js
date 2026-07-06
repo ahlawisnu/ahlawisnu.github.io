@@ -20,47 +20,44 @@ if (themeToggle) {
   });
 }
 
-// === Giscus Theme Sync final ===
-function updateGiscusTheme() {
-  // Ambil tema saat ini dari atribut HTML
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const giscusTheme = currentTheme === 'dark' ? 'dark_dimmed' : 'light';
-  
+// === Giscus Theme Sync ===
+function sendMessage(message) {
   const iframe = document.querySelector('iframe.giscus-frame');
   if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage(
-      { giscus: { setConfig: { theme: giscusTheme } } },
-      'https://giscus.app'
-    );
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
   }
 }
 
-// 1. Gunakan MutationObserver agar sinkron secara real-time
-// Ini akan mendeteksi setiap perubahan atribut pada tag <html>
-const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    if (mutation.attributeName === 'data-theme') {
-      updateGiscusTheme();
-    }
-  });
+function updateGiscusTheme() {
+  // Ubah selector ini jika tema Anda pakai class di body (misal: 'dark' atau 'light')
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                 document.body.classList.contains('dark');
+                 
+  const theme = isDark ? 'dark_dimmed' : 'light';
+  
+  sendMessage({ setConfig: { theme: theme } });
+}
+
+// 1. MutationObserver untuk memantau perubahan secara real-time
+const observer = new MutationObserver(() => {
+  updateGiscusTheme();
 });
 
-observer.observe(document.documentElement, { attributes: true });
+// Pantau <html> untuk atribut, atau <body> untuk class
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
-// 2. Initial trigger: Pastikan Giscus sesuai saat halaman pertama kali dimuat
-window.addEventListener('load', () => {
-  // Beri jeda sedikit agar iframe giscus selesai di-load
-  setTimeout(updateGiscusTheme, 1000);
-});
+// 2. Initial trigger dengan "Retry" agar pesan pasti terkirim
+function initGiscus() {
+  let count = 0;
+  const interval = setInterval(() => {
+    updateGiscusTheme();
+    count++;
+    if (count > 10) clearInterval(interval); // Berhenti setelah 5 detik
+  }, 500); // Coba kirim tiap 0.5 detik selama 5 detik pertama
+}
 
-// Listen perubahan system preference (jika user belum set manual)
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  const saved = localStorage.getItem('theme');
-  if (!saved) {
-    const newTheme = e.matches ? 'dark' : 'light';
-    updateGiscusTheme(newTheme);
-  }
-});
+window.addEventListener('load', initGiscus);
 
 // === Mobile Menu ===
 const menuToggle = document.querySelector('.menu-toggle');
