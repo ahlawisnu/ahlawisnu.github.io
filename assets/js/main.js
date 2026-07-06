@@ -560,6 +560,13 @@ if ('serviceWorker' in navigator) {
 (function() {
   'use strict';
 
+  // ✅ Cek apakah banner pernah ditutup atau app sudah terinstall
+  // Jika sudah, hentikan script agar banner tidak dibuat/ditampilkan lagi
+  if (localStorage.getItem('pwa_banner_dismissed') === 'true') {
+    console.log('[PWA] Banner sudah pernah ditutup/diinstall. Tidak akan ditampilkan lagi.');
+    return; 
+  }
+
   // ✅ Baca data dari meta tags (lebih reliable)
   const siteTitle = document.querySelector('meta[name="pwa-title"]')?.content || 'AI Art Gallery';
   const siteDescription = document.querySelector('meta[name="pwa-description"]')?.content || '';
@@ -614,6 +621,9 @@ if ('serviceWorker' in navigator) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       console.log(`[PWA] User choice: ${outcome}`);
+      
+      // ✅ Simpan status agar banner tidak muncul lagi
+      localStorage.setItem('pwa_banner_dismissed', 'true');
       deferredPrompt = null;
     });
   }
@@ -623,18 +633,16 @@ if ('serviceWorker' in navigator) {
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       installBanner.classList.remove('show');
+      // ✅ Simpan status agar banner tidak muncul lagi
+      localStorage.setItem('pwa_banner_dismissed', 'true');
     });
   }
 
   // ✅ Event: app installed
   window.addEventListener('appinstalled', () => {
     installBanner.classList.remove('show');
+    localStorage.setItem('pwa_banner_dismissed', 'true');
     console.log('[PWA] App installed');
   });
-})();
 
-// Hide banner if already installed
-window.addEventListener('appinstalled', () => {
-  installBanner.classList.remove('show');
-  console.log('[PWA] App installed');
-});
+})();
