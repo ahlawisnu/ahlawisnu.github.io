@@ -40,6 +40,11 @@ footer:
         url: /project/kg.html
       - title: "Prompt untuk edit foto"
         url: /project/pe.html
+        
+  - group: "Tools Editor"
+    link:
+      - title: "SVG Creator"
+        url: https://ahlawisnu.github.io/image-to-SVG/
       - title: "Json editor"
         url: /project/JSON.html
       - title: "JSON Editor Pro"
@@ -48,6 +53,7 @@ footer:
         url: /project/Doc-editor.html
       - title: "PROMPT GENERATOR"
         url: https://ahlawisnu.github.io/Prompt-Generator
+        
   - group: "Konten Creator"
     links:
       - title: "Artikel prompt Generator"
