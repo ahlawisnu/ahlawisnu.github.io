@@ -42,7 +42,7 @@ footer:
         url: /project/pe.html
         
   - group: "Tools Editor"
-    link:
+    links:
       - title: "SVG Creator"
         url: https://ahlawisnu.github.io/image-to-SVG/
       - title: "Json editor"
