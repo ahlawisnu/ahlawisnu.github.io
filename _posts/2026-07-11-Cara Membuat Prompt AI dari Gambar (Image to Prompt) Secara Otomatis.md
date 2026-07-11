@@ -3,7 +3,7 @@ layout: post
 title: "Cara Membuat Prompt AI dari Gambar (Image to Prompt) Secara Otomatis"
 date: 2026-07-11
 categories: [image2image]
-image: 
+image: /image.svg
 description: "Pelajari cara mengubah gambar menjadi prompt AI berkualitas tinggi menggunakan teknik Image to Prompt. Panduan lengkap membuat prompt otomatis yang siap digunakan di berbagai AI Image Generator sambil mempertahankan karakter wajah asli."
 model: ""
 prompt: "{
