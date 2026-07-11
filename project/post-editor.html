@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>STARK Editor — Jekyll Post Template</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/orbitron@5.0.18/index.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rajdhani@5.0.18/index.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/index.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.18/index.min.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+
+<style>
+  :root {
+    --bg-0: #0a0a0c;
+    --bg-1: #141418;
+    --bg-2: #1c1c22;
+    --bg-3: #25252d;
+    --red-deep: #7a0b0b;
+    --red-main: #c8102e;
+    --red-bright: #e63946;
+    --gold-deep: #b8860b;
+    --gold-main: #ffb300;
+    --gold-bright: #ffd54f;
+    --text-primary: #f5f5f5;
+    --text-secondary: #b0b0b8;
+    --text-muted: #70707a;
+    --border: #2a2a33;
+    --border-focus: #ffb300;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-0);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(200, 16, 46, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 179, 0, 0.05), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(10,10,12,0.98), rgba(10,10,12,0.92));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .brand { display: flex; align-items: center; gap: 14px; }
+
+  .arc-reactor {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #e0f7ff 0%, #4fc3f7 30%, #0277bd 70%, #014361 100%);
+    box-shadow:
+      0 0 20px rgba(79, 195, 247, 0.8),
+      0 0 40px rgba(79, 195, 247, 0.4),
+      inset 0 0 10px rgba(255,255,255,0.5);
+    position: relative;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  .arc-reactor::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, #81d4fa 50%, transparent 100%);
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(79,195,247,0.8), 0 0 40px rgba(79,195,247,0.4), inset 0 0 10px rgba(255,255,255,0.5); }
+    50% { box-shadow: 0 0 30px rgba(79,195,247,1), 0 0 60px rgba(79,195,247,0.6), inset 0 0 15px rgba(255,255,255,0.8); }
+  }
+
+  .brand-text h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--gold-bright), var(--gold-main), var(--red-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-text p {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--red-main), var(--red-deep));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(200, 16, 46, 0.4);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(200, 16, 46, 0.6); }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold-main), var(--gold-deep));
+    color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(255, 179, 0, 0.3);
+  }
+  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255, 179, 0, 0.5); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    background: var(--bg-2);
+    border-color: var(--gold-main);
+    color: var(--gold-main);
+  }
+
+  .tab-bar {
+    background: var(--bg-1);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    position: sticky;
+    top: 72px;
+    z-index: 90;
+    scrollbar-width: thin;
+  }
+  .tab-bar::-webkit-scrollbar { height: 4px; }
+  .tab-bar::-webkit-scrollbar-thumb { background: var(--red-deep); border-radius: 2px; }
+
+  .tab-item {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 14px 18px;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    position: relative;
+  }
+  .tab-item svg { width: 16px; height: 16px; }
+  .tab-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.02); }
+  .tab-item.active {
+    color: var(--gold-main);
+    border-bottom-color: var(--gold-main);
+  }
+  .tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 2px;
+    background: var(--red-bright);
+    box-shadow: 0 0 8px var(--red-bright);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: calc(100vh - 120px);
+    position: relative;
+    z-index: 1;
+  }
+
+  .panel { padding: 24px; overflow-y: auto; }
+  .panel-editor { border-right: 1px solid var(--border); max-height: calc(100vh - 120px); }
+  .panel-preview { background: var(--bg-1); max-height: calc(100vh - 120px); }
+
+  .panel-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-main);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-title::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--red-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--red-bright);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .tab-content { display: none; animation: fadeIn 0.3s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .section-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-main);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-card h3 svg { width: 18px; height: 18px; color: var(--red-bright); }
+  .section-card .hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  .input, .textarea {
+    width: 100%;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 11px 14px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+  .input:focus, .textarea:focus {
+    border-color: var(--gold-main);
+    box-shadow: 0 0 0 3px rgba(255, 179, 0, 0.15);
+    background: var(--bg-0);
+  }
+  .input::placeholder, .textarea::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+    min-height: 20px;
+  }
+  .chips:empty::before {
+    content: 'Belum ada kategori. Pilih quick category atau tambahkan custom di bawah.';
+    color: var(--text-muted);
+    font-size: 12px;
+    font-style: italic;
+    width: 100%;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(200, 16, 46, 0.2), rgba(200, 16, 46, 0.1));
+    border: 1px solid var(--red-main);
+    color: var(--gold-bright);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    animation: chipIn 0.2s ease;
+  }
+  @keyframes chipIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .chip input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--gold-bright);
+    font-family: inherit;
+    font-size: inherit;
+    width: 110px;
+  }
+  .chip-remove {
+    background: transparent;
+    border: none;
+    color: var(--red-bright);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+  .chip-remove:hover { transform: scale(1.2); color: var(--gold-main); }
+
+  /* Quick categories */
+  .quick-cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .quick-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--text-secondary);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .quick-cat svg { width: 12px; height: 12px; }
+  .quick-cat:hover {
+    border-color: var(--gold-main);
+    color: var(--gold-main);
+    background: rgba(255, 179, 0, 0.05);
+    transform: translateY(-1px);
+  }
+  .quick-cat.active {
+    background: linear-gradient(135deg, rgba(255, 179, 0, 0.2), rgba(200, 16, 46, 0.15));
+    border: 1px solid var(--gold-main);
+    color: var(--gold-bright);
+    border-style: solid;
+    box-shadow: 0 0 10px rgba(255, 179, 0, 0.2);
+  }
+  .quick-cat.active svg { color: var(--gold-main); }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .add-row { display: flex; gap: 8px; }
+  .add-row .input { flex: 1; }
+
+  .param-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr auto;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    animation: chipIn 0.2s ease;
+  }
+  .param-row .input { font-size: 12px; padding: 9px 11px; }
+
+  .empty-state {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-style: italic;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+
+  .md-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 6px 6px 0 0;
+    border-bottom: none;
+  }
+  .md-toolbar button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    width: 32px; height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .md-toolbar button:hover {
+    background: var(--bg-3);
+    color: var(--gold-main);
+    border-color: var(--border);
+  }
+  .md-toolbar .sep { width: 1px; background: var(--border); margin: 4px 2px; }
+
+  .md-editor {
+    width: 100%;
+    background: var(--bg-0);
+    border: 1px solid var(--border);
+    border-radius: 0 0 6px 6px;
+    padding: 14px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 340px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .md-editor:focus {
+    border-color: var(--gold-main);
+    box-shadow: 0 0 0 3px rgba(255, 179, 0, 0.15);
+  }
+  .md-editor::placeholder { color: var(--text-muted); font-style: italic; }
+
+  .preview-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-tab {
+    padding: 10px 18px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .preview-tab:hover { color: var(--text-primary); }
+  .preview-tab.active {
+    color: var(--gold-main);
+    border-bottom-color: var(--gold-main);
+  }
+
+  .preview-content {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    min-height: 400px;
+  }
+
+  .md-render { font-family: 'Inter', sans-serif; color: var(--text-primary); line-height: 1.7; }
+  .md-render h1, .md-render h2, .md-render h3, .md-render h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    margin: 1.2em 0 0.6em;
+    color: var(--gold-main);
+    line-height: 1.3;
+  }
+  .md-render h1 { font-size: 2em; border-bottom: 2px solid var(--red-main); padding-bottom: 8px; }
+  .md-render h2 { font-size: 1.6em; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .md-render h3 { font-size: 1.3em; color: var(--gold-bright); }
+  .md-render h4 { font-size: 1.1em; color: var(--red-bright); }
+  .md-render p { margin: 0.8em 0; }
+  .md-render a { color: var(--gold-main); text-decoration: none; border-bottom: 1px dotted var(--gold-main); }
+  .md-render a:hover { color: var(--gold-bright); }
+  .md-render strong { color: var(--gold-bright); font-weight: 700; }
+  .md-render em { color: var(--text-secondary); font-style: italic; }
+  .md-render ul, .md-render ol { padding-left: 1.8em; margin: 0.8em 0; }
+  .md-render li { margin: 0.3em 0; }
+  .md-render li::marker { color: var(--red-bright); }
+  .md-render blockquote {
+    border-left: 3px solid var(--red-main);
+    padding: 8px 16px;
+    margin: 1em 0;
+    background: rgba(200, 16, 46, 0.08);
+    color: var(--text-secondary);
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+  }
+  .md-render code {
+    background: var(--bg-0);
+    color: var(--gold-bright);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    border: 1px solid var(--border);
+  }
+  .md-render pre {
+    background: var(--bg-0);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 1em 0;
+    border-left: 3px solid var(--gold-main);
+  }
+  .md-render pre code { background: transparent; border: none; padding: 0; color: var(--text-primary); }
+  .md-render table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .md-render th, .md-render td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  .md-render th {
+    background: linear-gradient(90deg, rgba(200, 16, 46, 0.2), transparent);
+    color: var(--gold-main);
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  .md-render tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .md-render img { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); margin: 1em 0; }
+  .md-render hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red-main), var(--gold-main), var(--red-main), transparent);
+    margin: 2em 0;
+  }
+  .md-render input[type="checkbox"] { margin-right: 6px; accent-color: var(--red-main); }
+
+  .preview-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .preview-empty svg {
+    width: 64px; height: 64px;
+    color: var(--border);
+    margin-bottom: 16px;
+  }
+  .preview-empty h3 {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-secondary);
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .preview-empty p { font-size: 13px; line-height: 1.6; }
+  .preview-empty .btn { margin-top: 18px; }
+
+  .raw-preview {
+    background: var(--bg-0);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  .raw-preview .yml-key { color: var(--gold-main); }
+  .raw-preview .yml-str { color: #a5d6a7; }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--gold-main);
+    color: var(--gold-bright);
+    padding: 14px 22px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(255, 179, 0, 0.2);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast svg { width: 18px; height: 18px; color: var(--gold-main); }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-1); }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--red-deep), var(--bg-3)); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--red-main); }
+
+  @media (max-width: 960px) {
+    .layout { grid-template-columns: 1fr; }
+    .panel-editor { border-right: none; border-bottom: 1px solid var(--border); max-height: none; }
+    .panel-preview { max-height: none; }
+    .header { padding: 12px 16px; }
+    .brand-text h1 { font-size: 16px; }
+    .panel { padding: 16px; }
+    .tab-bar { top: 68px; padding: 0 12px; }
+  }
+
+  @media (max-width: 520px) {
+    .btn { padding: 8px 12px; font-size: 12px; }
+    .btn span.label { display: none; }
+    .header-actions { gap: 6px; }
+    .preview-content { padding: 18px; }
+    .param-row { grid-template-columns: 1fr; }
+    .tab-item { padding: 12px 12px; font-size: 11px; letter-spacing: 1px; }
+    .tab-item span.tab-label { display: none; }
+    .tab-item svg { width: 18px; height: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand">
+    <div class="arc-reactor"></div>
+    <div class="brand-text">
+      <h1>STARK EDITOR</h1>
+      <p>Jekyll Post Template • v1.0</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost" id="btnPreset" title="Load contoh preset">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="label">Load Preset</span>
+    </button>
+    <button class="btn btn-ghost" id="btnReset" title="Clear semua field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
+      <span class="label">Clear</span>
+    </button>
+    <button class="btn btn-gold" id="btnDownload" title="Download .md file">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="label">Download</span>
+    </button>
+    <button class="btn btn-primary" id="btnCopy" title="Copy ke clipboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span class="label">Copy</span>
+    </button>
+  </div>
+</header>
+
+<nav class="tab-bar" id="tabBar">
+  <button class="tab-item active" data-tab="title">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+    <span class="tab-label">Title</span>
+  </button>
+  <button class="tab-item" data-tab="date">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span class="tab-label">Date</span>
+  </button>
+  <button class="tab-item" data-tab="categories">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+    <span class="tab-label">Categories</span>
+  </button>
+  <button class="tab-item" data-tab="image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    <span class="tab-label">Image</span>
+  </button>
+  <button class="tab-item" data-tab="description">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+    <span class="tab-label">Description</span>
+  </button>
+  <button class="tab-item" data-tab="model">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    <span class="tab-label">Model</span>
+  </button>
+  <button class="tab-item" data-tab="prompt">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    <span class="tab-label">Prompt</span>
+  </button>
+  <button class="tab-item" data-tab="parameters">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+    <span class="tab-label">Parameters</span>
+  </button>
+  <button class="tab-item" data-tab="content">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    <span class="tab-label">Content</span>
+  </button>
+</nav>
+
+<div class="layout">
+  <div class="panel panel-editor">
+    <div class="panel-title">Editor</div>
+
+    <div class="tab-content active" data-content="title">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+          Judul Post
+        </h3>
+        <p class="hint">Masukkan judul utama untuk artikel Anda. Judul akan muncul di front matter YAML dan sebagai heading halaman.</p>
+        <div class="field">
+          <label>Title</label>
+          <input type="text" class="input" id="f_title" placeholder="contoh: Neon Dreams — Kota Cyberpunk di Tengah Hujan" />
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="date">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Tanggal Publish
+        </h3>
+        <p class="hint">Pilih tanggal publish post. Default otomatis terisi tanggal hari ini.</p>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" class="input" id="f_date" />
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="categories">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Kategori
+        </h3>
+        <p class="hint">Pilih quick category dengan klik, atau tambahkan kategori custom di bawah. Klik chip aktif untuk mengedit, klik ✕ untuk menghapus.</p>
+
+        <div class="section-divider">Quick Categories</div>
+        <div class="quick-cats" id="quickCats"></div>
+
+        <div class="section-divider">Kategori Aktif</div>
+        <div class="chips" id="categoriesList"></div>
+
+        <div class="section-divider">Tambah Custom</div>
+        <div class="add-row">
+          <input type="text" class="input" id="newCategory" placeholder="ketik kategori custom lalu Enter..." />
+          <button class="btn btn-primary" id="addCategory">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="image">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Featured Image
+        </h3>
+        <p class="hint">Path atau URL gambar utama untuk post ini. Biasanya disimpan di <code style="color:var(--gold-bright);">/assets/images/posts/</code>.</p>
+        <div class="field">
+          <label>Image Path / URL</label>
+          <input type="text" class="input" id="f_image" placeholder="contoh: /assets/images/posts/cyberpunk-city.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="description">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+          Deskripsi
+        </h3>
+        <p class="hint">Ringkasan singkat post. Digunakan untuk meta description SEO dan preview di listing halaman.</p>
+        <div class="field">
+          <label>Description</label>
+          <textarea class="textarea" id="f_description" rows="4" placeholder="contoh: Eksplorasi visual kota cyberpunk futuristik dengan atmosfer hujan dan neon yang dramatis."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="model">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Model AI
+        </h3>
+        <p class="hint">Nama dan versi model AI yang digunakan untuk generate gambar.</p>
+        <div class="field">
+          <label>Model</label>
+          <input type="text" class="input" id="f_model" placeholder="contoh: Midjourney v6.1" />
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="prompt">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Prompt
+        </h3>
+        <p class="hint">Prompt positif dan negatif yang digunakan untuk generate gambar. Sertakan parameter khusus model di akhir prompt jika diperlukan.</p>
+        <div class="field">
+          <label>Positive Prompt</label>
+          <textarea class="textarea" id="f_prompt" rows="6" placeholder="contoh: A breathtaking cyberpunk cityscape at night, heavy rain falling, neon signs in Japanese and Korean reflecting on wet asphalt, cinematic lighting, volumetric fog, ultra detailed, 8k, photorealistic --ar 16:9 --v 6.1 --style raw"></textarea>
+        </div>
+        <div class="field">
+          <label>Negative Prompt</label>
+          <textarea class="textarea" id="f_negative_prompt" rows="3" placeholder="contoh: blurry, low quality, distorted, watermark, text, cartoon, anime style"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="parameters">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/></svg>
+          Parameters
+        </h3>
+        <p class="hint">Parameter teknis tambahan seperti aspect ratio, CFG scale, seed, steps, dll. Tambahkan key-value pair sesuai kebutuhan.</p>
+        <div id="parametersList"></div>
+        <div id="parametersEmpty" class="empty-state">Belum ada parameter. Klik tombol di bawah untuk menambah.</div>
+        <button class="btn btn-ghost" id="addParameter" style="width:100%; justify-content:center; margin-top:8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Tambah Parameter
+        </button>
+      </div>
+    </div>
+
+    <div class="tab-content" data-content="content">
+      <div class="section-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Konten Markdown
+        </h3>
+        <p class="hint">Tulis konten post menggunakan syntax Markdown. Gunakan toolbar di bawah untuk menyisipkan format dengan cepat.</p>
+        <div class="md-toolbar">
+          <button title="Bold" data-md="bold"><b>B</b></button>
+          <button title="Italic" data-md="italic"><i>I</i></button>
+          <button title="Strikethrough" data-md="strike"><s>S</s></button>
+          <div class="sep"></div>
+          <button title="Heading 1" data-md="h1">H1</button>
+          <button title="Heading 2" data-md="h2">H2</button>
+          <button title="Heading 3" data-md="h3">H3</button>
+          <div class="sep"></div>
+          <button title="Unordered List" data-md="ul">•</button>
+          <button title="Ordered List" data-md="ol">1.</button>
+          <button title="Task List" data-md="task">☑</button>
+          <div class="sep"></div>
+          <button title="Link" data-md="link">🔗</button>
+          <button title="Image" data-md="image">🖼</button>
+          <button title="Code Inline" data-md="code">&lt;/&gt;</button>
+          <button title="Code Block" data-md="codeblock">{ }</button>
+          <div class="sep"></div>
+          <button title="Quote" data-md="quote">❝</button>
+          <button title="Horizontal Rule" data-md="hr">—</button>
+          <button title="Table" data-md="table">⊞</button>
+        </div>
+        <textarea class="md-editor" id="f_content" spellcheck="false" placeholder="Tulis konten post di sini menggunakan Markdown...
+
+Contoh:
+## 🌃 Konsep
+
+Ide karya ini terinspirasi dari film *Blade Runner 2049*...
+
+## 💡 Tips
+
+- Gunakan `--style raw` untuk hasil fotorealistik
+- Kata kunci `volumetric fog` berpengaruh pada atmosfer"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-preview">
+    <div class="panel-title">Live Preview</div>
+
+    <div class="preview-tabs">
+      <button class="preview-tab active" data-tab="rendered">Rendered</button>
+      <button class="preview-tab" data-tab="raw">Raw Output</button>
+    </div>
+
+    <div class="preview-content">
+      <div id="previewRendered" class="md-render"></div>
+      <div id="previewRaw" class="raw-preview" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg">Berhasil!</span>
+</div>
+
+<script>
+  const state = {
+    categories: [],
+    parameters: []
+  };
+
+  // Quick categories (fixed presets)
+  const QUICK_CATEGORIES = [
+    { name: 'portrait', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
+    { name: 'landscape', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20l7.5-7.5L14 17l4-4 4 4"/><path d="M8 11l3-3 3 3"/></svg>' },
+    { name: 'abstract', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
+    { name: 'random', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>' },
+    { name: 'fantasy', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg>' },
+    { name: 'image2image', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="13" height="13" rx="2"/><rect x="9" y="7" width="13" height="13" rx="2"/></svg>' }
+  ];
+
+  const PRESET = {
+    title: 'Neon Dreams — Kota Cyberpunk di Tengah Hujan',
+    image: '/assets/images/posts/cyberpunk-city.jpg',
+    description: 'Eksplorasi visual kota cyberpunk futuristik dengan atmosfer hujan dan neon yang dramatis.',
+    model: 'Midjourney v6.1',
+    prompt: 'A breathtaking cyberpunk cityscape at night, heavy rain falling, neon signs in Japanese and Korean reflecting on wet asphalt, flying cars with glowing trails, towering skyscrapers with holographic advertisements, cinematic lighting, volumetric fog, ultra detailed, 8k, photorealistic, shot on Sony A7R IV, 35mm lens --ar 16:9 --v 6.1 --style raw',
+    negative_prompt: 'blurry, low quality, distorted, watermark, text, cartoon, anime style',
+    categories: ['cyberpunk'],
+    parameters: [
+      { key: 'Model', value: 'Midjourney v6.1' },
+      { key: 'Aspect Ratio', value: '16:9' },
+      { key: 'Style', value: 'raw' },
+      { key: 'Steps', value: 'Auto' },
+      { key: 'CFG Scale', value: '7' },
+      { key: 'Seed', value: '48291037' }
+    ],
+    content: `## 🌃 Konsep
+
+Ide karya ini terinspirasi dari film *Blade Runner 2049* dan estetika kota Tokyo/Shibuya di malam hari. Saya ingin menangkap atmosfer **hujan deras** yang memantulkan cahaya neon ke jalanan basah — menciptakan kedalaman visual yang dramatis.
+
+## 🎨 Proses Kreatif
+
+1. **Riset referensi**: Mengumpulkan 20+ referensi visual dari Pinterest dan ArtStation
+2. **Iterasi prompt**: Melakukan 15+ variasi prompt untuk menemukan komposisi terbaik
+3. **Upscaling**: Menggunakan Topaz Gigapixel AI untuk meningkatkan resolusi ke 4K
+4. **Color grading**: Penyesuaian akhir di Lightroom untuk memperkuat tone cyan-magenta
+
+## 💡 Tips
+
+- Gunakan \`--style raw\` untuk hasil yang lebih fotorealistik
+- Kata kunci \`volumetric fog\` dan \`cinematic lighting\` sangat berpengaruh pada atmosfer
+- Aspect ratio 16:9 cocok untuk wallpaper desktop
+
+## 📊 Perbandingan Prompt
+
+| Variasi | Hasil | Rating |
+|---------|-------|--------|
+| v1 | Terlalu gelap | ⭐⭐ |
+| v2 | Komposisi baik | ⭐⭐⭐⭐ |
+| v3 | **Final choice** | ⭐⭐⭐⭐⭐ |
+
+> *"The city never sleeps, and neither do the neon lights."*
+
+\`\`\`javascript
+// Contoh parameter prompt
+const prompt = {
+  subject: "cyberpunk city",
+  mood: "dramatic",
+  lighting: "neon + volumetric"
+};
+\`\`\`
+`
+  };
+
+  function init() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('f_date').value = `${yyyy}-${mm}-${dd}`;
+    renderQuickCategories();
+    renderCategories();
+    renderParameters();
+    updatePreview();
+  }
+
+  // ============== TABS ==============
+  document.querySelectorAll('.tab-item').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`[data-content="${tab.dataset.tab}"]`).classList.add('active');
+    });
+  });
+
+  // ============== QUICK CATEGORIES ==============
+  function renderQuickCategories() {
+    const container = document.getElementById('quickCats');
+    container.innerHTML = '';
+    QUICK_CATEGORIES.forEach(qc => {
+      const isActive = state.categories.some(c => c.toLowerCase() === qc.name.toLowerCase());
+      const btn = document.createElement('button');
+      btn.className = 'quick-cat' + (isActive ? ' active' : '');
+      btn.innerHTML = `${qc.icon}<span>${qc.name}</span>`;
+      btn.title = isActive ? `Klik untuk menghapus "${qc.name}"` : `Klik untuk menambahkan "${qc.name}"`;
+      btn.addEventListener('click', () => toggleQuickCategory(qc.name));
+      container.appendChild(btn);
+    });
+  }
+
+  function toggleQuickCategory(name) {
+    const idx = state.categories.findIndex(c => c.toLowerCase() === name.toLowerCase());
+    if (idx >= 0) {
+      state.categories.splice(idx, 1);
+      showToast(`"${name}" dihapus dari kategori`);
+    } else {
+      state.categories.push(name);
+      showToast(`"${name}" ditambahkan ke kategori`);
+    }
+    renderQuickCategories();
+    renderCategories();
+    updatePreview();
+  }
+
+  // ============== CATEGORIES ==============
+  function renderCategories() {
+    const list = document.getElementById('categoriesList');
+    list.innerHTML = '';
+    state.categories.forEach((cat, idx) => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.innerHTML = `
+        <input type="text" value="${escapeHtml(cat)}" data-idx="${idx}" />
+        <button class="chip-remove" data-idx="${idx}" title="Hapus">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      `;
+      list.appendChild(chip);
+    });
+
+    list.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', e => {
+        state.categories[e.target.dataset.idx] = e.target.value;
+        renderQuickCategories();
+        updatePreview();
+      });
+    });
+    list.querySelectorAll('.chip-remove').forEach(btn => {
+      btn.addEventListener('click', e => {
+        state.categories.splice(e.currentTarget.dataset.idx, 1);
+        renderQuickCategories();
+        renderCategories();
+        updatePreview();
+      });
+    });
+  }
+
+  document.getElementById('addCategory').addEventListener('click', () => {
+    const inp = document.getElementById('newCategory');
+    const val = inp.value.trim();
+    if (val) {
+      if (state.categories.some(c => c.toLowerCase() === val.toLowerCase())) {
+        showToast(`"${val}" sudah ada di kategori`);
+        return;
+      }
+      state.categories.push(val);
+      inp.value = '';
+      renderQuickCategories();
+      renderCategories();
+      updatePreview();
+    }
+  });
+  document.getElementById('newCategory').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('addCategory').click();
+  });
+
+  // ============== PARAMETERS ==============
+  function renderParameters() {
+    const list = document.getElementById('parametersList');
+    const empty = document.getElementById('parametersEmpty');
+    list.innerHTML = '';
+    empty.style.display = state.parameters.length ? 'none' : 'block';
+
+    state.parameters.forEach((p, idx) => {
+      const row = document.createElement('div');
+      row.className = 'param-row';
+      row.innerHTML = `
+        <input type="text" class="input" placeholder="Key (contoh: Aspect Ratio)" value="${escapeHtml(p.key)}" data-idx="${idx}" data-field="key" />
+        <input type="text" class="input" placeholder="Value (contoh: 16:9)" value="${escapeHtml(p.value)}" data-idx="${idx}" data-field="value" />
+        <button class="btn btn-ghost" style="padding:8px; width:36px; height:36px; justify-content:center;" data-remove="${idx}" title="Hapus">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
+        </button>
+      `;
+      list.appendChild(row);
+    });
+
+    list.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', e => {
+        const idx = e.target.dataset.idx;
+        const field = e.target.dataset.field;
+        state.parameters[idx][field] = e.target.value;
+        updatePreview();
+      });
+    });
+    list.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        state.parameters.splice(e.currentTarget.dataset.remove, 1);
+        renderParameters();
+        updatePreview();
+      });
+    });
+  }
+
+  document.getElementById('addParameter').addEventListener('click', () => {
+    state.parameters.push({ key: '', value: '' });
+    renderParameters();
+    updatePreview();
+  });
+
+  // ============== MARKDOWN TOOLBAR ==============
+  document.querySelectorAll('[data-md]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ta = document.getElementById('f_content');
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const sel = ta.value.substring(start, end);
+      let insert = '', cursorOffset = 0;
+
+      switch (btn.dataset.md) {
+        case 'bold': insert = `**${sel || 'teks bold'}**`; cursorOffset = sel ? 0 : -2; break;
+        case 'italic': insert = `*${sel || 'teks italic'}*`; cursorOffset = sel ? 0 : -1; break;
+        case 'strike': insert = `~~${sel || 'teks strike'}~~`; cursorOffset = sel ? 0 : -2; break;
+        case 'h1': insert = `\n# ${sel || 'Heading 1'}\n`; break;
+        case 'h2': insert = `\n## ${sel || 'Heading 2'}\n`; break;
+        case 'h3': insert = `\n### ${sel || 'Heading 3'}\n`; break;
+        case 'ul': insert = `\n- ${sel || 'Item list'}\n`; break;
+        case 'ol': insert = `\n1. ${sel || 'Item list'}\n`; break;
+        case 'task': insert = `\n- [ ] ${sel || 'Task item'}\n`; break;
+        case 'link': insert = `[${sel || 'teks link'}](https://example.com)`; break;
+        case 'image': insert = `![${sel || 'alt text'}](url-gambar.jpg)`; break;
+        case 'code': insert = `\`${sel || 'code'}\``; cursorOffset = sel ? 0 : -1; break;
+        case 'codeblock': insert = `\n\`\`\`\n${sel || 'kode di sini'}\n\`\`\`\n`; break;
+        case 'quote': insert = `\n> ${sel || 'Quote text'}\n`; break;
+        case 'hr': insert = `\n\n---\n\n`; break;
+        case 'table': insert = `\n| Header 1 | Header 2 | Header 3 |\n|----------|----------|----------|\n| Cell 1   | Cell 2   | Cell 3   |\n| Cell 4   | Cell 5   | Cell 6   |\n`; break;
+      }
+
+      ta.value = ta.value.substring(0, start) + insert + ta.value.substring(end);
+      const newPos = start + insert.length + cursorOffset;
+      ta.setSelectionRange(newPos, newPos);
+      ta.focus();
+      updatePreview();
+    });
+  });
+
+  // ============== HELPERS ==============
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+  }
+
+  function buildOutput() {
+    const title = document.getElementById('f_title').value;
+    const date = document.getElementById('f_date').value;
+    const image = document.getElementById('f_image').value;
+    const description = document.getElementById('f_description').value;
+    const model = document.getElementById('f_model').value;
+    const prompt = document.getElementById('f_prompt').value;
+    const negative = document.getElementById('f_negative_prompt').value;
+    const content = document.getElementById('f_content').value;
+
+    const cats = state.categories.filter(c => c.trim()).map(c => c.trim());
+    const catsStr = cats.length ? `[${cats.join(', ')}]` : '[]';
+
+    const params = state.parameters.filter(p => p.key.trim());
+    let paramsStr = '';
+    if (params.length) {
+      paramsStr = '\nparameters:';
+      params.forEach(p => {
+        paramsStr += `\n  ${p.key}: "${p.value.replace(/"/g, '\\"')}"`;
+      });
+    }
+
+    const yamlQuote = s => `"${String(s).replace(/"/g, '\\"')}"`;
+
+    const frontMatter = `---
+layout: post
+title: ${yamlQuote(title)}
+date: ${date}
+categories: ${catsStr}
+image: ${image}
+description: ${yamlQuote(description)}
+model: ${yamlQuote(model)}
+prompt: ${yamlQuote(prompt)}
+negative_prompt: ${yamlQuote(negative)}${paramsStr}
+---`;
+
+    return { frontMatter, content, full: frontMatter + '\n\n' + content };
+  }
+
+  function hasContent() {
+    return !!(
+      document.getElementById('f_title').value.trim() ||
+      document.getElementById('f_description').value.trim() ||
+      document.getElementById('f_content').value.trim() ||
+      state.categories.length ||
+      state.parameters.length
+    );
+  }
+
+  function updatePreview() {
+    const { frontMatter, content, full } = buildOutput();
+    const renderedEl = document.getElementById('previewRendered');
+
+    if (!hasContent()) {
+      renderedEl.innerHTML = `
+        <div class="preview-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <h3>Empty Template</h3>
+          <p>Mulai isi field di editor untuk melihat preview,<br/>atau gunakan preset contoh untuk memulai.</p>
+          <button class="btn btn-gold" onclick="document.getElementById('btnPreset').click()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Load Preset
+          </button>
+        </div>
+      `;
+    } else {
+      const title = document.getElementById('f_title').value;
+      const date = document.getElementById('f_date').value;
+      const description = document.getElementById('f_description').value;
+      const image = document.getElementById('f_image').value;
+      const model = document.getElementById('f_model').value;
+      const cats = state.categories.filter(c => c.trim());
+
+      const metaHtml = `
+        <div style="margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--border);">
+          <h1 style="margin:0 0 10px; font-size:1.8em;">${escapeHtml(title) || '<em style="color:var(--text-muted);">Untitled</em>'}</h1>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; margin-bottom:8px;">
+            ${date ? `<span>📅 ${date}</span>` : ''}
+            ${model ? `<span>🤖 ${escapeHtml(model)}</span>` : ''}
+          </div>
+          ${cats.length ? `<div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">${cats.map(c => `<span style="background:rgba(200,16,46,0.15); border:1px solid var(--red-main); color:var(--gold-bright); padding:2px 10px; border-radius:12px; font-size:11px; font-family:'JetBrains Mono',monospace;">${escapeHtml(c)}</span>`).join('')}</div>` : ''}
+          ${description ? `<p style="margin-top:10px; color:var(--text-secondary); font-style:italic;">${escapeHtml(description)}</p>` : ''}
+          ${image ? `<img src="${escapeHtml(image)}" alt="featured" onerror="this.style.display='none'" style="margin-top:14px;" />` : ''}
+        </div>
+      `;
+
+      const rendered = marked.parse(content || '');
+      renderedEl.innerHTML = metaHtml + rendered;
+
+      renderedEl.querySelectorAll('pre code').forEach(block => {
+        hljs.highlightElement(block);
+      });
+    }
+
+    const rawHtml = escapeHtml(full)
+      .replace(/^(---)$/gm, '<span style="color:var(--red-bright);">$1</span>')
+      .replace(/^(\s*)([\w_]+)(:)/gm, '$1<span class="yml-key">$2</span><span style="color:var(--text-muted);">$3</span>')
+      .replace(/"([^"]*)"/g, '<span class="yml-str">"$1"</span>');
+    document.getElementById('previewRaw').innerHTML = rawHtml;
+  }
+
+  ['f_title', 'f_date', 'f_image', 'f_description', 'f_model', 'f_prompt', 'f_negative_prompt', 'f_content']
+    .forEach(id => document.getElementById(id).addEventListener('input', updatePreview));
+
+  document.querySelectorAll('.preview-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.preview-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      document.getElementById('previewRendered').style.display = target === 'rendered' ? 'block' : 'none';
+      document.getElementById('previewRaw').style.display = target === 'raw' ? 'block' : 'none';
+    });
+  });
+
+  document.getElementById('btnPreset').addEventListener('click', () => {
+    document.getElementById('f_title').value = PRESET.title;
+    document.getElementById('f_image').value = PRESET.image;
+    document.getElementById('f_description').value = PRESET.description;
+    document.getElementById('f_model').value = PRESET.model;
+    document.getElementById('f_prompt').value = PRESET.prompt;
+    document.getElementById('f_negative_prompt').value = PRESET.negative_prompt;
+    document.getElementById('f_content').value = PRESET.content;
+    state.categories = [...PRESET.categories];
+    state.parameters = PRESET.parameters.map(p => ({ ...p }));
+    renderQuickCategories();
+    renderCategories();
+    renderParameters();
+    updatePreview();
+    showToast('Preset contoh berhasil dimuat!');
+  });
+
+  document.getElementById('btnReset').addEventListener('click', () => {
+    if (hasContent() && !confirm('Clear semua field? Data yang sudah diisi akan hilang.')) return;
+    document.getElementById('f_title').value = '';
+    document.getElementById('f_image').value = '';
+    document.getElementById('f_description').value = '';
+    document.getElementById('f_model').value = '';
+    document.getElementById('f_prompt').value = '';
+    document.getElementById('f_negative_prompt').value = '';
+    document.getElementById('f_content').value = '';
+    state.categories = [];
+    state.parameters = [];
+    renderQuickCategories();
+    renderCategories();
+    renderParameters();
+    updatePreview();
+    showToast('Semua field telah di-clear');
+  });
+
+  document.getElementById('btnCopy').addEventListener('click', async () => {
+    const { full } = buildOutput();
+    if (!hasContent()) {
+      showToast('Template masih kosong!');
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(full);
+      showToast('Template berhasil disalin ke clipboard!');
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = full;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Template berhasil disalin!');
+    }
+  });
+
+  document.getElementById('btnDownload').addEventListener('click', () => {
+    const { full } = buildOutput();
+    if (!hasContent()) {
+      showToast('Template masih kosong!');
+      return;
+    }
+    const title = document.getElementById('f_title').value || 'post';
+    const date = document.getElementById('f_date').value;
+    const slug = title.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .substring(0, 50);
+    const filename = `${date}-${slug}.md`;
+
+    const blob = new Blob([full], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast(`Downloaded: ${filename}`);
+  });
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  init();
+</script>
+</body>
+</html>
