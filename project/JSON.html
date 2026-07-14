@@ -3,85 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JSON Builder</title>
+    <title>JSON Builder - #GitHub │ ahlawisnu.github.io</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
     <style>
         :root {
-            /* Material Design 3 Color System - Light Theme */
-            --md-sys-color-primary: #6750A4;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-primary-container: #EADDFF;
-            --md-sys-color-on-primary-container: #21005D;
-            
-            --md-sys-color-secondary: #625B71;
-            --md-sys-color-on-secondary: #FFFFFF;
-            --md-sys-color-secondary-container: #E8DEF8;
-            --md-sys-color-on-secondary-container: #1D192B;
-            
-            --md-sys-color-tertiary: #7D5260;
-            --md-sys-color-on-tertiary: #FFFFFF;
-            --md-sys-color-tertiary-container: #FFD8E4;
-            --md-sys-color-on-tertiary-container: #31111D;
-            
-            --md-sys-color-surface: #FFFBFE;
-            --md-sys-color-surface-container-lowest: #FFFFFF;
-            --md-sys-color-surface-container-low: #F7F2FA;
-            --md-sys-color-surface-container: #F3EDF7;
-            --md-sys-color-surface-container-high: #ECE6F0;
-            --md-sys-color-on-surface: #1C1B1F;
-            --md-sys-color-on-surface-variant: #49454F;
-            
-            --md-sys-color-outline: #79747E;
-            --md-sys-color-outline-variant: #CAC4D0;
-            
-            --md-sys-color-error: #B3261E;
-            --md-sys-color-error-container: #F9DEDC;
-            --md-sys-color-on-error-container: #410E0B;
-            
-            --md-sys-color-inverse-surface: #313033;
-            --md-sys-color-inverse-on-surface: #F4EFF4;
-            --md-sys-color-inverse-primary: #D0BCFF;
-            
+            /* Iron Man / Arc Reactor Theme */
+            --im-primary: #00E5FF;
+            --im-primary-dim: #00B8D4;
+            --im-primary-glow: rgba(0, 229, 255, 0.3);
+            --im-secondary: #FF3D00;
+            --im-secondary-dim: #DD2C00;
+            --im-secondary-glow: rgba(255, 61, 0, 0.3);
+            --im-gold: #FFD600;
+            --im-gold-dim: #FFAB00;
+
+            --im-surface: #0A0A0F;
+            --im-surface-elevated: #12121A;
+            --im-surface-card: #1A1A24;
+            --im-surface-card-hover: #222230;
+            --im-surface-input: #0D0D14;
+
+            --im-text-primary: #E0E0E0;
+            --im-text-secondary: #8A8A9A;
+            --im-text-muted: #5A5A6A;
+
+            --im-border: #2A2A3A;
+            --im-border-focus: #00E5FF;
+
+            --im-error: #FF3D00;
+            --im-error-bg: rgba(255, 61, 0, 0.15);
+            --im-success: #00E676;
+            --im-success-bg: rgba(0, 230, 118, 0.15);
+
+            --im-glow-primary: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.2);
+            --im-glow-secondary: 0 0 10px rgba(255, 61, 0, 0.4), 0 0 20px rgba(255, 61, 0, 0.2);
+
             --md-sys-motion-duration-short2: 100ms;
             --md-sys-motion-duration-medium2: 300ms;
             --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
-        }
-
-        [data-theme="dark"] {
-            --md-sys-color-primary: #D0BCFF;
-            --md-sys-color-on-primary: #381E72;
-            --md-sys-color-primary-container: #4F378B;
-            --md-sys-color-on-primary-container: #EADDFF;
-            
-            --md-sys-color-secondary: #CCC2DC;
-            --md-sys-color-on-secondary: #332D41;
-            --md-sys-color-secondary-container: #4A4458;
-            --md-sys-color-on-secondary-container: #E8DEF8;
-            
-            --md-sys-color-tertiary: #EFB8C8;
-            --md-sys-color-on-tertiary: #492532;
-            --md-sys-color-tertiary-container: #633B48;
-            --md-sys-color-on-tertiary-container: #FFD8E4;
-            
-            --md-sys-color-surface: #141218;
-            --md-sys-color-surface-container-lowest: #0F0D13;
-            --md-sys-color-surface-container-low: #1D1B20;
-            --md-sys-color-surface-container: #211F26;
-            --md-sys-color-surface-container-high: #2B2930;
-            --md-sys-color-on-surface: #E6E0E9;
-            --md-sys-color-on-surface-variant: #CAC4D0;
-            
-            --md-sys-color-outline: #938F99;
-            --md-sys-color-outline-variant: #49454F;
-            
-            --md-sys-color-error: #F2B8B5;
-            --md-sys-color-error-container: #8C1D18;
-            --md-sys-color-on-error-container: #F9DEDC;
-            
-            --md-sys-color-inverse-surface: #E6E0E9;
-            --md-sys-color-inverse-on-surface: #322F35;
-            --md-sys-color-inverse-primary: #6750A4;
         }
 
         * {
@@ -97,18 +57,16 @@
         }
 
         body {
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
+            background-color: var(--im-surface);
+            color: var(--im-text-primary);
             line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
-            transition: background-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
-                        color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
         }
 
-        /* Material App Bar */
+        /* App Bar - Iron Man HUD Style */
         .app-bar {
-            background-color: var(--md-sys-color-surface-container);
+            background: linear-gradient(135deg, #12121A 0%, #1A1A24 100%);
             height: 64px;
             padding: 0 16px;
             display: flex;
@@ -117,20 +75,23 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-bottom: 1px solid var(--im-border);
+            box-shadow: 0 2px 8px rgba(0, 229, 255, 0.1);
             width: 100%;
         }
 
         .app-bar-title {
             font-size: 1.125rem;
-            font-weight: 500;
-            color: var(--md-sys-color-on-surface);
+            font-weight: 700;
+            color: var(--im-primary);
             display: flex;
             align-items: center;
             gap: 12px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            letter-spacing: 1px;
         }
 
         .app-bar-actions {
@@ -142,10 +103,10 @@
         .icon-btn {
             width: 40px;
             height: 40px;
-            border: none;
-            background: transparent;
-            color: var(--md-sys-color-on-surface-variant);
-            border-radius: 50%;
+            border: 1px solid var(--im-border);
+            background: var(--im-surface-card);
+            color: var(--im-primary);
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -155,11 +116,13 @@
         }
 
         .icon-btn:hover {
-            background-color: var(--md-sys-color-on-surface-variant);
-            opacity: 0.08;
+            background-color: var(--im-primary);
+            color: var(--im-surface);
+            box-shadow: var(--im-glow-primary);
+            border-color: var(--im-primary);
         }
 
-        /* Main Layout - Responsive Grid */
+        /* Main Layout */
         .container {
             max-width: 100%;
             margin: 0 auto;
@@ -173,7 +136,6 @@
             }
         }
 
-        /* Grid: Single column mobile, 2 column desktop */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -188,16 +150,22 @@
             }
         }
 
-        /* Material Card */
+        /* Card - Iron Man Panel */
         .card {
-            background-color: var(--md-sys-color-surface-container-low);
+            background: linear-gradient(145deg, var(--im-surface-card) 0%, var(--im-surface-elevated) 100%);
             border-radius: 12px;
             padding: 16px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border: 1px solid var(--im-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             transition: all var(--md-sys-motion-duration-medium2);
             width: 100%;
             min-width: 0;
             overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.1);
         }
 
         @media (min-width: 768px) {
@@ -208,23 +176,24 @@
 
         .card-title {
             font-size: 1.125rem;
-            font-weight: 500;
-            color: var(--md-sys-color-on-surface);
+            font-weight: 700;
+            color: var(--im-primary);
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            text-shadow: 0 0 5px rgba(0, 229, 255, 0.3);
         }
 
         .card-subtitle {
             font-size: 0.875rem;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--im-text-secondary);
             margin-bottom: 16px;
             line-height: 1.5;
         }
 
-        /* Chip Group - Wrap on all screens */
+        /* Chip Group */
         .chip-group {
             display: flex;
             gap: 8px;
@@ -236,11 +205,11 @@
             height: 32px;
             padding: 0 16px;
             border-radius: 8px;
-            background-color: var(--md-sys-color-surface-container-highest);
-            color: var(--md-sys-color-on-surface-variant);
+            background-color: var(--im-surface-elevated);
+            color: var(--im-text-secondary);
             font-size: 0.875rem;
             font-weight: 500;
-            border: 1px solid var(--md-sys-color-outline);
+            border: 1px solid var(--im-border);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -250,17 +219,18 @@
         }
 
         .chip:hover {
-            background-color: var(--md-sys-color-on-surface-variant);
-            opacity: 0.08;
+            border-color: var(--im-primary-dim);
+            color: var(--im-primary);
         }
 
         .chip.active {
-            background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
-            border-color: transparent;
+            background-color: rgba(0, 229, 255, 0.15);
+            color: var(--im-primary);
+            border-color: var(--im-primary);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
         }
 
-        /* Toolbar - Wrap on mobile */
+        /* Toolbar */
         .toolbar {
             display: flex;
             gap: 8px;
@@ -271,7 +241,7 @@
         .btn {
             height: 40px;
             padding: 0 16px;
-            border-radius: 20px;
+            border-radius: 8px;
             font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
@@ -285,42 +255,69 @@
         }
 
         .btn-filled {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
+            background: linear-gradient(135deg, var(--im-primary) 0%, var(--im-primary-dim) 100%);
+            color: var(--im-surface);
+            font-weight: 700;
+        }
+
+        .btn-filled:hover {
+            box-shadow: var(--im-glow-primary);
+            transform: translateY(-1px);
         }
 
         .btn-tonal {
-            background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
+            background-color: rgba(0, 229, 255, 0.1);
+            color: var(--im-primary);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+        }
+
+        .btn-tonal:hover {
+            background-color: rgba(0, 229, 255, 0.2);
+            box-shadow: var(--im-glow-primary);
         }
 
         .btn-outlined {
             background-color: transparent;
-            color: var(--md-sys-color-primary);
-            border: 1px solid var(--md-sys-color-outline);
+            color: var(--im-primary);
+            border: 1px solid var(--im-border);
+        }
+
+        .btn-outlined:hover {
+            border-color: var(--im-primary);
+            background-color: rgba(0, 229, 255, 0.05);
         }
 
         .btn-text {
             background-color: transparent;
-            color: var(--md-sys-color-primary);
+            color: var(--im-text-secondary);
             padding: 0 12px;
         }
 
-        .btn-error {
-            background-color: var(--md-sys-color-error-container);
-            color: var(--md-sys-color-on-error-container);
+        .btn-text:hover {
+            color: var(--im-primary);
         }
 
-        /* Tree Container - NO HORIZONTAL SCROLL */
+        .btn-error {
+            background-color: rgba(255, 61, 0, 0.15);
+            color: var(--im-secondary);
+            border: 1px solid rgba(255, 61, 0, 0.3);
+        }
+
+        .btn-error:hover {
+            background-color: rgba(255, 61, 0, 0.25);
+            box-shadow: var(--im-glow-secondary);
+        }
+
+        /* Tree Container */
         .tree-container {
-            background-color: var(--md-sys-color-surface-container);
+            background-color: var(--im-surface-input);
             border-radius: 8px;
             padding: 12px;
             min-height: 300px;
             max-height: 500px;
             overflow-y: auto;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            border: 1px solid var(--md-sys-color-outline-variant);
+            overflow-x: hidden;
+            border: 1px solid var(--im-border);
             width: 100%;
         }
 
@@ -332,7 +329,7 @@
             }
         }
 
-        /* Tree Node - Responsive Flex Layout */
+        /* Tree Node */
         .tree-node {
             margin: 4px 0;
             width: 100%;
@@ -343,12 +340,11 @@
             align-items: flex-start;
             gap: 6px;
             padding: 8px;
-            background-color: var(--md-sys-color-surface-container-lowest);
+            background-color: var(--im-surface-card);
             border-radius: 8px;
-            border: 1px solid transparent;
+            border: 1px solid var(--im-border);
             transition: all var(--md-sys-motion-duration-short2);
             width: 100%;
-            /* Allow wrapping but prevent overflow */
             flex-wrap: nowrap;
         }
 
@@ -360,8 +356,9 @@
         }
 
         .node-content:hover {
-            border-color: var(--md-sys-color-outline-variant);
-            background-color: var(--md-sys-color-surface-container-low);
+            border-color: rgba(0, 229, 255, 0.4);
+            background-color: var(--im-surface-card-hover);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.1);
         }
 
         .node-indent {
@@ -373,7 +370,7 @@
 
         .indent-line {
             width: 12px;
-            border-left: 2px solid var(--md-sys-color-outline-variant);
+            border-left: 2px solid var(--im-border);
         }
 
         @media (min-width: 768px) {
@@ -387,7 +384,7 @@
             height: 24px;
             border: none;
             background: transparent;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--im-primary);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -400,8 +397,7 @@
         }
 
         .node-toggle:hover {
-            background-color: var(--md-sys-color-on-surface-variant);
-            opacity: 0.08;
+            background-color: rgba(0, 229, 255, 0.1);
         }
 
         .node-toggle.expanded {
@@ -425,8 +421,8 @@
             width: 24px;
             height: 24px;
             border: none;
-            background-color: var(--md-sys-color-surface-container-highest);
-            color: var(--md-sys-color-on-surface-variant);
+            background-color: var(--im-surface-elevated);
+            color: var(--im-text-secondary);
             border-radius: 4px;
             cursor: pointer;
             display: flex;
@@ -434,15 +430,17 @@
             justify-content: center;
             font-size: 14px;
             transition: all var(--md-sys-motion-duration-short2);
+            border: 1px solid var(--im-border);
         }
 
         .btn-order:hover:not(:disabled) {
-            background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
+            background-color: rgba(0, 229, 255, 0.2);
+            color: var(--im-primary);
+            border-color: var(--im-primary);
         }
 
         .btn-order:disabled {
-            opacity: 0.38;
+            opacity: 0.2;
             cursor: not-allowed;
         }
 
@@ -453,16 +451,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--md-sys-color-tertiary-container);
-            color: var(--md-sys-color-on-tertiary-container);
+            background: linear-gradient(135deg, rgba(255, 61, 0, 0.2) 0%, rgba(255, 61, 0, 0.1) 100%);
+            color: var(--im-secondary);
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-family: 'Roboto Mono', monospace;
             margin-top: 4px;
             flex-shrink: 0;
+            border: 1px solid rgba(255, 61, 0, 0.3);
+            font-weight: 700;
         }
 
-        /* Node Inputs - Responsive Grid */
+        /* Node Inputs */
         .node-inputs {
             flex: 1;
             display: grid;
@@ -491,10 +491,10 @@
             width: 100%;
             min-width: 0;
             padding: 8px 12px;
-            border: 1px solid var(--md-sys-color-outline);
-            border-radius: 4px;
-            background-color: var(--md-sys-color-surface-container-lowest);
-            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--im-border);
+            border-radius: 6px;
+            background-color: var(--im-surface-input);
+            color: var(--im-text-primary);
             font-size: 0.875rem;
             resize: none;
             overflow: hidden;
@@ -506,11 +506,11 @@
 
         .expandable-input:focus {
             outline: none;
-            border-color: var(--md-sys-color-primary);
+            border-color: var(--im-primary);
             border-width: 2px;
             padding: 7px 11px;
             min-height: 100px;
-            box-shadow: 0 0 0 4px var(--md-sys-color-primary-container);
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15), var(--im-glow-primary);
             z-index: 10;
             position: relative;
         }
@@ -523,9 +523,14 @@
         }
 
         .expandable-input:disabled {
-            background-color: var(--md-sys-color-surface-container);
-            color: var(--md-sys-color-on-surface-variant);
-            border-color: var(--md-sys-color-outline-variant);
+            background-color: var(--im-surface-elevated);
+            color: var(--im-text-muted);
+            border-color: var(--im-border);
+            cursor: not-allowed;
+        }
+
+        .expandable-input::placeholder {
+            color: var(--im-text-muted);
         }
 
         /* Type Select */
@@ -534,28 +539,30 @@
             min-width: 80px;
             height: 40px;
             padding: 0 8px;
-            border: 1px solid var(--md-sys-color-outline);
-            border-radius: 4px;
-            background-color: var(--md-sys-color-surface-container-lowest);
-            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--im-border);
+            border-radius: 6px;
+            background-color: var(--im-surface-input);
+            color: var(--im-text-primary);
             font-size: 0.875rem;
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236750A4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300E5FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 8px center;
             background-size: 16px;
             padding-right: 32px;
         }
 
-        [data-theme="dark"] .type-select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23D0BCFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-        }
-
         .type-select:focus {
             outline: none;
-            border-color: var(--md-sys-color-primary);
+            border-color: var(--im-primary);
             border-width: 2px;
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15);
+        }
+
+        .type-select option {
+            background-color: var(--im-surface-card);
+            color: var(--im-text-primary);
         }
 
         /* Node Actions */
@@ -578,7 +585,7 @@
             height: 28px;
             border: none;
             background: transparent;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--im-text-secondary);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -589,20 +596,19 @@
         }
 
         .btn-icon:hover {
-            background-color: var(--md-sys-color-on-surface-variant);
-            opacity: 0.08;
+            background-color: rgba(0, 229, 255, 0.1);
+            color: var(--im-primary);
         }
 
         .btn-icon.delete:hover {
-            background-color: var(--md-sys-color-error-container);
-            color: var(--md-sys-color-error);
-            opacity: 1;
+            background-color: rgba(255, 61, 0, 0.2);
+            color: var(--im-secondary);
         }
 
-        /* Children Container - Responsive Indent */
+        /* Children Container */
         .node-children {
             margin-left: 16px;
-            border-left: 1px solid var(--md-sys-color-outline-variant);
+            border-left: 1px solid var(--im-border);
             padding-left: 8px;
             width: calc(100% - 16px);
         }
@@ -619,23 +625,24 @@
             display: none;
         }
 
-        /* JSON Preview - NO HORIZONTAL SCROLL */
+        /* JSON Preview */
         .json-preview {
-            background-color: var(--md-sys-color-surface-container-high);
+            background-color: var(--im-surface-input);
             border-radius: 8px;
             padding: 16px;
             font-family: 'Roboto Mono', monospace;
             font-size: 13px;
             line-height: 1.6;
-            color: var(--md-sys-color-on-surface);
+            color: var(--im-text-primary);
             white-space: pre-wrap;
             word-break: break-word;
             min-height: 300px;
             max-height: 500px;
             overflow-y: auto;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
             position: relative;
             width: 100%;
+            border: 1px solid var(--im-border);
         }
 
         @media (min-width: 768px) {
@@ -648,20 +655,27 @@
         }
 
         .json-key {
-            color: var(--md-sys-color-primary);
+            color: var(--im-primary);
             font-weight: 500;
+            text-shadow: 0 0 3px rgba(0, 229, 255, 0.3);
         }
 
         .json-string {
-            color: var(--md-sys-color-tertiary);
+            color: var(--im-gold);
         }
 
         .json-number {
-            color: var(--md-sys-color-secondary);
+            color: var(--im-secondary);
         }
 
         .json-boolean {
-            color: var(--md-sys-color-error);
+            color: var(--im-success);
+            font-weight: 500;
+        }
+
+        .json-null {
+            color: var(--im-text-muted);
+            font-style: italic;
         }
 
         /* Copy Button */
@@ -669,43 +683,52 @@
             position: absolute;
             top: 12px;
             right: 12px;
-            background-color: var(--md-sys-color-surface-container);
-            border: 1px solid var(--md-sys-color-outline-variant);
+            background-color: var(--im-surface-card);
+            border: 1px solid var(--im-border);
+            color: var(--im-primary);
+        }
+
+        .btn-copy:hover {
+            background-color: rgba(0, 229, 255, 0.2);
+            border-color: var(--im-primary);
+            box-shadow: var(--im-glow-primary);
         }
 
         /* Status Bar */
         .status-bar {
             margin-top: 16px;
             padding: 12px;
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.15) 0%, rgba(0, 230, 118, 0.05) 100%);
+            color: var(--im-success);
             border-radius: 8px;
             font-size: 0.875rem;
             display: flex;
             align-items: center;
             gap: 8px;
+            border: 1px solid rgba(0, 230, 118, 0.3);
         }
 
         .status-bar.error {
-            background-color: var(--md-sys-color-error-container);
-            color: var(--md-sys-color-on-error-container);
+            background: linear-gradient(135deg, rgba(255, 61, 0, 0.15) 0%, rgba(255, 61, 0, 0.05) 100%);
+            color: var(--im-secondary);
+            border: 1px solid rgba(255, 61, 0, 0.3);
         }
 
         /* Import Section */
         .import-section {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid var(--md-sys-color-outline-variant);
+            border-top: 1px solid var(--im-border);
         }
 
         .import-textarea {
             width: 100%;
             min-height: 100px;
             padding: 12px;
-            border: 1px solid var(--md-sys-color-outline);
+            border: 1px solid var(--im-border);
             border-radius: 8px;
-            background-color: var(--md-sys-color-surface-container-lowest);
-            color: var(--md-sys-color-on-surface);
+            background-color: var(--im-surface-input);
+            color: var(--im-text-primary);
             font-family: 'Roboto Mono', monospace;
             font-size: 13px;
             resize: vertical;
@@ -714,34 +737,40 @@
 
         .import-textarea:focus {
             outline: none;
-            border-color: var(--md-sys-color-primary);
+            border-color: var(--im-primary);
             border-width: 2px;
             padding: 11px;
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15);
+        }
+
+        .import-textarea::placeholder {
+            color: var(--im-text-muted);
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--im-text-secondary);
         }
 
         .empty-state .material-symbols-rounded {
             font-size: 48px;
             margin-bottom: 12px;
             opacity: 0.6;
+            color: var(--im-primary);
         }
 
         /* Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
             padding: 16px;
         }
 
@@ -750,13 +779,14 @@
         }
 
         .modal {
-            background-color: var(--md-sys-color-surface-container-high);
-            border-radius: 28px;
+            background: linear-gradient(145deg, var(--im-surface-card) 0%, var(--im-surface-elevated) 100%);
+            border-radius: 16px;
             padding: 24px;
             max-width: 560px;
             width: 100%;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px rgba(0, 229, 255, 0.15);
             animation: modal-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+            border: 1px solid var(--im-border);
         }
 
         @keyframes modal-enter {
@@ -772,14 +802,15 @@
 
         .modal-title {
             font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--md-sys-color-on-surface);
+            font-weight: 700;
+            color: var(--im-primary);
             margin-bottom: 16px;
+            text-shadow: 0 0 5px rgba(0, 229, 255, 0.3);
         }
 
         .modal-content {
             font-size: 1rem;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--im-text-secondary);
             margin-bottom: 24px;
             line-height: 1.6;
             white-space: pre-wrap;
@@ -797,20 +828,22 @@
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: var(--md-sys-color-inverse-surface);
-            color: var(--md-sys-color-inverse-on-surface);
+            background: linear-gradient(135deg, var(--im-surface-card) 0%, var(--im-surface-elevated) 100%);
+            color: var(--im-primary);
             padding: 12px 20px;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 0.875rem;
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 16px rgba(0, 229, 255, 0.2);
             opacity: 0;
             transition: all var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
             z-index: 1001;
             max-width: calc(100% - 32px);
             width: max-content;
+            border: 1px solid var(--im-primary);
+            font-weight: 500;
         }
 
         .snackbar.show {
@@ -830,22 +863,44 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: transparent;
+            background: var(--im-surface);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--md-sys-color-outline-variant);
+            background: var(--im-border);
             border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--md-sys-color-outline);
+            background: var(--im-primary-dim);
         }
 
         /* Selection Color */
         ::selection {
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
+            background-color: rgba(0, 229, 255, 0.3);
+            color: var(--im-text-primary);
+        }
+
+        /* HUD Line Decoration */
+        .hud-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--im-primary) 50%, transparent 100%);
+            opacity: 0.3;
+            margin: 8px 0;
+        }
+
+        /* Node count badge */
+        .node-count-badge {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2) 0%, rgba(0, 229, 255, 0.1) 100%);
+            color: var(--im-primary);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
     </style>
 </head>
@@ -853,13 +908,10 @@
     <!-- App Bar -->
     <header class="app-bar">
         <div class="app-bar-title">
-            <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary);">account_tree</span>
-            Material JSON Builder
+            <span class="material-symbols-rounded" style="color: var(--im-primary);">account_tree</span>
+            JSON Builder
         </div>
         <div class="app-bar-actions">
-            <button class="icon-btn" onclick="toggleTheme()" title="Toggle Dark Mode">
-                <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
-            </button>
             <button class="icon-btn" onclick="showHelp()" title="Help">
                 <span class="material-symbols-rounded">help</span>
             </button>
@@ -874,8 +926,8 @@
                     <span class="material-symbols-rounded">tune</span>
                     Tree Editor
                 </div>
-                <div class="card-subtitle">Edit struktur JSON dengan Material Design 3</div>
-                
+                <div class="card-subtitle">Edit struktur JSON dengan tema Iron Man</div>
+
                 <!-- Template Chips -->
                 <div class="chip-group">
                     <button class="chip active" onclick="loadTemplate('empty')">
@@ -916,7 +968,7 @@
                     </button>
                 </div>
 
-                <!-- Tree Container - NO HORIZONTAL SCROLL -->
+                <!-- Tree Container -->
                 <div class="tree-container" id="treeContainer">
                     <div class="empty-state">
                         <span class="material-symbols-rounded">account_tree</span>
@@ -952,12 +1004,12 @@
                 <div class="card-title">
                     <span class="material-symbols-rounded">code</span>
                     Live Preview
-                    <span style="margin-left: auto; font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); display: flex; align-items: center; gap: 4px;">
-                        <span class="material-symbols-rounded" style="font-size: 16px;">account_tree</span>
-                        <span id="nodeCount">0</span>
-                    </span>
+                    <div class="node-count-badge" style="margin-left: auto;">
+                        <span class="material-symbols-rounded" style="font-size: 14px;">account_tree</span>
+                        <span id="nodeCount">0</span> nodes
+                    </div>
                 </div>
-                
+
                 <div class="json-preview" id="jsonPreview">
                     <button class="btn btn-tonal btn-copy" onclick="copyJSON()">
                         <span class="material-symbols-rounded" style="font-size: 18px;">content_copy</span>
@@ -1011,41 +1063,45 @@
         const templates = {
             empty: [],
             person: [
-                { id: '1', key: 'name', value: 'John Doe', type: 'string', expanded: true, children: [] },
-                { id: '2', key: 'age', value: '30', type: 'number', expanded: true, children: [] },
-                { id: '3', key: 'email', value: 'john@example.com', type: 'string', expanded: true, children: [] },
-                { id: '4', key: 'isActive', value: 'true', type: 'boolean', expanded: true, children: [] },
-                { id: '5', key: 'address', value: '', type: 'object', expanded: true, children: [
-                    { id: '6', key: 'street', value: '123 Main St', type: 'string', expanded: true, children: [] },
-                    { id: '7', key: 'city', value: 'New York', type: 'string', expanded: true, children: [] },
-                    { id: '8', key: 'country', value: 'USA', type: 'string', expanded: true, children: [] }
+                { id: '1', key: 'name', value: 'Tony ', type: 'string', expanded: true, children: [] },
+                { id: '2', key: 'alias', value: 'Iron Man', type: 'string', expanded: true, children: [] },
+                { id: '3', key: 'age', value: '48', type: 'number', expanded: true, children: [] },
+                { id: '4', key: 'company', value: ' Industries', type: 'string', expanded: true, children: [] },
+                { id: '5', key: 'isAvenger', value: 'true', type: 'boolean', expanded: true, children: [] },
+                { id: '6', key: 'suits', value: '', type: 'array', expanded: true, children: [
+                    { id: '7', key: '0', value: 'Mark III', type: 'string', expanded: true, children: [] },
+                    { id: '8', key: '1', value: 'Mark LXXXV', type: 'string', expanded: true, children: [] }
+                ]},
+                { id: '9', key: 'address', value: '', type: 'object', expanded: true, children: [
+                    { id: '10', key: 'city', value: 'Malibu', type: 'string', expanded: true, children: [] },
+                    { id: '11', key: 'country', value: 'USA', type: 'string', expanded: true, children: [] }
                 ]}
             ],
             config: [
-                { id: '1', key: 'appName', value: 'MyApplication', type: 'string', expanded: true, children: [] },
-                { id: '2', key: 'version', value: '1.0.0', type: 'string', expanded: true, children: [] },
-                { id: '3', key: 'debugMode', value: 'false', type: 'boolean', expanded: true, children: [] },
+                { id: '1', key: 'appName', value: 'JARVIS', type: 'string', expanded: true, children: [] },
+                { id: '2', key: 'version', value: '2.0.0', type: 'string', expanded: true, children: [] },
+                { id: '3', key: 'arcReactor', value: 'true', type: 'boolean', expanded: true, children: [] },
                 { id: '4', key: 'database', value: '', type: 'object', expanded: true, children: [
-                    { id: '5', key: 'host', value: 'localhost', type: 'string', expanded: true, children: [] },
-                    { id: '6', key: 'port', value: '5432', type: 'number', expanded: true, children: [] },
-                    { id: '7', key: 'ssl', value: 'true', type: 'boolean', expanded: true, children: [] }
+                    { id: '5', key: 'host', value: '-tower.local', type: 'string', expanded: true, children: [] },
+                    { id: '6', key: 'port', value: '9000', type: 'number', expanded: true, children: [] },
+                    { id: '7', key: 'encrypted', value: 'true', type: 'boolean', expanded: true, children: [] }
                 ]},
-                { id: '8', key: 'features', value: '', type: 'array', expanded: true, children: [
-                    { id: '9', key: '0', value: 'auth', type: 'string', expanded: true, children: [] },
-                    { id: '10', key: '1', value: 'logging', type: 'string', expanded: true, children: [] }
+                { id: '8', key: 'protocols', value: '', type: 'array', expanded: true, children: [
+                    { id: '9', key: '0', value: 'FRIDAY', type: 'string', expanded: true, children: [] },
+                    { id: '10', key: '1', value: 'EDITH', type: 'string', expanded: true, children: [] }
                 ]}
             ],
             api: [
                 { id: '1', key: 'status', value: 'success', type: 'string', expanded: true, children: [] },
                 { id: '2', key: 'data', value: '', type: 'object', expanded: true, children: [
-                    { id: '3', key: 'users', value: '', type: 'array', expanded: true, children: [
+                    { id: '3', key: 'suits', value: '', type: 'array', expanded: true, children: [
                         { id: '4', key: '0', value: '', type: 'object', expanded: true, children: [
-                            { id: '5', key: 'id', value: '1', type: 'number', expanded: true, children: [] },
-                            { id: '6', key: 'name', value: 'Alice', type: 'string', expanded: true, children: [] }
+                            { id: '5', key: 'model', value: 'Mark VII', type: 'string', expanded: true, children: [] },
+                            { id: '6', key: 'weapons', value: 'repulsors', type: 'string', expanded: true, children: [] }
                         ]},
                         { id: '7', key: '1', value: '', type: 'object', expanded: true, children: [
-                            { id: '8', key: 'id', value: '2', type: 'number', expanded: true, children: [] },
-                            { id: '9', key: 'name', value: 'Bob', type: 'string', expanded: true, children: [] }
+                            { id: '8', key: 'model', value: 'Hulkbuster', type: 'string', expanded: true, children: [] },
+                            { id: '9', key: 'weapons', value: 'missiles', type: 'string', expanded: true, children: [] }
                         ]}
                     ]},
                     { id: '10', key: 'total', value: '2', type: 'number', expanded: true, children: [] }
@@ -1091,29 +1147,6 @@
             closeModal();
         }
 
-        // Theme Toggle
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            
-            const icon = document.getElementById('themeIcon');
-            icon.textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
-            
-            showSnackbar(`Tema ${newTheme === 'dark' ? 'gelap' : 'terang'} aktif`);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        // Load saved theme
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            document.getElementById('themeIcon').textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
-            renderTree();
-            updatePreview();
-        });
-
         // Tree Operations
         function getNodeByPath(path) {
             let current = treeData;
@@ -1126,7 +1159,7 @@
 
         function renderTree() {
             const container = document.getElementById('treeContainer');
-            
+
             if (treeData.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -1135,11 +1168,13 @@
                     </div>
                 `;
                 updateStats();
+                updatePreview();
                 return;
             }
 
             container.innerHTML = renderNodes(treeData, []);
             updateStats();
+            updatePreview();
         }
 
         function renderNodes(nodes, parentPath) {
@@ -1160,7 +1195,8 @@
                 const typeIcon = node.type === 'object' ? '{ }' : 
                                node.type === 'array' ? '[ ]' : 
                                node.type === 'boolean' ? 'TF' :
-                               node.type === 'number' ? '123' : 'T';
+                               node.type === 'number' ? '123' : 
+                               node.type === 'null' ? 'N' : 'T';
 
                 return `
                     <div class="tree-node" data-path="${pathStr}">
@@ -1172,7 +1208,7 @@
                                     ${showToggle ? '<span class="material-symbols-rounded" style="font-size: 18px;">expand_more</span>' : ''}
                                 </button>
                             </div>
-                            
+
                             <div class="order-buttons">
                                 <button class="btn-order" onclick="moveNodeUp('${pathStr}')" ${index === 0 ? 'disabled' : ''}>
                                     <span class="material-symbols-rounded" style="font-size: 14px;">arrow_upward</span>
@@ -1191,7 +1227,7 @@
                                     onfocus="autoResize(this)"
                                     onblur="this.style.height='40px'"
                                     rows="1">${escapeHtml(node.key)}</textarea>
-                                
+
                                 <textarea class="expandable-input value-input ${isExpandable ? 'disabled' : ''}" 
                                     placeholder="value" 
                                     oninput="updateNode('${pathStr}', 'value', this.value); autoResize(this)"
@@ -1199,7 +1235,7 @@
                                     onblur="this.style.height='40px'"
                                     ${isExpandable ? 'disabled' : ''}
                                     rows="1">${escapeHtml(node.value)}</textarea>
-                                
+
                                 <select class="type-select" onchange="updateNode('${pathStr}', 'type', this.value)">
                                     <option value="string" ${node.type === 'string' ? 'selected' : ''}>string</option>
                                     <option value="number" ${node.type === 'number' ? 'selected' : ''}>number</option>
@@ -1224,7 +1260,7 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                         ${hasChildren ? `
                             <div class="node-children ${childrenClass}">
                                 ${renderNodes(node.children, currentPath)}
@@ -1265,7 +1301,7 @@
             if (!result) return;
 
             const node = result.node;
-            
+
             if (property === 'type') {
                 node.type = value;
                 if ((value === 'object' || value === 'array') && !node.children) {
@@ -1278,9 +1314,9 @@
                 renderTree();
             } else {
                 node[property] = value;
+                // REAL-TIME: update preview immediately on every keystroke
+                requestAnimationFrame(() => updatePreview());
             }
-            
-            updatePreview();
         }
 
         function moveNodeUp(pathStr) {
@@ -1337,8 +1373,7 @@
                 children: []
             });
             renderTree();
-            updatePreview();
-            
+
             setTimeout(() => {
                 const inputs = document.querySelectorAll('.key-input');
                 if (inputs.length > 0) {
@@ -1354,7 +1389,7 @@
 
             const node = result.node;
             if (!node.children) node.children = [];
-            
+
             node.children.push({
                 id: generateId(),
                 key: '',
@@ -1365,7 +1400,6 @@
             });
             node.expanded = true;
             renderTree();
-            updatePreview();
         }
 
         function duplicateNode(pathStr) {
@@ -1382,7 +1416,6 @@
 
             result.parent.splice(result.index + 1, 0, clone);
             renderTree();
-            updatePreview();
             showSnackbar('Node diduplikasi');
         }
 
@@ -1393,7 +1426,6 @@
                 if (result) {
                     result.parent.splice(result.index, 1);
                     renderTree();
-                    updatePreview();
                     showSnackbar('Node dihapus');
                 }
             });
@@ -1422,7 +1454,6 @@
             showModal('Hapus Semua?', `Yakin ingin menghapus ${countNodes(treeData)} node?`, () => {
                 treeData = [];
                 renderTree();
-                updatePreview();
                 showSnackbar('Semua data dihapus');
             });
         }
@@ -1454,12 +1485,11 @@
             treeData = JSON.parse(JSON.stringify(templates[name]));
             function updateIds(n) { n.id = generateId(); if (n.children) n.children.forEach(updateIds); }
             treeData.forEach(updateIds);
-            
+
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             event.currentTarget.classList.add('active');
-            
+
             renderTree();
-            updatePreview();
             showSnackbar(`Template ${name} dimuat`);
         }
 
@@ -1491,7 +1521,7 @@
             try {
                 const json = generateJSON();
                 const str = JSON.stringify(json, null, 2);
-                
+
                 const highlighted = str
                     .replace(/&/g, '&amp;')
                     .replace(/</g, '&lt;')
@@ -1503,9 +1533,9 @@
                         return `<span class="json-string">${match}</span>`;
                     })
                     .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
-                    .replace(/\b(null)\b/g, '<span class="json-boolean">$1</span>')
+                    .replace(/\b(null)\b/g, '<span class="json-null">$1</span>')
                     .replace(/\b(\d+\.?\d*)\b/g, '<span class="json-number">$1</span>');
-                
+
                 document.getElementById('jsonCode').innerHTML = highlighted;
                 document.getElementById('statusBar').className = 'status-bar';
                 document.getElementById('statusBar').innerHTML = `
@@ -1538,12 +1568,11 @@
                 showSnackbar('Textarea kosong!');
                 return;
             }
-            
+
             try {
                 const parsed = JSON.parse(text);
                 treeData = convertToTree(parsed);
                 renderTree();
-                updatePreview();
                 showSnackbar('JSON berhasil diimport!');
             } catch(e) {
                 showSnackbar('Error: ' + e.message);
@@ -1582,7 +1611,7 @@
             } else {
                 node.value = value === null ? 'null' : String(value);
             }
-            
+
             return node;
         }
 
@@ -1619,7 +1648,7 @@
         }
 
         function showHelp() {
-            showModal('Bantuan', 
+            showModal('Bantuan - JSON Builder', 
                 'Cara Penggunaan:\n\n' +
                 '1. Klik "Tambah Root" untuk membuat node baru\n' +
                 '2. Gunakan tombol ▲▼ untuk mengubah urutan node\n' +
@@ -1628,10 +1657,16 @@
                 '5. Pilih tipe data: string, number, boolean, object, array, null\n' +
                 '6. Gunakan template untuk memulai cepat\n' +
                 '7. Import JSON dari clipboard untuk mengedit\n' +
-                '8. Pada mobile, layout akan menyesuaikan secara otomatis tanpa scroll horizontal', 
+                '8. Live preview akan update real-time saat Anda mengetik\n' +
+                '9. Pada mobile, layout akan menyesuaikan secara otomatis', 
                 null
             );
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTree();
+        });
     </script>
 </body>
 </html>
