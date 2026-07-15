@@ -55,7 +55,8 @@ footer:
         url: https://ahlawisnu.github.io/Prompt-Generator
       - title: "Base64 IMAGE"
         url: https://ahlawisnu.github.io/Base64-image/
-        
+      - title: "Excel to Markdown"
+        url: /Excel-to-Markdown
   - group: "Konten Creator"
     links:
       - title: "Artikel prompt Generator"
