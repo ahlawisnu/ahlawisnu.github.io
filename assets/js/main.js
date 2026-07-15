@@ -646,3 +646,60 @@ if ('serviceWorker' in navigator) {
   });
 
 })();
+
+// === Service Worker Auto-Update ===
+if ('serviceWorker' in navigator) {
+  let refreshing = false;
+
+  // Detect controller change (SW baru aktif)
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return;
+    refreshing = true;
+    
+    console.log('[SW] New version detected, reloading...');
+    
+    // Tampilkan notifikasi ke user
+    const toast = document.createElement('div');
+    toast.className = 'copy-toast';
+    toast.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+      </svg>
+      <span>Konten baru tersedia! Refreshing...</span>
+    `;
+    document.body.appendChild(toast);
+    
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    // Reload halaman setelah 1 detik
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  });
+
+  // Register Service Worker
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        console.log('[SW] Registered:', reg.scope);
+
+        // ✅ Cek update setiap 5 menit
+        setInterval(() => {
+          reg.update();
+        }, 5 * 60 * 1000); // 5 menit
+
+        // ✅ Cek update saat user kembali ke tab
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) {
+            reg.update();
+          }
+        });
+      })
+      .catch(err => {
+        console.warn('[SW] Registration failed:', err);
+      });
+  });
+}
