@@ -1,6 +1,6 @@
 // === Header / Navbar ===
 .site-header {
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 100;
   background: color-mix(in srgb, var(--md-surface) 85%, transparent);
