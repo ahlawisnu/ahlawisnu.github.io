@@ -51,8 +51,8 @@
   <meta property="og:image:type" content="image/jpeg">
 {% else %}
   <!-- Fallback image jika post tidak punya image -->
-  <meta property="og:image" content="{{ '/image.svg' | absolute_url }}">
-  <meta property="og:image:secure_url" content="{{ '/image.svg' | absolute_url }}">
+  <meta property="og:image" content="{{ '/default.jpg' | absolute_url }}">
+  <meta property="og:image:secure_url" content="{{ '/default.jpg' | absolute_url }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="{{ site.title | escape }}">
@@ -77,7 +77,7 @@
   <meta name="twitter:image" content="{{ page.image | absolute_url }}">
   <meta name="twitter:image:alt" content="{{ page.title | escape }}">
 {% else %}
-  <meta name="twitter:image" content="{{ '/image.svg' | absolute_url }}">
+  <meta name="twitter:image" content="{{ '/default.jpg' | absolute_url }}">
   <meta name="twitter:image:alt" content="{{ site.title | escape }}">
 {% endif %}
 {% if site.twitter.username %}
