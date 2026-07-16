@@ -53,3 +53,6 @@ exclude:
   - vendor
   - .sass-cache/
   - .jekyll-cache/
+
+  # Di dalam _config.yml
+image: "/assets/images/default.jpg"
