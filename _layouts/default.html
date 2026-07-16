@@ -32,6 +32,8 @@
     <img src="" alt="" id="lightboxImg">
   </div>
 
-  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+<!-- === Cache-Busting untuk Assets === -->
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}">
+<script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}" defer></script>
 </body>
 </html>
