@@ -1,4 +1,3 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 // === Global Reset (Wajib Ada) ===
 html, body {
@@ -8,6 +7,10 @@ html, body {
   min-height: 100vh;
   overflow-x: hidden; // Mencegah scroll horizontal
 }
+*, *::before, *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
@@ -39,7 +42,7 @@ h3 { font-size: 1.5rem; }
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 clamp(16px, 4vw, 32px);
 }
 
 main { flex: 1; padding: 32px 0; }
