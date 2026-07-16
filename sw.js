@@ -51,11 +51,13 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetch(event.request)
         .then(response => {
-          // Update cache dengan response terbaru
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseClone);
-          });
+          // Hanya cache jika statusnya OK (200)
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
+          }
           return response;
         })
         .catch(() => {
@@ -71,12 +73,13 @@ self.addEventListener('fetch', event => {
   // ✅ Assets (CSS, JS, images): Cache-first dengan stale-while-revalidate
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
-      // Return cache immediately
+      
       const fetchPromise = fetch(event.request).then(networkResponse => {
-        // Update cache di background
         if (networkResponse.ok) {
+          // Perbaikan: Lakukan clone SEBELUM networkResponse dikembalikan (returned) ke browser
+          const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, networkResponse.clone());
+            cache.put(event.request, responseToCache);
           });
         }
         return networkResponse;
@@ -84,7 +87,8 @@ self.addEventListener('fetch', event => {
         console.log('[SW] Fetch failed for:', event.request.url);
       });
 
-      // Return cache atau network response
+      // Jika ada di cache, langsung kembalikan cache (fetch berjalan di background)
+      // Jika tidak ada di cache, tunggu dan kembalikan hasil dari network fetch
       return cachedResponse || fetchPromise;
     })
   );
