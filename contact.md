@@ -6,7 +6,7 @@ permalink: /contact/
 
 Tertarik berkolaborasi atau ingin commission karya AI Art?
 
-- 📧 Email: [email@example.com](mailto:email@example.com)
-- 🐦 Twitter: [@yourhandle](https://twitter.com/yourhandle)
-- 📸 Instagram: [@yourhandle](https://instagram.com/yourhandle)
-- 💼 GitHub: [github.com/yourusername](https://github.com/yourusername)
+- 📧 Email: [wisnudiary@gmail.com](mailto:wisnudiary@gmail.com)
+- 🐦 Twitter: [@UnknownDATA__](https://twitter.com/UnknownDATA__)
+- 📸 Instagram: [@awvr.verse](https://instagram.com/awvr.verse)
+- 💼 GitHub: [github.com/ahlawisnu](https://github.com/ahlawisnu)
