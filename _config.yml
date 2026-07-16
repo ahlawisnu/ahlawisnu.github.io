@@ -55,4 +55,4 @@ exclude:
   - .jekyll-cache/
 
   # Di dalam _config.yml
-image: "/assets/images/default.jpg"
+image: "/assets/images/default.png"
