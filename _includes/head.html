@@ -19,8 +19,8 @@
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 
 <!-- Theme color -->
-<meta name="theme-color" content="#6750A4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#141218" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="￼#6750A4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="￼#141218" media="(prefers-color-scheme: dark)">
 <meta name="google-site-verification" content="iOuGzpAPtvKUQRZ90phhagHaA2cyiRsbSogUjl6V1pw" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -33,57 +33,25 @@
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}">
 <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}" defer></script>
 
-<!-- === Open Graph (Facebook, WhatsApp, LinkedIn) === -->
+<!-- Open Graph -->
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-<meta property="og:title" content="{{ page.title | default: site.title | escape }}">
-<meta property="og:description" content="{{ page.description | default: site.description | strip_html | truncate: 200 | escape }}">
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description | strip_html | truncate: 200 }}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
 <meta property="og:site_name" content="{{ site.title }}">
-<meta property="og:locale" content="{{ site.lang | default: 'id_ID' }}">
-
-<!-- ✅ OG Image (KUNCI untuk WhatsApp) -->
+<meta property="og:locale" content="{{ site.lang }}">
 {% if page.image %}
   <meta property="og:image" content="{{ page.image | absolute_url }}">
-  <meta property="og:image:secure_url" content="{{ page.image | absolute_url }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ page.title | escape }}">
-  <meta property="og:image:type" content="image/jpeg">
-{% else %}
-  <!-- Fallback image jika post tidak punya image -->
-  <meta property="og:image" content="{{ '/default.jpg' | absolute_url }}">
-  <meta property="og:image:secure_url" content="{{ '/default.jpg' | absolute_url }}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ site.title | escape }}">
-  <meta property="og:image:type" content="image/jpeg">
 {% endif %}
 
-<!-- ✅ Article specific (untuk post) -->
-{% if page.layout == 'post' %}
-  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
-  <meta property="article:modified_time" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
-  <meta property="article:author" content="{{ site.author }}">
-  {% if page.categories.size > 0 %}
-    <meta property="article:section" content="{{ page.categories[0] }}">
-  {% endif %}
-{% endif %}
-
-<!-- === Twitter Card === -->
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ page.title | default: site.title | escape }}">
-<meta name="twitter:description" content="{{ page.description | default: site.description | strip_html | truncate: 200 | escape }}">
-{% if page.image %}
-  <meta name="twitter:image" content="{{ page.image | absolute_url }}">
-  <meta name="twitter:image:alt" content="{{ page.title | escape }}">
-{% else %}
-  <meta name="twitter:image" content="{{ '/default.jpg' | absolute_url }}">
-  <meta name="twitter:image:alt" content="{{ site.title | escape }}">
-{% endif %}
-{% if site.twitter.username %}
-  <meta name="twitter:site" content="@{{ site.twitter.username | remove: '@' }}">
-  <meta name="twitter:creator" content="@{{ site.twitter.username | remove: '@' }}">
-{% endif %}
+<meta name="twitter:title" content="{{ page.title | default: site.title }}">
+<meta name="twitter:description" content="{{ page.description | default: site.description | strip_html | truncate: 200 }}">
+{% if page.image %}<meta name="twitter:image" content="{{ page.image | absolute_url }}">{% endif %}
+{% if site.twitter.username %}<meta name="twitter:site" content="@{{ site.twitter.username | remove: '@' }}">{% endif %}
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="{{ 'https://ahlawisnu.github.io/assets/images/favicon.svg' | relative_url }}">
@@ -91,30 +59,3 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Google+Sans:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<!-- CSS -->
-<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
-<!-- Feeds & Sitemap -->
-{% feed_meta %}
-
-<!-- === PWA Meta Tags === -->
-<link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
-<meta name="theme-color" content="#6750A4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#141218" media="(prefers-color-scheme: dark)">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="apple-touch-icon" href="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}">
-<link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/images/icons/icon-192x192.png' | relative_url }}">
-<link rel="icon" type="image/png" sizes="512x512" href="{{ '/assets/images/icons/icon-512x512.png' | relative_url }}">
-
-<!-- Inline critical: prevent FOUC on theme -->
-<script>
-  (function() {
-    const saved = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = saved || (prefersDark ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  })();
-</script>
