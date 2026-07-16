@@ -1,16 +1,19 @@
-// === Header / Navbar ===
 .site-header {
-  position: sticky;
+  position: fixed; // ✅ Ganti sticky menjadi fixed
   top: 0;
-  left: 0;       // ✅ Pastikan menempel di kiri
-  width: 100%;   // ✅ Pastikan memenuhi lebar layar
-  z-index: 1000; // ✅ Pastikan di atas semua elemen lain
-  background: color-mix(in srgb, var(--md-surface) 95%, transparent); // ✅ Sedikit lebih solid agar body tidak tembus
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: color-mix(in srgb, var(--md-surface) 95%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--md-outline-variant);
 }
 
+// ⚠️ PENTING: Jika pakai fixed, tambahkan padding atas pada main agar konten tidak tertutup navbar
+main {
+  padding-top: 64px; // Sama dengan tinggi navbar
+}
 .navbar {
   display: flex;
   align-items: center;
