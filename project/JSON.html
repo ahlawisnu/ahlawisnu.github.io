@@ -891,15 +891,17 @@
             padding: 16px;
             font-family: 'Roboto Mono', monospace;
             font-size: 13px;
-            line-height: 0.8;
+            line-height: 1.5;
             color: var(--im-text-primary);
             min-height: 300px;
             max-height: 500px;
             overflow-y: auto;
-            overflow-x: auto;
+            overflow-x: hidden;
             position: relative;
             width: 100%;
             border: 1px solid var(--im-border);
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .json-preview::before {
@@ -930,9 +932,9 @@
             font-size: inherit;
             line-height: inherit;
             color: inherit;
-            white-space: pre;
-            word-wrap: normal;
-            overflow-wrap: normal;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
             tab-size: 2;
         }
 
@@ -946,7 +948,9 @@
         .json-line {
             display: block;
             padding-left: 0;
-            white-space: pre;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .json-indent-0 { padding-left: 0; }
