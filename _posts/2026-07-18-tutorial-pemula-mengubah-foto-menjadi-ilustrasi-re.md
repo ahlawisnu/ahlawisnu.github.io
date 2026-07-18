@@ -2,7 +2,7 @@
 layout: post
 title: "Tutorial Pemula: Mengubah Foto Menjadi Ilustrasi Realistik Tanpa Merusak Wajah (Image-to-Image)"
 date: 2026-07-18
-categories: []
+categories: [portrait]
 image: https://file.garden/aGUfgZGhfBC3mQSW/AI/1784315722152.png
 description: "Mengubah foto referensi menjadi gambar high-fidelity realistis sesuai prompt, dengan mempertahankan identitas wajah asli."
 model: "Stable Diffusion"
