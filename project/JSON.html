@@ -481,13 +481,11 @@
             background-color: var(--im-surface-input);
             border-radius: 8px;
             padding: 12px;
-            min-height: 300px;
-            max-height: 500px;
-            overflow-y: auto;
-            overflow-x: auto;
+            min-height: 200px;
             border: 1px solid var(--im-border);
             width: 100%;
             position: relative;
+            overflow: visible;
         }
 
         .tree-container::before {
@@ -504,8 +502,7 @@
         @media (min-width: 768px) {
             .tree-container {
                 padding: 16px;
-                min-height: 400px;
-                max-height: 600px;
+                min-height: 250px;
             }
         }
 
@@ -513,8 +510,49 @@
         .tree-node {
             margin: 4px 0;
             width: 100%;
-            min-width: fit-content;
+            position: relative;
         }
+
+        /* Guide line background for nesting levels */
+        .tree-node[data-depth="1"] { padding-left: 16px; }
+        .tree-node[data-depth="2"] { padding-left: 32px; }
+        .tree-node[data-depth="3"] { padding-left: 48px; }
+        .tree-node[data-depth="4"] { padding-left: 64px; }
+        .tree-node[data-depth="5"] { padding-left: 80px; }
+        .tree-node[data-depth="6"] { padding-left: 96px; }
+        .tree-node[data-depth="7"] { padding-left: 112px; }
+        .tree-node[data-depth="8"] { padding-left: 128px; }
+
+        .tree-node[data-depth="1"]::before,
+        .tree-node[data-depth="2"]::before,
+        .tree-node[data-depth="3"]::before,
+        .tree-node[data-depth="4"]::before,
+        .tree-node[data-depth="5"]::before,
+        .tree-node[data-depth="6"]::before,
+        .tree-node[data-depth="7"]::before,
+        .tree-node[data-depth="8"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(230, 36, 41, 0.15) 20%, 
+                rgba(255, 215, 0, 0.1) 50%, 
+                rgba(230, 36, 41, 0.15) 80%, 
+                transparent 100%);
+        }
+
+        .tree-node[data-depth="1"]::before { left: 8px; }
+        .tree-node[data-depth="2"]::before { left: 24px; }
+        .tree-node[data-depth="3"]::before { left: 40px; }
+        .tree-node[data-depth="4"]::before { left: 56px; }
+        .tree-node[data-depth="5"]::before { left: 72px; }
+        .tree-node[data-depth="6"]::before { left: 88px; }
+        .tree-node[data-depth="7"]::before { left: 104px; }
+        .tree-node[data-depth="8"]::before { left: 120px; }
 
         .node-content {
             display: flex;
@@ -526,7 +564,6 @@
             border: 1px solid var(--im-border);
             transition: all var(--md-sys-motion-duration-short2);
             width: 100%;
-            min-width: fit-content;
             flex-wrap: nowrap;
             position: relative;
         }
@@ -566,17 +603,6 @@
             gap: 4px;
             padding-top: 8px;
             flex-shrink: 0;
-        }
-
-        .indent-line {
-            width: 12px;
-            border-left: 2px solid var(--im-border);
-        }
-
-        @media (min-width: 768px) {
-            .indent-line {
-                width: 16px;
-            }
         }
 
         .node-toggle {
@@ -674,24 +700,41 @@
         /* Node Inputs - Responsive grid with minimum widths */
         .node-inputs {
             flex: 1;
-            display: grid;
-            grid-template-columns: minmax(100px, 1fr) minmax(150px, 2fr) auto;
+            display: flex;
             gap: 8px;
             align-items: flex-start;
             min-width: 0;
+            overflow: hidden;
+        }
+
+        .node-inputs .key-input {
+            flex: 1;
+            min-width: 80px;
+            max-width: 140px;
+        }
+
+        .node-inputs .value-input {
+            flex: 2;
+            min-width: 100px;
+        }
+
+        .node-inputs .type-select {
+            flex: 0 0 auto;
+            width: 90px;
         }
 
         @media (max-width: 600px) {
             .node-inputs {
-                grid-template-columns: 1fr;
+                flex-wrap: wrap;
                 width: 100%;
                 order: 3;
             }
-        }
-
-        @media (min-width: 601px) and (max-width: 768px) {
-            .node-inputs {
-                grid-template-columns: minmax(80px, 1fr) minmax(120px, 2fr) auto;
+            .node-inputs .key-input,
+            .node-inputs .value-input,
+            .node-inputs .type-select {
+                flex: 1 1 100%;
+                max-width: none;
+                width: 100%;
             }
         }
 
@@ -719,18 +762,16 @@
             border-color: var(--im-red);
             border-width: 2px;
             padding: 7px 11px;
-            min-height: 100px;
-            min-width: 200px;
+            min-height: 80px;
             box-shadow: 0 0 0 3px rgba(230, 36, 41, 0.15), var(--im-glow-red);
-            z-index: 100;
+            z-index: 10;
             position: relative;
         }
 
         @media (min-width: 768px) {
             .expandable-input:focus {
                 padding: 7px 15px;
-                min-height: 120px;
-                min-width: 280px;
+                min-height: 100px;
             }
         }
 
@@ -823,18 +864,20 @@
 
         /* Children Container - Auto width for deep nesting */
         .node-children {
-            margin-left: 16px;
-            border-left: 2px solid var(--im-border);
-            padding-left: 8px;
-            width: auto;
-            min-width: fit-content;
+            width: 100%;
+            padding-left: 20px;
+            position: relative;
         }
 
-        @media (min-width: 768px) {
-            .node-children {
-                margin-left: 24px;
-                padding-left: 12px;
-            }
+        .node-children::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 8px;
+            width: 1px;
+            background: linear-gradient(180deg, var(--im-border) 0%, var(--im-red) 50%, var(--im-border) 100%);
+            opacity: 0.4;
         }
 
         .node-children.collapsed {
@@ -848,7 +891,7 @@
             padding: 16px;
             font-family: 'Roboto Mono', monospace;
             font-size: 13px;
-            line-height: 0.7;
+            line-height: 0.8;
             color: var(--im-text-primary);
             min-height: 300px;
             max-height: 500px;
@@ -1556,11 +1599,6 @@
                 const toggleClass = node.expanded ? 'expanded' : '';
                 const childrenClass = node.expanded ? '' : 'collapsed';
 
-                let indentHtml = '';
-                for (let i = 0; i < parentPath.length; i++) {
-                    indentHtml += '<div class="indent-line"></div>';
-                }
-
                 const typeIcon = node.type === 'object' ? '{ }' : 
                                node.type === 'array' ? '[ ]' : 
                                node.type === 'boolean' ? 'TF' :
@@ -1571,7 +1609,6 @@
                     <div class="tree-node" data-path="${pathStr}">
                         <div class="node-content">
                             <div class="node-indent">
-                                ${indentHtml}
                                 <button class="node-toggle ${hasChildren ? toggleClass : 'leaf'} ${!showToggle ? 'leaf' : ''}" 
                                     onclick="${showToggle ? `toggleNode('${pathStr}')` : ''}">
                                     ${showToggle ? '<span class="material-symbols-rounded" style="font-size: 18px;">expand_more</span>' : ''}
@@ -1643,17 +1680,6 @@
         function autoResize(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = Math.max(40, textarea.scrollHeight) + 'px';
-            // Ensure parent scrolls to keep textarea visible when expanded
-            const container = textarea.closest('.tree-container');
-            if (container) {
-                setTimeout(() => {
-                    const rect = textarea.getBoundingClientRect();
-                    const containerRect = container.getBoundingClientRect();
-                    if (rect.bottom > containerRect.bottom - 20) {
-                        container.scrollTop += (rect.bottom - containerRect.bottom + 40);
-                    }
-                }, 50);
-            }
         }
 
         function escapeHtml(text) {
