@@ -40,6 +40,8 @@ footer:
         url: /project/kg.html
       - title: "Prompt untuk edit foto"
         url: /project/pe.html
+      - title: "YML Editor"
+        url: /project/yml.html
         
   - group: "Tools Editor"
     links:
