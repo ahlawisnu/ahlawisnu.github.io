@@ -2,7 +2,7 @@
 layout: post
 title: "Tutorial Singkat Membuat Prompt AI Karakter Fantasy untuk Seedream, ChatGPT, dan Gemini"
 date: 2026-07-30
-categories: []
+categories: [portrait]
 image: https://file.garden/aGUfgZGhfBC3mQSW/AI/1785325832101%5B54%5D.webp
 description: "Jika ingin menghasilkan ilustrasi karakter yang konsisten di berbagai AI generatif, gunakan prompt yang jelas, ringkas, dan terstruktur. Contoh berikut menggunakan karakter elf wanita dewasa bergaya fantasy dengan detail yang lengkap."
 model: "General"
