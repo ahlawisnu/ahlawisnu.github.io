@@ -2,7 +2,7 @@
 layout: post
 title: "Tutorial Rahasia: Bikin Foto Potret Estetik Cuma Modal Teks Pakai AI!"
 date: 2026-07-30
-categories: []
+categories: [portrait]
 image: https://file.garden/aGUfgZGhfBC3mQSW/1785424139072%5B1%5D.webp
 description: "Cara edit foto menggunakan Ai, dengan chatGPT, gemini dll"
 model: "ChatGPT, Gemini"
