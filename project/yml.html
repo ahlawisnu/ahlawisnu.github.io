@@ -1,9 +1,29 @@
-<!DOCTYPE html>
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body {
+                  background-color: white; /* Ensure the iframe has a white background */
+                }
+
+                pre.yaml{
+  user-select: text;    /* ← bisa di-select manual */
+  cursor: text;
+}
+
+
+              </style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, interactive-widget=resizes-content" />
-<title>STARK YAML Editor // v3.12</title>
+<title>YAML Editor // v3.13</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
@@ -38,7 +58,6 @@
     overflow:hidden;
   }
 
-  /* ===== TOP BAR ===== */
   .topbar{
     height:56px;
     background:linear-gradient(90deg,var(--stark-red-dark),var(--stark-red) 50%,var(--stark-red-dark));
@@ -77,7 +96,6 @@
   .icon-btn:active{transform:scale(.92)}
   .icon-btn.gold{color:var(--stark-gold)}
 
-  /* ===== MOBILE TAB TOGGLE ===== */
   .tab-toggle{
     display:none;
     background:var(--stark-panel);
@@ -106,18 +124,16 @@
   }
   .tab-toggle .material-icons{font-size:16px}
 
-  /* ===== LAYOUT ===== */
   .layout{
     display:grid;
     grid-template-columns: 1fr 420px;
     height:calc(100% - 56px);
   }
 
-  /* ===== EDITOR ===== */
   .editor{
     overflow:auto;
     padding:16px;
-    padding-bottom: 80px; /* ruang untuk floating toolbar */
+    padding-bottom: 80px;
     background:
       linear-gradient(180deg, rgba(0,0,0,.3), transparent 200px),
       var(--stark-bg);
@@ -151,7 +167,6 @@
   .btn.gold:hover{background:var(--stark-gold);color:#000}
   .btn .material-icons{font-size:16px}
 
-  /* ===== FLOATING TOOLBAR (BOTTOM) ===== */
   .floating-toolbar{
     position:fixed;
     bottom:20px;
@@ -166,11 +181,6 @@
     box-shadow:var(--shadow-fab);
     z-index:50;
     transition:all .3s ease;
-  }
-  .floating-toolbar.hidden{
-    transform:translateX(-50%) translateY(100px);
-    opacity:0;
-    pointer-events:none;
   }
   .floating-btn{
     width:44px;
@@ -227,7 +237,6 @@
     opacity:1;
   }
 
-  /* ===== FAB (FLOATING ACTION BUTTON) ===== */
   .fab{
     position:fixed;
     bottom:90px;
@@ -257,7 +266,6 @@
     font-size:28px;
   }
 
-  /* ===== FAB MENU ===== */
   .fab-menu{
     position:fixed;
     bottom:160px;
@@ -314,7 +322,6 @@
     font-size:20px;
   }
 
-  /* ===== TREE NODE ===== */
   .tree{
     padding-left:2px;
     min-width:0;
@@ -467,7 +474,6 @@
   .add-inline{display:inline-flex;gap:6px;flex-wrap:wrap}
   .add-inline .btn{padding:4px 10px;font-size:11px}
 
-  /* ===== PREVIEW ===== */
   .preview{
     background:var(--stark-panel);
     border-left:1px solid var(--stark-border);
@@ -503,6 +509,8 @@
     word-break:break-word;
     overflow-wrap:break-word;
     margin:0;
+    user-select:text;
+    cursor:text;
   }
   .yaml-key{color:var(--stark-gold)}
   .yaml-str{color:#81D4FA}
@@ -511,7 +519,6 @@
   .yaml-null{color:var(--stark-muted)}
   .yaml-dash{color:var(--stark-red)}
 
-  /* ===== MODAL ===== */
   .modal-backdrop{
     position:fixed;inset:0;
     background:rgba(0,0,0,.7);
@@ -588,7 +595,6 @@
     display:flex;gap:8px;flex-wrap:wrap;
   }
 
-  /* ===== TOAST ===== */
   .toast{
     position:fixed;bottom:24px;left:50%;
     transform:translateX(-50%) translateY(100px);
@@ -743,9 +749,9 @@
 <body>
 
 <div class="topbar">
-  <div class="logo">STARK<span>//</span>YAML</div>
+  <div class="logo">EDITOR<span>//</span>YAML</div>
   <div class="spacer"></div>
-  <span class="chip">J.A.R.V.I.S v3.12</span>
+  <span class="chip">J.A.R.V.I.S v3.13</span>
   <button class="icon-btn gold" title="Import YAML" onclick="openImport()"><span class="material-icons">file_upload</span></button>
   <button class="icon-btn gold" title="Export YAML" onclick="exportYaml()"><span class="material-icons">file_download</span></button>
   <button class="icon-btn" title="Reset" onclick="resetAll()"><span class="material-icons">refresh</span></button>
@@ -777,6 +783,9 @@
       <span class="material-icons" style="color:var(--stark-gold)">terminal</span>
       <h3>YAML OUTPUT</h3>
       <div class="spacer"></div>
+      <button class="icon-btn gold" onclick="copyYaml()" title="Copy YAML" style="width:32px;height:32px">
+        <span class="material-icons" style="font-size:18px">content_copy</span>
+      </button>
       <span style="font-size:11px;color:var(--stark-success);letter-spacing:1px">● ONLINE</span>
     </div>
     <div class="preview-body">
@@ -785,7 +794,6 @@
   </div>
 </div>
 
-<!-- FLOATING TOOLBAR -->
 <div class="floating-toolbar" id="floatingToolbar">
   <button class="floating-btn primary" onclick="addRoot()" title="Add Root Field">
     <span class="material-icons">add</span>
@@ -805,12 +813,10 @@
   </button>
 </div>
 
-<!-- FAB (FLOATING ACTION BUTTON) -->
 <button class="fab" id="fab" onclick="toggleFabMenu()">
   <span class="material-icons">add</span>
 </button>
 
-<!-- FAB MENU -->
 <div class="fab-menu" id="fabMenu">
   <div class="fab-menu-item">
     <span class="fab-menu-label">Add Root Field</span>
@@ -1018,36 +1024,68 @@ function parseVal(v){
   return v;
 }
 
+// ===== FIXED YAML SERIALIZER =====
 function toYaml(nodes, indent=0){
   let out='';
   const pad='  '.repeat(indent);
+  
   for(const n of nodes){
     if(!n.key && n.type!=='array') continue;
+    
     if(n.type==='object'){
       out += `${pad}${n.key}:\n`;
-      if(n.children && n.children.length) out += toYaml(n.children, indent+1);
-      else out += `${pad}  {}\n`;
-    } else if(n.type==='array'){
+      if(n.children && n.children.length){
+        out += toYaml(n.children, indent+1);
+      } else {
+        out += `${pad}  {}\n`;
+      }
+    } 
+    else if(n.type==='array'){
       out += `${pad}${n.key}:\n`;
-      if(!n.children || !n.children.length){ out += `${pad}  []\n`; continue; }
+      
+      if(!n.children || !n.children.length){
+        out += `${pad}  []\n`;
+        continue;
+      }
+      
+      const itemPad = '  '.repeat(indent+1);
       for(const c of n.children){
-        if(c.type==='object' || (c.key && c.value!==null && c.value!==undefined)){
+        if(c.type==='object' && c.children && c.children.length){
           if(c.key){
-            out += `${pad}- ${c.key}: ${formatVal(c.value)}\n`;
-            if(c.children && c.children.length) out += toYaml(c.children, indent+2);
+            out += `${itemPad}- ${c.key}:\n`;
+            out += toYaml(c.children, indent+2);
           } else {
-            out += `${pad}- ${formatVal(c.value)}\n`;
+            out += `${itemPad}-\n`;
+            out += toYaml(c.children, indent+1);
           }
-        } else {
-          out += `${pad}- ${formatVal(c.value)}\n`;
+        } 
+        else if(c.type==='array' && c.children && c.children.length){
+          if(c.key){
+            out += `${itemPad}- ${c.key}:\n`;
+            out += toYaml(c.children, indent+2);
+          } else {
+            out += `${itemPad}-\n`;
+            out += toYaml(c.children, indent+1);
+          }
+        } 
+        else if(c.key){
+          out += `${itemPad}- ${c.key}: ${formatVal(c.value)}\n`;
+          if(c.children && c.children.length){
+            out += toYaml(c.children, indent+2);
+          }
+        } 
+        else {
+          out += `${itemPad}- ${formatVal(c.value)}\n`;
         }
       }
-    } else {
+    } 
+    else {
       out += `${pad}${n.key}: ${formatVal(n.value)}\n`;
     }
   }
   return out;
 }
+
 function formatVal(v){
   if(v===null||v===undefined) return 'null';
   if(typeof v==='boolean') return v?'true':'false';
@@ -1252,7 +1290,7 @@ function addChild(node){
     return;
   }
   const c = newNode('string');
-  c.key = '';
+  c.key = 'new_field';
   node.children.push(c);
   node.collapsed = false;
   lastAddedNodeId = c.id;
@@ -1263,7 +1301,7 @@ function addChildOfType(id, type){
   const r = findNode(id);
   if(!r) return;
   const c = newNode(type);
-  c.key = type==='array'?'items':'';
+  c.key = type==='array'?'items':'new_field';
   r.node.children.push(c);
   r.node.collapsed = false;
   lastAddedNodeId = c.id;
@@ -1290,7 +1328,7 @@ function deleteNode(node, arr){
 
 function addRoot(){
   const n = newNode('string');
-  n.key = '';
+  n.key = 'new_key';
   root.push(n);
   lastAddedNodeId = n.id;
   render();
@@ -1314,6 +1352,7 @@ function updatePreview(){
     el.innerHTML = highlight(yaml);
   }
 }
+
 function highlight(yaml){
   return yaml.split('\n').map(line=>{
     if(/^\s*-\s/.test(line)){
@@ -1422,7 +1461,11 @@ function copyYaml(){
     toast('No data to copy', true);
     return;
   }
-  navigator.clipboard.writeText(yaml).then(()=>toast('Copied to clipboard'));
+  navigator.clipboard.writeText(yaml).then(()=>{
+    toast('YAML copied to clipboard');
+  }).catch(err => {
+    toast('Failed to copy: ' + err.message, true);
+  });
 }
 
 function resetAll(){
@@ -1433,17 +1476,22 @@ function resetAll(){
 
 function loadSample(){
   const sample = `Role: "Advanced Prompt generator"
-prompt target: "DALL-E"
-Task: "Analyze the image and extract it into highly detailed English prompts for high-fidelity digital portraiture, background. lighting and background, camera angle, camera composition"
-Detail focus:
-  - "subject"
-  - "rambut/gaya rambut"
-  - "Top Shirt"
-  - "Underwear"
-  - "pose/ekspresi"
-  - "background/environment"
-  - "angle camera"
-rule: "Separate with commas, explicitly include instructions to 'preserve the facial features from the reference image'. no parameter, max 70 words,"
+prompt_target: "DALL-E"
+Task: "Analyze the image and extract it into highly detailed English prompts for high-fidelity digital portraiture, including background, lighting, camera angle, and camera composition."
+Detail_focus:
+  - "[subject]"
+  - "[hair style]"
+  - "[top wear]"
+  - "[bottom wear]"
+  - "[pose], [expression]"
+  - "[background/environment]"
+  - "[angle camera]"
+Rule:
+  - "Each keyword is separated by a comma"
+  - "[subject] + curvy body"
+  - "[top wear] + thick chest"
+  - "[bottom wear] + thick thighs"
+  - "min 80 words < max 150 words"
 Output:
   - "English tag collection"
 `;
@@ -1457,7 +1505,6 @@ Output:
   toast('Sample loaded — DALL-E Prompt Generator ready');
 }
 
-// FAB MENU FUNCTIONS
 function toggleFabMenu(){
   fabMenuOpen = !fabMenuOpen;
   const menu = document.getElementById('fabMenu');
@@ -1480,7 +1527,6 @@ function closeFabMenu(){
   fab.style.transform = 'rotate(0deg)';
 }
 
-// Close FAB menu when clicking outside
 document.addEventListener('click', (e) => {
   const fab = document.getElementById('fab');
   const menu = document.getElementById('fabMenu');
@@ -1511,3 +1557,24 @@ render();
 </script>
 </body>
 </html>
+
+
+              <script>
+                              // Array items sekarang pakai indent+1
+const itemPad = '  '.repeat(indent+1);
+for(const c of n.children){
+  out += `${itemPad}- ${formatVal(c.value)}\n`;
+}
+
+function copyYaml(){
+  const yaml = toYaml(root);  // ← plain text, bukan HTML
+  navigator.clipboard.writeText(yaml).then(()=>{
+    toast('YAML copied to clipboard');
+  });
+}
+
+
+              </script>
+                        </body>
+                        </html>
+                    
