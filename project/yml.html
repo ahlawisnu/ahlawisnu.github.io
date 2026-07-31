@@ -1290,7 +1290,7 @@ function addChild(node){
     return;
   }
   const c = newNode('string');
-  c.key = 'new_field';
+  c.key = '';
   node.children.push(c);
   node.collapsed = false;
   lastAddedNodeId = c.id;
@@ -1301,7 +1301,7 @@ function addChildOfType(id, type){
   const r = findNode(id);
   if(!r) return;
   const c = newNode(type);
-  c.key = type==='array'?'items':'new_field';
+  c.key = type==='array'?'':'';
   r.node.children.push(c);
   r.node.collapsed = false;
   lastAddedNodeId = c.id;
@@ -1328,7 +1328,7 @@ function deleteNode(node, arr){
 
 function addRoot(){
   const n = newNode('string');
-  n.key = 'new_key';
+  n.key = '';
   root.push(n);
   lastAddedNodeId = n.id;
   render();
