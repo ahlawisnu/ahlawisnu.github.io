@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
     <title>JSON Builder - #GitHub │ ahlawisnu.github.io</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
@@ -1279,9 +1280,28 @@
             0%, 100% { box-shadow: 0 0 5px rgba(230, 36, 41, 0.2); }
             50% { box-shadow: 0 0 10px rgba(230, 36, 41, 0.4); }
         }
+
+.btn.floating {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom)); /* Menambahkan jarak aman */
+  left: 20px;
+  z-index: 1000;
+  
+  /* Transisi halus saat posisi berubah */
+  transition: bottom 0.3s ease; 
+  
+  /* Opsional: Tambahkan gaya agar terlihat lebih bagus */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 50px; /* Membuat tombol berbentuk kapsul */
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
     </style>
 </head>
-<body><body>
+<body>
     <!-- Floating Particles -->
     <div class="particles">
         <div class="particle"></div>
@@ -2121,6 +2141,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderTree();
         });
+
+// Deteksi jika layar berubah ukuran (biasanya karena keyboard muncul)
+let initialHeight = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  const btn = document.querySelector('.btn.floating');
+  
+  // Jika tinggi layar berkurang signifikan, berarti keyboard muncul
+  if (window.innerHeight < initialHeight - 100) {
+    btn.style.bottom = '20px'; // Atau sembunyikan: btn.style.display = 'none';
+    btn.style.transform = 'translateY(-150px)'; // Geser ke atas
+  } else {
+    btn.style.transform = 'translateY(0)'; // Kembalikan ke posisi asli
+  }
+});
+
     </script>
+  <button class="btn floating  btn-filled" onclick="addRootNode()">
+                        <span class="material-symbols-rounded">add</span>
+                        Tambah Root
+                    </button>
 </body>
 </html>
