@@ -11,7 +11,7 @@ main:
   - title: "Post Editor"
     url: /project/post-editor.html
   - title: "RoTI"
-  - url: /project/Rule-of-the-internet.html
+    url: /project/Rule-of-the-internet.html
     
 # === Kategori Karya ===
 categories:
