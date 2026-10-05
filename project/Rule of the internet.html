@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rules of The Internet</title>
+    <!-- Google Fonts untuk Material Design -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variabel untuk Dark Material Theme */
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1E1E1E;
+            --primary-color: #BB86FC;
+            --secondary-color: #03DAC6;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0A0;
+            --error-color: #CF6679;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* App Bar / Header */
+        header {
+            background-color: var(--surface-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* Search Input Material Style */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-bottom: 2px solid var(--text-secondary);
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            padding: 12px 16px;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .search-input:focus {
+            border-bottom-color: var(--secondary-color);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Grid Layout */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Material Card */
+        .card {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid var(--surface-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .rule-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .rule-text {
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* Highlight untuk pencarian */
+        .highlight {
+            background-color: rgba(3, 218, 198, 0.3);
+            color: #fff;
+            padding: 0 2px;
+            border-radius: 3px;
+        }
+
+        /* State Kosong */
+        .no-result {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Animasi masuk */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Responsivitas tambahan */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Rules of the Internet</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cari aturan (Ketik angka 1-100 atau kata kunci)..." autocomplete="off">
+        </div>
+    </header>
+
+    <main>
+        <div id="rulesContainer" class="rules-grid">
+            <!-- Kartu aturan akan di-render di sini oleh JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // Database 100 Rules of the Internet
+        const internetRules = [
+            "Jangan membicarakan tentang /b/ (atau forum rahasia).",
+            "Jangan PERNAH membicarakan tentang /b/.",
+            "Kita adalah Anonymous.",
+            "Anonymous adalah legiun (jumlahnya tak terbatas).",
+            "Anonymous tidak pernah memaafkan.",
+            "Anonymous tidak pernah lupa.",
+            "Anonymous bisa menjadi monster yang mengerikan, tidak berakal, dan tidak peduli.",
+            "Tidak ada aturan mutlak tentang apa yang boleh diposting.",
+            "Tidak ada aturan mutlak tentang moderasi juga — nikmatilah ban-mu.",
+            "Jika kamu menyukai situs saingan — JANGAN.",
+            "Semua argumenmu yang disusun dengan hati-hati dapat dengan mudah diabaikan.",
+            "Apapun yang kamu katakan dapat dan akan digunakan untuk melawanmu.",
+            "Apapun yang kamu katakan dapat diubah menjadi sesuatu yang lain.",
+            "Jangan berdebat dengan troll — itu berarti mereka menang.",
+            "Semakin keras kamu mencoba, semakin keras kamu akan gagal.",
+            "Jika kamu gagal dalam skala yang sangat epik, itu mungkin akan menjadi kemenangan tersendiri (Epic Fail = Epic Win).",
+            "Setiap kemenangan pada akhirnya akan menjadi kegagalan.",
+            "Segala sesuatu yang bisa diberi label, bisa dibenci.",
+            "Semakin kamu membencinya, semakin kuat hal itu jadinya.",
+            "Tidak ada hal di internet yang boleh dianggap serius.",
+            "Konten orisinal (OC) hanya orisinal selama beberapa detik sebelum menjadi usang.",
+            "Copypasta dibuat untuk menghancurkan setiap sisa orisinalitas.",
+            "Copypasta dibuat untuk menghancurkan setiap sisa orisinalitas (Sengaja diulang).",
+            "Setiap repost selalu merupakan repost dari sebuah repost.",
+            "Keterkaitan dengan topik asli pada akhirnya pasti akan hancur (derailment).",
+            "Setiap topik dapat dan akan dengan mudah diubah menjadi perdebatan tentang agama atau politik.",
+            "Selalu pertanyakan motif orang lain.",
+            "Selalu pertanyakan gender seseorang — untuk berjaga-jaga.",
+            "Di internet, semua pria adalah pria, semua wanita adalah pria yang menyamar, dan semua anak-anak adalah agen FBI yang menyamar.",
+            "Tidak ada wanita di internet.",
+            "Buktikan klaimmu, atau pergi (Pics/Tits or GTFO).",
+            "Kamu harus memiliki gambar/foto untuk membuktikan pernyataanmu.",
+            "Lurk more (pantau dan pelajari budaya sebuah forum) sebelum kamu mulai berbicara.",
+            "Jika sesuatu itu ada, pasti ada versi pornografinya. Tanpa pengecualian.",
+            "Jika versi pornografi dari sesuatu belum ada, hal itu sedang dibuat.",
+            "Akan selalu ada hal yang lebih kacau (fucked up) dari apa yang baru saja kamu lihat.",
+            "Kamu tidak bisa membagi angka dengan nol (karena semesta akan hancur).",
+            "Tidak ada batasan nyata dalam bentuk apapun di sini.",
+            "CAPSLOCK ADALAH CRUISE CONTROL UNTUK TERLIHAT KEREN.",
+            "BAHKAN DENGAN CRUISE CONTROL, KAMU TETAP HARUS MENYETIR (Gunakan tanda baca yang benar).",
+            "Desu tidaklah lucu. Sungguh, itu lebih buruk daripada lelucon Chuck Norris.",
+            "Tidak ada yang lebih lucu atau lebih buruk daripada lelucon Chuck Norris.",
+            "Semakin indah dan murni sebuah konsep, semakin memuaskan bagi internet untuk merusaknya.",
+            "Satu komentar positif tentang sesuatu akan selalu memicu puluhan komentar negatif.",
+            "Jika kamu melihat singa, kamu harus masuk ke dalam mobil.",
+            "Kue itu adalah kebohongan (The cake is a lie).",
+            "Kolam renang selalu tutup karena terinfeksi AIDS.",
+            "Sebuah gambar pantulan cermin tidak bisa diedit.",
+            "Semakin banyak sesuatu diperbincangkan, semakin besar kemungkinan hal itu adalah hoax.",
+            "Sebuah crossover, tidak peduli seberapa mustahilnya, pasti akan terjadi.",
+            "Tidak peduli apa itu, seseorang di suatu tempat pasti memiliki fetish terhadap hal tersebut.",
+            "Adalah hal yang wajar jika sesekali kamu merasa mual melihat internet.",
+            "Tidak ada yang peduli dengan kucingmu yang mati.",
+            "Lelucon tentang pedofilia hanya lucu di internet.",
+            "Jika kamu memiliki pertanyaan, jawaban pertama yang kamu dapatkan pasti adalah hinaan.",
+            "Jika kamu tidak setuju dengan seseorang, sebut saja mereka gay atau Hitler (Godwin's Law).",
+            "Tidak ada yang lebih suci dari kucing di internet.",
+            "Jika kamu mengetik \"Google\" ke dalam Google, kamu akan merusak internet.",
+            "Apapun yang kamu lakukan, jangan pernah melihat ke belakang.",
+            "Seseorang, di suatu tempat, sedang memantau apa yang kamu lakukan (Big Brother is watching).",
+            "Chuck Norris adalah satu-satunya pengecualian untuk semua aturan.",
+            "Terlalu banyak waktu di internet akan membuatmu kehilangan akal sehat.",
+            "Untuk setiap karakter fiksi laki-laki, ada versi perempuannya (dan sebaliknya).",
+            "Jika sesuatu itu eksis, pasti ada versi Alternate Universe (AU) dari hal tersebut.",
+            "Jika tidak ada, kamu harus membuatnya.",
+            "Segala hal yang memiliki nama pasti memiliki basis penggemar (fandom).",
+            "90% dari internet adalah sampah, dan kita terus-menerus mengonsumsinya.",
+            "Hati-hati dengan apa yang kamu unduh, karena itu mungkin virus.",
+            "Lolcats akan selalu lucu.",
+            "Jangan percayai apapun yang tidak memiliki sumber.",
+            "Internet tidak membuatmu bodoh, internet hanya membuat kebodohanmu terlihat oleh seluruh dunia.",
+            "Setiap video di YouTube pasti memiliki setidaknya satu komentar yang mengklaim video itu palsu.",
+            "Kamu tidak akan pernah bisa memenangkan argumen di internet.",
+            "Jika sebuah postingan tidak memiliki gambar, maka itu tidak akan dibaca.",
+            "Jangan pernah memberikan informasi pribadi yang sebenarnya kepada siapa pun.",
+            "Sarcasm sangat sulit dideteksi dalam bentuk teks, bersiaplah untuk disalahpahami.",
+            "Internet membuat orang menjadi lebih berani, lebih bodoh, dan lebih kejam (karena anonimitas).",
+            "Nostalgia di internet sering kali berlebihan.",
+            "Meme akan mati tepat pada saat orang tua mulai menggunakannya.",
+            "Jika kamu tidak mengerti suatu lelucon, kamu adalah bagian dari lelucon tersebut.",
+            "Terkadang, jawaban terbaik adalah tidak menjawab sama sekali.",
+            "Apapun yang kamu hapus, akan selalu ada orang yang sudah menyimpannya (Screenshot is forever).",
+            "Orang-orang akan lebih peduli pada drama daripada fakta.",
+            "Wiki adalah kebenaran mutlak, sampai seseorang mengeditnya menjadi lelucon.",
+            "Jangan salahkan internet jika hidupmu hancur karenanya.",
+            "Spam adalah bentuk kehidupan abadi di internet.",
+            "Kamu tidak bisa memuaskan semua orang.",
+            "Mereka tidak sedang menertawakan leluconmu, mereka menertawakanmu.",
+            "Jika kamu mencari sesuatu yang tidak bersalah, hasil pencariannya pasti akan merusak masa kecilmu.",
+            "Jangan pernah mempercayai tautan yang diberikan oleh orang tak dikenal (Rickroll).",
+            "Emoji tidak bisa menggantikan emosi yang sebenarnya.",
+            "Kamu tidak seunik yang kamu pikirkan.",
+            "Internet tidak pernah tidur.",
+            "Tidak ada batasan usia untuk bertingkah seperti anak kecil di internet.",
+            "Semua orang adalah pakar atau ahli di internet.",
+            "Sebuah kebohongan yang diulang-ulang di internet pada akhirnya akan dianggap sebagai kebenaran.",
+            "Jika kamu mencari simpati di internet, kamu mencari di tempat yang salah.",
+            "Setiap generasi akan menganggap generasi internet berikutnya lebih bodoh.",
+            "Pada akhirnya, tidak ada yang peduli siapa kamu di internet.",
+            "Aturan nomor 1 sampai 100 selalu bisa diubah, kecuali aturan 1, 2, dan 34."
+        ];
+
+        const container = document.getElementById('rulesContainer');
+        const searchInput = document.getElementById('searchInput');
+
+        // Fungsi untuk merender list aturan
+        function renderRules(filterQuery = "") {
+            container.innerHTML = "";
+            const lowerFilter = filterQuery.toLowerCase();
+            let foundCount = 0;
+
+            internetRules.forEach((rule, index) => {
+                const ruleNumber = index + 1;
+                const numStr = ruleNumber.toString();
+                const textLower = rule.toLowerCase();
+
+                // Logika pencarian: Cocok dengan angka atau teks
+                if (numStr.includes(lowerFilter) || textLower.includes(lowerFilter)) {
+                    foundCount++;
+                    
+                    // Membuat elemen card
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    
+                    // Highlight efek jika sedang mencari
+                    let displayText = rule;
+                    let displayNum = numStr;
+
+                    if (lowerFilter !== "") {
+                        // Highlight teks (sederhana)
+                        const regex = new RegExp(`(${lowerFilter})`, "gi");
+                        displayText = rule.replace(regex, "<span class='highlight'>$1</span>");
+                        
+                        if(numStr.includes(lowerFilter)) {
+                            displayNum = numStr.replace(new RegExp(`(${lowerFilter})`, "g"), "<span class='highlight'>$1</span>");
+                        }
+                    }
+
+                    card.innerHTML = `
+                        <div class="rule-number">Rule ${displayNum}</div>
+                        <div class="rule-text">${displayText}</div>
+                    `;
+                    
+                    // Menambahkan delay animasi berdasarkan urutan agar tidak kaku
+                    card.style.animationDelay = `${(foundCount % 20) * 0.03}s`;
+                    
+                    container.appendChild(card);
+                }
+            });
+
+            // Tampilkan pesan jika tidak ada hasil
+            if (foundCount === 0) {
+                container.innerHTML = `
+                    <div class="no-result">
+                        <span style="font-size: 3rem; display:block; margin-bottom: 10px;">👻</span>
+                        Aturan tidak ditemukan. Mungkin kamu baru saja melanggar Aturan 1?
+                    </div>
+                `;
+            }
+        }
+
+        // Event listener untuk input pencarian real-time
+        searchInput.addEventListener('input', (e) => {
+            renderRules(e.target.value.trim());
+        });
+
+        // Render pertama kali saat halaman dimuat
+        renderRules();
+    </script>
+</body>
+</html>
