@@ -10,6 +10,9 @@ main:
     url: /contact/
   - title: "Post Editor"
     url: /project/post-editor.html
+  - title: ROTI
+  - url: /project/Rule-of-the-internet.html
+    
 
 # === Kategori Karya ===
 categories:
